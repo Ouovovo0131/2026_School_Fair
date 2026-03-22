@@ -1,0 +1,479 @@
+@import "tailwindcss";
+
+:root {
+  /* Claymorphic 柔和粉彩色調 */
+  --background: #faf8f6;
+  --foreground: #2c2c2c;
+  
+  /* 主色調 - Ring Toss 嘉年華系列 */
+  --primary-rose: #f5a3c7;
+  --primary-blue: #a8d8e8;
+  --primary-purple: #d4c5e8;
+  --primary-yellow: #fce8b2;
+  --primary-mint: #c8e8d8;
+  
+  /* 深色變體 */
+  --rose-dark: #e8789b;
+  --blue-dark: #7ab8d0;
+  --purple-dark: #b8a5d0;
+  --yellow-dark: #f0d489;
+  --mint-dark: #a8d0b8;
+  
+  /* 中和色 */
+  --clay-light: #fffaf5;
+  --clay-medium: #f5e8e0;
+  --clay-dark: #e8d4c4;
+  --text-light: #4a4a4a;
+  --text-dark: #2c2c2c;
+}
+
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #1a1a1a;
+    --foreground: #f5f5f5;
+    --clay-light: #2a2a2a;
+    --clay-medium: #3a3a3a;
+    --clay-dark: #4a4a4a;
+    --text-light: #e8e8e8;
+    --text-dark: #f5f5f5;
+  }
+}
+
+* {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: linear-gradient(135deg, var(--clay-light) 0%, var(--background) 50%, #f0f0f0 100%);
+  color: var(--foreground);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  letter-spacing: 0.3px;
+  min-height: 100vh;
+}
+
+/* ========== Claymorphic 設計系統 ========== */
+
+/* 柔和陰影效果 - 3D深度感 */
+.clay-shadow-sm {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.clay-shadow-md {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.clay-shadow-lg {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 8px 16px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.clay-shadow-xl {
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.18), 0 12px 24px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* 浮動/深度效果 */
+.clay-float {
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.clay-float:hover {
+  transform: translateY(-8px) scale(1.02);
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.15));
+}
+
+.clay-float:active {
+  transform: translateY(-2px);
+}
+
+/* 3D卡片效果 */
+.clay-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.4));
+  backdrop-filter: blur(10px);
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.clay-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
+  pointer-events: none;
+}
+
+/* 高級按鈕 */
+.clay-button {
+  padding: 14px 28px;
+  border-radius: 20px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--primary-rose), var(--rose-dark));
+  color: white;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 8px 20px rgba(245, 163, 199, 0.3);
+  font-size: 15px;
+}
+
+.clay-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: left 0.3s ease;
+}
+
+.clay-button:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(245, 163, 199, 0.4);
+}
+
+.clay-button:hover:not(:disabled)::before {
+  left: 100%;
+}
+
+.clay-button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(245, 163, 199, 0.3);
+}
+
+.clay-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 按鈕變體 */
+.clay-button-blue {
+  background: linear-gradient(135deg, var(--primary-blue), var(--blue-dark));
+  box-shadow: 0 8px 20px rgba(168, 216, 232, 0.3);
+}
+
+.clay-button-blue:hover:not(:disabled) {
+  box-shadow: 0 15px 35px rgba(168, 216, 232, 0.4);
+}
+
+.clay-button-purple {
+  background: linear-gradient(135deg, var(--primary-purple), var(--purple-dark));
+  box-shadow: 0 8px 20px rgba(212, 197, 232, 0.3);
+}
+
+.clay-button-purple:hover:not(:disabled) {
+  box-shadow: 0 15px 35px rgba(212, 197, 232, 0.4);
+}
+
+.clay-button-yellow {
+  background: linear-gradient(135deg, var(--primary-yellow), var(--yellow-dark));
+  color: var(--text-dark);
+  box-shadow: 0 8px 20px rgba(252, 232, 178, 0.3);
+}
+
+.clay-button-yellow:hover:not(:disabled) {
+  box-shadow: 0 15px 35px rgba(252, 232, 178, 0.4);
+}
+
+.clay-button-lg {
+  padding: 18px 36px;
+  font-size: 16px;
+}
+
+.clay-button-sm {
+  padding: 10px 20px;
+  font-size: 13px;
+}
+
+/* 高級輸入框 */
+.clay-input {
+  padding: 14px 20px;
+  border-radius: 20px;
+  border: 2px solid var(--clay-medium);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.clay-input:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 8px 20px rgba(168, 216, 232, 0.3);
+  transform: translateY(-2px);
+}
+
+.clay-input::placeholder {
+  color: rgba(76, 76, 76, 0.5);
+}
+
+/* 漸進色背景 - Ring Toss 主題 */
+.gradient-carousel {
+  background: linear-gradient(135deg, #fdd7e4 0%, #d4e8f0 25%, #e8d7f0 50%, #fff4d4 75%, #d7f0e8 100%);
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 3D 旋轉環效果 */
+@keyframes float-rotate {
+  0% { transform: translateY(0px) rotateZ(0deg); }
+  33% { transform: translateY(-20px) rotateZ(120deg); }
+  66% { transform: translateY(-30px) rotateZ(240deg); }
+  100% { transform: translateY(0px) rotateZ(360deg); }
+}
+
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(245, 163, 199, 0.4); }
+  50% { box-shadow: 0 0 40px rgba(245, 163, 199, 0.7); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+/* 專用卡片設計 */
+.premium-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+  backdrop-filter: blur(20px);
+  border-radius: 28px;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.premium-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.4), transparent);
+  pointer-events: none;
+}
+
+.premium-card:hover {
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Ring Toss 主題 - 3D環元素 */
+.ring-element {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 6px solid;
+  animation: float-gentle 3s ease-in-out infinite;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.ring-rose { border-color: var(--primary-rose); }
+.ring-blue { border-color: var(--primary-blue); }
+.ring-purple { border-color: var(--primary-purple); }
+.ring-yellow { border-color: var(--primary-yellow); }
+.ring-mint { border-color: var(--primary-mint); }
+
+/* 3D 深度效果 */
+.perspective-3d {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.rotate-3d {
+  transform: rotateX(5deg) rotateY(5deg) rotateZ(2deg);
+}
+
+/* 進度條 - 高級設計 */
+.progress-bar-container {
+  background: linear-gradient(90deg, var(--clay-medium), var(--clay-dark));
+  border-radius: 20px;
+  padding: 3px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar-fill {
+  background: linear-gradient(90deg, var(--primary-rose), var(--rose-dark));
+  height: 8px;
+  border-radius: 20px;
+  transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 0 10px rgba(245, 163, 199, 0.5);
+}
+
+.progress-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+/* 彩色徽章系統 */
+.badge-rose {
+  background: linear-gradient(135deg, var(--primary-rose), var(--rose-dark));
+  color: white;
+}
+
+.badge-blue {
+  background: linear-gradient(135deg, var(--primary-blue), var(--blue-dark));
+  color: white;
+}
+
+.badge-purple {
+  background: linear-gradient(135deg, var(--primary-purple), var(--purple-dark));
+  color: white;
+}
+
+.badge-yellow {
+  background: linear-gradient(135deg, var(--primary-yellow), var(--yellow-dark));
+  color: var(--text-dark);
+}
+
+.badge-mint {
+  background: linear-gradient(135deg, var(--primary-mint), var(--mint-dark));
+  color: white;
+}
+
+/* 完成效果 - 3D 印章 */
+.completion-seal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-15deg) scale(0);
+  animation: seal-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
+}
+
+@keyframes seal-pop {
+  0% {
+    transform: translate(-50%, -50%) rotate(-15deg) scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(-15deg) scale(1.1);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(-15deg) scale(1);
+    opacity: 1;
+  }
+}
+
+/* 導航欄設計 */
+.premium-nav {
+  background: linear-gradient(135deg, rgba(168, 216, 232, 0.9), rgba(245, 163, 199, 0.9));
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* 模態對話框設計 */
+.modal-overlay {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
+  animation: fade-in 0.3s ease;
+}
+
+.modal-content {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(250, 248, 246, 0.95) 100%);
+  border-radius: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  animation: modal-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes modal-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* 任務網格卡片 */
+.task-grid-item {
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.5));
+  backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  padding: 20px;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.task-grid-item:hover {
+  transform: translateY(-8px);
+  border-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+}
+
+.task-grid-item.locked {
+  opacity: 0.6;
+  filter: grayscale(30%);
+}
+
+.task-grid-item.completed {
+  background: linear-gradient(135deg, rgba(245, 163, 199, 0.15), rgba(168, 216, 232, 0.15));
+  border: 1.5px solid rgba(245, 163, 199, 0.3);
+}
+
+/* 廢棄的漫畫風格 - 保留向後相容性（不使用） */
+.cartoon-card {
+  display: contents;
+}
+
+.cartoon-label {
+  display: contents;
+}
+
+.cartoon-button {
+  display: contents;
+}
+
+.cartoon-input {
+  display: contents;
+}
+
+.task-number-badge {
+  display: contents;
+}
