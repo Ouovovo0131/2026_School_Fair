@@ -33,7 +33,20 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
   const [privacyAgreed, setPrivacyAgreed] = useState(false); // 隱私同意狀態
   // userMode: 'select' | 'game' | 'map' | 'game-map'
   // 'game-map' = 從遊戲中進入地圖，返回時回到遊戲畫面
-  const [userMode, setUserMode] = useState<'select' | 'game' | 'map' | 'game-map'>('select');
+  const [userMode, setUserMode] = useState<'select' | 'game' | 'map' | 'game-map'>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('userMode');
+      if (saved === 'game') return 'game'; // 只允許回到 game 模式，其他一律回 select
+    }
+    return 'select';
+  });
+
+  // userMode 變動時同步寫入 localStorage
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('userMode', userMode);
+    }
+  }, [userMode]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -406,18 +419,18 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                     </div>
                     <p className="text-sm mb-4" style={{color: '#6b6b6b', fontWeight: '500'}}>完成所有 20 關即可領取更好的獎品</p>
                     {redeemedRewards.includes(20) ? (
-                      <button disabled className="w-full clay-button-blue" style={{opacity: 0.5}}>
+                      <button disabled className="w-full clay-button clay-button-blue" style={{opacity: 0.5, color: 'white', borderRadius: '20px', padding: '14px 28px', fontSize: '15px', fontWeight: '600'}}>
                         ✅ 已領取
                       </button>
                     ) : completed.length >= 20 ? (
                       <button
                         onClick={() => openRedeemModal(20)}
-                        className="w-full clay-button-blue animate-pulse"
+                        className="w-full clay-button clay-button-blue animate-pulse"
                       >
                         👑 兌換大獎品
                       </button>
                     ) : (
-                      <button disabled className="w-full clay-button-blue" style={{opacity: 0.5}}>
+                      <button disabled className="w-full clay-button clay-button-blue" style={{opacity: 0.5, color: 'white', borderRadius: '20px', padding: '14px 28px', fontSize: '15px', fontWeight: '600'}}>
                         還差 {20 - completed.length} 關
                       </button>
                     )}
