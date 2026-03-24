@@ -31,8 +31,9 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
   const [nickname, setNickname] = useState(""); // 玩家暱稱
   const [showPrivacyModal, setShowPrivacyModal] = useState(false); // 隱私說明模態
   const [privacyAgreed, setPrivacyAgreed] = useState(false); // 隱私同意狀態
-  const [userMode, setUserMode] = useState<'select' | 'game' | 'map'>('select'); // 用戶模式：選擇、遊戲、地圖
-  const [showMapModal, setShowMapModal] = useState(false); // 遊戲中的地圖模態
+  // userMode: 'select' | 'game' | 'map' | 'game-map'
+  // 'game-map' = 從遊戲中進入地圖，返回時回到遊戲畫面
+  const [userMode, setUserMode] = useState<'select' | 'game' | 'map' | 'game-map'>('select');
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -208,9 +209,10 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
             🎪 校慶拾光地圖
           </h1>
           <div className="flex gap-3">
+            {/* 地圖按鈕：在遊戲模式才顯示，點擊後導覽到地圖畫面（可返回遊戲） */}
             {user && userMode === 'game' && (
               <button
-                onClick={() => setShowMapModal(true)}
+                onClick={() => setUserMode('game-map')}
                 className="p-3 rounded-full transition-all active:scale-90 hover:bg-white/30 clay-button-blue flex items-center gap-2 px-4"
                 title="查看地圖"
               >
@@ -318,13 +320,19 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
               </div>
             </div>
           ) : userMode === 'map' ? (
-            // 地圖視圖
+            // 從選擇畫面進入的地圖視圖，返回到選擇畫面
             <MapComponent 
               onBack={() => setUserMode('select')} 
               isModal={false}
             />
+          ) : userMode === 'game-map' ? (
+            // 從遊戲中進入的地圖視圖，返回到遊戲畫面
+            <MapComponent 
+              onBack={() => setUserMode('game')} 
+              isModal={false}
+            />
           ) : (
-            // 登入後的雙欄布局
+            // 登入後的雙欄布局（遊戲模式）
             <div className="flex flex-col lg:flex-row gap-8 px-4 pt-6">
               {/* 左側：玩家卡片、進度條、獎品卡片 */}
               <div className="lg:w-1/3 flex flex-col gap-6">
@@ -470,14 +478,6 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
             </div>
           )}
         </div>
-
-        {/* 遊戲中的地圖模態 */}
-        {showMapModal && (
-          <MapComponent 
-            onBack={() => setShowMapModal(false)} 
-            isModal={true}
-          />
-        )}
 
         {/* 兌換模態 */}
         {showRedeemModal && (
