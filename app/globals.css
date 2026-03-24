@@ -1,25 +1,24 @@
 @import "tailwindcss";
 
 :root {
-  /* Claymorphic 柔和粉彩色調 */
-  --background: #faf8f6;
+  /* 麥當勞獵人主題色調 */
+  --background: #fff7e6;
   --foreground: #2c2c2c;
-  
-  /* 主色調 - Ring Toss 嘉年華系列 */
-  --primary-rose: #f5a3c7;
-  --primary-blue: #a8d8e8;
-  --primary-purple: #d4c5e8;
-  --primary-yellow: #fce8b2;
-  --primary-mint: #c8e8d8;
-  
+  /* 主色調 */
+  --primary-red: #e60012;
+  --primary-yellow: #ffd600;
+  --primary-gold: #ffb300;
+  --primary-blue: #3b8edb;
+  --primary-purple: #a259d9;
+  --primary-brown: #a67b5b;
   /* 深色變體 */
-  --rose-dark: #e8789b;
-  --blue-dark: #7ab8d0;
-  --purple-dark: #b8a5d0;
-  --yellow-dark: #f0d489;
-  --mint-dark: #a8d0b8;
-  
-  /* 中和色 */
+  --red-dark: #b8000a;
+  --yellow-dark: #e6b800;
+  --gold-dark: #c49000;
+  --blue-dark: #2563a6;
+  --purple-dark: #7c3fa0;
+  --brown-dark: #7c5a3a;
+  /* 中性色 */
   --clay-light: #fffaf5;
   --clay-medium: #f5e8e0;
   --clay-dark: #e8d4c4;
@@ -30,13 +29,13 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #1a1a1a;
-    --foreground: #f5f5f5;
-    --clay-light: #2a2a2a;
-    --clay-medium: #3a3a3a;
-    --clay-dark: #4a4a4a;
-    --text-light: #e8e8e8;
-    --text-dark: #f5f5f5;
+    --background: #2c1a00;
+    --foreground: #fff7e6;
+    --clay-light: #3a2a1a;
+    --clay-medium: #5a3a1a;
+    --clay-dark: #7c5a3a;
+    --text-light: #ffe8b2;
+    --text-dark: #fff7e6;
   }
 }
 
@@ -391,15 +390,15 @@ body {
 }
 
 /* 導航欄設計 */
-.premium-nav {
-  background: linear-gradient(135deg, rgba(168, 216, 232, 0.9), rgba(245, 163, 199, 0.9));
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-  color: white;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+.premium-card {
+  background: linear-gradient(135deg, #fff7e6 60%, #ffd600 100%);
+  border-radius: 32px;
+  border: 2.5px solid var(--primary-red);
+  box-shadow: 0 8px 32px rgba(230,0,18,0.08), 0 2px 8px rgba(255,214,0,0.08);
+  padding: 28px 24px;
+  position: relative;
+  overflow: hidden;
 }
-
-/* 模態對話框設計 */
 .modal-overlay {
   background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(5px);
