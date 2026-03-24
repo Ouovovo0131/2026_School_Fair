@@ -48,7 +48,7 @@ html {
 }
 
 body {
-  background: var(--background);
+  background: linear-gradient(135deg, #fff7e6 0%, #ffd600 100%);
   color: var(--foreground);
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
   letter-spacing: 0.3px;
@@ -113,19 +113,19 @@ body {
 
 /* 高級按鈕 */
 .clay-button {
-  padding: 14px 28px;
-  border-radius: 20px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
+  padding: 16px 32px;
+  border-radius: 24px;
+  font-weight: 900;
+  letter-spacing: 1px;
   border: none;
   cursor: pointer;
-  background: linear-gradient(135deg, var(--primary-rose), var(--rose-dark));
-  color: white;
+  background: linear-gradient(90deg, var(--primary-red), var(--primary-yellow));
+  color: #fff;
   position: relative;
   overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 8px 20px rgba(245, 163, 199, 0.3);
-  font-size: 15px;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 6px 18px rgba(230,0,18,0.10);
+  font-size: 18px;
 }
 
 .clay-button::before {
@@ -140,8 +140,8 @@ body {
 }
 
 .clay-button:hover:not(:disabled) {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 35px rgba(245, 163, 199, 0.4);
+  filter: brightness(1.12);
+  box-shadow: 0 12px 32px rgba(255,214,0,0.18);
 }
 
 .clay-button:hover:not(:disabled)::before {
@@ -480,7 +480,7 @@ body {
 
 /* ========== 遊樂感增強效果 ========== */
 
-/* 彈跳動畫 - 遊戲互動感 */
+/* 彼跳動畫 - 遊戲互動感 */
 @keyframes bounce-play {
   0%, 100% { transform: translateY(0) scale(1); }
   50% { transform: translateY(-10px) scale(1.05); }
@@ -585,4 +585,13 @@ body {
 
 .rainbow-animated-border {
   animation: border-rainbow 4s linear infinite;
+}
+
+/* 麥當勞獵人主題標題 */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-weight: 900;
+  color: var(--primary-red);
+  letter-spacing: 1.5px;
+  text-shadow: 0 2px 8px rgba(255,214,0,0.10);
 }
