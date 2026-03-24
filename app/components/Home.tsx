@@ -3,9 +3,10 @@ import { useState, useEffect } from "react";
 import { auth, db } from "@/lib/firebase";
 import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 import { doc, getDoc, setDoc, updateDoc, collection, getDocs, deleteDoc } from "firebase/firestore"; 
-import { Trophy, LogOut, Gift, Stamp, MapPin, Award, X, Settings, Lock } from "lucide-react";
+import { Trophy, LogOut, Gift, Stamp, MapPin, Award, X, Settings, Lock, Map } from "lucide-react";
 import { THEME_NAMES } from "./tasks"; // 引入集中的設定
 import { QUESTS } from "../../constants/quests";
+import MapComponent from "./Map";
 
 const TOTAL_QUESTS = 20;
 const SMALL_REWARD_THRESHOLD = 10; // 10 關領取小獎品
@@ -30,6 +31,8 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
   const [nickname, setNickname] = useState(""); // 玩家暱稱
   const [showPrivacyModal, setShowPrivacyModal] = useState(false); // 隱私說明模態
   const [privacyAgreed, setPrivacyAgreed] = useState(false); // 隱私同意狀態
+  const [userMode, setUserMode] = useState<'select' | 'game' | 'map'>('select'); // 用戶模式：選擇、遊戲、地圖
+  const [showMapModal, setShowMapModal] = useState(false); // 遊戲中的地圖模態
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -205,6 +208,16 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
             🎪 校慶拾光地圖
           </h1>
           <div className="flex gap-3">
+            {user && userMode === 'game' && (
+              <button
+                onClick={() => setShowMapModal(true)}
+                className="p-3 rounded-full transition-all active:scale-90 hover:bg-white/30 clay-button-blue flex items-center gap-2 px-4"
+                title="查看地圖"
+              >
+                <Map className="w-5 h-5" />
+                <span className="hidden sm:inline text-sm font-bold">地圖</span>
+              </button>
+            )}
             {user && (
               <button
                 onClick={() => setShowAdminMode(!showAdminMode)}
@@ -249,6 +262,67 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                 </button>
               </div>
             </div>
+          ) : userMode === 'select' ? (
+            // 流程選擇屏幕
+            <div className="max-w-lg mx-auto" style={{marginTop: '40px'}}>
+              <div className="premium-card clay-shadow-lg p-8">
+                <div style={{textAlign: 'center', marginBottom: '48px'}}>
+                  <div style={{fontSize: '64px', marginBottom: '20px'}}>🎮</div>
+                  <h2 className="text-3xl font-bold mb-2" style={{color: '#3d3d3d'}}>選擇您的旅程</h2>
+                  <p style={{color: '#6b6b6b', fontWeight: '500', fontSize: '16px'}}>
+                    選擇您想要進行的活動
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  {/* 玩遊戲選項 */}
+                  <button
+                    onClick={() => setUserMode('game')}
+                    className="w-full premium-card clay-shadow-md p-6 text-left transition-all hover:shadow-lg clay-float"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(245, 163, 199, 0.15), rgba(212, 197, 232, 0.15))',
+                      border: '2px solid #f5a3c7'
+                    }}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="text-2xl font-bold mb-2" style={{color: '#3d3d3d'}}>🎯 玩遊戲</h3>
+                        <p style={{color: '#6b6b6b', fontWeight: '500', fontSize: '14px'}}>
+                          完成各個任務，蒐集徽章、領取獎品
+                        </p>
+                      </div>
+                      <div style={{fontSize: '48px'}}>▶️</div>
+                    </div>
+                  </button>
+
+                  {/* 查看地圖選項 */}
+                  <button
+                    onClick={() => setUserMode('map')}
+                    className="w-full premium-card clay-shadow-md p-6 text-left transition-all hover:shadow-lg clay-float"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(168, 216, 232, 0.15), rgba(252, 232, 178, 0.15))',
+                      border: '2px solid #a8d8e8'
+                    }}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="text-2xl font-bold mb-2" style={{color: '#3d3d3d'}}>🗺️ 查看地圖</h3>
+                        <p style={{color: '#6b6b6b', fontWeight: '500', fontSize: '14px'}}>
+                          瀏覽校慶園遊會的所有攤位位置
+                        </p>
+                      </div>
+                      <div style={{fontSize: '48px'}}>▶️</div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : userMode === 'map' ? (
+            // 地圖視圖
+            <MapComponent 
+              onBack={() => setUserMode('select')} 
+              isModal={false}
+            />
           ) : (
             // 登入後的雙欄布局
             <div className="flex flex-col lg:flex-row gap-8 px-4 pt-6">
@@ -396,6 +470,14 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
             </div>
           )}
         </div>
+
+        {/* 遊戲中的地圖模態 */}
+        {showMapModal && (
+          <MapComponent 
+            onBack={() => setShowMapModal(false)} 
+            isModal={true}
+          />
+        )}
 
         {/* 兌換模態 */}
         {showRedeemModal && (
@@ -591,6 +673,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                   onClick={() => {
                     if (privacyAgreed) {
                       setShowPrivacyModal(false);
+                      setUserMode('select'); // 進入流程選擇屏幕
                     } else {
                       alert("✅ 請勾選同意框才能繼續");
                     }
