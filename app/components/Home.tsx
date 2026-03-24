@@ -144,7 +144,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
       {/* ── 導航列 ── */}
       <header className="premium-nav sticky top-0 z-10">
         <div className="flex items-center justify-between px-4 h-14">
-          <h1 className="text-lg font-bold truncate" style={{color: '#3d3d3d', maxWidth: '55%'}}>🎪 校慶拾光地圖</h1>
+          <h1 className="text-xl font-black truncate tracking-wide" style={{color: '#3d3d3d', maxWidth: '55%', textShadow: '1px 2px 0px rgba(245,163,199,0.8)'}}>🎪 校慶拾光地圖</h1>
           <div className="flex items-center gap-2 shrink-0">
             {user && userMode === 'game' && (
               <button onClick={() => setUserMode('game-map')}
@@ -176,8 +176,8 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
         {/* 未登入 */}
         {!user ? (
           <div className="premium-card clay-shadow-md mt-10 p-8 text-center">
-            <div className="text-6xl mb-4">🎪</div>
-            <h2 className="text-2xl font-bold mb-2" style={{color: '#3d3d3d'}}>校慶拾光地圖</h2>
+            <div className="text-6xl mb-4 animate-bounce">🎢</div>
+            <h2 className="text-3xl font-black mb-2 tracking-wide" style={{color: '#3d3d3d', textShadow: '2px 2px 0px #f5a3c7'}}>校慶拾光地圖</h2>
             <p className="text-sm mb-6 font-medium" style={{color: '#6b6b6b'}}>完成各個任務，蒐集徽章、領取獎品！</p>
             <button onClick={handleLogin} className="w-full clay-button">🔐 使用 Google 登入</button>
           </div>
@@ -187,8 +187,8 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
           <div className="space-y-3 mt-6">
             <p className="text-center text-sm font-semibold mb-4" style={{color: '#6b6b6b'}}>選擇您想要進行的活動</p>
             <button onClick={() => setUserMode('game')}
-              className="w-full premium-card clay-shadow-sm p-5 flex items-center justify-between transition-all active:scale-[0.98]"
-              style={{border: '2px solid #f5a3c7', background: 'linear-gradient(135deg,rgba(245,163,199,0.12),rgba(212,197,232,0.12))'}}>
+              className="w-full premium-card clay-shadow-sm p-5 flex items-center justify-between transition-all hover:-translate-y-1 active:scale-[0.98] border-b-4"
+              style={{borderColor: '#f5a3c7', background: 'linear-gradient(135deg,rgba(245,163,199,0.2),rgba(212,197,232,0.2))'}}>
               <div className="text-left">
                 <p className="text-base font-bold" style={{color: '#3d3d3d'}}>🎯 玩遊戲</p>
                 <p className="text-xs mt-0.5 font-medium" style={{color: '#6b6b6b'}}>完成任務，蒐集徽章、領取獎品</p>
@@ -196,8 +196,8 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
               <ChevronRight size={20} style={{color: '#f5a3c7', flexShrink: 0}}/>
             </button>
             <button onClick={() => setUserMode('map')}
-              className="w-full premium-card clay-shadow-sm p-5 flex items-center justify-between transition-all active:scale-[0.98]"
-              style={{border: '2px solid #a8d8e8', background: 'linear-gradient(135deg,rgba(168,216,232,0.12),rgba(252,232,178,0.12))'}}>
+              className="w-full premium-card clay-shadow-sm p-5 flex items-center justify-between transition-all hover:-translate-y-1 active:scale-[0.98] border-b-4"
+              style={{borderColor: '#a8d8e8', background: 'linear-gradient(135deg,rgba(168,216,232,0.2),rgba(252,232,178,0.2))'}}>
               <div className="text-left">
                 <p className="text-base font-bold" style={{color: '#3d3d3d'}}>🗺️ 查看地圖</p>
                 <p className="text-xs mt-0.5 font-medium" style={{color: '#6b6b6b'}}>瀏覽校慶園遊會的所有攤位位置</p>
@@ -226,8 +226,16 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                 </div>
               </div>
               {/* 進度條 */}
-              <div className="progress-bar-container">
-                <div className="progress-bar-fill" style={{width: `${pct}%`}}/>
+              <div className="progress-bar-container bg-white/50 rounded-full h-3 overflow-hidden border border-gray-200 mt-2">
+                <div className="progress-bar-fill h-full rounded-full transition-all duration-500" 
+                  style={{
+                    width: `${pct}%`,
+                    background: 'linear-gradient(90deg, #f5a3c7, #a8d8e8)',
+                    backgroundImage: 'linear-gradient(45deg, rgba(255,255,255,0.3) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.3) 75%, transparent 75%, transparent)',
+                    backgroundSize: '1rem 1rem',
+                    animation: 'progress-stripes 2s linear infinite'
+                  }}
+                />
               </div>
               <p className="text-xs text-right mt-1 font-semibold" style={{color: '#6b6b6b'}}>{pct}%</p>
             </div>
@@ -290,8 +298,12 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                   if (!isUnlocked) return (
                     <div key={questId}
                       className="aspect-square rounded-2xl flex flex-col items-center justify-center gap-0.5"
-                      style={{background: 'rgba(0,0,0,0.04)', border: '1.5px solid rgba(0,0,0,0.07)'}}>
-                      <Lock size={14} style={{color: '#bbb'}}/>
+                      style={{
+                        background: 'rgba(0,0,0,0.04)', 
+                        border: '1.5px solid rgba(0,0,0,0.07)',
+                        borderBottom: '4px solid rgba(0,0,0,0.1)'
+                      }}>
+                      <Lock size={16} style={{color: '#bbb'}}/>
                       <span className="text-xs font-bold" style={{color: '#bbb'}}>#{questId}</span>
                     </div>
                   );
@@ -301,18 +313,27 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                   if (isCompleted) return (
                     <div key={questId}
                       className="aspect-square rounded-2xl flex flex-col items-center justify-center gap-0.5 relative"
-                      style={{background: 'linear-gradient(135deg,rgba(245,163,199,0.2),rgba(168,216,232,0.2))', border: '1.5px solid rgba(245,163,199,0.4)'}}>
-                      <span className="text-base font-black" style={{color: '#8fb372'}}>✓</span>
+                      style={{
+                        background: 'linear-gradient(135deg,rgba(245,163,199,0.3),rgba(168,216,232,0.3))', 
+                        border: '1.5px solid rgba(245,163,199,0.5)',
+                        borderBottom: '4px solid rgba(245,163,199,0.6)'
+                      }}>
+                      <span className="text-xl font-black drop-shadow-sm" style={{color: '#d16d99'}}>✓</span>
                       <span className="text-xs font-bold" style={{color: '#6b6b6b'}}>#{questId}</span>
                     </div>
                   );
 
                   return (
                     <a key={questId} href={`/scan/${quest.slug}`}
-                      className="aspect-square rounded-2xl flex flex-col items-center justify-center gap-0.5 transition-all active:scale-95"
-                      style={{background: 'rgba(255,255,255,0.7)', border: '1.5px solid rgba(107,157,198,0.3)'}}>
-                      <span className="text-xs font-bold" style={{color: '#6b9dc6'}}>#{questId}</span>
-                      <span className="text-[10px] font-semibold text-center px-0.5 leading-tight"
+                      className="aspect-square rounded-2xl flex flex-col items-center justify-center gap-0.5 transition-all hover:-translate-y-1 active:scale-95 active:translate-y-0"
+                      style={{
+                        background: 'linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(240,248,255,0.8) 100%)', 
+                        border: '1.5px solid rgba(107,157,198,0.3)',
+                        borderBottom: '4px solid rgba(107,157,198,0.4)',
+                        boxShadow: '0 4px 6px rgba(0,0,0,0.05)'
+                      }}>
+                      <span className="text-sm font-black" style={{color: '#6b9dc6'}}>#{questId}</span>
+                      <span className="text-[10px] font-bold text-center px-0.5 leading-tight text-gray-700"
                         style={{color: '#3d3d3d', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden'}}>
                         {THEME_NAMES[questId] || "任務"}
                       </span>
@@ -343,7 +364,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
             <div className="mb-4">
               <label className="block text-sm font-bold mb-1.5" style={{color: '#3d3d3d'}}>⚠️ 工作人員確認碼</label>
               <input type="text" placeholder="請輸入確認碼" value={redeemConfirmCode}
-                onChange={e => setRedeemConfirmCode(e.target.value)} className="w-full clay-input"/>
+                onChange={e => setRedeemConfirmCode(e.target.value)} className="w-full clay-input text-black font-bold border-2 border-gray-200 focus:border-pink-300"/>
               {redeemError && <p className="text-red-500 text-xs mt-1.5 font-bold">{redeemError}</p>}
             </div>
             <div className="flex gap-2">
@@ -367,7 +388,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
             <input type="text" placeholder="輸入您喜歡的暱稱" value={nickname}
               onChange={e => setNickname(e.target.value)}
               onKeyPress={e => e.key === 'Enter' && handleSaveNickname()}
-              className="w-full clay-input mb-4"/>
+              className="w-full clay-input mb-4 text-black font-bold border-2 border-gray-200 focus:border-blue-300"/>
             <div className="flex gap-2">
               <button onClick={() => setShowNicknameModal(false)}
                 className="flex-1 py-3 rounded-2xl font-bold text-sm border border-gray-200 text-gray-600 hover:bg-gray-50">稍後設定</button>
@@ -426,7 +447,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
               <p className="text-sm font-semibold text-red-700">⚠️ 此操作將清除<strong>所有用戶的遊戲進度</strong>，無法復原！</p>
             </div>
             <input type="password" placeholder="請輸入管理員密碼" value={adminPassword}
-              onChange={e => setAdminPassword(e.target.value)} className="w-full clay-input mb-4"/>
+              onChange={e => setAdminPassword(e.target.value)} className="w-full clay-input mb-4 text-black font-bold border-2 border-red-200 focus:border-red-400"/>
             <div className="flex gap-2">
               <button onClick={() => { setShowAdminMode(false); setAdminPassword(""); }}
                 className="flex-1 py-3 rounded-2xl font-bold text-sm border border-gray-200 text-gray-600 hover:bg-gray-50">取消</button>

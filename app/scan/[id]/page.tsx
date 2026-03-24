@@ -133,14 +133,14 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
         </div>
 
         <div className="text-center relative z-10">
-          <div style={{fontSize: '120px', marginBottom: '20px'}} className="animate-bounce">
-            🎯
+          <div style={{fontSize: '120px', marginBottom: '20px', textShadow: '0 10px 20px rgba(0,0,0,0.1)'}} className="animate-bounce">
+            🎢
           </div>
 
           <h1 className="text-7xl font-black mb-4 tracking-tighter" style={{
             color: '#3d3d3d',
             textShadow: '0 4px 20px rgba(245, 163, 199, 0.3)',
-            marginBottom: '10px'
+            marginBottom: '10px',
           }}>
             任務完成！
           </h1>
@@ -219,10 +219,10 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
         <div className="premium-card clay-shadow-sm p-8">
         
           {/* 標題和類型 */}
-          <div className="flex justify-between items-start mb-6 pb-4" style={{borderBottom: '2px solid rgba(0,0,0,0.06)'}}>
+          <div className="flex justify-between items-start mb-6 pb-4" style={{borderBottom: '4px dashed rgba(245,163,199,0.4)'}}>
             <div>
-              <div className="text-sm font-bold" style={{color: '#a68080', marginBottom: '8px'}}>任務 #{quest.id}</div>
-              <h1 className="text-3xl font-bold" style={{color: '#3d3d3d'}}>《{quest.title}》</h1>
+              <div className="text-sm font-black tracking-widest uppercase" style={{color: '#a68080', marginBottom: '8px'}}>Mission #{quest.id}</div>
+              <h1 className="text-3xl font-black" style={{color: '#3d3d3d', textShadow: '1px 2px 0px rgba(168,216,232,0.8)'}}>《{quest.title}》</h1>
             </div>
             <span className="badge-blue py-2 px-4 text-xs font-bold rounded-full">
               {quest.type === 'quiz' ? '📝 問答題' : '📷 照片'}
@@ -247,7 +247,7 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
               <input 
                 type="text" 
                 placeholder="請輸入選項代號 (如 A, B, C)"
-                className="w-full clay-input text-lg uppercase" 
+                className="w-full clay-input text-lg uppercase text-black font-black border-2 border-blue-200 focus:border-blue-400" 
                 value={answer}
                 onChange={(e) => setAnswer(e.target.value.toUpperCase())}
               />
@@ -262,7 +262,7 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
           ) : (
             <div className="space-y-6">
               {quest.referenceImage && (
-                <div className="premium-card clay-shadow-md overflow-hidden">
+                <div className="premium-card clay-shadow-md overflow-hidden border-4 border-yellow-100">
                   <img src={quest.referenceImage} className="w-full h-auto object-cover" alt="範例" />
                 </div>
               )}
