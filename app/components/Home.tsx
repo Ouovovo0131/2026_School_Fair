@@ -235,7 +235,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
             {/* 獎品區 — 橫排兩張卡 */}
             <div className="grid grid-cols-2 gap-3">
               {/* 小獎品 */}
-              <div className="premium-card clay-shadow-sm p-3 flex flex-col gap-2"
+              <div className={`premium-card clay-shadow-sm p-3 flex flex-col gap-2 ${completed.length >= 10 && !redeemedRewards.includes(10) ? 'reward-available' : ''}`}
                 style={{background: completed.length >= 10 && !redeemedRewards.includes(10)
                   ? 'linear-gradient(135deg,rgba(245,163,199,0.18),rgba(212,197,232,0.18))' : undefined}}>
                 <div className="flex items-center justify-between">
@@ -249,14 +249,14 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                 {redeemedRewards.includes(10) ? (
                   <button disabled className="w-full clay-button !text-xs !py-2 !rounded-2xl" style={{opacity:0.5}}>✅ 已領取</button>
                 ) : completed.length >= 10 ? (
-                  <button onClick={() => openRedeemModal(10)} className="w-full clay-button !text-xs !py-2 !rounded-2xl">🎊 兌換</button>
+                  <button onClick={() => openRedeemModal(10)} className="w-full clay-button !text-xs !py-2 !rounded-2xl animate-pulse">🎊 兌換</button>
                 ) : (
                   <button disabled className="w-full clay-button !text-xs !py-2 !rounded-2xl" style={{opacity:0.5}}>差 {10 - completed.length} 關</button>
                 )}
               </div>
 
               {/* 大獎品 */}
-              <div className="premium-card clay-shadow-sm p-3 flex flex-col gap-2"
+              <div className={`premium-card clay-shadow-sm p-3 flex flex-col gap-2 ${completed.length >= 20 && !redeemedRewards.includes(20) ? 'reward-available' : ''}`}
                 style={{background: completed.length >= 20 && !redeemedRewards.includes(20)
                   ? 'linear-gradient(135deg,rgba(168,216,232,0.18),rgba(252,232,178,0.18))' : undefined}}>
                 <div className="flex items-center justify-between">

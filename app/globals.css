@@ -209,6 +209,7 @@ body {
   font-weight: 500;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  color: #1a1a1a;
 }
 
 .clay-input:focus {
@@ -476,4 +477,113 @@ body {
 
 .task-number-badge {
   display: contents;
+}
+
+/* ========== 遊樂感增強效果 ========== */
+
+/* 彈跳動畫 - 遊戲互動感 */
+@keyframes bounce-play {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-10px) scale(1.05); }
+}
+
+@keyframes bounce-pop {
+  0% { transform: scale(0) rotate(0deg); opacity: 0; }
+  50% { transform: scale(1.15) rotate(10deg); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* 遊戲卡片編號效果 - 類似麥當勞主題 */
+.game-quest-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, var(--primary-rose), var(--rose-dark));
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px rgba(245, 163, 199, 0.4);
+  animation: bounce-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.game-quest-number.blue {
+  background: linear-gradient(135deg, var(--primary-blue), var(--blue-dark));
+  box-shadow: 0 8px 16px rgba(168, 216, 232, 0.4);
+}
+
+.game-quest-number.purple {
+  background: linear-gradient(135deg, var(--primary-purple), var(--purple-dark));
+  box-shadow: 0 8px 16px rgba(212, 197, 232, 0.4);
+}
+
+.game-quest-number.yellow {
+  background: linear-gradient(135deg, var(--primary-yellow), var(--yellow-dark));
+  color: #2c2c2c;
+  box-shadow: 0 8px 16px rgba(252, 232, 178, 0.4);
+}
+
+/* 獎勵通知閃爍 */
+@keyframes reward-glow {
+  0%, 100% { 
+    box-shadow: 0 0 10px rgba(245, 163, 199, 0.4), 0 0 20px rgba(168, 216, 232, 0.2);
+  }
+  50% { 
+    box-shadow: 0 0 25px rgba(245, 163, 199, 0.8), 0 0 40px rgba(168, 216, 232, 0.5);
+  }
+}
+
+.reward-available {
+  animation: reward-glow 1.5s ease-in-out infinite;
+}
+
+/* 遊戲進度里程碑 */
+@keyframes milestone-pop {
+  0% {
+    transform: scale(0) translateY(30px);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+/* 互動按鈕增強 - 遊戲感 */
+.clay-button:active:not(:disabled) {
+  animation: bounce-play 0.4s ease;
+}
+
+/* 完成任務視覺反饋 */
+.task-completed-effect {
+  position: relative;
+}
+
+.task-completed-effect::after {
+  content: '✓';
+  position: absolute;
+  font-size: 24px;
+  font-weight: 900;
+  color: #8fb372;
+  animation: bounce-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 彩色邊框動畫 - Rainbow 效果 */
+@keyframes border-rainbow {
+  0% { border-color: var(--primary-rose); }
+  25% { border-color: var(--primary-purple); }
+  50% { border-color: var(--primary-blue); }
+  75% { border-color: var(--primary-mint); }
+  100% { border-color: var(--primary-rose); }
+}
+
+.rainbow-animated-border {
+  animation: border-rainbow 4s linear infinite;
 }
