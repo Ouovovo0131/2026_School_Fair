@@ -125,6 +125,152 @@ p {
   box-shadow: 0 10px 20px rgba(30, 68, 99, 0.08);
 }
 
+.comic-card {
+  position: relative;
+  border: 4px solid #111111;
+  border-radius: 1rem;
+  box-shadow: 6px 6px 0 #111111;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.comic-card-default {
+  background: #ffffff;
+}
+
+.comic-card-highlight {
+  background: var(--accent-500);
+}
+
+.comic-card-interactive {
+  cursor: pointer;
+}
+
+.comic-card-interactive:hover {
+  transform: translate(-2px, -2px) scale(1.03) rotate(-0.7deg);
+  box-shadow: 9px 9px 0 #111111;
+}
+
+.comic-card-interactive:active {
+  transform: translate(0, 0) scale(0.99);
+  box-shadow: 4px 4px 0 #111111;
+}
+
+.number-sticker {
+  position: absolute;
+  top: -14px;
+  left: -10px;
+  min-width: 3rem;
+  height: 2rem;
+  padding: 0 0.55rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--warning-500);
+  color: #ffffff;
+  border: 3px solid #111111;
+  border-radius: 0.7rem;
+  transform: rotate(-12deg);
+  box-shadow: 3px 3px 0 #111111;
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  z-index: 2;
+}
+
+.quest-card-shell {
+  min-height: 126px;
+  padding: 1.05rem 0.75rem 0.65rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+.quest-card-locked {
+  background: var(--bg-200);
+}
+
+.quest-card-completed {
+  background: var(--secondary-100);
+}
+
+.quest-card-link {
+  text-decoration: none;
+}
+
+.quest-card-link:hover .number-sticker {
+  transform: rotate(-14deg) scale(1.05);
+}
+
+.countdown-board {
+  background: #ffffff;
+  border: 4px solid #111111;
+  border-radius: 1rem;
+  box-shadow: 6px 6px 0 #111111;
+  padding: 1.1rem;
+}
+
+.countdown-title {
+  color: var(--primary-700);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+}
+
+.countdown-live {
+  border: 3px solid #111111;
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+  background: var(--accent-500);
+  color: var(--primary-900);
+  box-shadow: 2px 2px 0 #111111;
+}
+
+.countdown-slot {
+  border: 3px solid #111111;
+  border-radius: 0.9rem;
+  box-shadow: 4px 4px 0 #111111;
+  padding: 0.5rem 0.4rem;
+  text-align: center;
+}
+
+.countdown-slot-primary {
+  background: var(--primary-500);
+  color: #ffffff;
+}
+
+.countdown-slot-accent {
+  background: var(--accent-500);
+  color: var(--primary-900);
+}
+
+.countdown-value {
+  font-size: clamp(1.45rem, 4.2vw, 2rem);
+  line-height: 1;
+  font-weight: 900;
+}
+
+.countdown-label {
+  margin-top: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  opacity: 0.92;
+}
+
+.countdown-finished {
+  margin-top: 0.9rem;
+  border: 3px solid #111111;
+  border-radius: 0.8rem;
+  background: var(--secondary-500);
+  color: #ffffff;
+  box-shadow: 4px 4px 0 #111111;
+  text-align: center;
+  padding: 0.6rem;
+  font-weight: 900;
+}
+
 .clay-shadow-sm {
   box-shadow: 0 6px 16px rgba(30, 68, 99, 0.1);
 }

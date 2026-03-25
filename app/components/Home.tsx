@@ -9,6 +9,8 @@ import { QUESTS } from "../../constants/quests";
 import MapComponent from "./Map";
 import Countdown from "@/app/components/Countdown";
 import Timeline from "@/app/components/Timeline";
+import ComicCard from "@/app/components/ui/ComicCard";
+import NumberBadge from "@/app/components/ui/NumberBadge";
 
 const TOTAL_QUESTS = 20;
 const SMALL_REWARD_THRESHOLD = 10;
@@ -97,22 +99,24 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
 
   const handleRedeemSubmit = async () => {
     if (!redeemConfirmCode.trim()) { setRedeemError("請輸入確認碼"); return; }
+    if (!user?.email) { setRedeemError("使用者資料異常，請重新登入"); return; }
     const smallPassword = process.env.NEXT_PUBLIC_STAFF_SMALL_PASSWORD || "STAFF10";
     const bigPassword = process.env.NEXT_PUBLIC_STAFF_BIG_PASSWORD || "STAFF20";
-    const expectedCode = redeemLevel === 10 ? smallPassword : bigPassword;
+    const expectedCode = redeemLevel === SMALL_REWARD_THRESHOLD ? smallPassword : bigPassword;
     if (redeemConfirmCode.toUpperCase() !== expectedCode) { setRedeemError("❌ 確認碼錯誤"); return; }
     try {
       const userRef = doc(db, "users", user.email);
       const newRedeemedRewards = [...redeemedRewards, redeemLevel!];
       await updateDoc(userRef, { redeemedRewards: newRedeemedRewards });
       setRedeemedRewards(newRedeemedRewards);
-      alert(`🎉 ${redeemLevel === 10 ? "小" : "大"}獎品兌換成功！`);
+      alert(`🎉 ${redeemLevel === SMALL_REWARD_THRESHOLD ? "小" : "大"}獎品兌換成功！`);
       closeRedeemModal();
-    } catch (error) { setRedeemError("連線錯誤，請重試"); }
+    } catch { setRedeemError("連線錯誤，請重試"); }
   };
 
   const handleSaveNickname = async () => {
     if (!nickname.trim()) { alert("請輸入暱稱"); return; }
+    if (!user?.email) { alert("使用者資料異常，請重新登入"); return; }
     try {
       const userRef = doc(db, "users", user.email);
       await updateDoc(userRef, { nickname });
@@ -324,44 +328,44 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
             {/* 獎品區 — 橫排兩張卡 */}
             <div className="grid grid-cols-2 gap-3">
               {/* 小獎品 */}
-              <div className={`premium-card clay-shadow-sm p-3 flex flex-col gap-2 ${completed.length >= 10 && !redeemedRewards.includes(10) ? 'reward-available' : ''}`}
-                style={{background: completed.length >= 10 && !redeemedRewards.includes(10)
+              <div className={`premium-card clay-shadow-sm p-3 flex flex-col gap-2 ${completed.length >= SMALL_REWARD_THRESHOLD && !redeemedRewards.includes(SMALL_REWARD_THRESHOLD) ? 'reward-available' : ''}`}
+                style={{background: completed.length >= SMALL_REWARD_THRESHOLD && !redeemedRewards.includes(SMALL_REWARD_THRESHOLD)
                   ? 'linear-gradient(135deg,rgba(79,70,229,0.18),rgba(34,197,94,0.14))' : undefined}}>
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-bold" style={{color: 'var(--text)'}}>🎁 小獎</span>
                   <span className="text-xs font-bold px-2 py-0.5 rounded-full"
                     style={{background: 'var(--primary)', color: 'white', whiteSpace: 'nowrap'}}>
-                    {completed.length}/10
+                    {completed.length}/{SMALL_REWARD_THRESHOLD}
                   </span>
                 </div>
-                <p className="text-xs" style={{color: 'var(--primary)'}}>完成 10 關領取</p>
-                {redeemedRewards.includes(10) ? (
+                <p className="text-xs" style={{color: 'var(--primary)'}}>完成 {SMALL_REWARD_THRESHOLD} 關領取</p>
+                {redeemedRewards.includes(SMALL_REWARD_THRESHOLD) ? (
                   <button disabled className="w-full clay-button !text-xs !py-2 !rounded-2xl" style={{opacity:0.5}}>✅ 已領取</button>
-                ) : completed.length >= 10 ? (
-                  <button onClick={() => openRedeemModal(10)} className="w-full clay-button !text-xs !py-2 !rounded-2xl animate-pulse">🎊 兌換</button>
+                ) : completed.length >= SMALL_REWARD_THRESHOLD ? (
+                  <button onClick={() => openRedeemModal(SMALL_REWARD_THRESHOLD)} className="w-full clay-button !text-xs !py-2 !rounded-2xl animate-pulse">🎊 兌換</button>
                 ) : (
-                  <button disabled className="w-full clay-button !text-xs !py-2 !rounded-2xl" style={{opacity:0.5}}>差 {10 - completed.length} 關</button>
+                  <button disabled className="w-full clay-button !text-xs !py-2 !rounded-2xl" style={{opacity:0.5}}>差 {SMALL_REWARD_THRESHOLD - completed.length} 關</button>
                 )}
               </div>
 
               {/* 大獎品 */}
-              <div className={`premium-card clay-shadow-sm p-3 flex flex-col gap-2 ${completed.length >= 20 && !redeemedRewards.includes(20) ? 'reward-available' : ''}`}
-                style={{background: completed.length >= 20 && !redeemedRewards.includes(20)
+              <div className={`premium-card clay-shadow-sm p-3 flex flex-col gap-2 ${completed.length >= BIG_REWARD_THRESHOLD && !redeemedRewards.includes(BIG_REWARD_THRESHOLD) ? 'reward-available' : ''}`}
+                style={{background: completed.length >= BIG_REWARD_THRESHOLD && !redeemedRewards.includes(BIG_REWARD_THRESHOLD)
                   ? 'linear-gradient(135deg,rgba(79,70,229,0.18),rgba(34,197,94,0.14))' : undefined}}>
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-bold" style={{color: 'var(--text)'}}>🏆 大獎</span>
                   <span className="text-xs font-bold px-2 py-0.5 rounded-full"
                     style={{background: 'var(--secondary)', color: 'white', whiteSpace: 'nowrap'}}>
-                    {completed.length}/20
+                    {completed.length}/{BIG_REWARD_THRESHOLD}
                   </span>
                 </div>
-                <p className="text-xs" style={{color: 'var(--primary)'}}>完成 20 關領取</p>
-                {redeemedRewards.includes(20) ? (
+                <p className="text-xs" style={{color: 'var(--primary)'}}>完成 {BIG_REWARD_THRESHOLD} 關領取</p>
+                {redeemedRewards.includes(BIG_REWARD_THRESHOLD) ? (
                   <button disabled className="w-full clay-button clay-button-blue !text-xs !py-2 !rounded-2xl" style={{opacity:0.5,color:'white'}}>✅ 已領取</button>
-                ) : completed.length >= 20 ? (
-                  <button onClick={() => openRedeemModal(20)} className="w-full clay-button clay-button-blue !text-xs !py-2 !rounded-2xl animate-pulse" style={{color:'white'}}>👑 兌換</button>
+                ) : completed.length >= BIG_REWARD_THRESHOLD ? (
+                  <button onClick={() => openRedeemModal(BIG_REWARD_THRESHOLD)} className="w-full clay-button clay-button-blue !text-xs !py-2 !rounded-2xl animate-pulse" style={{color:'white'}}>👑 兌換</button>
                 ) : (
-                  <button disabled className="w-full clay-button clay-button-blue !text-xs !py-2 !rounded-2xl" style={{opacity:0.5,color:'white'}}>差 {20 - completed.length} 關</button>
+                  <button disabled className="w-full clay-button clay-button-blue !text-xs !py-2 !rounded-2xl" style={{opacity:0.5,color:'white'}}>差 {BIG_REWARD_THRESHOLD - completed.length} 關</button>
                 )}
               </div>
             </div>
@@ -369,7 +373,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
             {/* 任務格子 */}
             <div className="premium-card clay-shadow-sm p-4">
               <h3 className="text-base font-bold mb-3 px-3 py-2 rounded-lg inline-block" style={{color: 'white', backgroundColor: 'var(--primary)'}}>🎮 任務列表 ({TOTAL_QUESTS} 關)</h3>
-              <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2 mt-4">
+              <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3 mt-4">
                 {Array.from({ length: TOTAL_QUESTS }).map((_, index) => {
                   const questId = index + 1;
                   const quest = QUESTS.find(q => q.id === questId);
@@ -377,51 +381,37 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                   const isUnlocked = unlockedTasks.includes(questId);
 
                   if (!isUnlocked) return (
-                    <div key={questId}
-                      className="aspect-square rounded-2xl flex flex-col items-center justify-center gap-1.5 task-locked-card"
-                      style={{
-                        background: 'var(--surface)', 
-                        border: '1.5px solid var(--surface-soft)',
-                        borderBottom: '4px solid var(--primary)'
-                      }}>
-                      <Lock size={16} style={{color: 'var(--text-muted)'}}/>
-                      <span className="text-[10px] font-bold" style={{color: 'var(--text-muted)'}}>未解鎖</span>
-                    </div>
+                    <ComicCard key={questId} className="quest-card-shell quest-card-locked">
+                      <NumberBadge value={questId} />
+                      <Lock size={17} style={{color: 'var(--text-muted)'}}/>
+                      <span className="text-[11px] font-bold" style={{color: 'var(--text-muted)'}}>未解鎖</span>
+                    </ComicCard>
                   );
 
                   if (!quest) return null;
 
                   if (isCompleted) return (
-                    <div key={questId}
-                      className="aspect-square rounded-2xl flex flex-col items-center justify-center gap-1 relative overflow-hidden"
-                      style={{
-                        background: 'var(--surface)', 
-                        border: '2px solid var(--secondary)',
-                        borderBottom: '4px solid var(--secondary)'
-                      }}>
+                    <ComicCard key={questId} className="quest-card-shell quest-card-completed" highlighted={questId === 4}>
+                      <NumberBadge value={questId} />
                       <span className="text-2xl" style={{animation: 'bounce-pop 0.6s ease'}}>✓</span>
-                      <span className={`game-quest-number text-xs w-6 h-6 flex items-center justify-center`}
-                        style={{fontSize: '11px', width: '28px', height: '28px'}}>
-                        {String(questId).padStart(2, '0')}
+                      <span className="text-[11px] font-bold" style={{color: 'var(--primary-700)'}}>
+                        已完成
                       </span>
-                    </div>
+                    </ComicCard>
                   );
 
                   return (
-                    <a key={questId} href={`/scan/${quest.slug}`}
-                      className="aspect-square rounded-2xl flex flex-col items-center justify-center gap-0.5 transition-all hover:-translate-y-1.5 hover:scale-105 active:scale-95 active:translate-y-0 relative overflow-hidden group"
-                      style={{
-                        background: 'var(--surface)', 
-                        border: '2px solid var(--primary)',
-                        borderBottom: '4px solid var(--primary)'
-                      }}>
-                      <div className="game-quest-number blue text-xs" style={{fontSize: '16px', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                        {String(questId).padStart(2, '0')}
-                      </div>
-                      <span className="text-[9px] font-bold text-center px-1 leading-tight"
-                        style={{color: 'var(--text)', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden', maxWidth: '90%'}}>
-                        {THEME_NAMES[questId] || "任務"}
-                      </span>
+                    <a key={questId} href={`/scan/${quest.slug}`} className="quest-card-link">
+                      <ComicCard className="quest-card-shell" highlighted={questId === 4}>
+                        <NumberBadge value={questId} />
+                        <p className="text-lg font-black text-[var(--primary-700)] leading-none">
+                          GO
+                        </p>
+                        <span className="text-[10px] font-bold text-center px-1 leading-tight"
+                          style={{color: 'var(--text)', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden', maxWidth: '90%'}}>
+                          {THEME_NAMES[questId] || "任務"}
+                        </span>
+                      </ComicCard>
                     </a>
                   );
                 })}
