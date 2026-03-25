@@ -1,29 +1,43 @@
 @import "tailwindcss";
 
 :root {
-  /* 蔚藍色主題 - Adobe推薦的現代互補色方案 */
-  --background: #ffffff;  /* 純白背景 - 清爽明亮 */
-  --foreground: #0d47a1;  /* 深藍昏暗精確度 */
-  /* 主色調 - 蔚藍色系 */
-  --primary-red: #0288d1;   /* 明亮蔚藍 */
-  --primary-yellow: #ff6b6b; /* 補色：珊瑚紅（互補色原則） */
-  --primary-gold: #1abc9c;   /* 綠松石強調色 */
-  --primary-blue: #0288d1;   /* 主蔚藍色 */
-  --primary-purple: #7c3aed;  /* 紫羅蘭強調 */
-  --primary-brown: #64b5f6;   /* 淡藍色背景 */
-  /* 深色變體 - 保持高對比度 */
-  --red-dark: #0277bd;
-  --yellow-dark: #ff5252;
-  --gold-dark: #0288d1;
-  --blue-dark: #0277bd;
-  --purple-dark: #6a1b9a;
-  --brown-dark: #42a5f5;
-  /* 中性色 - 清爽灰白系 */
-  --clay-light: #f5f5f5;  /* 淺灰 */
-  --clay-medium: #e8eef7; /* 淡藍灰 */
-  --clay-dark: #cfd8e3;   /* 中灰 */
-  --text-light: #1565c0;  /* 深藍文字 */
-  --text-dark: #0d47a1;   /* 暗藍文字 */
+  /* 主背景 - 暖米白，取代冷白 */
+  --background: #FFFBF5;
+
+  /* 主色 - 熱情橘紅 */
+  --primary-red:    #E8401C;
+  --red-dark:       #CC2900;
+  --red-light:      #FFE8E2;
+
+  /* 強調色 - 節慶金黃 */
+  --primary-yellow: #F7A600;
+  --yellow-dark:    #C47800;
+  --yellow-light:   #FFF5DC;
+
+  /* 完成色 - 活力草綠 */
+  --primary-gold:   #3AAD5E;
+  --gold-dark:      #1A6B35;
+  --gold-light:     #E2F5E9;
+
+  /* 次要色 - 繽紛紫 */
+  --primary-purple: #9B5DE5;
+  --purple-dark:    #5A1EA0;
+  --purple-light:   #F0E8FF;
+
+  /* 輔助色 - 天空藍 */
+  --primary-blue:   #00B4D8;
+  --blue-dark:      #006B82;
+  --blue-light:     #E0F7FB;
+
+  /* 中性色 */
+  --clay-light:  #F5EFE0;
+  --clay-medium: #E8D9BC;
+  --clay-dark:   #C8B490;
+
+  /* 文字色 */
+  --text-dark:      #3D2000;  /* 深暖棕，主標題 */
+  --text-secondary: #8B6010;  /* 輔助文字 */
+  --text-light:     #B8916A;  /* 次要說明 */
 }
 
 
@@ -39,8 +53,7 @@
   }
 
   body {
-    background: linear-gradient(135deg, #0d1b2a 0%, #1b2d42 100%);
-    color: var(--foreground);
+    background: linear-gradient(160deg, #FFFBF5 0%, #FFF5E0 50%, #FFF0F5 100%);
   }
 
   /* 暗黑模式下的卡片對比度提升 */
@@ -87,7 +100,7 @@ html {
 }
 
 body {
-  background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
+  background: linear-gradient(160deg, #FFFBF5 0%, #FFF5E0 50%, #FFF0F5 100%);
   color: var(--foreground);
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
   letter-spacing: 0.3px;
@@ -366,11 +379,11 @@ body {
 }
 
 .progress-bar-fill {
-  background: linear-gradient(90deg, #2A52BE, #FFBF00, #FF7F50);  /* 寶石藍→琥珀金→珊瑚橘 */
+  background: linear-gradient(90deg, #E8401C, #F7A600, #3AAD5E);  /* 熱情橘紅→節慶金黃→活力草綠 */
   height: 10px;
   border-radius: 20px;
   transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 0 12px rgba(255, 191, 0, 0.5), 0 0 4px rgba(42, 82, 190, 0.20);
+  box-shadow: 0 0 12px rgba(232, 64, 28, 0.5), 0 0 4px rgba(247, 166, 0, 0.20);
 }
 
 .progress-bar-fill::after {
@@ -418,11 +431,10 @@ body {
 
 /* 導航欄設計 */
 .premium-card {
-  background: linear-gradient(135deg, #ffffff 60%, #f0f4ff 100%);
+  background: linear-gradient(135deg, #ffffff 60%, #FFF5DC 100%);
   border-radius: 32px;
-  border: 2.5px solid #0288d1;  /* 蔚藍邊框 */
-  box-shadow: 0 8px 32px rgba(2, 136, 209, 0.15), 0 2px 8px rgba(26, 188, 156, 0.10);
-
+  border: 1.5px solid rgba(232, 64, 28, 0.12);  /* 熱情橘紅邊框 */
+  box-shadow: 0 8px 32px rgba(232, 64, 28, 0.08);
   padding: 28px 24px;
   position: relative;
   overflow: hidden;
@@ -827,13 +839,13 @@ h1, h2, h3, h4, h5, h6 {
   animation: float-cloud 6s ease-in-out infinite;
 }
 
-/* Hero 標題 - 高對比度設計 */
+/* Hero 標題 - 園遊會熱情風格 */
 .hero-title {
-  color: #0288d1;  /* 明亮蔚藍色 - 高可讀性 */
+  color: #CC2900;  /* 熱情橘紅-深 */
   font-size: 3.5rem;
   font-weight: 900;
   letter-spacing: 2px;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);  /* 輕微陰影增加深度 */
+  text-shadow: 0 2px 8px rgba(232, 64, 28, 0.15);  /* 橘紅陰影 */
   animation: hero-title-subtle 3s ease-in-out infinite;
 }
 

@@ -130,7 +130,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
   };
 
   if (loading) return (
-    <div className="min-h-screen flex items-center justify-center" style={{background: 'linear-gradient(180deg, #d4e5f0 0%, #f5ede0 100%)'}}>
+    <div className="min-h-screen flex items-center justify-center" style={{background: 'linear-gradient(180deg, #FFF5DC 0%, #FFFBF5 100%)'}}>
       <span className="text-base font-semibold" style={{color: '#6b6b6b'}}>載入中…</span>
     </div>
   );
@@ -142,7 +142,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
   if (userMode === 'game-map') return <MapComponent onBack={() => setUserMode('game')} isModal={false} />;
 
   return (
-    <div className="min-h-screen" style={{background: 'linear-gradient(180deg, #d4e5f0 0%, #f5ede0 60%, #e8dcc8 100%)'}}>
+    <div className="min-h-screen" style={{background: 'linear-gradient(180deg, #FFF5DC 0%, #FFFBF5 50%, #FFE8E2 100%)'}}>
 
       {/* ── 導航列 ── */}
       <header className="sticky-header">
