@@ -57,9 +57,9 @@
 .navy-bg {
   background: var(--palette-navy);
 }
-.red-bg {
+
+red-bg {
   background: var(--palette-red);
-}
 }
 
 
