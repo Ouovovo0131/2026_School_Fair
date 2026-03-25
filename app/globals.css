@@ -1,54 +1,65 @@
 @import "tailwindcss";
 
 :root {
-  /* ========== 10 種主題顏色 ========== */
-  
-  /* 藍色系（文字・標題用） */
-  --color-navy:       #000080;  /* 深藍 - 主文字色 */
-  --color-sky:        #5DADE2;  /* 淡蓝 - 標題背景 */
-  --color-cobalt:     #0047AB;  /* 蓝色 - 次文字色 */
-  --color-light-blue: #ADD8E6;  /* 浅灰蓝 - 背景色 */
-  --color-cyan:       #00CED1;  /* 深青蓝 - 強調色 */
-  
-  /* 暖色系（背景・框線用） */
-  --color-slate:      #2C3E50;  /* 深藍灰 - 深色背景 */
-  --color-cream:      #FFF8DC;  /* 淡黃 - 淺色背景 */
-  --color-gold:       #FFD700;  /* 黃金 - 完成狀態 */
-  --color-orange:     #FF8C00;  /* 橙色 - 進行中 */
-  --color-maroon:     #8B0000;  /* 深紅 - 重點提示 */
-  
-  /* 對應舊變數（向後相容） */
-  --background: #FFF8DC;
-  
-  --primary-red:      #FF8C00;
-  --red-dark:         #8B0000;
-  --red-light:        #FFF8DC;
-  
-  --primary-yellow:   #FFD700;
-  --yellow-dark:      #CC8800;
-  --yellow-light:     #FFF8DC;
-  
-  --primary-gold:     #FFD700;
-  --gold-dark:        #CC8800;
-  --gold-light:       #FFF8DC;
-  
-  --primary-purple:   #5DADE2;
-  --purple-dark:      #0047AB;
-  --purple-light:     #ADD8E6;
-  
-  --primary-blue:     #00CED1;
-  --blue-dark:        #000080;
-  --blue-light:       #ADD8E6;
-  
-  /* 中性色 */
-  --clay-light:  #FFF8DC;
-  --clay-medium: #ADD8E6;
-  --clay-dark:   #2C3E50;
-  
-  /* 文字色 */
-  --text-dark:      #000080;  /* 深藍 - 主標題 */
-  --text-secondary: #0047AB;  /* 蓝色 - 輔助文字 */
-  --text-light:     #5DADE2;  /* 淡蓝 - 次要說明 */
+  /* 2026 校園獵人專用色票（僅用下列 10 色） */
+  --palette-blue-1: #6fd3ff;
+  --palette-blue-2: #001e62;
+  --palette-blue-3: #0062ff;
+  --palette-blue-4: #aee6ff;
+  --palette-blue-5: #00b2e3;
+  --palette-navy: #18344a;
+  --palette-cream: #fff9e3;
+  --palette-yellow: #ffd600;
+  --palette-orange: #ff9000;
+  --palette-red: #d13a1f;
+  /* 其他顏色嚴禁使用 */
+  --background: var(--palette-cream);
+  --text-main: var(--palette-navy);
+  --text-accent: var(--palette-blue-3);
+  --text-invert: #fff;
+}
+
+/* 通用粗邊、陰影、斜角標籤、點陣背景 */
+.thick-border {
+  border: 4px solid #000;
+  box-shadow: 4px 4px 0 0 var(--palette-navy);
+}
+.shadow-title {
+  text-shadow: 2px 2px 0 #000, 4px 4px 0 var(--palette-navy);
+}
+.angled-label {
+  display: inline-block;
+  background: var(--palette-red);
+  color: #fff;
+  font-weight: bold;
+  padding: 0.2em 0.8em;
+  border-radius: 4px;
+  transform: skew(-12deg);
+  box-shadow: 2px 2px 0 #000;
+  font-size: 1.1em;
+  letter-spacing: 0.05em;
+}
+.dotted-bg {
+  background: repeating-radial-gradient(circle, #d9d9d9 0 1px, transparent 1px 20px);
+}
+.cream-bg {
+  background: var(--palette-cream);
+}
+.yellow-bg {
+  background: var(--palette-yellow);
+}
+.orange-bg {
+  background: var(--palette-orange);
+}
+.blue-bg {
+  background: var(--palette-blue-1);
+}
+.navy-bg {
+  background: var(--palette-navy);
+}
+.red-bg {
+  background: var(--palette-red);
+}
 }
 
 
