@@ -185,7 +185,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
               <div
                 className="absolute inset-0"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(230, 0, 18, 0.08) 0%, rgba(255, 214, 0, 0.08) 50%, rgba(59, 142, 219, 0.08) 100%)'
+                  background: 'linear-gradient(135deg, rgba(232, 64, 28, 0.08) 0%, rgba(247, 166, 0, 0.08) 50%, rgba(58, 173, 94, 0.08) 100%)'
                 }}
               />
 
@@ -231,7 +231,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                   key={idx}
                   className="premium-card clay-shadow-sm p-3 text-center"
                   style={{
-                    background: 'linear-gradient(135deg, rgba(255,255,255,0.5), rgba(240,248,255,0.3))'
+                    background: 'linear-gradient(135deg, rgba(255,255,255,0.5), rgba(255,245,220,0.3))'
                   }}
                 >
                   <div className="text-3xl mb-1">{item.icon}</div>
@@ -255,21 +255,21 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
             <p className="text-center text-sm font-semibold mb-4" style={{color: '#6b6b6b'}}>選擇您想要進行的活動</p>
             <button onClick={() => setUserMode('game')}
               className="w-full premium-card clay-shadow-sm p-5 flex items-center justify-between transition-all hover:-translate-y-1 active:scale-[0.98] border-b-4"
-              style={{borderColor: '#f5a3c7', background: 'linear-gradient(135deg,rgba(245,163,199,0.2),rgba(212,197,232,0.2))'}}>
+              style={{borderColor: '#E8401C', background: 'linear-gradient(135deg,rgba(232,64,28,0.2),rgba(247,166,0,0.2))'}}>
               <div className="text-left">
                 <p className="text-base font-bold" style={{color: '#3d3d3d'}}>🎯 玩遊戲</p>
                 <p className="text-xs mt-0.5 font-medium" style={{color: '#6b6b6b'}}>完成任務，蒐集徽章、領取獎品</p>
               </div>
-              <ChevronRight size={20} style={{color: '#f5a3c7', flexShrink: 0}}/>
+              <ChevronRight size={20} style={{color: '#E8401C', flexShrink: 0}}/>
             </button>
             <button onClick={() => setUserMode('map')}
               className="w-full premium-card clay-shadow-sm p-5 flex items-center justify-between transition-all hover:-translate-y-1 active:scale-[0.98] border-b-4"
-              style={{borderColor: '#a8d8e8', background: 'linear-gradient(135deg,rgba(168,216,232,0.2),rgba(252,232,178,0.2))'}}>
+              style={{borderColor: '#F7A600', background: 'linear-gradient(135deg,rgba(247,166,0,0.2),rgba(58,173,94,0.2))'}}>
               <div className="text-left">
                 <p className="text-base font-bold" style={{color: '#3d3d3d'}}>🗺️ 查看地圖</p>
                 <p className="text-xs mt-0.5 font-medium" style={{color: '#6b6b6b'}}>瀏覽校慶園遊會的所有攤位位置</p>
               </div>
-              <ChevronRight size={20} style={{color: '#a8d8e8', flexShrink: 0}}/>
+              <ChevronRight size={20} style={{color: '#F7A600', flexShrink: 0}}/>
             </button>
           </div>
 
@@ -280,7 +280,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
             <div className="premium-card clay-shadow-sm p-4">
               <div className="flex items-center gap-3 mb-3">
                 {user.photoURL
-                  ? <img src={user.photoURL} alt="頭像" className="w-11 h-11 rounded-full object-cover shrink-0" style={{border: '2px solid #a8d8e8'}}/>
+                  ? <img src={user.photoURL} alt="頭像" className="w-11 h-11 rounded-full object-cover shrink-0" style={{border: '2px solid #E8401C'}}/>
                   : <div className="w-11 h-11 rounded-full flex items-center justify-center text-xl shrink-0" style={{background: 'linear-gradient(135deg,#6b9dc6,#a67b5b)',color:'white'}}>🦆</div>
                 }
                 <div className="min-w-0">
@@ -297,7 +297,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                 <div className="progress-bar-fill h-full rounded-full transition-all duration-500" 
                   style={{
                     width: `${pct}%`,
-                    background: 'linear-gradient(90deg, #f5a3c7, #a8d8e8)',
+                    background: 'linear-gradient(90deg, #E8401C, #F7A600, #3AAD5E)',
                     backgroundImage: 'linear-gradient(45deg, rgba(255,255,255,0.3) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.3) 75%, transparent 75%, transparent)',
                     backgroundSize: '1rem 1rem',
                     animation: 'progress-stripes 2s linear infinite'
@@ -316,7 +316,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-bold" style={{color: '#3d3d3d'}}>🎁 小獎</span>
                   <span className="text-xs font-bold px-2 py-0.5 rounded-full"
-                    style={{background: '#f5a3c7', color: 'white', whiteSpace: 'nowrap'}}>
+                  <div style={{background: '#E8401C', color: 'white', whiteSpace: 'nowrap'}}>
                     {completed.length}/10
                   </span>
                 </div>
@@ -333,11 +333,11 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
               {/* 大獎品 */}
               <div className={`premium-card clay-shadow-sm p-3 flex flex-col gap-2 ${completed.length >= 20 && !redeemedRewards.includes(20) ? 'reward-available' : ''}`}
                 style={{background: completed.length >= 20 && !redeemedRewards.includes(20)
-                  ? 'linear-gradient(135deg,rgba(168,216,232,0.18),rgba(252,232,178,0.18))' : undefined}}>
+                  ? 'linear-gradient(135deg,rgba(247,166,0,0.18),rgba(58,173,94,0.18))' : undefined}}>
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-bold" style={{color: '#3d3d3d'}}>🏆 大獎</span>
                   <span className="text-xs font-bold px-2 py-0.5 rounded-full"
-                    style={{background: '#a8d8e8', color: 'white', whiteSpace: 'nowrap'}}>
+                    style={{background: '#F7A600', color: 'white', whiteSpace: 'nowrap'}}>
                     {completed.length}/20
                   </span>
                 </div>
@@ -398,10 +398,10 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                     <a key={questId} href={`/scan/${quest.slug}`}
                       className="aspect-square rounded-2xl flex flex-col items-center justify-center gap-0.5 transition-all hover:-translate-y-1.5 hover:scale-105 active:scale-95 active:translate-y-0 relative overflow-hidden group"
                       style={{
-                        background: 'linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(240,248,255,0.85) 100%)', 
-                        border: '2px solid rgba(107,157,198,0.4)',
-                        borderBottom: '4px solid rgba(107,157,198,0.5)',
-                        boxShadow: '0 6px 12px rgba(107,157,198,0.15)'
+                        background: 'linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,245,220,0.85) 100%)', 
+                        border: '2px solid rgba(232,64,28,0.4)',
+                        borderBottom: '4px solid rgba(232,64,28,0.5)',
+                        boxShadow: '0 6px 12px rgba(232,64,28,0.15)'
                       }}>
                       <div className="game-quest-number blue text-xs" style={{fontSize: '16px', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                         {String(questId).padStart(2, '0')}

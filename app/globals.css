@@ -60,12 +60,12 @@
   .premium-card,
   .clay-card {
     background: linear-gradient(135deg, rgba(30, 45, 61, 0.85), rgba(38, 56, 73, 0.85)) !important;
-    border-color: rgba(2, 136, 209, 0.45) !important;
+    border-color: rgba(232, 64, 28, 0.45) !important;
   }
 
   /* 暗黑模式下的按鈕可見性 */
   .clay-button {
-    box-shadow: 0 12px 32px rgba(2, 136, 209, 0.5);
+    box-shadow: 0 12px 32px rgba(232, 64, 28, 0.5);
   }
 
   /* 悬浮提示在暗黑模式下更清晰 */
@@ -76,8 +76,8 @@
 
   /* 進度條暗黑模式優化 */
   .progress-bar-container {
-    background: rgba(2, 136, 209, 0.15);
-    box-shadow: 0 0 0 2px rgba(2, 136, 209, 0.5), 0 2px 8px rgba(26, 188, 156, 0.10);
+    background: rgba(232, 64, 28, 0.15);
+    box-shadow: 0 0 0 2px rgba(232, 64, 28, 0.5), 0 2px 8px rgba(247, 166, 0, 0.10);
   }
 
   /* Hero title 在暗黑模式下的可見性 */
@@ -176,7 +176,7 @@ body {
   position: relative;
   overflow: hidden;
   transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 6px 18px rgba(0,153,204,0.15);
+  box-shadow: 0 6px 18px rgba(232, 64, 28, 0.18);
   font-size: 18px;
 }
 
@@ -193,7 +193,7 @@ body {
 
 .clay-button:hover:not(:disabled) {
   filter: brightness(1.08);
-  box-shadow: 0 12px 32px rgba(2, 136, 209, 0.35);
+  box-shadow: 0 12px 32px rgba(232, 64, 28, 0.35);
   transform: translateY(-2px);
 }
 
@@ -203,7 +203,7 @@ body {
 
 .clay-button:active:not(:disabled) {
   transform: translateY(0);
-  box-shadow: 0 4px 12px rgba(2, 136, 209, 0.25);
+  box-shadow: 0 4px 12px rgba(232, 64, 28, 0.25);
 }
 
 .clay-button:disabled {
@@ -213,36 +213,36 @@ body {
 
 /* 按鈕變體 - 拾光主題配色 */
 .clay-button-blue {
-  background: linear-gradient(135deg, #FFBF00, #FF9500);  /* 琥珀金漸層 */
-  color: #333333;  /* 深色文字 - 高對比 */
-  box-shadow: 0 8px 20px rgba(255, 191, 0, 0.30);
+  background: linear-gradient(135deg, #E8401C, #F7A600);  /* 熱橙紅→節慶金黃 */
+  color: #fff;  /* 白色文字 */
+  box-shadow: 0 8px 20px rgba(232, 64, 28, 0.30);
 }
 
 .clay-button-blue:hover:not(:disabled) {
-  box-shadow: 0 15px 35px rgba(255, 191, 0, 0.50);
-  background: linear-gradient(135deg, #FFBF00, #FF8C00);
+  box-shadow: 0 15px 35px rgba(232, 64, 28, 0.50);
+  background: linear-gradient(135deg, #CC2900, #E8401C);
 }
 
 .clay-button-purple {
-  background: linear-gradient(135deg, #FF7F50, #FF6347);  /* 珊瑚橘漸層 */
+  background: linear-gradient(135deg, #F7A600, #3AAD5E);  /* 節慶金黃→活力草綠 */
   color: #fff;
-  box-shadow: 0 8px 20px rgba(255, 127, 80, 0.30);
+  box-shadow: 0 8px 20px rgba(247, 166, 0, 0.30);
 }
 
 .clay-button-purple:hover:not(:disabled) {
-  box-shadow: 0 15px 35px rgba(255, 127, 80, 0.50);
-  background: linear-gradient(135deg, #FF7F50, #FF4500);
+  box-shadow: 0 15px 35px rgba(247, 166, 0, 0.50);
+  background: linear-gradient(135deg, #E8401C, #2A8E5A);
 }
 
 .clay-button-yellow {
-  background: linear-gradient(135deg, #1B4332, #2A52BE);  /* 學院深綠→寶石藍 */
+  background: linear-gradient(135deg, #3AAD5E, #E8401C);  /* 活力草綠→熱橙紅 */
   color: #fff;
-  box-shadow: 0 8px 20px rgba(27, 67, 50, 0.30);
+  box-shadow: 0 8px 20px rgba(58, 173, 94, 0.30);
 }
 
 .clay-button-yellow:hover:not(:disabled) {
-  box-shadow: 0 15px 35px rgba(42, 82, 190, 0.50);
-  background: linear-gradient(135deg, #0F2818, #1a3a7f);
+  box-shadow: 0 15px 35px rgba(58, 173, 94, 0.50);
+  background: linear-gradient(135deg, #2A8E5A, #CC2900);
 }
 
 .clay-button-lg {
@@ -307,8 +307,8 @@ body {
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(2, 136, 209, 0.4); }
-  50% { box-shadow: 0 0 40px rgba(26, 188, 156, 0.7); }
+  0%, 100% { box-shadow: 0 0 20px rgba(232, 64, 28, 0.4); }
+  50% { box-shadow: 0 0 40px rgba(58, 173, 94, 0.7); }
 }
 
 @keyframes shimmer {
@@ -318,10 +318,10 @@ body {
 
 /* 專用卡片設計 */
 .premium-card {
-  background: linear-gradient(135deg, #ffffff 95%, #f0f4ff 100%);
+  background: linear-gradient(135deg, #ffffff 95%, #FDFBF7 100%);
   backdrop-filter: blur(20px);
   border-radius: 28px;
-  border: 1.5px solid rgba(2, 136, 209, 0.15);  /* 蔚藍邊框 */
+  border: 1.5px solid rgba(232, 64, 28, 0.15);  /* 熱橙紅邊框 */
   padding: 24px;
   position: relative;
   overflow: hidden;
@@ -354,9 +354,9 @@ body {
 }
 
 .ring-rose { border-color: #ff6b6b; }  /* 珊瑚紅 */
-.ring-blue { border-color: #0288d1; }  /* 蔚藍 */
+.ring-blue { border-color: #E8401C; }  /* 熱橙紅 */
 .ring-purple { border-color: #7c3aed; }  /* 紫羅蘭 */
-.ring-yellow { border-color: #1abc9c; }  /* 綠松石 */
+.ring-yellow { border-color: #F7A600; }  /* 節慶金黃 */
 .ring-mint { border-color: var(--primary-mint); }
 
 /* 3D 深度效果 */
@@ -375,7 +375,7 @@ body {
   border-radius: 20px;
   padding: 3px;
   overflow: hidden;
-  box-shadow: 0 0 0 2px #2A52BE, 0 2px 8px rgba(42, 82, 190, 0.12);
+  box-shadow: 0 0 0 2px #E8401C, 0 2px 8px rgba(232, 64, 28, 0.12);
 }
 
 .progress-bar-fill {
@@ -399,10 +399,10 @@ body {
 
 /* 彩色徽章系統 - 現代互補色方案 */
 .badge-rose, .badge-blue, .badge-purple, .badge-yellow, .badge-mint {
-  background: linear-gradient(135deg, #0288d1, #1abc9c, #00d4ff);
+  background: linear-gradient(135deg, #E8401C, #F7A600, #3AAD5E);
   color: #fff;
-  border: 2px solid #0288d1;
-  box-shadow: 0 2px 8px rgba(2, 136, 209, 0.25);
+  border: 2px solid #E8401C;
+  box-shadow: 0 2px 8px rgba(232, 64, 28, 0.25);
 }
 
 /* 完成效果 - 3D 印章 */
@@ -473,8 +473,8 @@ body {
 .task-grid-item {
   border-radius: 24px;
   background: linear-gradient(135deg, #ffffff 95%, #FDFBF7 100%);
-  border: 2.5px solid #2A52BE;  /* 寶石藍邊框 */
-  box-shadow: 0 4px 16px rgba(42, 82, 190, 0.12), 0 2px 8px rgba(255, 191, 0, 0.08);
+  border: 2.5px solid #E8401C;  /* 熱橙紅邊框 */
+  box-shadow: 0 4px 16px rgba(232, 64, 28, 0.12), 0 2px 8px rgba(247, 166, 0, 0.08);
   padding: 20px;
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
@@ -483,8 +483,8 @@ body {
 
 .task-grid-item:hover {
   transform: translateY(-8px);
-  border-color: rgba(255, 255, 255, 0.6);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  border-color: rgba(232, 64, 28, 0.8);
+  box-shadow: 0 15px 40px rgba(232, 64, 28, 0.15);
 }
 
 .task-grid-item.locked {
@@ -651,13 +651,13 @@ body {
   animation: border-rainbow 4s linear infinite;
 }
 
-/* 標題樣式 - 清晰高對比度 */
+/* 標題樣式 - 園遊會熱情風格 */
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
   font-weight: 900;
-  color: #0288d1;  /* 明亮蔚藍 */
+  color: #CC2900;  /* 熱情橙紅 */
   letter-spacing: 1.5px;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);  /* 極淡陰影 */
+  text-shadow: 0 2px 4px rgba(232, 64, 28, 0.1);  /* 橙紅陰影 */
 }
 
 /* 任務卡片 - 未解鎖狀態增強 */
@@ -769,10 +769,10 @@ h1, h2, h3, h4, h5, h6 {
 /* 脈動光暈 - Hero Section */
 @keyframes hero-pulse {
   0%, 100% {
-    box-shadow: 0 0 30px rgba(2, 136, 209, 0.3);
+    box-shadow: 0 0 30px rgba(232, 64, 28, 0.3);
   }
   50% {
-    box-shadow: 0 0 60px rgba(26, 188, 156, 0.5), 0 0 90px rgba(2, 136, 209, 0.2);
+    box-shadow: 0 0 60px rgba(58, 173, 94, 0.5), 0 0 90px rgba(232, 64, 28, 0.2);
   }
 }
 
@@ -818,9 +818,9 @@ h1, h2, h3, h4, h5, h6 {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle at 20% 50%, rgba(2, 136, 209, 0.08) 0%, transparent 50%),
-              radial-gradient(circle at 80% 80%, rgba(26, 188, 156, 0.08) 0%, transparent 50%),
-              radial-gradient(circle at 40% 80%, rgba(255, 107, 107, 0.05) 0%, transparent 50%);
+  background: radial-gradient(circle at 20% 50%, rgba(232, 64, 28, 0.08) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(58, 173, 94, 0.08) 0%, transparent 50%),
+              radial-gradient(circle at 40% 80%, rgba(247, 166, 0, 0.05) 0%, transparent 50%);
   animation: bg-shift 20s ease-in-out infinite;
   pointer-events: none;
 }
@@ -913,9 +913,9 @@ h1, h2, h3 {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(240, 244, 255, 0.95) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 245, 220, 0.95) 100%);
   backdrop-filter: blur(10px);
-  border-bottom: 2px solid rgba(2, 136, 209, 0.12);
+  border-bottom: 2px solid rgba(232, 64, 28, 0.12);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 

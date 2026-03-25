@@ -73,7 +73,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
           ? "fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 overflow-y-auto"
           : "min-h-screen"
       }
-      style={!isModal ? { background: "linear-gradient(180deg, #d4e5f0 0%, #f5ede0 50%, #e8dcc8 100%)" } : {}}
+      style={!isModal ? { background: "linear-gradient(180deg, #FFF5DC 0%, #FFFBF5 50%, #FFE8E2 100%)" } : {}}
     >
       <div className={isModal ? "w-full max-w-5xl bg-white rounded-2xl shadow-xl overflow-hidden" : ""}>
 
@@ -165,8 +165,8 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                         width={box.w}
                         height={box.h}
                         rx="3"
-                        fill={isSelected ? "rgba(168,216,232,0.55)" : isHovered ? "rgba(168,216,232,0.35)" : "rgba(255,255,255,0.6)"}
-                        stroke={isSelected ? "#4a90d9" : "#7b5fdb"}
+                        fill={isSelected ? "rgba(232,64,28,0.55)" : isHovered ? "rgba(247,166,0,0.35)" : "rgba(255,255,255,0.7)"}
+                        stroke={isSelected ? "#E8401C" : "#F7A600"}
                         strokeWidth={isSelected ? 3.5 : 2.5}
                         style={{ cursor: "pointer", transition: "all 0.15s" }}
                         onClick={() => handleBoxClick(box.id)}
@@ -181,7 +181,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                         dominantBaseline="middle"
                         fontSize="11"
                         fontWeight="700"
-                        fill={isSelected ? "#1a5fa8" : "#6a3fc8"}
+                        fill={isSelected ? "#CC2900" : "#E8401C"}
                         style={{ cursor: "pointer", pointerEvents: "none" }}
                       >
                         {box.id}
@@ -191,7 +191,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                 })}
 
                 {/* 圖例 */}
-                <rect x="86" y="420" width="16" height="16" rx="2" fill="rgba(255,255,255,0.6)" stroke="#7b5fdb" strokeWidth="2.5" />
+                <rect x="86" y="420" width="16" height="16" rx="2" fill="rgba(255,255,255,0.7)" stroke="#F7A600" strokeWidth="2.5" />
                 <text x="108" y="432" fontSize="12" fill="#555">攤位（可點擊）</text>
               </svg>
             </div>
