@@ -1,27 +1,14 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Home from "@/app/components/Home";
 
 export default function Page() {
-  const [unlockedTasks, setUnlockedTasks] = useState<number[]>([]);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
-
-  useEffect(() => {
+  const [unlockedTasks] = useState<number[]>(() => {
+    if (typeof window === 'undefined') return [];
     const saved = localStorage.getItem('unlockedTasks');
-    if (saved) {
-      setUnlockedTasks(JSON.parse(saved));
-    }
-    setIsLoaded(true);
-  }, []);
-
-  if (!isLoaded) {
-    return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--bg)' }}>
-        <span style={{ color: 'var(--primary)' }}>系統載入中...</span>
-      </div>
-    );
-  }
+    return saved ? JSON.parse(saved) : [];
+  });
 
   return (
     <main className="min-h-screen flex flex-col">

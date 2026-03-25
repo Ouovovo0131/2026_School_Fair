@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { auth, db } from "@/lib/firebase";
 import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 import { doc, getDoc, setDoc, updateDoc, collection, getDocs, deleteDoc } from "firebase/firestore";
-import { LogOut, Map, Settings, Lock, ChevronRight } from "lucide-react";
+import { LogOut, Map, Settings, Lock, ChevronRight, CalendarDays, Clock3 } from "lucide-react";
 import { THEME_NAMES } from "./tasks";
 import { QUESTS } from "../../constants/quests";
 import MapComponent from "./Map";
@@ -18,8 +18,14 @@ interface HomeProps {
   unlockedTasks?: number[];
 }
 
+interface LocalUser {
+  email?: string | null;
+  displayName?: string | null;
+  photoURL?: string | null;
+}
+
 export default function Home({ unlockedTasks = [] }: HomeProps) {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<LocalUser | null>(null);
   const [completed, setCompleted] = useState<number[]>([]);
   const [redeemedRewards, setRedeemedRewards] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
@@ -146,25 +152,25 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
       {/* ── 導航列 ── */}
       <header className="sticky-header">
         <div className="flex items-center justify-between px-4 md:px-6 h-16 max-w-6xl mx-auto">
-          <h1 className="text-lg sm:text-xl md:text-2xl font-black truncate tracking-tight" style={{color: 'var(--text)', maxWidth: '65%'}}>🎪 校慶拾光地圖</h1>
+          <h1 className="text-lg sm:text-xl md:text-2xl font-black truncate tracking-tight" style={{color: 'var(--bg-100)', maxWidth: '65%'}}>🎪 校慶拾光地圖</h1>
           <div className="flex items-center gap-2 shrink-0">
-            {user && userMode === 'game' && (
-              <button onClick={() => setUserMode('game-map')}
-                className="clay-button clay-button-blue flex items-center gap-1 !py-2 !px-3 !text-sm !rounded-xl">
+            {(userMode === 'game' || !user) && (
+              <button onClick={() => setUserMode(user ? 'game-map' : 'map')}
+                className="clay-button clay-button-yellow flex items-center gap-1 !py-2 !px-3 !text-sm !rounded-xl">
                 <Map size={15}/><span>地圖</span>
               </button>
             )}
             {user && (
               <button onClick={() => setShowAdminMode(!showAdminMode)}
-                className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 transition-all"
-                style={{color: 'var(--text)'}}>
+                className="w-9 h-9 flex items-center justify-center rounded-full transition-all"
+                style={{color: 'var(--bg-100)', background: 'transparent'}}>
                 <Settings size={20}/>
               </button>
             )}
             {user && (
               <button onClick={handleLogout}
-                className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 transition-all"
-                style={{color: 'var(--text)'}}>
+                className="w-9 h-9 flex items-center justify-center rounded-full transition-all"
+                style={{color: 'var(--bg-100)', background: 'transparent'}}>
                 <LogOut size={20}/>
               </button>
             )}
@@ -200,14 +206,25 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                 <p className="text-sm" style={{ color: 'var(--text-muted)', lineHeight: '1.7' }}>
                   完成各處任務、蒐集徽章、領取獎品<br/>在校園各角落發現驚喜冒險！
                 </p>
+                <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
+                  <span className="site-pill"><CalendarDays size={14} /> 5/23</span>
+                  <span className="site-pill"><Clock3 size={14} /> 09:00 - 14:00</span>
+                </div>
 
-                {/* 超大 CTA 按鈕 */}
-                <button
-                  onClick={handleLogin}
-                  className="btn-cta-large w-full mt-6"
-                >
-                  🔐 使用 Google 登入
-                </button>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6">
+                  <button
+                    onClick={handleLogin}
+                    className="btn-cta-large w-full"
+                  >
+                    🔐 使用 Google 登入
+                  </button>
+                  <button
+                    onClick={() => setUserMode('map')}
+                    className="clay-button clay-button-yellow w-full"
+                  >
+                    🗺️ 直接查看地圖
+                  </button>
+                </div>
 
                 {/* 次要 CTA */}
                 <p className="text-xs pt-4" style={{ color: 'var(--text-muted)' }}>
@@ -290,7 +307,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                 </div>
               </div>
               {/* 進度條 */}
-              <div className="progress-bar-container bg-white/50 rounded-full h-3 overflow-hidden border border-gray-200 mt-2">
+              <div className="progress-bar-container rounded-full h-3 overflow-hidden mt-2" style={{background: 'var(--bg-100)', borderColor: 'var(--border)'}}>
                 <div className="progress-bar-fill h-full rounded-full transition-all duration-500" 
                   style={{
                     width: `${pct}%`,
@@ -351,7 +368,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
 
             {/* 任務格子 */}
             <div className="premium-card clay-shadow-sm p-4">
-              <h3 className="text-base font-bold mb-3 px-3 py-2 rounded-lg inline-block" style={{color: '#FFFFFF', backgroundColor: 'var(--primary)'}}>🎮 任務列表 ({TOTAL_QUESTS} 關)</h3>
+              <h3 className="text-base font-bold mb-3 px-3 py-2 rounded-lg inline-block" style={{color: 'white', backgroundColor: 'var(--primary)'}}>🎮 任務列表 ({TOTAL_QUESTS} 關)</h3>
               <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2 mt-4">
                 {Array.from({ length: TOTAL_QUESTS }).map((_, index) => {
                   const questId = index + 1;
@@ -422,7 +439,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
               <h3 className="text-lg font-bold" style={{color: 'var(--text)'}}>
                 {redeemLevel === 10 ? '🎁 兌換小獎品' : '🏆 兌換大獎品'}
               </h3>
-              <button onClick={closeRedeemModal} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 font-bold text-lg text-gray-500">✕</button>
+              <button onClick={closeRedeemModal} className="w-8 h-8 flex items-center justify-center rounded-full font-bold text-lg" style={{color: 'var(--text-muted)', background: 'transparent'}}>✕</button>
             </div>
             <div className="premium-card clay-shadow-sm p-3 mb-4 space-y-1">
               <p className="text-sm font-semibold" style={{color: 'var(--text)'}}>👤 {nickname || user?.displayName}</p>
@@ -432,12 +449,12 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
             <div className="mb-4">
               <label className="block text-sm font-bold mb-1.5" style={{color: 'var(--text)'}}>⚠️ 工作人員確認碼</label>
               <input type="text" placeholder="請輸入確認碼" value={redeemConfirmCode}
-                onChange={e => setRedeemConfirmCode(e.target.value)} className="w-full clay-input text-black font-bold border-2 border-gray-200 focus:border-pink-300"/>
-              {redeemError && <p className="text-red-500 text-xs mt-1.5 font-bold">{redeemError}</p>}
+                onChange={e => setRedeemConfirmCode(e.target.value)} className="w-full clay-input text-black font-bold border-2" style={{borderColor: 'var(--border)'}}/>
+              {redeemError && <p className="text-xs mt-1.5 font-bold" style={{color: 'var(--warning)'}}>{redeemError}</p>}
             </div>
             <div className="flex gap-2">
               <button onClick={closeRedeemModal}
-                className="flex-1 py-3 rounded-2xl font-bold text-sm border border-gray-200 text-gray-600 hover:bg-gray-50">取消</button>
+                className="flex-1 py-3 rounded-2xl font-bold text-sm border" style={{borderColor: 'var(--border)', color: 'var(--text-secondary)', background: 'var(--surface)'}}>取消</button>
               <button onClick={handleRedeemSubmit} className="flex-1 clay-button !text-sm">✅ 確認兌換</button>
             </div>
           </div>
@@ -450,16 +467,16 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
           <div className="modal-content w-full sm:max-w-sm p-6 rounded-t-3xl sm:rounded-3xl clay-shadow-lg">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-bold" style={{color: 'var(--text)'}}>👤 設定暱稱</h3>
-              <button onClick={() => setShowNicknameModal(false)} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 font-bold text-lg text-gray-500">✕</button>
+              <button onClick={() => setShowNicknameModal(false)} className="w-8 h-8 flex items-center justify-center rounded-full font-bold text-lg" style={{color: 'var(--text-muted)', background: 'transparent'}}>✕</button>
             </div>
             <p className="text-sm font-medium mb-4" style={{color: 'var(--primary)'}}>請設定您的遊戲暱稱，這將代替您的真實姓名顯示在遊戲中。</p>
             <input type="text" placeholder="輸入您喜歡的暱稱" value={nickname}
               onChange={e => setNickname(e.target.value)}
               onKeyPress={e => e.key === 'Enter' && handleSaveNickname()}
-              className="w-full clay-input mb-4 text-black font-bold border-2 border-gray-200 focus:border-blue-300"/>
+              className="w-full clay-input mb-4 text-black font-bold border-2" style={{borderColor: 'var(--border)'}}/>
             <div className="flex gap-2">
               <button onClick={() => setShowNicknameModal(false)}
-                className="flex-1 py-3 rounded-2xl font-bold text-sm border border-gray-200 text-gray-600 hover:bg-gray-50">稍後設定</button>
+                className="flex-1 py-3 rounded-2xl font-bold text-sm border" style={{borderColor: 'var(--border)', color: 'var(--text-secondary)', background: 'var(--surface)'}}>稍後設定</button>
               <button onClick={handleSaveNickname} className="flex-1 clay-button !text-sm">✅ 確認</button>
             </div>
           </div>
@@ -485,16 +502,17 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
             </div>
             <label className="flex items-center gap-3 premium-card clay-shadow-sm p-3 mb-4 cursor-pointer">
               <input type="checkbox" checked={privacyAgreed} onChange={e => setPrivacyAgreed(e.target.checked)}
-                className="w-5 h-5 rounded border-gray-400"/>
+                className="w-5 h-5 rounded" style={{borderColor: 'var(--border)'}}/>
               <span className="text-sm font-semibold" style={{color: 'var(--text)'}}>我已了解上述說明，同意上傳符合要求的圖片</span>
             </label>
             <div className="flex gap-2">
               <button onClick={() => setShowPrivacyModal(false)}
-                className="flex-1 py-3 rounded-2xl font-bold text-sm border border-gray-200 text-gray-600 hover:bg-gray-50">返回修改暱稱</button>
+                className="flex-1 py-3 rounded-2xl font-bold text-sm border" style={{borderColor: 'var(--border)', color: 'var(--text-secondary)', background: 'var(--surface)'}}>返回修改暱稱</button>
               <button
                 onClick={() => { if (privacyAgreed) { setShowPrivacyModal(false); setUserMode('select'); } else alert("請勾選同意框才能繼續"); }}
                 disabled={!privacyAgreed}
-                className={`flex-1 !text-sm ${privacyAgreed ? 'clay-button' : 'py-3 rounded-2xl font-bold bg-gray-200 text-gray-400 cursor-not-allowed'}`}>
+                className={`flex-1 !text-sm ${privacyAgreed ? 'clay-button' : 'py-3 rounded-2xl font-bold cursor-not-allowed'}`}
+                style={!privacyAgreed ? {background: 'var(--bg-200)', color: 'var(--text-muted)'} : undefined}>
                 ✅ 我已同意
               </button>
             </div>
@@ -505,22 +523,22 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
       {/* ── 管理員模態 ── */}
       {showAdminMode && (
         <div className="fixed inset-0 modal-overlay flex items-end sm:items-center justify-center z-50 p-0 sm:p-4">
-          <div className="modal-content w-full sm:max-w-sm p-6 rounded-t-3xl sm:rounded-3xl clay-shadow-lg" style={{borderColor: 'rgba(239,68,68,0.3)'}}>
+          <div className="modal-content w-full sm:max-w-sm p-6 rounded-t-3xl sm:rounded-3xl clay-shadow-lg" style={{borderColor: 'var(--warning-300)'}}>
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-bold text-red-700">⚙️ 管理員面板</h3>
+              <h3 className="text-lg font-bold" style={{color: 'var(--warning-700)'}}>⚙️ 管理員面板</h3>
               <button onClick={() => { setShowAdminMode(false); setAdminPassword(""); }}
-                className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-red-50 font-bold text-lg text-red-500">✕</button>
+                className="w-8 h-8 flex items-center justify-center rounded-full font-bold text-lg" style={{color: 'var(--warning-500)'}}>✕</button>
             </div>
-            <div className="premium-card clay-shadow-sm p-3 mb-4 border-l-4 border-red-500">
-              <p className="text-sm font-semibold text-red-700">⚠️ 此操作將清除<strong>所有用戶的遊戲進度</strong>，無法復原！</p>
+            <div className="premium-card clay-shadow-sm p-3 mb-4 border-l-4" style={{borderLeftColor: 'var(--warning-500)'}}>
+              <p className="text-sm font-semibold" style={{color: 'var(--warning-700)'}}>⚠️ 此操作將清除<strong>所有用戶的遊戲進度</strong>，無法復原！</p>
             </div>
             <input type="password" placeholder="請輸入管理員密碼" value={adminPassword}
-              onChange={e => setAdminPassword(e.target.value)} className="w-full clay-input mb-4 text-black font-bold border-2 border-red-200 focus:border-red-400"/>
+              onChange={e => setAdminPassword(e.target.value)} className="w-full clay-input mb-4 text-black font-bold border-2" style={{borderColor: 'var(--warning-200)'}}/>
             <div className="flex gap-2">
               <button onClick={() => { setShowAdminMode(false); setAdminPassword(""); }}
-                className="flex-1 py-3 rounded-2xl font-bold text-sm border border-gray-200 text-gray-600 hover:bg-gray-50">取消</button>
+                className="flex-1 py-3 rounded-2xl font-bold text-sm border" style={{borderColor: 'var(--border)', color: 'var(--text-secondary)', background: 'var(--surface)'}}>取消</button>
               <button onClick={handleClearAllData}
-                className="flex-1 py-3 rounded-2xl font-bold text-sm text-white bg-gradient-to-r from-red-500 to-red-600">🗑️ 清除數據</button>
+                className="flex-1 py-3 rounded-2xl font-bold text-sm text-white" style={{background: 'linear-gradient(135deg, var(--warning-500), var(--warning-700))'}}>🗑️ 清除數據</button>
             </div>
           </div>
         </div>

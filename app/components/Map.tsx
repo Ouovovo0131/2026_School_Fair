@@ -166,7 +166,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                         height={box.h}
                         rx="3"
                         fill={isSelected ? "rgba(255,140,0,0.55)" : isHovered ? "rgba(255,215,0,0.35)" : "rgba(255,255,255,0.7)"}
-                        stroke={isSelected ? "var(--primary)" : "var(--secondary)"}
+                        stroke={isSelected ? "var(--secondary)" : "var(--accent)"}
                         strokeWidth={isSelected ? 3.5 : 2.5}
                         style={{ cursor: "pointer", transition: "all 0.15s" }}
                         onClick={() => handleBoxClick(box.id)}
@@ -181,7 +181,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                         dominantBaseline="middle"
                         fontSize="11"
                         fontWeight="700"
-                        fill={isSelected ? "var(--primary-hover)" : "var(--primary)"}
+                        fill={isSelected ? "var(--secondary-700)" : "var(--secondary-500)"}
                         style={{ cursor: "pointer", pointerEvents: "none" }}
                       >
                         {box.id}
@@ -214,11 +214,11 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                     className="px-4 py-2 rounded-full font-bold text-sm transition-all"
                     style={{
                       background: filterCategory === cat.id 
-                        ? 'linear-gradient(135deg, var(--primary), var(--primary-hover))'
+                        ? 'linear-gradient(135deg, var(--secondary-500), var(--secondary-700))'
                         : 'var(--surface-soft)',
-                      color: filterCategory === cat.id ? 'white' : 'var(--text)',
+                      color: filterCategory === cat.id ? 'white' : 'var(--text-primary)',
                       border: filterCategory === cat.id 
-                        ? '2px solid var(--primary-hover)'
+                        ? '2px solid var(--secondary-800)'
                         : '1px solid var(--border)',
                       transform: filterCategory === cat.id ? 'scale(1.05)' : 'scale(1)'
                     }}
@@ -244,7 +244,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   >
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-2xl">{stall.icon}</span>
-                      <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: "var(--primary)", color: "white" }}>
+                      <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: "var(--accent-500)", color: "var(--primary-900)" }}>
                         {stall.highlight}
                       </span>
                     </div>
@@ -280,7 +280,8 @@ export default function Map({ onBack, isModal = false }: MapProps) {
           >
             <button
               onClick={() => setSelectedStall(null)}
-              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 font-bold text-lg"
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full font-bold text-lg"
+              style={{color: 'var(--text-muted)', background: 'transparent'}}
             >
               ✕
             </button>

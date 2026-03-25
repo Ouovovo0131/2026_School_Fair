@@ -7,7 +7,12 @@ import { ref, uploadBytes } from "firebase/storage";
 import { onAuthStateChanged } from "firebase/auth";
 import { QUESTS } from "@/constants/quests";
 import imageCompression from "browser-image-compression";
-import { ArrowLeft, CheckCircle, Upload, Camera } from "lucide-react";
+import { ArrowLeft, Camera } from "lucide-react";
+
+interface LocalUser {
+  email?: string | null;
+  displayName?: string | null;
+}
 
 export default function QuestPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
@@ -17,7 +22,7 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
   const quest = QUESTS.find((q) => q.slug === urlParam);
   const questId = quest?.id ?? 0;
 
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<LocalUser | null>(null);
   const [answer, setAnswer] = useState("");
   const [uploading, setUploading] = useState(false);
   const [status, setStatus] = useState("idle");
@@ -50,9 +55,9 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
   if (!quest) return (
     <div
       className="min-h-screen flex items-center justify-center p-10 text-center"
-      style={{background: 'linear-gradient(180deg, #FFF8DC 0%, #ADD8E6 50%, #FFF8DC 100%)'}}
+      style={{background: 'var(--background)'}}
     >
-      <p className="text-red-500 font-bold text-lg">❌ 無效的網址，請去現場尋找並掃描正確的 QR Code！</p>
+      <p className="font-bold text-lg" style={{color: 'var(--warning-600)'}}>❌ 無效的網址，請去現場尋找並掃描正確的 QR Code！</p>
     </div>
   );
 
@@ -69,8 +74,8 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
     await completeQuest();
   };
 
-  const handlePhotoUpload = async (e: any) => {
-    const file = e.target.files[0];
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (!file) return;
 
     setUploading(true);

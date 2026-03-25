@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Noto_Sans_TC } from "next/font/google";
 import "./globals.css";
-import ConfettiEffect from "./components/ConfettiEffect";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -29,7 +28,6 @@ export default function RootLayout({
         className={`${inter.variable} ${notoSansTC.variable} antialiased`}
         suppressHydrationWarning={true}
       >
-        <ConfettiEffect />
         {children}
       </body>
     </html>
