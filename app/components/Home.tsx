@@ -297,14 +297,14 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
 
                   if (!isUnlocked) return (
                     <div key={questId}
-                      className="aspect-square rounded-2xl flex flex-col items-center justify-center gap-0.5"
+                      className="aspect-square rounded-2xl flex flex-col items-center justify-center gap-1.5 task-locked-card"
                       style={{
                         background: 'rgba(0,0,0,0.04)', 
                         border: '1.5px solid rgba(0,0,0,0.07)',
                         borderBottom: '4px solid rgba(0,0,0,0.1)'
                       }}>
                       <Lock size={16} style={{color: '#bbb'}}/>
-                      <span className="text-xs font-bold" style={{color: '#bbb'}}>#{questId}</span>
+                      <span className="text-[10px] font-bold" style={{color: '#bbb'}}>未解鎖</span>
                     </div>
                   );
 
@@ -312,29 +312,35 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
 
                   if (isCompleted) return (
                     <div key={questId}
-                      className="aspect-square rounded-2xl flex flex-col items-center justify-center gap-0.5 relative"
+                      className="aspect-square rounded-2xl flex flex-col items-center justify-center gap-1 relative overflow-hidden"
                       style={{
-                        background: 'linear-gradient(135deg,rgba(245,163,199,0.3),rgba(168,216,232,0.3))', 
-                        border: '1.5px solid rgba(245,163,199,0.5)',
-                        borderBottom: '4px solid rgba(245,163,199,0.6)'
+                        background: 'linear-gradient(135deg,rgba(139,179,114,0.2),rgba(139,179,114,0.1))', 
+                        border: '2px solid #8fb372',
+                        borderBottom: '4px solid #7a9460',
+                        boxShadow: '0 4px 12px rgba(139,179,114,0.25)'
                       }}>
-                      <span className="text-xl font-black drop-shadow-sm" style={{color: '#d16d99'}}>✓</span>
-                      <span className="text-xs font-bold" style={{color: '#6b6b6b'}}>#{questId}</span>
+                      <span className="text-2xl" style={{animation: 'bounce-pop 0.6s ease'}}>✓</span>
+                      <span className={`game-quest-number text-xs w-6 h-6 flex items-center justify-center`}
+                        style={{fontSize: '11px', width: '28px', height: '28px'}}>
+                        {String(questId).padStart(2, '0')}
+                      </span>
                     </div>
                   );
 
                   return (
                     <a key={questId} href={`/scan/${quest.slug}`}
-                      className="aspect-square rounded-2xl flex flex-col items-center justify-center gap-0.5 transition-all hover:-translate-y-1 active:scale-95 active:translate-y-0"
+                      className="aspect-square rounded-2xl flex flex-col items-center justify-center gap-0.5 transition-all hover:-translate-y-1.5 hover:scale-105 active:scale-95 active:translate-y-0 relative overflow-hidden group"
                       style={{
-                        background: 'linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(240,248,255,0.8) 100%)', 
-                        border: '1.5px solid rgba(107,157,198,0.3)',
-                        borderBottom: '4px solid rgba(107,157,198,0.4)',
-                        boxShadow: '0 4px 6px rgba(0,0,0,0.05)'
+                        background: 'linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(240,248,255,0.85) 100%)', 
+                        border: '2px solid rgba(107,157,198,0.4)',
+                        borderBottom: '4px solid rgba(107,157,198,0.5)',
+                        boxShadow: '0 6px 12px rgba(107,157,198,0.15)'
                       }}>
-                      <span className="text-sm font-black" style={{color: '#6b9dc6'}}>#{questId}</span>
-                      <span className="text-[10px] font-bold text-center px-0.5 leading-tight text-gray-700"
-                        style={{color: '#3d3d3d', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden'}}>
+                      <div className="game-quest-number blue text-xs" style={{fontSize: '16px', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                        {String(questId).padStart(2, '0')}
+                      </div>
+                      <span className="text-[9px] font-bold text-center px-1 leading-tight"
+                        style={{color: '#3d3d3d', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden', maxWidth: '90%'}}>
                         {THEME_NAMES[questId] || "任務"}
                       </span>
                     </a>
