@@ -316,7 +316,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-bold" style={{color: '#000080'}}>🎁 小獎</span>
                   <span className="text-xs font-bold px-2 py-0.5 rounded-full"
-                  <div style={{background: '#FF8C00', color: 'white', whiteSpace: 'nowrap'}}>
+                    style={{background: '#FF8C00', color: 'white', whiteSpace: 'nowrap'}}>
                     {completed.length}/10
                   </span>
                 </div>
