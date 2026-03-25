@@ -113,44 +113,44 @@ export default function Map({ onBack, isModal = false }: MapProps) {
               >
                 {/* ── 建築牆體填色 (淺灰) ── */}
                 {/* 校園外框 */}
-                <rect x="80" y="10" width="700" height="440" rx="4" fill="var(--surface)" stroke="var(--border)" strokeWidth="3" />
+                <rect x="80" y="10" width="700" height="440" rx="4" fill="transparent" stroke="#111111" strokeWidth="3" />
 
                 {/* 科學館 */}
-                <rect x="10" y="10" width="62" height="80" rx="3" fill="var(--surface-soft)" stroke="var(--border)" strokeWidth="2" />
+                <rect x="10" y="10" width="62" height="80" rx="3" fill="transparent" stroke="#111111" strokeWidth="3" />
                 <text x="41" y="58" textAnchor="middle" fontSize="13" fill="var(--text)" fontWeight="600">科學館</text>
 
                 {/* 大門 */}
-                <rect x="160" y="10" width="80" height="46" rx="3" fill="var(--surface-soft)" stroke="var(--border)" strokeWidth="2" />
+                <rect x="160" y="10" width="80" height="46" rx="3" fill="transparent" stroke="#111111" strokeWidth="3" />
                 <text x="200" y="38" textAnchor="middle" fontSize="13" fill="var(--text)" fontWeight="600">大門</text>
 
                 {/* 新圖書館 */}
-                <rect x="300" y="10" width="230" height="70" rx="3" fill="var(--surface-soft)" stroke="var(--border)" strokeWidth="2" />
+                <rect x="300" y="10" width="230" height="70" rx="3" fill="transparent" stroke="#111111" strokeWidth="3" />
                 <text x="415" y="51" textAnchor="middle" fontSize="16" fill="var(--text)" fontWeight="600">新圖書館</text>
 
                 {/* 舊圖書館 */}
-                <rect x="590" y="10" width="140" height="70" rx="3" fill="var(--surface-soft)" stroke="var(--border)" strokeWidth="2" />
+                <rect x="590" y="10" width="140" height="70" rx="3" fill="transparent" stroke="#111111" strokeWidth="3" />
                 <text x="660" y="51" textAnchor="middle" fontSize="15" fill="var(--text)" fontWeight="600">舊圖書館</text>
 
                 {/* 綜合大樓 */}
-                <rect x="80" y="10" width="68" height="440" rx="3" fill="var(--surface-soft)" stroke="var(--border)" strokeWidth="2" />
+                <rect x="80" y="10" width="68" height="440" rx="3" fill="transparent" stroke="#111111" strokeWidth="3" />
                 <text x="114" y="220" textAnchor="middle" fontSize="13" fill="var(--text)" fontWeight="600"
                   transform="rotate(-90 114 220)">綜合大樓</text>
 
                 {/* 信義樓 */}
-                <rect x="730" y="160" width="50" height="260" rx="3" fill="var(--surface-soft)" stroke="var(--border)" strokeWidth="2" />
+                <rect x="730" y="160" width="50" height="260" rx="3" fill="transparent" stroke="#111111" strokeWidth="3" />
                 <text x="755" y="298" textAnchor="middle" fontSize="13" fill="var(--text)" fontWeight="600"
                   transform="rotate(-90 755 298)">信義樓</text>
 
                 {/* 左側小花園 */}
-                <rect x="188" y="168" width="116" height="138" rx="3" fill="var(--surface)" stroke="var(--border)" strokeWidth="2" />
+                <rect x="188" y="168" width="116" height="138" rx="3" fill="transparent" stroke="#111111" strokeWidth="3" />
                 <text x="246" y="243" textAnchor="middle" fontSize="14" fill="var(--primary)" fontWeight="600">小花園</text>
 
                 {/* 右側小花園 */}
-                <rect x="388" y="168" width="148" height="138" rx="3" fill="var(--surface)" stroke="var(--border)" strokeWidth="2" />
+                <rect x="388" y="168" width="148" height="138" rx="3" fill="transparent" stroke="#111111" strokeWidth="3" />
                 <text x="462" y="243" textAnchor="middle" fontSize="14" fill="var(--primary)" fontWeight="600">小花園</text>
 
                 {/* 忠孝樓 */}
-                <rect x="188" y="360" width="440" height="82" rx="3" fill="var(--surface-soft)" stroke="var(--border)" strokeWidth="2" />
+                <rect x="188" y="360" width="440" height="82" rx="3" fill="transparent" stroke="#111111" strokeWidth="3" />
                 <text x="408" y="408" textAnchor="middle" fontSize="16" fill="var(--text)" fontWeight="600">忠孝樓</text>
 
                 {/* ── 攤位框框 (藍/紫色) ── */}
