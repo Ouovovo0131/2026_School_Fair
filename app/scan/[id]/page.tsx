@@ -204,7 +204,7 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
   return (
     <div
       className="min-h-screen"
-      style={{background: 'linear-gradient(180deg, #FFF5DC 0%, #FFFBF5 50%, #FFE8E2 100%)'}}
+      style={{background: 'linear-gradient(180deg, #FFF8DC 0%, #ADD8E6 50%, #FFF8DC 100%)'}}
     >
       {/* 返回按鈕 */}
       <button 

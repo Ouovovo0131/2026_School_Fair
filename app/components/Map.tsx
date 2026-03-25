@@ -73,7 +73,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
           ? "fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 overflow-y-auto"
           : "min-h-screen"
       }
-      style={!isModal ? { background: "linear-gradient(180deg, #FFF5DC 0%, #FFFBF5 50%, #FFE8E2 100%)" } : {}}
+      style={!isModal ? { background: "linear-gradient(180deg, #FFF8DC 0%, #ADD8E6 50%, #FFF8DC 100%)" } : {}}
     >
       <div className={isModal ? "w-full max-w-5xl bg-white rounded-2xl shadow-xl overflow-hidden" : ""}>
 
@@ -95,10 +95,10 @@ export default function Map({ onBack, isModal = false }: MapProps) {
 
             {/* 標題 */}
             <div className="mb-6">
-              <h1 className="text-3xl font-bold" style={{ color: "#3d3d3d" }}>
+              <h1 className="text-3xl font-bold" style={{ color: "#000080" }}>
                 🗺️ 校慶攤位地圖
               </h1>
-              <p className="mt-1 text-base font-medium" style={{ color: "#6b6b6b" }}>
+              <p className="mt-1 text-base font-medium" style={{ color: "#0047AB" }}>
                 點擊藍色攤位框可查看詳情 ✨
               </p>
             </div>
@@ -165,8 +165,8 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                         width={box.w}
                         height={box.h}
                         rx="3"
-                        fill={isSelected ? "rgba(232,64,28,0.55)" : isHovered ? "rgba(247,166,0,0.35)" : "rgba(255,255,255,0.7)"}
-                        stroke={isSelected ? "#E8401C" : "#F7A600"}
+                        fill={isSelected ? "rgba(255,140,0,0.55)" : isHovered ? "rgba(255,215,0,0.35)" : "rgba(255,255,255,0.7)"}
+                        stroke={isSelected ? "#FF8C00" : "#FFD700"}
                         strokeWidth={isSelected ? 3.5 : 2.5}
                         style={{ cursor: "pointer", transition: "all 0.15s" }}
                         onClick={() => handleBoxClick(box.id)}
@@ -181,7 +181,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                         dominantBaseline="middle"
                         fontSize="11"
                         fontWeight="700"
-                        fill={isSelected ? "#CC2900" : "#E8401C"}
+                        fill={isSelected ? "#8B0000" : "#FF8C00"}
                         style={{ cursor: "pointer", pointerEvents: "none" }}
                       >
                         {box.id}
@@ -191,14 +191,14 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                 })}
 
                 {/* 圖例 */}
-                <rect x="86" y="420" width="16" height="16" rx="2" fill="rgba(255,255,255,0.7)" stroke="#F7A600" strokeWidth="2.5" />
-                <text x="108" y="432" fontSize="12" fill="#555">攤位（可點擊）</text>
+                <rect x="86" y="420" width="16" height="16" rx="2" fill="rgba(255,255,255,0.7)" stroke="#FFD700" strokeWidth="2.5" />
+                <text x="108" y="432" fontSize="12" fill="#000080">攤位（可點擊）</text>
               </svg>
             </div>
 
             {/* ── 攤位列表 ── */}
             <div className="premium-card clay-shadow-md p-6">
-              <h2 className="text-xl font-bold mb-4" style={{ color: "#3d3d3d" }}>🏪 全部攤位</h2>
+              <h2 className="text-xl font-bold mb-4" style={{ color: "#000080" }}>🏪 全部攤位</h2>
               
               {/* 篩選按鈕 */}
               <div className="flex gap-2 mb-4 flex-wrap">
@@ -216,7 +216,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                       background: filterCategory === cat.id 
                         ? 'linear-gradient(135deg, #e60012, #ffd600)'
                         : 'rgba(0,0,0,0.05)',
-                      color: filterCategory === cat.id ? 'white' : '#3d3d3d',
+                      color: filterCategory === cat.id ? 'white' : '#000080',
                       border: filterCategory === cat.id 
                         ? '2px solid #d90010'
                         : '1px solid rgba(0,0,0,0.1)',
@@ -248,15 +248,15 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                         {stall.highlight}
                       </span>
                     </div>
-                    <p className="font-bold text-sm mt-1" style={{ color: "#3d3d3d" }}>{stall.name}</p>
-                    <p className="text-xs mt-0.5" style={{ color: "#6b6b6b" }}>📍 {stall.location}</p>
+                    <p className="font-bold text-sm mt-1" style={{ color: "#000080" }}>{stall.name}</p>
+                    <p className="text-xs mt-0.5" style={{ color: "#0047AB" }}>📍 {stall.location}</p>
                   </button>
                 ))}
               </div>
 
               {filteredStalls.length === 0 && (
                 <div className="text-center py-8">
-                  <p className="text-lg font-bold" style={{ color: '#6b6b6b' }}>
+                  <p className="text-lg font-bold" style={{ color: '#0047AB' }}>
                     🔍 此分類暫無攤位
                   </p>
                 </div>
@@ -285,7 +285,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
               ✕
             </button>
             <div className="text-5xl text-center mb-3">{selectedStall.icon}</div>
-            <h3 className="text-2xl font-bold text-center mb-1" style={{ color: "#3d3d3d" }}>
+            <h3 className="text-2xl font-bold text-center mb-1" style={{ color: "#000080" }}>
               {selectedStall.name}
             </h3>
             <p
@@ -301,11 +301,11 @@ export default function Map({ onBack, isModal = false }: MapProps) {
             <div className="space-y-3 mb-6">
               <div>
                 <p className="text-xs font-bold mb-0.5" style={{ color: "#a68080" }}>位置</p>
-                <p className="font-medium" style={{ color: "#3d3d3d" }}>📍 {selectedStall.location}</p>
+                <p className="font-medium" style={{ color: "#000080" }}>📍 {selectedStall.location}</p>
               </div>
               <div>
                 <p className="text-xs font-bold mb-0.5" style={{ color: "#a68080" }}>介紹</p>
-                <p className="font-medium" style={{ color: "#3d3d3d" }}>{selectedStall.description}</p>
+                <p className="font-medium" style={{ color: "#000080" }}>{selectedStall.description}</p>
               </div>
             </div>
             <button
