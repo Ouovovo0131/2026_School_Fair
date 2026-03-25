@@ -130,7 +130,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
   };
 
   if (loading) return (
-    <div className="min-h-screen flex items-center justify-center" style={{background: 'linear-gradient(180deg, #FFF5DC 0%, #FFFBF5 100%)'}}>
+    <div className="min-h-screen flex items-center justify-center" style={{background: 'linear-gradient(180deg, #FFF8DC 0%, #ADD8E6 100%)'}}>
       <span className="text-base font-semibold" style={{color: '#0047AB'}}>載入中…</span>
     </div>
   );
@@ -142,7 +142,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
   if (userMode === 'game-map') return <MapComponent onBack={() => setUserMode('game')} isModal={false} />;
 
   return (
-    <div className="min-h-screen" style={{background: 'linear-gradient(180deg, #FFF5DC 0%, #FFFBF5 50%, #FFE8E2 100%)'}}>
+    <div className="min-h-screen" style={{background: 'linear-gradient(180deg, #FFF8DC 0%, #ADD8E6 50%, #FFF8DC 100%)'}}>
 
       {/* ── 導航列 ── */}
       <header className="sticky-header">
@@ -211,7 +211,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                 </button>
 
                 {/* 次要 CTA */}
-                <p className="text-xs pt-4" style={{ color: '#9a9a9a' }}>
+                <p className="text-xs pt-4" style={{ color: '#5DADE2' }}>
                   一起來參加校慶冒險吧！
                 </p>
               </div>
@@ -231,7 +231,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                   key={idx}
                   className="premium-card clay-shadow-sm p-3 text-center"
                   style={{
-                    background: 'linear-gradient(135deg, rgba(255,255,255,0.5), rgba(255,248,220,0.3))'
+                    background: '#FFF8DC'
                   }}
                 >
                   <div className="text-3xl mb-1">{item.icon}</div>
@@ -255,7 +255,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
             <p className="text-center text-sm font-semibold mb-4" style={{color: '#0047AB'}}>選擇您想要進行的活動</p>
             <button onClick={() => setUserMode('game')}
               className="w-full premium-card clay-shadow-sm p-5 flex items-center justify-between transition-all hover:-translate-y-1 active:scale-[0.98] border-b-4"
-              style={{borderColor: '#FF8C00', background: 'linear-gradient(135deg,rgba(255,140,0,0.2),rgba(255,215,0,0.2))'}}>
+              style={{borderColor: '#FF8C00', background: '#FFF8DC'}}>
               <div className="text-left">
                 <p className="text-base font-bold" style={{color: '#000080'}}>🎯 玩遊戲</p>
                 <p className="text-xs mt-0.5 font-medium" style={{color: '#0047AB'}}>完成任務，蒐集徽章、領取獎品</p>
@@ -264,7 +264,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
             </button>
             <button onClick={() => setUserMode('map')}
               className="w-full premium-card clay-shadow-sm p-5 flex items-center justify-between transition-all hover:-translate-y-1 active:scale-[0.98] border-b-4"
-              style={{borderColor: '#FFD700', background: 'linear-gradient(135deg,rgba(255,215,0,0.2),rgba(0,206,209,0.2))'}}>
+              style={{borderColor: '#FFD700', background: '#FFF8DC'}}>
               <div className="text-left">
                 <p className="text-base font-bold" style={{color: '#000080'}}>🗺️ 查看地圖</p>
                 <p className="text-xs mt-0.5 font-medium" style={{color: '#0047AB'}}>瀏覽校慶園遊會的所有攤位位置</p>
@@ -285,7 +285,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                 }
                 <div className="min-w-0">
                   <p className="font-bold text-sm truncate" style={{color: '#000080'}}>{nickname || user.displayName}</p>
-                  <p className="text-xs" style={{color: '#9a9a9a'}}>ID: {user.email?.split('@')[0].slice(0,6).toUpperCase()}</p>
+                  <p className="text-xs" style={{color: '#5DADE2'}}>ID: {user.email?.split('@')[0].slice(0,6).toUpperCase()}</p>
                 </div>
                 <div className="ml-auto shrink-0 text-right">
                   <p className="text-xs font-semibold" style={{color: '#0047AB'}}>進度</p>
@@ -312,7 +312,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
               {/* 小獎品 */}
               <div className={`premium-card clay-shadow-sm p-3 flex flex-col gap-2 ${completed.length >= 10 && !redeemedRewards.includes(10) ? 'reward-available' : ''}`}
                 style={{background: completed.length >= 10 && !redeemedRewards.includes(10)
-                  ? 'linear-gradient(135deg,rgba(245,163,199,0.18),rgba(212,197,232,0.18))' : undefined}}>
+                  ? 'linear-gradient(135deg,rgba(255,140,0,0.18),rgba(255,215,0,0.18))' : undefined}}>
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-bold" style={{color: '#000080'}}>🎁 小獎</span>
                   <span className="text-xs font-bold px-2 py-0.5 rounded-full"
@@ -367,11 +367,11 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                       className="aspect-square rounded-2xl flex flex-col items-center justify-center gap-1.5 task-locked-card"
                       style={{
                         background: '#FFF8DC', 
-                        border: '1.5px solid #DDD',
-                        borderBottom: '4px solid #CCC'
+                        border: '1.5px solid #ADD8E6',
+                        borderBottom: '4px solid #5DADE2'
                       }}>
-                      <Lock size={16} style={{color: '#999'}}/>
-                      <span className="text-[10px] font-bold" style={{color: '#999'}}>未解鎖</span>
+                      <Lock size={16} style={{color: '#5DADE2'}}/>
+                      <span className="text-[10px] font-bold" style={{color: '#5DADE2'}}>未解鎖</span>
                     </div>
                   );
 
@@ -476,9 +476,9 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
             <h3 className="text-lg font-bold mb-4" style={{color: '#000080'}}>📸 圖片隱私說明</h3>
             <div className="space-y-3 mb-4">
               {[
-                { icon: '📺', title: '當天大螢幕', color: '#e85c8a', text: '您上傳的圖片將在活動現場的大螢幕上播放，讓全校同學看到您的精彩表現。' },
-                { icon: '🎁', title: '紀念保存', color: '#4a90d9', text: '您的圖片將被保存，作為校慶拾光地圖的活動紀念，讓我們永遠記住這美好的回憶。' },
-                { icon: '⚠️', title: '自制提醒', color: '#d4a017', text: '請上傳得體、適合全校播放的圖片，確保圖片符合校園文化。' },
+                { icon: '📺', title: '當天大螢幕', color: '#8B0000', text: '您上傳的圖片將在活動現場的大螢幕上播放，讓全校同學看到您的精彩表現。' },
+                { icon: '🎁', title: '紀念保存', color: '#0047AB', text: '您的圖片將被保存，作為校慶拾光地圖的活動紀念，讓我們永遠記住這美好的回憶。' },
+                { icon: '⚠️', title: '自制提醒', color: '#FF8C00', text: '請上傳得體、適合全校播放的圖片，確保圖片符合校園文化。' },
               ].map(item => (
                 <div key={item.title} className="premium-card clay-shadow-sm p-3">
                   <p className="text-sm font-bold mb-1" style={{color: item.color}}>{item.icon} {item.title}</p>

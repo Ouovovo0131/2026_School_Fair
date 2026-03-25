@@ -50,7 +50,7 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
   if (!quest) return (
     <div
       className="min-h-screen flex items-center justify-center p-10 text-center"
-      style={{background: 'linear-gradient(180deg, #d4e5f0 0%, #f5ede0 50%, #e8dcc8 100%)'}}
+      style={{background: 'linear-gradient(180deg, #FFF8DC 0%, #ADD8E6 50%, #FFF8DC 100%)'}}
     >
       <p className="text-red-500 font-bold text-lg">❌ 無效的網址，請去現場尋找並掃描正確的 QR Code！</p>
     </div>
@@ -123,7 +123,7 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
     return (
       <div
         className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden"
-        style={{background: 'linear-gradient(180deg, #d4e5f0 0%, #f5ede0 50%, #e8dcc8 100%)'}}
+        style={{background: 'linear-gradient(180deg, #FFF8DC 0%, #ADD8E6 50%, #FFF8DC 100%)'}}
       >
         <div className="absolute inset-0 pointer-events-none">
           <div style={{position: 'absolute', top: '10%', left: '10%', fontSize: '60px', animation: 'float-gentle 3s ease-in-out infinite'}}>🎊</div>
@@ -138,15 +138,15 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
           </div>
 
           <h1 className="text-7xl font-black mb-4 tracking-tighter" style={{
-            color: '#3d3d3d',
-            textShadow: '0 4px 20px rgba(245, 163, 199, 0.3)',
+            color: '#000080',
+            textShadow: '0 4px 20px rgba(93, 173, 226, 0.3)',
             marginBottom: '10px',
           }}>
             任務完成！
           </h1>
 
           <p className="text-3xl font-bold mb-8" style={{
-            background: 'linear-gradient(135deg, #f5a3c7, #a8d8e8)',
+            background: 'linear-gradient(135deg, #FF8C00, #5DADE2)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text'
@@ -158,9 +158,9 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
             animation: 'modal-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)'
           }}>
             <div className="text-center">
-              <p className="text-lg font-bold mb-3" style={{color: '#3d3d3d'}}>📊 您的進度</p>
+              <p className="text-lg font-bold mb-3" style={{color: '#000080'}}>📊 您的進度</p>
               <p className="text-4xl font-black mb-2" style={{
-                background: 'linear-gradient(90deg, #a68080, #8fb372)',
+                background: 'linear-gradient(90deg, #FF8C00, #FFD700)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text'
@@ -171,28 +171,28 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
                 <div style={{
                   width: `${(completedCount / 20) * 100}%`,
                   height: '100%',
-                  background: 'linear-gradient(90deg, #f5a3c7, #d4c5e8)',
+                  background: 'linear-gradient(90deg, #FF8C00, #FFD700, #00CED1)',
                   animation: 'shimmer 2s infinite'
                 }}></div>
               </div>
-              <p style={{color: '#6b6b6b', fontWeight: '600'}}>已完成 {completedCount}/20 關</p>
+              <p style={{color: '#0047AB', fontWeight: '600'}}>已完成 {completedCount}/20 關</p>
             </div>
           </div>
 
           <div className="mb-6">
             {completedCount % 10 === 0 && completedCount > 0 && (
-              <p className="text-2xl font-black mb-3" style={{color: '#c85a54'}}>
+              <p className="text-2xl font-black mb-3" style={{color: '#8B0000'}}>
                 🎁 達成里程碑！即將可以兌換獎品！
               </p>
             )}
-            <p className="text-lg font-bold" style={{color: '#3d3d3d'}}>
+            <p className="text-lg font-bold" style={{color: '#000080'}}>
               {completedCount < 10 ? '還差 ' + (10 - completedCount) + ' 關就可以領取小獎品！' : 
                completedCount < 20 ? '還差 ' + (20 - completedCount) + ' 關就能完成所有任務！' : 
                '🏆 恭喜！您已完成全部任務！'}
             </p>
           </div>
 
-          <p className="text-md font-bold mt-8 animate-pulse" style={{color: '#6b6b6b'}}>
+          <p className="text-md font-bold mt-8 animate-pulse" style={{color: '#0047AB'}}>
             ⏱️ 3 秒後自動返回...
           </p>
         </div>
@@ -219,10 +219,10 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
         <div className="premium-card clay-shadow-sm p-8">
         
           {/* 標題和類型 */}
-          <div className="flex justify-between items-start mb-6 pb-4" style={{borderBottom: '4px dashed rgba(245,163,199,0.4)'}}>
+          <div className="flex justify-between items-start mb-6 pb-4" style={{borderBottom: '4px dashed rgba(255,140,0,0.4)'}}>
             <div>
-              <div className="text-sm font-black tracking-widest uppercase" style={{color: '#a68080', marginBottom: '8px'}}>Mission #{quest.id}</div>
-              <h1 className="text-3xl font-black" style={{color: '#3d3d3d', textShadow: '1px 2px 0px rgba(168,216,232,0.8)'}}>《{quest.title}》</h1>
+              <div className="text-sm font-black tracking-widest uppercase" style={{color: '#FF8C00', marginBottom: '8px'}}>Mission #{quest.id}</div>
+              <h1 className="text-3xl font-black" style={{color: '#000080', textShadow: '1px 2px 0px rgba(93,173,226,0.8)'}}>《{quest.title}》</h1>
             </div>
             <span className="badge-blue py-2 px-4 text-xs font-bold rounded-full">
               {quest.type === 'quiz' ? '📝 問答題' : '📷 照片'}
@@ -231,8 +231,8 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
 
           {/* 敘述 */}
           <div className="premium-card clay-shadow-sm p-4 mb-6">
-            <p className="text-xs font-bold" style={{color: '#a68080', marginBottom: '8px'}}>任務敘述</p>
-            <p style={{color: '#3d3d3d', fontWeight: '500'}}>
+            <p className="text-xs font-bold" style={{color: '#FF8C00', marginBottom: '8px'}}>任務敘述</p>
+            <p style={{color: '#000080', fontWeight: '500'}}>
               {quest.description}
             </p>
           </div>
@@ -241,7 +241,7 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
           {quest.type === "quiz" ? (
             <div className="space-y-4">
               <div className="premium-card clay-shadow-sm p-4">
-                <p style={{color: '#3d3d3d', fontWeight: '600'}}>❓ {quest.question}</p>
+                <p style={{color: '#000080', fontWeight: '600'}}>❓ {quest.question}</p>
               </div>
 
               <input 

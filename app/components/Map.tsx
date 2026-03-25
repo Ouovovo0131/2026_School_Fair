@@ -113,45 +113,45 @@ export default function Map({ onBack, isModal = false }: MapProps) {
               >
                 {/* ── 建築牆體填色 (淺灰) ── */}
                 {/* 校園外框 */}
-                <rect x="80" y="10" width="700" height="440" rx="4" fill="#f0ece6" stroke="#aaa" strokeWidth="3" />
+                <rect x="80" y="10" width="700" height="440" rx="4" fill="#FFF8DC" stroke="#2C3E50" strokeWidth="3" />
 
                 {/* 科學館 */}
-                <rect x="10" y="10" width="62" height="80" rx="3" fill="#e8e2da" stroke="#999" strokeWidth="2" />
-                <text x="41" y="58" textAnchor="middle" fontSize="13" fill="#555" fontWeight="600">科學館</text>
+                <rect x="10" y="10" width="62" height="80" rx="3" fill="#ADD8E6" stroke="#2C3E50" strokeWidth="2" />
+                <text x="41" y="58" textAnchor="middle" fontSize="13" fill="#000080" fontWeight="600">科學館</text>
 
                 {/* 大門 */}
-                <rect x="160" y="10" width="80" height="46" rx="3" fill="#e8e2da" stroke="#999" strokeWidth="2" />
-                <text x="200" y="38" textAnchor="middle" fontSize="13" fill="#555" fontWeight="600">大門</text>
+                <rect x="160" y="10" width="80" height="46" rx="3" fill="#ADD8E6" stroke="#2C3E50" strokeWidth="2" />
+                <text x="200" y="38" textAnchor="middle" fontSize="13" fill="#000080" fontWeight="600">大門</text>
 
                 {/* 新圖書館 */}
-                <rect x="300" y="10" width="230" height="70" rx="3" fill="#e8e2da" stroke="#999" strokeWidth="2" />
-                <text x="415" y="51" textAnchor="middle" fontSize="16" fill="#555" fontWeight="600">新圖書館</text>
+                <rect x="300" y="10" width="230" height="70" rx="3" fill="#ADD8E6" stroke="#2C3E50" strokeWidth="2" />
+                <text x="415" y="51" textAnchor="middle" fontSize="16" fill="#000080" fontWeight="600">新圖書館</text>
 
                 {/* 舊圖書館 */}
-                <rect x="590" y="10" width="140" height="70" rx="3" fill="#e8e2da" stroke="#999" strokeWidth="2" />
-                <text x="660" y="51" textAnchor="middle" fontSize="15" fill="#555" fontWeight="600">舊圖書館</text>
+                <rect x="590" y="10" width="140" height="70" rx="3" fill="#ADD8E6" stroke="#2C3E50" strokeWidth="2" />
+                <text x="660" y="51" textAnchor="middle" fontSize="15" fill="#000080" fontWeight="600">舊圖書館</text>
 
                 {/* 綜合大樓 */}
-                <rect x="80" y="10" width="68" height="440" rx="3" fill="#e8e2da" stroke="#999" strokeWidth="2" />
-                <text x="114" y="220" textAnchor="middle" fontSize="13" fill="#555" fontWeight="600"
+                <rect x="80" y="10" width="68" height="440" rx="3" fill="#ADD8E6" stroke="#2C3E50" strokeWidth="2" />
+                <text x="114" y="220" textAnchor="middle" fontSize="13" fill="#000080" fontWeight="600"
                   transform="rotate(-90 114 220)">綜合大樓</text>
 
                 {/* 信義樓 */}
-                <rect x="730" y="160" width="50" height="260" rx="3" fill="#e8e2da" stroke="#999" strokeWidth="2" />
-                <text x="755" y="298" textAnchor="middle" fontSize="13" fill="#555" fontWeight="600"
+                <rect x="730" y="160" width="50" height="260" rx="3" fill="#ADD8E6" stroke="#2C3E50" strokeWidth="2" />
+                <text x="755" y="298" textAnchor="middle" fontSize="13" fill="#000080" fontWeight="600"
                   transform="rotate(-90 755 298)">信義樓</text>
 
                 {/* 左側小花園 */}
-                <rect x="188" y="168" width="116" height="138" rx="3" fill="#d6ead0" stroke="#999" strokeWidth="2" />
-                <text x="246" y="243" textAnchor="middle" fontSize="14" fill="#557" fontWeight="600">小花園</text>
+                <rect x="188" y="168" width="116" height="138" rx="3" fill="#FFF8DC" stroke="#2C3E50" strokeWidth="2" />
+                <text x="246" y="243" textAnchor="middle" fontSize="14" fill="#0047AB" fontWeight="600">小花園</text>
 
                 {/* 右側小花園 */}
-                <rect x="388" y="168" width="148" height="138" rx="3" fill="#d6ead0" stroke="#999" strokeWidth="2" />
-                <text x="462" y="243" textAnchor="middle" fontSize="14" fill="#557" fontWeight="600">小花園</text>
+                <rect x="388" y="168" width="148" height="138" rx="3" fill="#FFF8DC" stroke="#2C3E50" strokeWidth="2" />
+                <text x="462" y="243" textAnchor="middle" fontSize="14" fill="#0047AB" fontWeight="600">小花園</text>
 
                 {/* 忠孝樓 */}
-                <rect x="188" y="360" width="440" height="82" rx="3" fill="#e8e2da" stroke="#999" strokeWidth="2" />
-                <text x="408" y="408" textAnchor="middle" fontSize="16" fill="#555" fontWeight="600">忠孝樓</text>
+                <rect x="188" y="360" width="440" height="82" rx="3" fill="#ADD8E6" stroke="#2C3E50" strokeWidth="2" />
+                <text x="408" y="408" textAnchor="middle" fontSize="16" fill="#000080" fontWeight="600">忠孝樓</text>
 
                 {/* ── 攤位框框 (藍/紫色) ── */}
                 {stallBoxes.map(box => {
@@ -214,12 +214,12 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                     className="px-4 py-2 rounded-full font-bold text-sm transition-all"
                     style={{
                       background: filterCategory === cat.id 
-                        ? 'linear-gradient(135deg, #e60012, #ffd600)'
-                        : 'rgba(0,0,0,0.05)',
+                        ? 'linear-gradient(135deg, #FF8C00, #FFD700)'
+                        : 'rgba(173,216,230,0.35)',
                       color: filterCategory === cat.id ? 'white' : '#000080',
                       border: filterCategory === cat.id 
-                        ? '2px solid #d90010'
-                        : '1px solid rgba(0,0,0,0.1)',
+                        ? '2px solid #8B0000'
+                        : '1px solid rgba(0,71,171,0.2)',
                       transform: filterCategory === cat.id ? 'scale(1.05)' : 'scale(1)'
                     }}
                   >
@@ -236,15 +236,15 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                     onClick={() => setSelectedStall(stall)}
                     className="premium-card clay-shadow-sm p-4 text-left transition-all hover:shadow-md hover:-translate-y-1"
                     style={{
-                      border: selectedStall?.id === stall.id ? "2.5px solid #4a90d9" : "1.5px solid rgba(0,0,0,0.08)",
+                      border: selectedStall?.id === stall.id ? "2.5px solid #0047AB" : "1.5px solid rgba(0,71,171,0.15)",
                       background: selectedStall?.id === stall.id
-                        ? "linear-gradient(135deg,rgba(168,216,232,0.25),rgba(212,197,232,0.2))"
-                        : undefined,
+                        ? "linear-gradient(135deg,rgba(173,216,230,0.35),rgba(255,248,220,0.55))"
+                        : '#FFF8DC',
                     }}
                   >
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-2xl">{stall.icon}</span>
-                      <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: "#f5a3c7", color: "white" }}>
+                      <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: "#FF8C00", color: "white" }}>
                         {stall.highlight}
                       </span>
                     </div>
@@ -291,7 +291,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
             <p
               className="text-center text-sm font-bold mb-4"
               style={{
-                background: "linear-gradient(90deg,#f5a3c7,#a8d8e8)",
+                background: "linear-gradient(90deg,#FF8C00,#5DADE2)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}
@@ -300,11 +300,11 @@ export default function Map({ onBack, isModal = false }: MapProps) {
             </p>
             <div className="space-y-3 mb-6">
               <div>
-                <p className="text-xs font-bold mb-0.5" style={{ color: "#a68080" }}>位置</p>
+                <p className="text-xs font-bold mb-0.5" style={{ color: "#FF8C00" }}>位置</p>
                 <p className="font-medium" style={{ color: "#000080" }}>📍 {selectedStall.location}</p>
               </div>
               <div>
-                <p className="text-xs font-bold mb-0.5" style={{ color: "#a68080" }}>介紹</p>
+                <p className="text-xs font-bold mb-0.5" style={{ color: "#FF8C00" }}>介紹</p>
                 <p className="font-medium" style={{ color: "#000080" }}>{selectedStall.description}</p>
               </div>
             </div>

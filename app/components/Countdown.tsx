@@ -42,8 +42,8 @@ export default function Countdown() {
   if (!isLoaded) return null;
 
   return (
-    <div className="w-full py-6 px-4 bg-gradient-to-r from-red-500/10 to-yellow-500/10 rounded-2xl border border-red-200/30">
-      <p className="text-center text-sm font-bold mb-4" style={{ color: '#6b6b6b' }}>
+    <div className="w-full py-6 px-4 rounded-2xl border" style={{ background: '#FFF8DC', borderColor: '#FF8C00' }}>
+      <p className="text-center text-sm font-bold mb-4" style={{ color: '#0047AB' }}>
         ⏰ 校慶即將開始
       </p>
       <div className="grid grid-cols-4 gap-2 sm:gap-4">
@@ -57,14 +57,14 @@ export default function Countdown() {
             <div
               className="w-full aspect-square flex items-center justify-center rounded-lg font-black text-xl sm:text-3xl"
               style={{
-                background: 'linear-gradient(135deg, rgba(230, 0, 18, 0.2), rgba(255, 214, 0, 0.2))',
-                border: '2px solid rgba(230, 0, 18, 0.3)',
-                color: '#3d3d3d'
+                background: '#ADD8E6',
+                border: '2px solid #000080',
+                color: '#000080'
               }}
             >
               {String(item.value).padStart(2, '0')}
             </div>
-            <span className="text-xs font-bold mt-2" style={{ color: '#6b6b6b' }}>
+            <span className="text-xs font-bold mt-2" style={{ color: '#0047AB' }}>
               {item.label}
             </span>
           </div>

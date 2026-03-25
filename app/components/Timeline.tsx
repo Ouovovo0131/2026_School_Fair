@@ -70,7 +70,7 @@ const TIMELINE_EVENTS: TimelineItem[] = [
 export default function Timeline() {
   return (
     <div className="w-full px-4 py-8">
-      <h2 className="text-2xl font-bold mb-8 text-center" style={{ color: '#3d3d3d' }}>
+      <h2 className="text-2xl font-bold mb-8 text-center" style={{ color: '#000080' }}>
         📅 活動時程表
       </h2>
 
@@ -78,7 +78,7 @@ export default function Timeline() {
         {/* 中央時間線 */}
         <div
           className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full"
-          style={{ background: 'linear-gradient(180deg, #e60012, #ffd600, #3b8edb)' }}
+          style={{ background: 'linear-gradient(180deg, #8B0000, #FFD700, #5DADE2)' }}
         />
 
         {/* 時程項目 */}
@@ -90,8 +90,8 @@ export default function Timeline() {
                 <div
                   className="w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold bg-white border-4"
                   style={{
-                    borderColor: idx % 2 === 0 ? '#e60012' : '#3b8edb',
-                    boxShadow: '0 0 0 8px rgba(255, 247, 230, 0.8)'
+                    borderColor: idx % 2 === 0 ? '#FF8C00' : '#000080',
+                    boxShadow: '0 0 0 8px rgba(255, 248, 220, 0.8)'
                   }}
                 >
                   {event.icon}
@@ -106,23 +106,23 @@ export default function Timeline() {
                     className="premium-card clay-shadow-sm p-4 rounded-xl"
                     style={{
                       background: idx % 2 === 0
-                        ? 'linear-gradient(135deg, rgba(230, 0, 18, 0.08), rgba(255, 214, 0, 0.08))'
-                        : 'linear-gradient(135deg, rgba(59, 142, 219, 0.08), rgba(162, 89, 217, 0.08))'
+                        ? 'linear-gradient(135deg, rgba(255, 140, 0, 0.12), rgba(255, 215, 0, 0.12))'
+                        : 'linear-gradient(135deg, rgba(0, 0, 128, 0.12), rgba(93, 173, 226, 0.12))'
                     }}
                   >
                     <p
                       className="text-sm font-bold mb-1"
                       style={{
-                        color: idx % 2 === 0 ? '#e60012' : '#3b8edb'
+                        color: idx % 2 === 0 ? '#FF8C00' : '#0047AB'
                       }}
                     >
                       {event.time}
                     </p>
-                    <p className="font-bold text-base" style={{ color: '#3d3d3d' }}>
+                    <p className="font-bold text-base" style={{ color: '#000080' }}>
                       {event.title}
                     </p>
                     {event.description && (
-                      <p className="text-xs mt-1" style={{ color: '#6b6b6b' }}>
+                      <p className="text-xs mt-1" style={{ color: '#0047AB' }}>
                         {event.description}
                       </p>
                     )}

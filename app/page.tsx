@@ -17,8 +17,8 @@ export default function Page() {
 
   if (!isLoaded) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <span className="text-gray-500">系統載入中...</span>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: '#FFF8DC' }}>
+        <span style={{ color: '#0047AB' }}>系統載入中...</span>
       </div>
     );
   }

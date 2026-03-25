@@ -22,7 +22,7 @@
   
   --primary-red:      #FF8C00;
   --red-dark:         #8B0000;
-  --red-light:        #FFE8E2;
+  --red-light:        #FFF8DC;
   
   --primary-yellow:   #FFD700;
   --yellow-dark:      #CC8800;
@@ -64,31 +64,31 @@
   }
 
   body {
-    background: linear-gradient(160deg, #FFFBF5 0%, #FFF5E0 50%, #FFF0F5 100%);
+    background: linear-gradient(160deg, #2C3E50 0%, #000080 50%, #2C3E50 100%);
   }
 
   /* 暗黑模式下的卡片對比度提升 */
   .premium-card,
   .clay-card {
     background: linear-gradient(135deg, rgba(30, 45, 61, 0.85), rgba(38, 56, 73, 0.85)) !important;
-    border-color: rgba(232, 64, 28, 0.45) !important;
+    border-color: rgba(255, 140, 0, 0.45) !important;
   }
 
   /* 暗黑模式下的按鈕可見性 */
   .clay-button {
-    box-shadow: 0 12px 32px rgba(232, 64, 28, 0.5);
+    box-shadow: 0 12px 32px rgba(255, 140, 0, 0.5);
   }
 
   /* 悬浮提示在暗黑模式下更清晰 */
   .tooltip, [title] {
-    background-color: #1a3a52;
+    background-color: #2C3E50;
     color: #e8f4ff;
   }
 
   /* 進度條暗黑模式優化 */
   .progress-bar-container {
-    background: rgba(232, 64, 28, 0.15);
-    box-shadow: 0 0 0 2px rgba(232, 64, 28, 0.5), 0 2px 8px rgba(247, 166, 0, 0.10);
+    background: rgba(255, 140, 0, 0.15);
+    box-shadow: 0 0 0 2px rgba(255, 140, 0, 0.5), 0 2px 8px rgba(255, 215, 0, 0.10);
   }
 
   /* Hero title 在暗黑模式下的可見性 */
@@ -253,7 +253,7 @@ body {
 
 .clay-button-yellow:hover:not(:disabled) {
   box-shadow: 0 15px 35px rgba(255, 215, 0, 0.50);
-  background: linear-gradient(135deg, #FFC800, #FF6B00);
+  background: linear-gradient(135deg, #FFD700, #FF8C00);
 }
 
 .clay-button-lg {
@@ -293,7 +293,7 @@ body {
 
 /* 漸進色背景 - Ring Toss 主題 */
 .gradient-carousel {
-  background: linear-gradient(135deg, #fdd7e4 0%, #d4e8f0 25%, #e8d7f0 50%, #fff4d4 75%, #d7f0e8 100%);
+  background: linear-gradient(135deg, #FFF8DC 0%, #ADD8E6 25%, #5DADE2 50%, #FFD700 75%, #00CED1 100%);
   background-size: 400% 400%;
   animation: gradient-shift 15s ease infinite;
 }
@@ -329,7 +329,7 @@ body {
 
 /* 專用卡片設計 */
 .premium-card {
-  background: linear-gradient(135deg, #ffffff 95%, #FFF8DC 100%);
+  background: linear-gradient(135deg, #FFF8DC 75%, #ADD8E6 100%);
   backdrop-filter: blur(20px);
   border-radius: 28px;
   border: 1.5px solid rgba(255, 140, 0, 0.15);  /* 橙色邊框 */
@@ -382,7 +382,7 @@ body {
 
 /* 進度條 - 高級設計 */
 .progress-bar-container {
-  background: linear-gradient(90deg, #f5f5f5 0%, #FFF8DC 100%);
+  background: linear-gradient(90deg, #FFF8DC 0%, #ADD8E6 100%);
   border-radius: 20px;
   padding: 3px;
   overflow: hidden;
@@ -442,10 +442,10 @@ body {
 
 /* 導航欄設計 */
 .premium-card {
-  background: linear-gradient(135deg, #ffffff 60%, #FFF5DC 100%);
+  background: linear-gradient(135deg, #FFF8DC 60%, #ADD8E6 100%);
   border-radius: 32px;
-  border: 1.5px solid rgba(232, 64, 28, 0.12);  /* 熱情橘紅邊框 */
-  box-shadow: 0 8px 32px rgba(232, 64, 28, 0.08);
+  border: 1.5px solid rgba(255, 140, 0, 0.12);  /* 橙色邊框 */
+  box-shadow: 0 8px 32px rgba(255, 140, 0, 0.08);
   padding: 28px 24px;
   position: relative;
   overflow: hidden;

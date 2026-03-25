@@ -14,7 +14,7 @@ export default function ConfettiEffect() {
   }, []);
 
   const createConfetti = () => {
-    const colors = ['#e60012', '#ffd600', '#3b8edb', '#a259d9', '#a67b5b'];
+    const colors = ['#000080', '#5DADE2', '#0047AB', '#FFD700', '#FF8C00', '#8B0000'];
     const confettiCount = Math.random() > 0.5 ? 12 : 8;
 
     for (let i = 0; i < confettiCount; i++) {
