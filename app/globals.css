@@ -1,120 +1,36 @@
 @import "tailwindcss";
 
 :root {
-  /* 2026 校園獵人專用色票（僅用下列 10 色） */
-  --palette-blue-1: #6fd3ff;
-  --palette-blue-2: #001e62;
-  --palette-blue-3: #0062ff;
-  --palette-blue-4: #aee6ff;
-  --palette-blue-5: #00b2e3;
-  --palette-navy: #18344a;
-  --palette-cream: #fff9e3;
-  --palette-yellow: #ffd600;
-  --palette-orange: #ff9000;
-  --palette-red: #d13a1f;
-  /* 其他顏色嚴禁使用 */
-  --background: var(--palette-cream);
-  --text-main: var(--palette-navy);
-  --text-accent: var(--palette-blue-3);
-  --text-invert: #fff;
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --primary-soft: #e0e7ff;
+  --secondary: #22c55e;
+  --secondary-hover: #16a34a;
+  --secondary-soft: #dcfce7;
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-soft: #f1f5f9;
+  --text: #0f172a;
+  --text-muted: #475569;
+  --border: #cbd5e1;
+  --ring: rgba(79, 70, 229, 0.35);
 }
-
-/* 通用粗邊、陰影、斜角標籤、點陣背景 */
-.thick-border {
-  border: 4px solid #000;
-  box-shadow: 4px 4px 0 0 var(--palette-navy);
-}
-.shadow-title {
-  text-shadow: 2px 2px 0 #000, 4px 4px 0 var(--palette-navy);
-}
-.angled-label {
-  display: inline-block;
-  background: var(--palette-red);
-  color: #fff;
-  font-weight: bold;
-  padding: 0.2em 0.8em;
-  border-radius: 4px;
-  transform: skew(-12deg);
-  box-shadow: 2px 2px 0 #000;
-  font-size: 1.1em;
-  letter-spacing: 0.05em;
-}
-.dotted-bg {
-  background: repeating-radial-gradient(circle, #d9d9d9 0 1px, transparent 1px 20px);
-}
-.cream-bg {
-  background: var(--palette-cream);
-}
-.yellow-bg {
-  background: var(--palette-yellow);
-}
-.orange-bg {
-  background: var(--palette-orange);
-}
-.blue-bg {
-  background: var(--palette-blue-1);
-}
-.navy-bg {
-  background: var(--palette-navy);
-}
-
-red-bg {
-  background: var(--palette-red);
-}
-
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0d1b2a;  /* 深藍黑 */
-    --foreground: #e3f2fd;  /* 淺藍白 */
-    --clay-light: #1e2d3d;
-    --clay-medium: #263849;
-    --clay-dark: #354857;
-    --text-light: #b3e5fc;
-    --text-dark: #e3f2fd;
-  }
-
-  body {
-    background: linear-gradient(160deg, #2C3E50 0%, #000080 50%, #2C3E50 100%);
-  }
-
-  /* 暗黑模式下的卡片對比度提升 */
-  .premium-card,
-  .clay-card {
-    background: linear-gradient(135deg, rgba(30, 45, 61, 0.85), rgba(38, 56, 73, 0.85)) !important;
-    border-color: rgba(255, 140, 0, 0.45) !important;
-  }
-
-  /* 暗黑模式下的按鈕可見性 */
-  .clay-button {
-    box-shadow: 0 12px 32px rgba(255, 140, 0, 0.5);
-  }
-
-  /* 悬浮提示在暗黑模式下更清晰 */
-  .tooltip, [title] {
-    background-color: #2C3E50;
-    color: #e8f4ff;
-  }
-
-  /* 進度條暗黑模式優化 */
-  .progress-bar-container {
-    background: rgba(255, 140, 0, 0.15);
-    box-shadow: 0 0 0 2px rgba(255, 140, 0, 0.5), 0 2px 8px rgba(255, 215, 0, 0.10);
-  }
-
-  /* Hero title 在暗黑模式下的可見性 */
-  .hero-title {
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-  }
-
-  /* 暗黑模式下的文本陰影調整 */
-  h1, h2, h3, h4, h5, h6 {
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --surface-soft: #334155;
+    --text: #f8fafc;
+    --text-muted: #cbd5e1;
+    --border: #475569;
+    --primary-soft: rgba(79, 70, 229, 0.28);
+    --secondary-soft: rgba(34, 197, 94, 0.22);
   }
 }
 
 * {
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-sizing: border-box;
 }
 
 html {
@@ -122,853 +38,261 @@ html {
 }
 
 body {
-  background: linear-gradient(160deg, #FFF8DC 0%, #ADD8E6 50%, #FFF8DC 100%);
-  color: var(--foreground);
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  letter-spacing: 0.3px;
+  margin: 0;
   min-height: 100vh;
+  color: var(--text);
+  background: radial-gradient(circle at 0% 0%, rgba(79, 70, 229, 0.08), transparent 28%),
+    radial-gradient(circle at 100% 0%, rgba(34, 197, 94, 0.08), transparent 24%),
+    var(--bg);
+  font-family: var(--font-inter), var(--font-noto-sans-tc), "Noto Sans TC", "Segoe UI", sans-serif;
 }
 
-/* ========== Claymorphic 設計系統 ========== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text);
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
 
-/* 柔和陰影效果 - 3D深度感 */
+p {
+  color: var(--text-muted);
+}
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(10px);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  border-bottom: 1px solid var(--border);
+}
+
+.premium-card,
+.clay-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
 .clay-shadow-sm {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
 }
 
 .clay-shadow-md {
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.12);
 }
 
 .clay-shadow-lg {
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 8px 16px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.16);
 }
 
-.clay-shadow-xl {
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.18), 0 12px 24px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.5);
-}
-
-/* 浮動/深度效果 */
-.clay-float {
-  position: relative;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.clay-float:hover {
-  transform: translateY(-8px) scale(1.02);
-  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.15));
-}
-
-.clay-float:active {
-  transform: translateY(-2px);
-}
-
-/* 3D卡片效果 */
-.clay-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.4));
-  backdrop-filter: blur(10px);
-  border-radius: 32px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  padding: 32px;
-  position: relative;
-  overflow: hidden;
-}
-
-.clay-card::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  right: -50%;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
-  pointer-events: none;
-}
-
-/* 高級按鈕 */
 .clay-button {
-  padding: 16px 32px;
-  border-radius: 24px;
-  font-weight: 900;
-  letter-spacing: 1px;
-  border: none;
+  border: 0;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+  color: #fff;
+  font-weight: 700;
+  padding: 0.75rem 1.1rem;
   cursor: pointer;
-  background: linear-gradient(90deg, #FF8C00, #FFD700);  /* 橙色→金色漸層 */
-  color: #000;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 6px 18px rgba(255, 140, 0, 0.18);
-  font-size: 18px;
-}
-
-.clay-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.2);
-  transition: left 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.28);
 }
 
 .clay-button:hover:not(:disabled) {
-  filter: brightness(1.08);
-  box-shadow: 0 12px 32px rgba(255, 140, 0, 0.35);
-  transform: translateY(-2px);
-}
-
-.clay-button:hover:not(:disabled)::before {
-  left: 100%;
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 12px 28px rgba(79, 70, 229, 0.34);
+  filter: brightness(1.04);
 }
 
 .clay-button:active:not(:disabled) {
-  transform: translateY(0);
-  box-shadow: 0 4px 12px rgba(255, 140, 0, 0.25);
+  transform: translateY(0) scale(0.99);
 }
 
 .clay-button:disabled {
-  opacity: 0.5;
+  opacity: 0.55;
   cursor: not-allowed;
 }
 
-/* 按鈕變體 - 拾光主題配色 */
 .clay-button-blue {
-  background: linear-gradient(135deg, #000080, #5DADE2);  /* 深藍→淡藍 */
-  color: #fff;
-  box-shadow: 0 8px 20px rgba(0, 0, 128, 0.30);
-}
-
-.clay-button-blue:hover:not(:disabled) {
-  box-shadow: 0 15px 35px rgba(0, 0, 128, 0.50);
-  background: linear-gradient(135deg, #000080, #0047AB);
-}
-
-.clay-button-purple {
-  background: linear-gradient(135deg, #FF8C00, #FFD700);  /* 橙→金 */
-  color: #000;
-  box-shadow: 0 8px 20px rgba(255, 140, 0, 0.30);
-}
-
-.clay-button-purple:hover:not(:disabled) {
-  box-shadow: 0 15px 35px rgba(255, 140, 0, 0.50);
-  background: linear-gradient(135deg, #8B0000, #FF8C00);
+  background: linear-gradient(135deg, var(--primary), #6366f1);
 }
 
 .clay-button-yellow {
-  background: linear-gradient(135deg, #FFD700, #FF8C00);  /* 金→橙 */
-  color: #000;
-  box-shadow: 0 8px 20px rgba(255, 215, 0, 0.30);
+  background: linear-gradient(135deg, var(--secondary), var(--secondary-hover));
 }
 
-.clay-button-yellow:hover:not(:disabled) {
-  box-shadow: 0 15px 35px rgba(255, 215, 0, 0.50);
-  background: linear-gradient(135deg, #FFD700, #FF8C00);
-}
-
-.clay-button-lg {
-  padding: 18px 36px;
-  font-size: 16px;
-}
-
-.clay-button-sm {
-  padding: 10px 20px;
-  font-size: 13px;
-}
-
-/* 高級輸入框 */
 .clay-input {
-  padding: 14px 20px;
-  border-radius: 20px;
-  border: 2px solid var(--clay-medium);
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(10px);
-  font-size: 15px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  color: #1a1a1a;
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  padding: 0.72rem 0.9rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .clay-input:focus {
   outline: none;
-  border-color: var(--primary-blue);
-  box-shadow: 0 8px 20px rgba(168, 216, 232, 0.3);
-  transform: translateY(-2px);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--ring);
 }
 
-.clay-input::placeholder {
-  color: rgba(76, 76, 76, 0.5);
-}
-
-/* 漸進色背景 - Ring Toss 主題 */
-.gradient-carousel {
-  background: linear-gradient(135deg, #FFF8DC 0%, #ADD8E6 25%, #5DADE2 50%, #FFD700 75%, #00CED1 100%);
-  background-size: 400% 400%;
-  animation: gradient-shift 15s ease infinite;
-}
-
-@keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* 3D 旋轉環效果 */
-@keyframes float-rotate {
-  0% { transform: translateY(0px) rotateZ(0deg); }
-  33% { transform: translateY(-20px) rotateZ(120deg); }
-  66% { transform: translateY(-30px) rotateZ(240deg); }
-  100% { transform: translateY(0px) rotateZ(360deg); }
-}
-
-@keyframes float-gentle {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-15px); }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(255, 140, 0, 0.4); }
-  50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.7); }
-}
-
-@keyframes shimmer {
-  0% { background-position: -1000px 0; }
-  100% { background-position: 1000px 0; }
-}
-
-/* 專用卡片設計 */
-.premium-card {
-  background: linear-gradient(135deg, #FFF8DC 75%, #ADD8E6 100%);
-  backdrop-filter: blur(20px);
-  border-radius: 28px;
-  border: 1.5px solid rgba(255, 140, 0, 0.15);  /* 橙色邊框 */
-  padding: 24px;
-  position: relative;
-  overflow: hidden;
-}
-
-.premium-card::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  right: -50%;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.4), transparent);
-  pointer-events: none;
-}
-
-.premium-card:hover {
-  border-color: rgba(255, 255, 255, 0.8);
-}
-
-/* Ring Toss 主題 - 3D環元素 */
-.ring-element {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  border: 6px solid;
-  animation: float-gentle 3s ease-in-out infinite;
-  perspective: 1000px;
-  transform-style: preserve-3d;
-}
-
-.ring-rose { border-color: #FF8C00; }  /* 橙色 */
-.ring-blue { border-color: #000080; }  /* 深藍 */
-.ring-purple { border-color: #5DADE2; }  /* 淡藍 */
-.ring-yellow { border-color: #FFD700; }  /* 金色 */
-.ring-mint { border-color: #00CED1; }  /* 青色 */
-
-/* 3D 深度效果 */
-.perspective-3d {
-  perspective: 1200px;
-  transform-style: preserve-3d;
-}
-
-.rotate-3d {
-  transform: rotateX(5deg) rotateY(5deg) rotateZ(2deg);
-}
-
-/* 進度條 - 高級設計 */
-.progress-bar-container {
-  background: linear-gradient(90deg, #FFF8DC 0%, #ADD8E6 100%);
-  border-radius: 20px;
-  padding: 3px;
-  overflow: hidden;
-  box-shadow: 0 0 0 2px #FF8C00, 0 2px 8px rgba(255, 140, 0, 0.12);
-}
-
-.progress-bar-fill {
-  background: linear-gradient(90deg, #FF8C00, #FFD700, #00CED1);  /* 橙→金→青 */
-  height: 10px;
-  border-radius: 20px;
-  transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 0 12px rgba(255, 140, 0, 0.5), 0 0 4px rgba(255, 215, 0, 0.20);
-}
-
-.progress-bar-fill::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  animation: shimmer 2s infinite;
-}
-
-/* 彩色徽章系統 - 10色主題 */
-.badge-rose, .badge-blue, .badge-purple, .badge-yellow, .badge-mint {
-  background: linear-gradient(135deg, #FF8C00, #FFD700, #00CED1);
-  color: #000;
-  border: 2px solid #FF8C00;
-  box-shadow: 0 2px 8px rgba(255, 140, 0, 0.25);
-}
-
-/* 完成效果 - 3D 印章 */
-.completion-seal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(-15deg) scale(0);
-  animation: seal-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
-}
-
-@keyframes seal-pop {
-  0% {
-    transform: translate(-50%, -50%) rotate(-15deg) scale(0);
-    opacity: 0;
-  }
-  50% {
-    transform: translate(-50%, -50%) rotate(-15deg) scale(1.1);
-  }
-  100% {
-    transform: translate(-50%, -50%) rotate(-15deg) scale(1);
-    opacity: 1;
-  }
-}
-
-/* 導航欄設計 */
-.premium-card {
-  background: linear-gradient(135deg, #FFF8DC 60%, #ADD8E6 100%);
-  border-radius: 32px;
-  border: 1.5px solid rgba(255, 140, 0, 0.12);  /* 橙色邊框 */
-  box-shadow: 0 8px 32px rgba(255, 140, 0, 0.08);
-  padding: 28px 24px;
-  position: relative;
-  overflow: hidden;
-}
 .modal-overlay {
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(5px);
-  animation: fade-in 0.3s ease;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+  animation: fade-in 0.2s ease;
 }
 
 .modal-content {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(250, 248, 246, 0.95) 100%);
-  border-radius: 40px;
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-  animation: modal-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  animation: modal-pop 0.22s ease;
 }
 
-@keyframes modal-pop {
-  0% {
-    opacity: 0;
-    transform: scale(0.95) translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
+.hero-title {
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.05;
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  color: var(--text);
 }
 
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.btn-cta-large {
+  border: 0;
+  border-radius: 0.95rem;
+  padding: 0.95rem 1.25rem;
+  background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 12px 28px rgba(79, 70, 229, 0.25);
 }
 
-/* 任務網格卡片 */
-.task-grid-item {
-  border-radius: 24px;
-  background: linear-gradient(135deg, #ffffff 95%, #FFF8DC 100%);
-  border: 2.5px solid #FF8C00;  /* 橙色邊框 */
-  box-shadow: 0 4px 16px rgba(255, 140, 0, 0.12), 0 2px 8px rgba(255, 215, 0, 0.08);
-  padding: 20px;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  position: relative;
+.btn-cta-large:hover:not(:disabled) {
+  transform: translateY(-1px) scale(1.02);
+}
+
+.progress-bar-container {
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: 999px;
   overflow: hidden;
 }
 
-.task-grid-item:hover {
-  transform: translateY(-8px);
-  border-color: rgba(255, 140, 0, 0.8);
-  box-shadow: 0 15px 40px rgba(255, 140, 0, 0.15);
-}
-
-.task-grid-item.locked {
-  opacity: 0.6;
-  filter: grayscale(30%) brightness(1.1);
-  border: 2.5px dashed var(--primary-brown);
-}
-
-.task-grid-item.completed {
-  background: linear-gradient(135deg, var(--primary-gold), var(--primary-yellow));
-  border: 2.5px solid var(--primary-gold);
-}
-
-/* 廢棄的漫畫風格 - 保留向後相容性（不使用） */
-.cartoon-card {
-  display: contents;
-}
-
-.cartoon-label {
-  display: contents;
-}
-
-.cartoon-button {
-  display: contents;
-}
-
-.cartoon-input {
-  display: contents;
-}
-
-.task-number-badge {
-  display: contents;
-}
-
-/* ========== 遊樂感增強效果 ========== */
-
-/* 彼跳動畫 - 遊戲互動感 */
-@keyframes bounce-play {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-10px) scale(1.05); }
-}
-
-@keyframes bounce-pop {
-  0% { transform: scale(0) rotate(0deg); opacity: 0; }
-  50% { transform: scale(1.15) rotate(10deg); }
-  100% { transform: scale(1) rotate(0deg); opacity: 1; }
-}
-
-/* 遊戲卡片編號效果 - 類似麥當勞主題 */
-.game-quest-number {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  font-size: 20px;
-  font-weight: 900;
-  letter-spacing: 2px;
-  background: linear-gradient(135deg, var(--primary-rose), var(--rose-dark));
-  color: white;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  box-shadow: 0 8px 16px rgba(245, 163, 199, 0.4);
-  animation: bounce-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.game-quest-number.blue {
-  background: linear-gradient(135deg, var(--primary-blue), var(--blue-dark));
-  box-shadow: 0 8px 16px rgba(168, 216, 232, 0.4);
-}
-
-.game-quest-number.purple {
-  background: linear-gradient(135deg, var(--primary-purple), var(--purple-dark));
-  box-shadow: 0 8px 16px rgba(212, 197, 232, 0.4);
-}
-
-.game-quest-number.yellow {
-  background: linear-gradient(135deg, var(--primary-yellow), var(--yellow-dark));
-  color: #2c2c2c;
-  box-shadow: 0 8px 16px rgba(252, 232, 178, 0.4);
-}
-
-/* 獎勵通知閃爍 */
-@keyframes reward-glow {
-  0%, 100% { 
-    box-shadow: 0 0 10px rgba(245, 163, 199, 0.4), 0 0 20px rgba(168, 216, 232, 0.2);
-  }
-  50% { 
-    box-shadow: 0 0 25px rgba(245, 163, 199, 0.8), 0 0 40px rgba(168, 216, 232, 0.5);
-  }
-}
-
-.reward-available {
-  animation: reward-glow 1.5s ease-in-out infinite;
-  border: 2px solid rgba(245, 163, 199, 0.6) !important;
-  transform: scale(1.02);
-}
-
-/* 特殊里程碑閃爍效果 */
-@keyframes milestone-celebrate {
-  0%, 100% { 
-    transform: scale(1) rotate(0deg);
-    filter: brightness(1);
-  }
-  25% { 
-    transform: scale(1.08) rotate(-2deg);
-  }
-  50% { 
-    transform: scale(1.1) rotate(2deg);
-  }
-  75% { 
-    transform: scale(1.05) rotate(-1deg);
-  }
-}
-
-.reward-milestone {
-  animation: milestone-celebrate 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-/* 遊戲進度里程碑 */
-@keyframes milestone-pop {
-  0% {
-    transform: scale(0) translateY(30px);
-    opacity: 0;
-  }
-  60% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1) translateY(0);
-    opacity: 1;
-  }
-}
-
-/* 互動按鈕增強 - 遊戲感 */
-.clay-button:active:not(:disabled) {
-  animation: bounce-play 0.4s ease;
-}
-
-/* 完成任務視覺反饋 */
-.task-completed-effect {
+.progress-bar-fill {
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
   position: relative;
 }
 
-.task-completed-effect::after {
-  content: '✓';
-  position: absolute;
-  font-size: 24px;
-  font-weight: 900;
-  color: #FFD700;
-  animation: bounce-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+.badge-blue {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-soft);
+  color: var(--primary-hover);
+  border: 1px solid color-mix(in srgb, var(--primary) 35%, var(--border));
 }
 
-/* 彩色邊框動畫 - Rainbow 效果 */
-@keyframes border-rainbow {
-  0% { border-color: var(--primary-rose); }
-  25% { border-color: var(--primary-purple); }
-  50% { border-color: var(--primary-blue); }
-  75% { border-color: var(--primary-mint); }
-  100% { border-color: var(--primary-rose); }
-}
-
-.rainbow-animated-border {
-  animation: border-rainbow 4s linear infinite;
-}
-
-/* 標題樣式 - 深藍文字 */
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  font-weight: 900;
-  color: #000080;  /* 深藍 */
-  letter-spacing: 1.5px;
-  text-shadow: 0 2px 4px rgba(0, 0, 128, 0.1);  /* 深藍陰影 */
-}
-
-/* 任務卡片 - 未解鎖狀態增強 */
 .task-locked-card {
-  opacity: 0.65;
-  background: linear-gradient(135deg, rgba(200,200,200,0.1), rgba(220,220,220,0.1)) !important;
-  border: 2px dashed rgba(150,150,150,0.3) !important;
+  opacity: 0.7;
+  background: var(--surface-soft) !important;
+  border-style: dashed !important;
 }
 
-/* 遊樂感卡片邊框效果 - 厚重感 */
-@keyframes card-hover-glow {
-  0% {
-    box-shadow: 0 4px 8px rgba(107,157,198,0.15);
-  }
-  50% {
-    box-shadow: 0 8px 20px rgba(107,157,198,0.3), inset 0 0 10px rgba(255,255,255,0.2);
-  }
-  100% {
-    box-shadow: 0 4px 8px rgba(107,157,198,0.15);
-  }
+.game-quest-number {
+  border-radius: 999px;
+  background: var(--secondary-soft);
+  color: var(--secondary-hover);
+  border: 1px solid color-mix(in srgb, var(--secondary) 45%, var(--border));
+  font-weight: 800;
 }
 
-/* 按鈕文字動畫 - 遊戲兌換感 */
-@keyframes pulse-text {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
+.game-quest-number.blue {
+  background: var(--primary-soft);
+  color: var(--primary-hover);
+  border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
 }
 
-/* 兌換按鈕脈動 */
-.redeem-pulse {
-  animation: pulse-text 1.2s ease-in-out infinite;
+.reward-available {
+  border-color: color-mix(in srgb, var(--secondary) 50%, var(--border)) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--secondary) 20%, transparent), 0 10px 24px rgba(15, 23, 42, 0.12);
 }
 
-/* 完成印章 - 更大更明顯 */
-.completion-seal-large {
-  font-size: 48px;
-  font-weight: 900;
-  animation: seal-pop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2)) drop-shadow(0 0 10px rgba(143, 179, 114, 0.4));
-}
-
-/* ========== 動態視覺效果系統 ========== */
-
-/* 飄落紙屑動畫 */
-@keyframes confetti-fall {
-  0% {
-    transform: translateY(-100px) rotateZ(0deg);
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(100vh) rotateZ(720deg);
-    opacity: 0;
-  }
-}
-
-@keyframes confetti-fall-left {
-  0% {
-    transform: translateX(0) translateY(-100px) rotateZ(0deg);
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(-50px) translateY(100vh) rotateZ(720deg);
-    opacity: 0;
-  }
-}
-
-@keyframes confetti-fall-right {
-  0% {
-    transform: translateX(0) translateY(-100px) rotateZ(0deg);
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(50px) translateY(100vh) rotateZ(720deg);
-    opacity: 0;
-  }
-}
-
-/* 飄動雲朵效果 */
-@keyframes float-cloud {
-  0%, 100% {
-    transform: translateX(0) translateY(0);
-  }
-  50% {
-    transform: translateX(20px) translateY(-10px);
-  }
-}
-
-/* 標題微妙脈動 - 現代設計 */
-@keyframes hero-title-subtle {
-  0%, 100% {
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-    opacity: 1;
-  }
-  50% {
-    text-shadow: 0 4px 12px rgba(255, 107, 107, 0.15);
-    opacity: 0.95;
-  }
-}
-
-/* 脈動光暈 - Hero Section */
-@keyframes hero-pulse {
-  0%, 100% {
-    box-shadow: 0 0 30px rgba(255, 140, 0, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 60px rgba(255, 215, 0, 0.5), 0 0 90px rgba(255, 140, 0, 0.2);
-  }
-}
-
-/* 字摆动画 */
-@keyframes text-wave {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
-}
-
-/* 飄落紙屑元素 */
-.confetti {
-  position: fixed;
-  pointer-events: none;
-  z-index: 50;
-}
-
-.confetti.fall-straight {
-  animation: confetti-fall 3s linear forwards;
-}
-
-.confetti.fall-left {
-  animation: confetti-fall-left 3.5s linear forwards;
-}
-
-.confetti.fall-right {
-  animation: confetti-fall-right 3.5s linear forwards;
-}
-
-/* 動態背景容器 */
 .animated-background {
   position: relative;
   overflow: hidden;
 }
 
 .animated-background::before {
-  content: '';
+  content: "";
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle at 20% 50%, rgba(255, 140, 0, 0.08) 0%, transparent 50%),
-              radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
-              radial-gradient(circle at 40% 80%, rgba(0, 206, 209, 0.05) 0%, transparent 50%);
-  animation: bg-shift 20s ease-in-out infinite;
+  inset: 0;
+  background: radial-gradient(circle at 20% 15%, rgba(79, 70, 229, 0.15), transparent 40%),
+    radial-gradient(circle at 80% 85%, rgba(34, 197, 94, 0.14), transparent 38%);
   pointer-events: none;
 }
 
-@keyframes bg-shift {
-  0%, 100% {
-    transform: translate(0, 0);
+@keyframes modal-pop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes bounce-pop {
+  0% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes float-gentle {
+  0%,
+  100% {
+    transform: translateY(0);
   }
   50% {
-    transform: translate(50px, 50px);
+    transform: translateY(-12px);
   }
 }
 
-/* 浮動雲朵裝飾 */
-.float-cloud {
-  animation: float-cloud 6s ease-in-out infinite;
-}
-
-/* Hero 標題 - 園遊會熱情風格 */
-.hero-title {
-  color: #CC2900;  /* 熱情橘紅-深 */
-  font-size: 3.5rem;
-  font-weight: 900;
-  letter-spacing: 2px;
-  text-shadow: 0 2px 8px rgba(232, 64, 28, 0.15);  /* 橘紅陰影 */
-  animation: hero-title-subtle 3s ease-in-out infinite;
-}
-
-/* 字體優化 */
-body {
-  font-family: 'Microsoft JhengHei', 'Noto Sans TC', 'Segoe UI', system-ui, -apple-system, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-h1, h2, h3 {
-  font-family: 'Microsoft JhengHei', 'Noto Sans TC', system-ui;
-  font-weight: 900;
-}
-
-/* CTA 按鈕 - 超大尺寸 */
-.btn-cta-large {
-  padding: 18px 48px;
-  font-size: 18px;
-  font-weight: 900;
-  letter-spacing: 1.5px;
-  border-radius: 28px;
-  border: none;
-  cursor: pointer;
-  background: linear-gradient(135deg, #FF7F50, #FFBF00);  /* 珊瑚橘→琥珀金 */
-  color: #333333;  /* 深色文字 */
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 12px 32px rgba(255, 127, 80, 0.30);
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  transform: scale(1);
-}
-
-.btn-cta-large::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.2);
-  transition: left 0.3s ease;
-}
-
-.btn-cta-large:hover:not(:disabled) {
-  transform: scale(1.08) translateY(-2px);
-  box-shadow: 0 20px 48px rgba(255, 127, 80, 0.45);
-}
-
-.btn-cta-large:hover:not(:disabled)::before {
-  left: 100%;
-}
-
-.btn-cta-large:active:not(:disabled) {
-  transform: scale(0.98);
-}
-
-.btn-cta-large:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* Sticky 導覽列 */
-.sticky-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 248, 220, 0.95) 100%);
-  backdrop-filter: blur(10px);
-  border-bottom: 2px solid rgba(255, 140, 0, 0.12);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-@media (prefers-color-scheme: dark) {
-  .sticky-header {
-    background: linear-gradient(180deg, rgba(13, 27, 42, 0.98) 0%, rgba(27, 45, 66, 0.95) 100%);
-    border-bottom-color: rgba(26, 188, 156, 0.15);
+@keyframes progress-stripes {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 1rem 0;
   }
 }
 
-/* 響應式優化 - 平板 */
-@media (max-width: 768px) {
-  .hero-title {
-    font-size: 2.5rem;
-  }
-  
-  .btn-cta-large {
-    padding: 16px 40px;
-    font-size: 16px;
-  }
-}
-
-/* 響應式優化 - 手機 */
-@media (max-width: 480px) {
-  .hero-title {
-    font-size: 1.8rem;
-    letter-spacing: 1px;
-  }
-  
-  .btn-cta-large {
-    padding: 14px 32px;
-    font-size: 14px;
+@media (max-width: 640px) {
+  .premium-card,
+  .clay-card {
+    border-radius: 0.9rem;
   }
 }

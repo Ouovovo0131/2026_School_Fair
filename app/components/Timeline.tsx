@@ -9,130 +9,58 @@ interface TimelineItem {
 }
 
 const TIMELINE_EVENTS: TimelineItem[] = [
-  {
-    id: 1,
-    time: '09:00',
-    title: '活動開始',
-    description: '校園各處開始營運',
-    icon: '🎪'
-  },
-  {
-    id: 2,
-    time: '10:00',
-    title: '校長致詞',
-    description: '大禮堂進行開幕式',
-    icon: '🎤'
-  },
-  {
-    id: 3,
-    time: '11:00',
-    title: '特色表演',
-    description: '舞蹈隊、樂隊精彩演出',
-    icon: '🎭'
-  },
-  {
-    id: 4,
-    time: '12:00',
-    title: '攤位高峰期',
-    description: '美食、手作、遊戲攤位大開放',
-    icon: '🍔'
-  },
-  {
-    id: 5,
-    time: '14:00',
-    title: '摸彩抽獎',
-    description: '大獎、小獎輪流抽取',
-    icon: '🎁'
-  },
-  {
-    id: 6,
-    time: '16:00',
-    title: '大隊接力',
-    description: '班級競賽，精彩刺激',
-    icon: '🏃'
-  },
-  {
-    id: 7,
-    time: '17:00',
-    title: '晚會演出',
-    description: '學生表演及頒獎典禮',
-    icon: '✨'
-  },
-  {
-    id: 8,
-    time: '18:30',
-    title: '活動結束',
-    description: '感謝大家參與',
-    icon: '👋'
-  }
+  { id: 1, time: '09:00', title: '活動開始', description: '校園各處開始營運', icon: '🎪' },
+  { id: 2, time: '10:00', title: '校長致詞', description: '大禮堂進行開幕式', icon: '🎤' },
+  { id: 3, time: '11:00', title: '特色表演', description: '舞蹈隊、樂隊精彩演出', icon: '🎭' },
+  { id: 4, time: '12:00', title: '攤位高峰期', description: '美食、手作、遊戲攤位大開放', icon: '🍔' },
+  { id: 5, time: '14:00', title: '摸彩抽獎', description: '大獎、小獎輪流抽取', icon: '🎁' },
+  { id: 6, time: '16:00', title: '大隊接力', description: '班級競賽，精彩刺激', icon: '🏃' },
+  { id: 7, time: '17:00', title: '晚會演出', description: '學生表演及頒獎典禮', icon: '✨' },
+  { id: 8, time: '18:30', title: '活動結束', description: '感謝大家參與', icon: '👋' },
 ];
 
 export default function Timeline() {
   return (
-    <div className="w-full px-4 py-8">
-      <h2 className="text-2xl font-bold mb-8 text-center" style={{ color: '#000080' }}>
-        📅 活動時程表
-      </h2>
+    <section className="premium-card clay-shadow-sm p-5 sm:p-6">
+      <div className="mb-5 sm:mb-6">
+        <h2 className="text-xl sm:text-2xl font-bold" style={{ color: 'var(--text)' }}>
+          活動時程
+        </h2>
+        <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>
+          掌握每個時段，不錯過任何精彩內容
+        </p>
+      </div>
 
-      <div className="relative">
-        {/* 中央時間線 */}
-        <div
-          className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full"
-          style={{ background: 'linear-gradient(180deg, #8B0000, #FFD700, #5DADE2)' }}
-        />
+      <div className="relative pl-4 sm:pl-5">
+        <div className="absolute left-[11px] sm:left-[13px] top-0 bottom-0 w-px" style={{ background: 'var(--border)' }} />
 
-        {/* 時程項目 */}
-        <div className="space-y-8">
-          {TIMELINE_EVENTS.map((event, idx) => (
-            <div key={event.id} className="relative">
-              {/* 時間點圓圈 */}
-              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 top-6">
-                <div
-                  className="w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold bg-white border-4"
-                  style={{
-                    borderColor: idx % 2 === 0 ? '#FF8C00' : '#000080',
-                    boxShadow: '0 0 0 8px rgba(255, 248, 220, 0.8)'
-                  }}
-                >
-                  {event.icon}
-                </div>
+        <div className="space-y-3">
+          {TIMELINE_EVENTS.map((event) => (
+            <div key={event.id} className="relative pl-8 sm:pl-10">
+              <div
+                className="absolute left-0 top-3 w-6 h-6 rounded-full flex items-center justify-center text-xs"
+                style={{ background: 'var(--primary-soft)', border: '1px solid var(--primary)' }}
+              >
+                {event.icon}
               </div>
 
-              {/* 交替排列的卡片 */}
-              <div className={`w-full flex ${idx % 2 === 0 ? 'flex-row-reverse' : 'flex-row'}`}>
-                <div className="w-1/2" />
-                <div className="w-1/2 px-4">
-                  <div
-                    className="premium-card clay-shadow-sm p-4 rounded-xl"
-                    style={{
-                      background: idx % 2 === 0
-                        ? 'linear-gradient(135deg, rgba(255, 140, 0, 0.12), rgba(255, 215, 0, 0.12))'
-                        : 'linear-gradient(135deg, rgba(0, 0, 128, 0.12), rgba(93, 173, 226, 0.12))'
-                    }}
-                  >
-                    <p
-                      className="text-sm font-bold mb-1"
-                      style={{
-                        color: idx % 2 === 0 ? '#FF8C00' : '#0047AB'
-                      }}
-                    >
-                      {event.time}
-                    </p>
-                    <p className="font-bold text-base" style={{ color: '#000080' }}>
-                      {event.title}
-                    </p>
-                    {event.description && (
-                      <p className="text-xs mt-1" style={{ color: '#0047AB' }}>
-                        {event.description}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </div>
+              <article className="rounded-xl p-3 sm:p-4" style={{ background: 'var(--surface-soft)', border: '1px solid var(--border)' }}>
+                <p className="text-xs font-bold" style={{ color: 'var(--primary)' }}>
+                  {event.time}
+                </p>
+                <h3 className="text-sm sm:text-base font-bold mt-1" style={{ color: 'var(--text)' }}>
+                  {event.title}
+                </h3>
+                {event.description && (
+                  <p className="text-xs sm:text-sm mt-1" style={{ color: 'var(--text-muted)' }}>
+                    {event.description}
+                  </p>
+                )}
+              </article>
             </div>
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

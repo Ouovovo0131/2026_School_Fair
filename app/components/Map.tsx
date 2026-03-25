@@ -73,9 +73,9 @@ export default function Map({ onBack, isModal = false }: MapProps) {
           ? "fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 overflow-y-auto"
           : "min-h-screen"
       }
-      style={!isModal ? { background: "linear-gradient(180deg, #FFF8DC 0%, #ADD8E6 50%, #FFF8DC 100%)" } : {}}
+      style={!isModal ? { background: "var(--bg)" } : {}}
     >
-      <div className={isModal ? "w-full max-w-5xl bg-white rounded-2xl shadow-xl overflow-hidden" : ""}>
+      <div className={isModal ? "w-full max-w-5xl premium-card overflow-hidden" : ""}>
 
         {/* 返回按鈕 */}
         {onBack && (
@@ -95,10 +95,10 @@ export default function Map({ onBack, isModal = false }: MapProps) {
 
             {/* 標題 */}
             <div className="mb-6">
-              <h1 className="text-3xl font-bold" style={{ color: "#000080" }}>
+              <h1 className="text-3xl font-bold" style={{ color: "var(--text)" }}>
                 🗺️ 校慶攤位地圖
               </h1>
-              <p className="mt-1 text-base font-medium" style={{ color: "#0047AB" }}>
+              <p className="mt-1 text-base font-medium" style={{ color: "var(--primary)" }}>
                 點擊藍色攤位框可查看詳情 ✨
               </p>
             </div>
@@ -113,45 +113,45 @@ export default function Map({ onBack, isModal = false }: MapProps) {
               >
                 {/* ── 建築牆體填色 (淺灰) ── */}
                 {/* 校園外框 */}
-                <rect x="80" y="10" width="700" height="440" rx="4" fill="#FFF8DC" stroke="#2C3E50" strokeWidth="3" />
+                <rect x="80" y="10" width="700" height="440" rx="4" fill="var(--surface)" stroke="var(--border)" strokeWidth="3" />
 
                 {/* 科學館 */}
-                <rect x="10" y="10" width="62" height="80" rx="3" fill="#ADD8E6" stroke="#2C3E50" strokeWidth="2" />
-                <text x="41" y="58" textAnchor="middle" fontSize="13" fill="#000080" fontWeight="600">科學館</text>
+                <rect x="10" y="10" width="62" height="80" rx="3" fill="var(--surface-soft)" stroke="var(--border)" strokeWidth="2" />
+                <text x="41" y="58" textAnchor="middle" fontSize="13" fill="var(--text)" fontWeight="600">科學館</text>
 
                 {/* 大門 */}
-                <rect x="160" y="10" width="80" height="46" rx="3" fill="#ADD8E6" stroke="#2C3E50" strokeWidth="2" />
-                <text x="200" y="38" textAnchor="middle" fontSize="13" fill="#000080" fontWeight="600">大門</text>
+                <rect x="160" y="10" width="80" height="46" rx="3" fill="var(--surface-soft)" stroke="var(--border)" strokeWidth="2" />
+                <text x="200" y="38" textAnchor="middle" fontSize="13" fill="var(--text)" fontWeight="600">大門</text>
 
                 {/* 新圖書館 */}
-                <rect x="300" y="10" width="230" height="70" rx="3" fill="#ADD8E6" stroke="#2C3E50" strokeWidth="2" />
-                <text x="415" y="51" textAnchor="middle" fontSize="16" fill="#000080" fontWeight="600">新圖書館</text>
+                <rect x="300" y="10" width="230" height="70" rx="3" fill="var(--surface-soft)" stroke="var(--border)" strokeWidth="2" />
+                <text x="415" y="51" textAnchor="middle" fontSize="16" fill="var(--text)" fontWeight="600">新圖書館</text>
 
                 {/* 舊圖書館 */}
-                <rect x="590" y="10" width="140" height="70" rx="3" fill="#ADD8E6" stroke="#2C3E50" strokeWidth="2" />
-                <text x="660" y="51" textAnchor="middle" fontSize="15" fill="#000080" fontWeight="600">舊圖書館</text>
+                <rect x="590" y="10" width="140" height="70" rx="3" fill="var(--surface-soft)" stroke="var(--border)" strokeWidth="2" />
+                <text x="660" y="51" textAnchor="middle" fontSize="15" fill="var(--text)" fontWeight="600">舊圖書館</text>
 
                 {/* 綜合大樓 */}
-                <rect x="80" y="10" width="68" height="440" rx="3" fill="#ADD8E6" stroke="#2C3E50" strokeWidth="2" />
-                <text x="114" y="220" textAnchor="middle" fontSize="13" fill="#000080" fontWeight="600"
+                <rect x="80" y="10" width="68" height="440" rx="3" fill="var(--surface-soft)" stroke="var(--border)" strokeWidth="2" />
+                <text x="114" y="220" textAnchor="middle" fontSize="13" fill="var(--text)" fontWeight="600"
                   transform="rotate(-90 114 220)">綜合大樓</text>
 
                 {/* 信義樓 */}
-                <rect x="730" y="160" width="50" height="260" rx="3" fill="#ADD8E6" stroke="#2C3E50" strokeWidth="2" />
-                <text x="755" y="298" textAnchor="middle" fontSize="13" fill="#000080" fontWeight="600"
+                <rect x="730" y="160" width="50" height="260" rx="3" fill="var(--surface-soft)" stroke="var(--border)" strokeWidth="2" />
+                <text x="755" y="298" textAnchor="middle" fontSize="13" fill="var(--text)" fontWeight="600"
                   transform="rotate(-90 755 298)">信義樓</text>
 
                 {/* 左側小花園 */}
-                <rect x="188" y="168" width="116" height="138" rx="3" fill="#FFF8DC" stroke="#2C3E50" strokeWidth="2" />
-                <text x="246" y="243" textAnchor="middle" fontSize="14" fill="#0047AB" fontWeight="600">小花園</text>
+                <rect x="188" y="168" width="116" height="138" rx="3" fill="var(--surface)" stroke="var(--border)" strokeWidth="2" />
+                <text x="246" y="243" textAnchor="middle" fontSize="14" fill="var(--primary)" fontWeight="600">小花園</text>
 
                 {/* 右側小花園 */}
-                <rect x="388" y="168" width="148" height="138" rx="3" fill="#FFF8DC" stroke="#2C3E50" strokeWidth="2" />
-                <text x="462" y="243" textAnchor="middle" fontSize="14" fill="#0047AB" fontWeight="600">小花園</text>
+                <rect x="388" y="168" width="148" height="138" rx="3" fill="var(--surface)" stroke="var(--border)" strokeWidth="2" />
+                <text x="462" y="243" textAnchor="middle" fontSize="14" fill="var(--primary)" fontWeight="600">小花園</text>
 
                 {/* 忠孝樓 */}
-                <rect x="188" y="360" width="440" height="82" rx="3" fill="#ADD8E6" stroke="#2C3E50" strokeWidth="2" />
-                <text x="408" y="408" textAnchor="middle" fontSize="16" fill="#000080" fontWeight="600">忠孝樓</text>
+                <rect x="188" y="360" width="440" height="82" rx="3" fill="var(--surface-soft)" stroke="var(--border)" strokeWidth="2" />
+                <text x="408" y="408" textAnchor="middle" fontSize="16" fill="var(--text)" fontWeight="600">忠孝樓</text>
 
                 {/* ── 攤位框框 (藍/紫色) ── */}
                 {stallBoxes.map(box => {
@@ -166,7 +166,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                         height={box.h}
                         rx="3"
                         fill={isSelected ? "rgba(255,140,0,0.55)" : isHovered ? "rgba(255,215,0,0.35)" : "rgba(255,255,255,0.7)"}
-                        stroke={isSelected ? "#FF8C00" : "#FFD700"}
+                        stroke={isSelected ? "var(--primary)" : "var(--secondary)"}
                         strokeWidth={isSelected ? 3.5 : 2.5}
                         style={{ cursor: "pointer", transition: "all 0.15s" }}
                         onClick={() => handleBoxClick(box.id)}
@@ -181,7 +181,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                         dominantBaseline="middle"
                         fontSize="11"
                         fontWeight="700"
-                        fill={isSelected ? "#8B0000" : "#FF8C00"}
+                        fill={isSelected ? "var(--primary-hover)" : "var(--primary)"}
                         style={{ cursor: "pointer", pointerEvents: "none" }}
                       >
                         {box.id}
@@ -191,14 +191,14 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                 })}
 
                 {/* 圖例 */}
-                <rect x="86" y="420" width="16" height="16" rx="2" fill="rgba(255,255,255,0.7)" stroke="#FFD700" strokeWidth="2.5" />
-                <text x="108" y="432" fontSize="12" fill="#000080">攤位（可點擊）</text>
+                <rect x="86" y="420" width="16" height="16" rx="2" fill="rgba(255,255,255,0.7)" stroke="var(--secondary)" strokeWidth="2.5" />
+                <text x="108" y="432" fontSize="12" fill="var(--text)">攤位（可點擊）</text>
               </svg>
             </div>
 
             {/* ── 攤位列表 ── */}
             <div className="premium-card clay-shadow-md p-6">
-              <h2 className="text-xl font-bold mb-4" style={{ color: "#000080" }}>🏪 全部攤位</h2>
+              <h2 className="text-xl font-bold mb-4" style={{ color: "var(--text)" }}>🏪 全部攤位</h2>
               
               {/* 篩選按鈕 */}
               <div className="flex gap-2 mb-4 flex-wrap">
@@ -214,12 +214,12 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                     className="px-4 py-2 rounded-full font-bold text-sm transition-all"
                     style={{
                       background: filterCategory === cat.id 
-                        ? 'linear-gradient(135deg, #FF8C00, #FFD700)'
-                        : 'rgba(173,216,230,0.35)',
-                      color: filterCategory === cat.id ? 'white' : '#000080',
+                        ? 'linear-gradient(135deg, var(--primary), var(--primary-hover))'
+                        : 'var(--surface-soft)',
+                      color: filterCategory === cat.id ? 'white' : 'var(--text)',
                       border: filterCategory === cat.id 
-                        ? '2px solid #8B0000'
-                        : '1px solid rgba(0,71,171,0.2)',
+                        ? '2px solid var(--primary-hover)'
+                        : '1px solid var(--border)',
                       transform: filterCategory === cat.id ? 'scale(1.05)' : 'scale(1)'
                     }}
                   >
@@ -236,27 +236,27 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                     onClick={() => setSelectedStall(stall)}
                     className="premium-card clay-shadow-sm p-4 text-left transition-all hover:shadow-md hover:-translate-y-1"
                     style={{
-                      border: selectedStall?.id === stall.id ? "2.5px solid #0047AB" : "1.5px solid rgba(0,71,171,0.15)",
+                      border: selectedStall?.id === stall.id ? "2.5px solid var(--primary)" : "1.5px solid var(--border)",
                       background: selectedStall?.id === stall.id
-                        ? "linear-gradient(135deg,rgba(173,216,230,0.35),rgba(255,248,220,0.55))"
-                        : '#FFF8DC',
+                        ? "linear-gradient(135deg,var(--primary-soft),var(--surface))"
+                        : 'var(--surface)',
                     }}
                   >
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-2xl">{stall.icon}</span>
-                      <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: "#FF8C00", color: "white" }}>
+                      <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: "var(--primary)", color: "white" }}>
                         {stall.highlight}
                       </span>
                     </div>
-                    <p className="font-bold text-sm mt-1" style={{ color: "#000080" }}>{stall.name}</p>
-                    <p className="text-xs mt-0.5" style={{ color: "#0047AB" }}>📍 {stall.location}</p>
+                    <p className="font-bold text-sm mt-1" style={{ color: "var(--text)" }}>{stall.name}</p>
+                    <p className="text-xs mt-0.5" style={{ color: "var(--primary)" }}>📍 {stall.location}</p>
                   </button>
                 ))}
               </div>
 
               {filteredStalls.length === 0 && (
                 <div className="text-center py-8">
-                  <p className="text-lg font-bold" style={{ color: '#0047AB' }}>
+                  <p className="text-lg font-bold" style={{ color: 'var(--primary)' }}>
                     🔍 此分類暫無攤位
                   </p>
                 </div>
@@ -274,7 +274,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
           onClick={() => setSelectedStall(null)}
         >
           <div
-            className="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-8 relative"
+            className="premium-card clay-shadow-lg max-w-sm w-full p-8 relative"
             style={{ animation: "modal-pop 0.35s cubic-bezier(0.34,1.56,0.64,1)" }}
             onClick={e => e.stopPropagation()}
           >
@@ -285,13 +285,13 @@ export default function Map({ onBack, isModal = false }: MapProps) {
               ✕
             </button>
             <div className="text-5xl text-center mb-3">{selectedStall.icon}</div>
-            <h3 className="text-2xl font-bold text-center mb-1" style={{ color: "#000080" }}>
+            <h3 className="text-2xl font-bold text-center mb-1" style={{ color: "var(--text)" }}>
               {selectedStall.name}
             </h3>
             <p
               className="text-center text-sm font-bold mb-4"
               style={{
-                background: "linear-gradient(90deg,#FF8C00,#5DADE2)",
+                background: "linear-gradient(90deg,var(--primary),var(--secondary))",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}
@@ -300,12 +300,12 @@ export default function Map({ onBack, isModal = false }: MapProps) {
             </p>
             <div className="space-y-3 mb-6">
               <div>
-                <p className="text-xs font-bold mb-0.5" style={{ color: "#FF8C00" }}>位置</p>
-                <p className="font-medium" style={{ color: "#000080" }}>📍 {selectedStall.location}</p>
+                <p className="text-xs font-bold mb-0.5" style={{ color: "var(--primary)" }}>位置</p>
+                <p className="font-medium" style={{ color: "var(--text)" }}>📍 {selectedStall.location}</p>
               </div>
               <div>
-                <p className="text-xs font-bold mb-0.5" style={{ color: "#FF8C00" }}>介紹</p>
-                <p className="font-medium" style={{ color: "#000080" }}>{selectedStall.description}</p>
+                <p className="text-xs font-bold mb-0.5" style={{ color: "var(--primary)" }}>介紹</p>
+                <p className="font-medium" style={{ color: "var(--text)" }}>{selectedStall.description}</p>
               </div>
             </div>
             <button
