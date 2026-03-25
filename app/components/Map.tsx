@@ -14,18 +14,19 @@ interface Stall {
   icon: string;
   description: string;
   highlight: string;
+  category: 'food' | 'game' | 'craft' | 'other';
 }
 
 // 攤位資料 — 請依實際情況修改
 const stalls: Stall[] = [
-  { id: 1,  name: "攤位 A1", location: "中央走廊左側",  icon: "🍱", description: "美味餐點",           highlight: "人氣王"   },
-  { id: 2,  name: "攤位 A2", location: "中央走廊左側",  icon: "🥤", description: "飲料冰品",           highlight: "消暑首選" },
-  { id: 3,  name: "攤位 A3", location: "中央走廊左側",  icon: "🍡", description: "古早味點心",         highlight: "IG打卡"   },
-  { id: 4,  name: "攤位 B1", location: "中央走廊中段",  icon: "🎮", description: "趣味小遊戲",         highlight: "親子同樂" },
-  { id: 5,  name: "攤位 B2", location: "中央走廊中段",  icon: "🎨", description: "手作 DIY 工坊",      highlight: "必買伴手禮"},
-  { id: 6,  name: "攤位 C1", location: "中央走廊右段",  icon: "🍖", description: "烤肉燒烤",           highlight: "香噴噴"   },
-  { id: 7,  name: "攤位 C2", location: "中央走廊右段",  icon: "📚", description: "文創紀念品",         highlight: "時尚新貨" },
-  { id: 8,  name: "攤位 D1", location: "信義樓側走廊",  icon: "💪", description: "健身體驗 & 示範",    highlight: "增進健康" },
+  { id: 1,  name: "攤位 A1", location: "中央走廊左側",  icon: "🍱", description: "美味餐點",           highlight: "人氣王",    category: 'food' },
+  { id: 2,  name: "攤位 A2", location: "中央走廊左側",  icon: "🥤", description: "飲料冰品",           highlight: "消暑首選",  category: 'food' },
+  { id: 3,  name: "攤位 A3", location: "中央走廊左側",  icon: "🍡", description: "古早味點心",         highlight: "IG打卡",    category: 'food' },
+  { id: 4,  name: "攤位 B1", location: "中央走廊中段",  icon: "🎮", description: "趣味小遊戲",         highlight: "親子同樂", category: 'game' },
+  { id: 5,  name: "攤位 B2", location: "中央走廊中段",  icon: "🎨", description: "手作 DIY 工坊",      highlight: "必買伴手禮", category: 'craft' },
+  { id: 6,  name: "攤位 C1", location: "中央走廊右段",  icon: "🍖", description: "烤肉燒烤",           highlight: "香噴噴",    category: 'food' },
+  { id: 7,  name: "攤位 C2", location: "中央走廊右段",  icon: "📚", description: "文創紀念品",         highlight: "時尚新貨",  category: 'craft' },
+  { id: 8,  name: "攤位 D1", location: "信義樓側走廊",  icon: "💪", description: "健身體驗 & 示範",    highlight: "增進健康", category: 'other' },
 ];
 
 // ─── 攤位框框在地圖 SVG 中的位置 ──────────────────────────────────────────────
@@ -53,11 +54,17 @@ const stallBoxes = [
 export default function Map({ onBack, isModal = false }: MapProps) {
   const [selectedStall, setSelectedStall] = useState<Stall | null>(null);
   const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const [filterCategory, setFilterCategory] = useState<'all' | 'food' | 'game' | 'craft' | 'other'>('all');
 
   const handleBoxClick = (stallId: number) => {
     const stall = stalls.find(s => s.id === stallId) ?? null;
     setSelectedStall(stall);
   };
+
+  // 篩選攤位
+  const filteredStalls = filterCategory === 'all' 
+    ? stalls 
+    : stalls.filter(s => s.category === filterCategory);
 
   return (
     <div
@@ -192,12 +199,42 @@ export default function Map({ onBack, isModal = false }: MapProps) {
             {/* ── 攤位列表 ── */}
             <div className="premium-card clay-shadow-md p-6">
               <h2 className="text-xl font-bold mb-4" style={{ color: "#3d3d3d" }}>🏪 全部攤位</h2>
+              
+              {/* 篩選按鈕 */}
+              <div className="flex gap-2 mb-4 flex-wrap">
+                {[
+                  { id: 'all' as const, label: '全部', emoji: '🎪' },
+                  { id: 'food' as const, label: '美食', emoji: '🍱' },
+                  { id: 'game' as const, label: '遊戲', emoji: '🎮' },
+                  { id: 'craft' as const, label: '手作', emoji: '🎨' },
+                ].map(cat => (
+                  <button
+                    key={cat.id}
+                    onClick={() => setFilterCategory(cat.id)}
+                    className="px-4 py-2 rounded-full font-bold text-sm transition-all"
+                    style={{
+                      background: filterCategory === cat.id 
+                        ? 'linear-gradient(135deg, #e60012, #ffd600)'
+                        : 'rgba(0,0,0,0.05)',
+                      color: filterCategory === cat.id ? 'white' : '#3d3d3d',
+                      border: filterCategory === cat.id 
+                        ? '2px solid #d90010'
+                        : '1px solid rgba(0,0,0,0.1)',
+                      transform: filterCategory === cat.id ? 'scale(1.05)' : 'scale(1)'
+                    }}
+                  >
+                    {cat.emoji} {cat.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* 攤位卡片 */}
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                {stalls.map(stall => (
+                {filteredStalls.map(stall => (
                   <button
                     key={stall.id}
                     onClick={() => setSelectedStall(stall)}
-                    className="premium-card clay-shadow-sm p-4 text-left transition-all hover:shadow-md"
+                    className="premium-card clay-shadow-sm p-4 text-left transition-all hover:shadow-md hover:-translate-y-1"
                     style={{
                       border: selectedStall?.id === stall.id ? "2.5px solid #4a90d9" : "1.5px solid rgba(0,0,0,0.08)",
                       background: selectedStall?.id === stall.id
@@ -216,6 +253,14 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   </button>
                 ))}
               </div>
+
+              {filteredStalls.length === 0 && (
+                <div className="text-center py-8">
+                  <p className="text-lg font-bold" style={{ color: '#6b6b6b' }}>
+                    🔍 此分類暫無攤位
+                  </p>
+                </div>
+              )}
             </div>
 
           </div>

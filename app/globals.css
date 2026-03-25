@@ -37,6 +37,45 @@
     --text-light: #ffe8b2;
     --text-dark: #fff7e6;
   }
+
+  body {
+    background: linear-gradient(135deg, #2c1a00 0%, #3d2a0a 100%);
+    color: var(--foreground);
+  }
+
+  /* 暗黑模式下的卡片對比度提升 */
+  .premium-card,
+  .clay-card {
+    background: linear-gradient(135deg, rgba(92, 62, 18, 0.7), rgba(62, 36, 8, 0.7)) !important;
+    border-color: rgba(255, 214, 0, 0.25) !important;
+  }
+
+  /* 暗黑模式下的按鈕可見性 */
+  .clay-button {
+    box-shadow: 0 12px 32px rgba(230, 0, 18, 0.4);
+  }
+
+  /* 悬浮提示在暗黑模式下更清晰 */
+  .tooltip, [title] {
+    background-color: #1a1a1a;
+    color: #fff7e6;
+  }
+
+  /* 進度條暗黑模式優化 */
+  .progress-bar-container {
+    background: rgba(255, 214, 0, 0.15);
+    box-shadow: 0 0 0 2px rgba(230, 0, 18, 0.4), 0 2px 8px rgba(255, 214, 0, 0.08);
+  }
+
+  /* Hero title 在暗黑模式下的可見性 */
+  .hero-title {
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  }
+
+  /* 暗黑模式下的文本陰影調整 */
+  h1, h2, h3, h4, h5, h6 {
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
 }
 
 * {
@@ -639,4 +678,246 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 900;
   animation: seal-pop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2)) drop-shadow(0 0 10px rgba(143, 179, 114, 0.4));
+}
+
+/* ========== 動態視覺效果系統 ========== */
+
+/* 飄落紙屑動畫 */
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-100px) rotateZ(0deg);
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotateZ(720deg);
+    opacity: 0;
+  }
+}
+
+@keyframes confetti-fall-left {
+  0% {
+    transform: translateX(0) translateY(-100px) rotateZ(0deg);
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50px) translateY(100vh) rotateZ(720deg);
+    opacity: 0;
+  }
+}
+
+@keyframes confetti-fall-right {
+  0% {
+    transform: translateX(0) translateY(-100px) rotateZ(0deg);
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(50px) translateY(100vh) rotateZ(720deg);
+    opacity: 0;
+  }
+}
+
+/* 飄動雲朵效果 */
+@keyframes float-cloud {
+  0%, 100% {
+    transform: translateX(0) translateY(0);
+  }
+  50% {
+    transform: translateX(20px) translateY(-10px);
+  }
+}
+
+/* 脈動光暈 - Hero Section */
+@keyframes hero-pulse {
+  0%, 100% {
+    box-shadow: 0 0 30px rgba(230, 0, 18, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 60px rgba(255, 214, 0, 0.5), 0 0 90px rgba(230, 0, 18, 0.2);
+  }
+}
+
+/* 字摆动画 */
+@keyframes text-wave {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* 飄落紙屑元素 */
+.confetti {
+  position: fixed;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.confetti.fall-straight {
+  animation: confetti-fall 3s linear forwards;
+}
+
+.confetti.fall-left {
+  animation: confetti-fall-left 3.5s linear forwards;
+}
+
+.confetti.fall-right {
+  animation: confetti-fall-right 3.5s linear forwards;
+}
+
+/* 動態背景容器 */
+.animated-background {
+  position: relative;
+  overflow: hidden;
+}
+
+.animated-background::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 20% 50%, rgba(230, 0, 18, 0.05) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(255, 214, 0, 0.05) 0%, transparent 50%),
+              radial-gradient(circle at 40% 80%, rgba(59, 142, 219, 0.04) 0%, transparent 50%);
+  animation: bg-shift 20s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes bg-shift {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(50px, 50px);
+  }
+}
+
+/* 浮動雲朵裝飾 */
+.float-cloud {
+  animation: float-cloud 6s ease-in-out infinite;
+}
+
+/* Hero 標題波動效果 */
+.hero-title {
+  background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-yellow) 50%, var(--primary-gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 3.5rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  animation: hero-pulse 2s ease-in-out infinite;
+}
+
+/* 字體優化 */
+body {
+  font-family: 'Microsoft JhengHei', 'Noto Sans TC', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3 {
+  font-family: 'Microsoft JhengHei', 'Noto Sans TC', system-ui;
+  font-weight: 900;
+}
+
+/* CTA 按鈕 - 超大尺寸 */
+.btn-cta-large {
+  padding: 18px 48px;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  border-radius: 28px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--primary-red), var(--primary-yellow));
+  color: white;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgba(230, 0, 18, 0.25);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform: scale(1);
+}
+
+.btn-cta-large::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: left 0.3s ease;
+}
+
+.btn-cta-large:hover:not(:disabled) {
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 20px 48px rgba(230, 0, 18, 0.35);
+}
+
+.btn-cta-large:hover:not(:disabled)::before {
+  left: 100%;
+}
+
+.btn-cta-large:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn-cta-large:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Sticky 導覽列 */
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: linear-gradient(180deg, rgba(255, 247, 230, 0.98) 0%, rgba(255, 247, 230, 0.95) 100%);
+  backdrop-filter: blur(10px);
+  border-bottom: 2px solid rgba(230, 0, 18, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  .sticky-header {
+    background: linear-gradient(180deg, rgba(44, 26, 0, 0.98) 0%, rgba(44, 26, 0, 0.95) 100%);
+    border-bottom-color: rgba(255, 214, 0, 0.1);
+  }
+}
+
+/* 響應式優化 - 平板 */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .btn-cta-large {
+    padding: 16px 40px;
+    font-size: 16px;
+  }
+}
+
+/* 響應式優化 - 手機 */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+  }
+  
+  .btn-cta-large {
+    padding: 14px 32px;
+    font-size: 14px;
+  }
 }

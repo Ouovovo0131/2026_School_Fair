@@ -7,6 +7,9 @@ import { LogOut, Map, Settings, Lock, ChevronRight } from "lucide-react";
 import { THEME_NAMES } from "./tasks";
 import { QUESTS } from "../../constants/quests";
 import MapComponent from "./Map";
+import Countdown from "./Countdown";
+import Timeline from "./Timeline";
+import ConfettiEffect from "./ConfettiEffect";
 
 const TOTAL_QUESTS = 20;
 const SMALL_REWARD_THRESHOLD = 10;
@@ -142,8 +145,8 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
     <div className="min-h-screen" style={{background: 'linear-gradient(180deg, #d4e5f0 0%, #f5ede0 60%, #e8dcc8 100%)'}}>
 
       {/* ── 導航列 ── */}
-      <header className="premium-nav sticky top-0 z-10">
-        <div className="flex items-center justify-between px-4 h-14">
+      <header className="sticky-header">
+        <div className="flex items-center justify-between px-4 h-14 max-w-lg mx-auto">
           <h1 className="text-xl font-black truncate tracking-wide" style={{color: '#3d3d3d', maxWidth: '55%', textShadow: '1px 2px 0px rgba(245,163,199,0.8)'}}>🎪 校慶拾光地圖</h1>
           <div className="flex items-center gap-2 shrink-0">
             {user && userMode === 'game' && (
@@ -173,13 +176,77 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
       {/* ── 主內容 ── */}
       <main className="px-4 py-5 max-w-lg mx-auto space-y-4">
 
-        {/* 未登入 */}
+        {/* 未登入 - Hero Section */}
         {!user ? (
-          <div className="premium-card clay-shadow-md mt-10 p-8 text-center">
-            <div className="text-6xl mb-4 animate-bounce">🎢</div>
-            <h2 className="text-3xl font-black mb-2 tracking-wide" style={{color: '#3d3d3d', textShadow: '2px 2px 0px #f5a3c7'}}>校慶拾光地圖</h2>
-            <p className="text-sm mb-6 font-medium" style={{color: '#6b6b6b'}}>完成各個任務，蒐集徽章、領取獎品！</p>
-            <button onClick={handleLogin} className="w-full clay-button">🔐 使用 Google 登入</button>
+          <div className="space-y-6 mt-0">
+            {/* Hero 背景容器 */}
+            <div className="animated-background rounded-3xl overflow-hidden py-12 px-6 relative">
+              {/* 漸進色背景 */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(230, 0, 18, 0.08) 0%, rgba(255, 214, 0, 0.08) 50%, rgba(59, 142, 219, 0.08) 100%)'
+                }}
+              />
+
+              {/* 內容 */}
+              <div className="relative z-10 text-center space-y-4">
+                <div className="text-7xl mb-2 animate-bounce" style={{ animationDuration: '2s' }}>🎪</div>
+                <h1 className="hero-title" style={{fontSize: '3rem', marginBottom: '1rem'}}>
+                  校慶拾光地圖
+                </h1>
+                <p className="text-lg font-bold" style={{ color: '#3d3d3d', letterSpacing: '0.5px' }}>
+                  2026 校園盛事
+                </p>
+                <p className="text-sm" style={{ color: '#6b6b6b', lineHeight: '1.6' }}>
+                  完成各處任務、蒐集徽章、領取獎品<br/>在校園各角落發現驚喜冒險！
+                </p>
+
+                {/* 超大 CTA 按鈕 */}
+                <button
+                  onClick={handleLogin}
+                  className="btn-cta-large w-full mt-6"
+                >
+                  🔐 使用 Google 登入
+                </button>
+
+                {/* 次要 CTA */}
+                <p className="text-xs pt-4" style={{ color: '#9a9a9a' }}>
+                  一起來參加校慶冒險吧！
+                </p>
+              </div>
+            </div>
+
+            {/* 倒數計時器 */}
+            <Countdown />
+
+            {/* 活動亮點卡片 */}
+            <div className="grid grid-cols-3 gap-2">
+              {[
+                { icon: '🎮', label: '20 關任務', desc: '挑戰完成' },
+                { icon: '🏆', label: '分級獎品', desc: '等你領取' },
+                { icon: '📸', label: '相機上傳', desc: '留下回憶' }
+              ].map((item, idx) => (
+                <div
+                  key={idx}
+                  className="premium-card clay-shadow-sm p-3 text-center"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(255,255,255,0.5), rgba(240,248,255,0.3))'
+                  }}
+                >
+                  <div className="text-3xl mb-1">{item.icon}</div>
+                  <p className="text-xs font-bold" style={{ color: '#3d3d3d' }}>
+                    {item.label}
+                  </p>
+                  <p className="text-[10px]" style={{ color: '#6b6b6b' }}>
+                    {item.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* 活動時程 */}
+            <Timeline />
           </div>
 
         /* 流程選擇 */
