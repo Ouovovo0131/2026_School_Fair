@@ -354,8 +354,8 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
 
             {/* 任務格子 */}
             <div className="premium-card clay-shadow-sm p-4">
-              <h3 className="text-base font-bold mb-3" style={{color: '#000080'}}>🎮 任務列表 ({TOTAL_QUESTS} 關)</h3>
-              <div className="grid grid-cols-4 gap-2">
+              <h3 className="text-base font-bold mb-3 px-3 py-2 rounded-lg inline-block" style={{color: '#FFFFFF', backgroundColor: '#FF8C00'}}>🎮 任務列表 ({TOTAL_QUESTS} 關)</h3>
+              <div className="grid grid-cols-4 md:grid-cols-2 gap-2 mt-4">
                 {Array.from({ length: TOTAL_QUESTS }).map((_, index) => {
                   const questId = index + 1;
                   const quest = QUESTS.find(q => q.id === questId);
@@ -366,12 +366,12 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                     <div key={questId}
                       className="aspect-square rounded-2xl flex flex-col items-center justify-center gap-1.5 task-locked-card"
                       style={{
-                        background: 'rgba(0,0,0,0.04)', 
-                        border: '1.5px solid rgba(0,0,0,0.07)',
-                        borderBottom: '4px solid rgba(0,0,0,0.1)'
+                        background: '#FFF8DC', 
+                        border: '1.5px solid #DDD',
+                        borderBottom: '4px solid #CCC'
                       }}>
-                      <Lock size={16} style={{color: '#bbb'}}/>
-                      <span className="text-[10px] font-bold" style={{color: '#bbb'}}>未解鎖</span>
+                      <Lock size={16} style={{color: '#999'}}/>
+                      <span className="text-[10px] font-bold" style={{color: '#999'}}>未解鎖</span>
                     </div>
                   );
 
@@ -381,10 +381,9 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                     <div key={questId}
                       className="aspect-square rounded-2xl flex flex-col items-center justify-center gap-1 relative overflow-hidden"
                       style={{
-                        background: 'linear-gradient(135deg,rgba(255,215,0,0.2),rgba(255,215,0,0.1))', 
+                        background: '#FFF8DC', 
                         border: '2px solid #FFD700',
-                        borderBottom: '4px solid #CC9900',
-                        boxShadow: '0 4px 12px rgba(255,215,0,0.25)'
+                        borderBottom: '4px solid #FFD700'
                       }}>
                       <span className="text-2xl" style={{animation: 'bounce-pop 0.6s ease'}}>✓</span>
                       <span className={`game-quest-number text-xs w-6 h-6 flex items-center justify-center`}
@@ -398,10 +397,9 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                     <a key={questId} href={`/scan/${quest.slug}`}
                       className="aspect-square rounded-2xl flex flex-col items-center justify-center gap-0.5 transition-all hover:-translate-y-1.5 hover:scale-105 active:scale-95 active:translate-y-0 relative overflow-hidden group"
                       style={{
-                        background: 'linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,248,220,0.85) 100%)', 
-                        border: '2px solid rgba(255,140,0,0.4)',
-                        borderBottom: '4px solid rgba(255,140,0,0.5)',
-                        boxShadow: '0 6px 12px rgba(255,140,0,0.15)'
+                        background: '#FFF8DC', 
+                        border: '2px solid #FF8C00',
+                        borderBottom: '4px solid #FF8C00'
                       }}>
                       <div className="game-quest-number blue text-xs" style={{fontSize: '16px', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                         {String(questId).padStart(2, '0')}
