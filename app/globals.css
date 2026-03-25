@@ -198,33 +198,38 @@ body {
   cursor: not-allowed;
 }
 
-/* 按鈕變體 - 使用補色方案 */
+/* 按鈕變體 - 拾光主題配色 */
 .clay-button-blue {
-  background: linear-gradient(135deg, #0288d1, #0277bd);  /* 深蔚藍 */
-  box-shadow: 0 8px 20px rgba(2, 136, 209, 0.30);
+  background: linear-gradient(135deg, #FFBF00, #FF9500);  /* 琥珀金漸層 */
+  color: #333333;  /* 深色文字 - 高對比 */
+  box-shadow: 0 8px 20px rgba(255, 191, 0, 0.30);
 }
 
 .clay-button-blue:hover:not(:disabled) {
-  box-shadow: 0 15px 35px rgba(2, 136, 209, 0.50);
+  box-shadow: 0 15px 35px rgba(255, 191, 0, 0.50);
+  background: linear-gradient(135deg, #FFBF00, #FF8C00);
 }
 
 .clay-button-purple {
-  background: linear-gradient(135deg, #7c3aed, #6a1b9a);  /* 紫罗兰 */
-  box-shadow: 0 8px 20px rgba(124, 58, 237, 0.30);
+  background: linear-gradient(135deg, #FF7F50, #FF6347);  /* 珊瑚橘漸層 */
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(255, 127, 80, 0.30);
 }
 
 .clay-button-purple:hover:not(:disabled) {
-  box-shadow: 0 15px 35px rgba(124, 58, 237, 0.50);
+  box-shadow: 0 15px 35px rgba(255, 127, 80, 0.50);
+  background: linear-gradient(135deg, #FF7F50, #FF4500);
 }
 
 .clay-button-yellow {
-  background: linear-gradient(135deg, #ff6b6b, #ff5252);  /* 珊瑚紅 - 補色 */
+  background: linear-gradient(135deg, #1B4332, #2A52BE);  /* 學院深綠→寶石藍 */
   color: #fff;
-  box-shadow: 0 8px 20px rgba(255, 107, 107, 0.30);
+  box-shadow: 0 8px 20px rgba(27, 67, 50, 0.30);
 }
 
 .clay-button-yellow:hover:not(:disabled) {
-  box-shadow: 0 15px 35px rgba(255, 107, 107, 0.50);
+  box-shadow: 0 15px 35px rgba(42, 82, 190, 0.50);
+  background: linear-gradient(135deg, #0F2818, #1a3a7f);
 }
 
 .clay-button-lg {
@@ -353,19 +358,19 @@ body {
 
 /* 進度條 - 高級設計 */
 .progress-bar-container {
-  background: linear-gradient(90deg, #f5f5f5 0%, #fafbfc 100%);
+  background: linear-gradient(90deg, #f5f5f5 0%, #FDFBF7 100%);
   border-radius: 20px;
   padding: 3px;
   overflow: hidden;
-  box-shadow: 0 0 0 2px #0288d1, 0 2px 8px rgba(2, 136, 209, 0.12);
+  box-shadow: 0 0 0 2px #2A52BE, 0 2px 8px rgba(42, 82, 190, 0.12);
 }
 
 .progress-bar-fill {
-  background: linear-gradient(90deg, #0288d1, #1abc9c, #00d4ff);  /* 蔚藍→綠松石→淡青 */
+  background: linear-gradient(90deg, #2A52BE, #FFBF00, #FF7F50);  /* 寶石藍→琥珀金→珊瑚橘 */
   height: 10px;
   border-radius: 20px;
   transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 0 12px rgba(26, 188, 156, 0.5), 0 0 4px rgba(2, 136, 209, 0.20);
+  box-shadow: 0 0 12px rgba(255, 191, 0, 0.5), 0 0 4px rgba(42, 82, 190, 0.20);
 }
 
 .progress-bar-fill::after {
@@ -455,9 +460,9 @@ body {
 /* 任務網格卡片 */
 .task-grid-item {
   border-radius: 24px;
-  background: linear-gradient(135deg, #ffffff 95%, #f0f4ff 100%);
-  border: 2.5px solid #0288d1;
-  box-shadow: 0 4px 16px rgba(2, 136, 209, 0.12), 0 2px 8px rgba(26, 188, 156, 0.08);
+  background: linear-gradient(135deg, #ffffff 95%, #FDFBF7 100%);
+  border: 2.5px solid #2A52BE;  /* 寶石藍邊框 */
+  box-shadow: 0 4px 16px rgba(42, 82, 190, 0.12), 0 2px 8px rgba(255, 191, 0, 0.08);
   padding: 20px;
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
@@ -853,11 +858,11 @@ h1, h2, h3 {
   border-radius: 28px;
   border: none;
   cursor: pointer;
-  background: linear-gradient(135deg, #ff6b6b, #ff5252);
-  color: white;
+  background: linear-gradient(135deg, #FF7F50, #FFBF00);  /* 珊瑚橘→琥珀金 */
+  color: #333333;  /* 深色文字 */
   position: relative;
   overflow: hidden;
-  box-shadow: 0 12px 32px rgba(255, 107, 107, 0.30);
+  box-shadow: 0 12px 32px rgba(255, 127, 80, 0.30);
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   transform: scale(1);
 }
@@ -875,7 +880,7 @@ h1, h2, h3 {
 
 .btn-cta-large:hover:not(:disabled) {
   transform: scale(1.08) translateY(-2px);
-  box-shadow: 0 20px 48px rgba(255, 107, 107, 0.45);
+  box-shadow: 0 20px 48px rgba(255, 127, 80, 0.45);
 }
 
 .btn-cta-large:hover:not(:disabled)::before {
