@@ -1,70 +1,70 @@
 @import "tailwindcss";
 
 :root {
-  /* 麥當勞獵人主題色調 */
-  --background: #fff7e6;
-  --foreground: #2c2c2c;
-  /* 主色調 */
-  --primary-red: #e60012;
-  --primary-yellow: #ffd600;
-  --primary-gold: #ffb300;
-  --primary-blue: #3b8edb;
-  --primary-purple: #a259d9;
-  --primary-brown: #a67b5b;
-  /* 深色變體 */
-  --red-dark: #b8000a;
+  /* 蔚藍色主題色調 */
+  --background: #f0faff;
+  --foreground: #1a3a52;
+  /* 主色調 - 蔚藍色系 */
+  --primary-red: #0099cc;
+  --primary-yellow: #ffc900;
+  --primary-gold: #00d4ff;
+  --primary-blue: #1ab4e7;
+  --primary-purple: #4169e1;
+  --primary-brown: #6b8e99;
+  /* 深色變體 - 暗藍色系 */
+  --red-dark: #005a8d;
   --yellow-dark: #e6b800;
-  --gold-dark: #c49000;
-  --blue-dark: #2563a6;
-  --purple-dark: #7c3fa0;
-  --brown-dark: #7c5a3a;
+  --gold-dark: #0099cc;
+  --blue-dark: #0f6b9e;
+  --purple-dark: #2e5aa5;
+  --brown-dark: #4a6378;
   /* 中性色 */
-  --clay-light: #fffaf5;
-  --clay-medium: #f5e8e0;
-  --clay-dark: #e8d4c4;
-  --text-light: #4a4a4a;
-  --text-dark: #2c2c2c;
+  --clay-light: #e8f4ff;
+  --clay-medium: #c9e4f5;
+  --clay-dark: #a8d4e6;
+  --text-light: #2c5a7b;
+  --text-dark: #1a3a52;
 }
 
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #2c1a00;
-    --foreground: #fff7e6;
-    --clay-light: #3a2a1a;
-    --clay-medium: #5a3a1a;
-    --clay-dark: #7c5a3a;
-    --text-light: #ffe8b2;
-    --text-dark: #fff7e6;
+    --background: #0f2738;
+    --foreground: #e8f4ff;
+    --clay-light: #1a3a52;
+    --clay-medium: #284a66;
+    --clay-dark: #3a5a7a;
+    --text-light: #b3d9ff;
+    --text-dark: #e8f4ff;
   }
 
   body {
-    background: linear-gradient(135deg, #2c1a00 0%, #3d2a0a 100%);
+    background: linear-gradient(135deg, #0f2738 0%, #1a3a52 100%);
     color: var(--foreground);
   }
 
   /* 暗黑模式下的卡片對比度提升 */
   .premium-card,
   .clay-card {
-    background: linear-gradient(135deg, rgba(92, 62, 18, 0.7), rgba(62, 36, 8, 0.7)) !important;
-    border-color: rgba(255, 214, 0, 0.25) !important;
+    background: linear-gradient(135deg, rgba(15, 43, 56, 0.8), rgba(26, 58, 82, 0.8)) !important;
+    border-color: rgba(0, 180, 231, 0.35) !important;
   }
 
   /* 暗黑模式下的按鈕可見性 */
   .clay-button {
-    box-shadow: 0 12px 32px rgba(230, 0, 18, 0.4);
+    box-shadow: 0 12px 32px rgba(0, 153, 204, 0.4);
   }
 
   /* 悬浮提示在暗黑模式下更清晰 */
   .tooltip, [title] {
-    background-color: #1a1a1a;
-    color: #fff7e6;
+    background-color: #1a3a52;
+    color: #e8f4ff;
   }
 
   /* 進度條暗黑模式優化 */
   .progress-bar-container {
-    background: rgba(255, 214, 0, 0.15);
-    box-shadow: 0 0 0 2px rgba(230, 0, 18, 0.4), 0 2px 8px rgba(255, 214, 0, 0.08);
+    background: rgba(0, 153, 204, 0.15);
+    box-shadow: 0 0 0 2px rgba(0, 153, 204, 0.4), 0 2px 8px rgba(0, 212, 255, 0.08);
   }
 
   /* Hero title 在暗黑模式下的可見性 */
@@ -87,7 +87,7 @@ html {
 }
 
 body {
-  background: linear-gradient(135deg, #fff7e6 0%, #ffd600 100%);
+  background: linear-gradient(135deg, #f0faff 0%, #e0f2ff 100%);
   color: var(--foreground);
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
   letter-spacing: 0.3px;
@@ -158,12 +158,12 @@ body {
   letter-spacing: 1px;
   border: none;
   cursor: pointer;
-  background: linear-gradient(90deg, var(--primary-red), var(--primary-yellow));
+  background: linear-gradient(90deg, var(--primary-red), var(--primary-gold));
   color: #fff;
   position: relative;
   overflow: hidden;
   transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 6px 18px rgba(230,0,18,0.10);
+  box-shadow: 0 6px 18px rgba(0,153,204,0.15);
   font-size: 18px;
 }
 
@@ -180,7 +180,7 @@ body {
 
 .clay-button:hover:not(:disabled) {
   filter: brightness(1.12);
-  box-shadow: 0 12px 32px rgba(255,214,0,0.18);
+  box-shadow: 0 12px 32px rgba(0,212,255,0.25);
 }
 
 .clay-button:hover:not(:disabled)::before {
@@ -189,7 +189,7 @@ body {
 
 .clay-button:active:not(:disabled) {
   transform: translateY(0);
-  box-shadow: 0 4px 12px rgba(245, 163, 199, 0.3);
+  box-shadow: 0 4px 12px rgba(26, 180, 231, 0.3);
 }
 
 .clay-button:disabled {
@@ -200,30 +200,30 @@ body {
 /* 按鈕變體 */
 .clay-button-blue {
   background: linear-gradient(135deg, var(--primary-blue), var(--blue-dark));
-  box-shadow: 0 8px 20px rgba(168, 216, 232, 0.3);
+  box-shadow: 0 8px 20px rgba(26, 180, 231, 0.3);
 }
 
 .clay-button-blue:hover:not(:disabled) {
-  box-shadow: 0 15px 35px rgba(168, 216, 232, 0.4);
+  box-shadow: 0 15px 35px rgba(26, 180, 231, 0.45);
 }
 
 .clay-button-purple {
   background: linear-gradient(135deg, var(--primary-purple), var(--purple-dark));
-  box-shadow: 0 8px 20px rgba(212, 197, 232, 0.3);
+  box-shadow: 0 8px 20px rgba(65, 105, 225, 0.3);
 }
 
 .clay-button-purple:hover:not(:disabled) {
-  box-shadow: 0 15px 35px rgba(212, 197, 232, 0.4);
+  box-shadow: 0 15px 35px rgba(65, 105, 225, 0.45);
 }
 
 .clay-button-yellow {
   background: linear-gradient(135deg, var(--primary-yellow), var(--yellow-dark));
   color: var(--text-dark);
-  box-shadow: 0 8px 20px rgba(252, 232, 178, 0.3);
+  box-shadow: 0 8px 20px rgba(255, 201, 0, 0.3);
 }
 
 .clay-button-yellow:hover:not(:disabled) {
-  box-shadow: 0 15px 35px rgba(252, 232, 178, 0.4);
+  box-shadow: 0 15px 35px rgba(255, 201, 0, 0.45);
 }
 
 .clay-button-lg {
@@ -334,7 +334,7 @@ body {
   transform-style: preserve-3d;
 }
 
-.ring-rose { border-color: var(--primary-rose); }
+.ring-rose { border-color: var(--primary-red); }
 .ring-blue { border-color: var(--primary-blue); }
 .ring-purple { border-color: var(--primary-purple); }
 .ring-yellow { border-color: var(--primary-yellow); }
@@ -352,19 +352,19 @@ body {
 
 /* 進度條 - 高級設計 */
 .progress-bar-container {
-  background: linear-gradient(90deg, #fff7e6 0%, #ffd600 100%);
+  background: linear-gradient(90deg, #f0faff 0%, #e0f2ff 100%);
   border-radius: 20px;
   padding: 3px;
   overflow: hidden;
-  box-shadow: 0 0 0 2px var(--primary-red), 0 2px 8px rgba(255,214,0,0.10);
+  box-shadow: 0 0 0 2px var(--primary-red), 0 2px 8px rgba(0,212,255,0.12);
 }
 
 .progress-bar-fill {
-  background: linear-gradient(90deg, var(--primary-red), var(--primary-yellow), var(--primary-gold));
+  background: linear-gradient(90deg, var(--primary-red), var(--primary-gold), var(--primary-blue));
   height: 10px;
   border-radius: 20px;
   transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 0 12px rgba(255,214,0,0.4), 0 0 4px rgba(230,0,18,0.15);
+  box-shadow: 0 0 12px rgba(0,212,255,0.4), 0 0 4px rgba(0,153,204,0.15);
 }
 
 .progress-bar-fill::after {
@@ -380,10 +380,10 @@ body {
 
 /* 彩色徽章系統 */
 .badge-rose, .badge-blue, .badge-purple, .badge-yellow, .badge-mint {
-  background: linear-gradient(135deg, var(--primary-red), var(--primary-yellow), var(--primary-gold));
+  background: linear-gradient(135deg, var(--primary-red), var(--primary-gold), var(--primary-blue));
   color: #fff;
   border: 2px solid var(--primary-red);
-  box-shadow: 0 2px 8px rgba(255,214,0,0.18);
+  box-shadow: 0 2px 8px rgba(0,212,255,0.22);
 }
 
 /* 完成效果 - 3D 印章 */
@@ -412,10 +412,10 @@ body {
 
 /* 導航欄設計 */
 .premium-card {
-  background: linear-gradient(135deg, #fff7e6 60%, #ffd600 100%);
+  background: linear-gradient(135deg, #f0faff 60%, #e0f2ff 100%);
   border-radius: 32px;
   border: 2.5px solid var(--primary-red);
-  box-shadow: 0 8px 32px rgba(230,0,18,0.08), 0 2px 8px rgba(255,214,0,0.08);
+  box-shadow: 0 8px 32px rgba(0,153,204,0.12), 0 2px 8px rgba(0,212,255,0.08);
   padding: 28px 24px;
   position: relative;
   overflow: hidden;
@@ -453,9 +453,9 @@ body {
 /* 任務網格卡片 */
 .task-grid-item {
   border-radius: 24px;
-  background: linear-gradient(135deg, #fff7e6 60%, #ffd600 100%);
+  background: linear-gradient(135deg, #f0faff 60%, #e0f2ff 100%);
   border: 2.5px solid var(--primary-red);
-  box-shadow: 0 4px 16px rgba(230,0,18,0.10), 0 2px 8px rgba(255,214,0,0.10);
+  box-shadow: 0 4px 16px rgba(0,153,204,0.10), 0 2px 8px rgba(0,212,255,0.10);
   padding: 20px;
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
@@ -638,7 +638,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 900;
   color: var(--primary-red);
   letter-spacing: 1.5px;
-  text-shadow: 0 2px 8px rgba(255,214,0,0.10);
+  text-shadow: 0 2px 8px rgba(0,212,255,0.10);
 }
 
 /* 任務卡片 - 未解鎖狀態增強 */
@@ -738,10 +738,10 @@ h1, h2, h3, h4, h5, h6 {
 /* 脈動光暈 - Hero Section */
 @keyframes hero-pulse {
   0%, 100% {
-    box-shadow: 0 0 30px rgba(230, 0, 18, 0.3);
+    box-shadow: 0 0 30px rgba(0, 153, 204, 0.3);
   }
   50% {
-    box-shadow: 0 0 60px rgba(255, 214, 0, 0.5), 0 0 90px rgba(230, 0, 18, 0.2);
+    box-shadow: 0 0 60px rgba(0, 212, 255, 0.5), 0 0 90px rgba(0, 153, 204, 0.2);
   }
 }
 
@@ -787,9 +787,9 @@ h1, h2, h3, h4, h5, h6 {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle at 20% 50%, rgba(230, 0, 18, 0.05) 0%, transparent 50%),
-              radial-gradient(circle at 80% 80%, rgba(255, 214, 0, 0.05) 0%, transparent 50%),
-              radial-gradient(circle at 40% 80%, rgba(59, 142, 219, 0.04) 0%, transparent 50%);
+  background: radial-gradient(circle at 20% 50%, rgba(0, 153, 204, 0.05) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(0, 212, 255, 0.05) 0%, transparent 50%),
+              radial-gradient(circle at 40% 80%, rgba(26, 180, 231, 0.04) 0%, transparent 50%);
   animation: bg-shift 20s ease-in-out infinite;
   pointer-events: none;
 }
@@ -841,11 +841,11 @@ h1, h2, h3 {
   border-radius: 28px;
   border: none;
   cursor: pointer;
-  background: linear-gradient(135deg, var(--primary-red), var(--primary-yellow));
+  background: linear-gradient(135deg, var(--primary-red), var(--primary-gold));
   color: white;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 12px 32px rgba(230, 0, 18, 0.25);
+  box-shadow: 0 12px 32px rgba(0, 153, 204, 0.25);
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   transform: scale(1);
 }
@@ -863,7 +863,7 @@ h1, h2, h3 {
 
 .btn-cta-large:hover:not(:disabled) {
   transform: scale(1.08) translateY(-2px);
-  box-shadow: 0 20px 48px rgba(230, 0, 18, 0.35);
+  box-shadow: 0 20px 48px rgba(0, 153, 204, 0.35);
 }
 
 .btn-cta-large:hover:not(:disabled)::before {
@@ -884,16 +884,16 @@ h1, h2, h3 {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: linear-gradient(180deg, rgba(255, 247, 230, 0.98) 0%, rgba(255, 247, 230, 0.95) 100%);
+  background: linear-gradient(180deg, rgba(240, 250, 255, 0.98) 0%, rgba(224, 242, 255, 0.95) 100%);
   backdrop-filter: blur(10px);
-  border-bottom: 2px solid rgba(230, 0, 18, 0.1);
+  border-bottom: 2px solid rgba(0, 153, 204, 0.1);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 @media (prefers-color-scheme: dark) {
   .sticky-header {
-    background: linear-gradient(180deg, rgba(44, 26, 0, 0.98) 0%, rgba(44, 26, 0, 0.95) 100%);
-    border-bottom-color: rgba(255, 214, 0, 0.1);
+    background: linear-gradient(180deg, rgba(15, 43, 56, 0.98) 0%, rgba(15, 43, 56, 0.95) 100%);
+    border-bottom-color: rgba(0, 212, 255, 0.1);
   }
 }
 
