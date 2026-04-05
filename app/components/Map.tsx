@@ -126,6 +126,12 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                 className="w-full"
                 style={{ minWidth: "340px", maxWidth: "900px", display: "block", margin: "0 auto" }}
               >
+                <defs>
+                  <filter id="map-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="4" stdDeviation="3" floodColor="#1E4463" floodOpacity="0.18" />
+                  </filter>
+                </defs>
+
                 <rect x="80" y="10" width="700" height="440" rx="8" fill="transparent" stroke={MAP_COLORS.campusBorder} strokeWidth="3" />
 
                 <rect x="150" y="92" width="590" height="44" rx="18" fill={MAP_COLORS.roadAlt} opacity="0.7" pointerEvents="none" />
@@ -253,10 +259,10 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                 <text x="462" y="243" textAnchor="middle" fontSize="14" fill={MAP_COLORS.building} fontWeight="700">小花園</text>
 
                 <rect
-                  x="285"
-                  y="312"
-                  width="150"
-                  height="40"
+                  x="334"
+                  y="134"
+                  width="132"
+                  height="86"
                   rx="8"
                   fill={MAP_COLORS.stage}
                   stroke={MAP_COLORS.stageBorder}
@@ -265,7 +271,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   onMouseLeave={() => setHoveredBuilding(null)}
                   style={{ cursor: "pointer", transition: "stroke 0.15s ease, transform 0.15s ease" }}
                 />
-                <text x="360" y="338" textAnchor="middle" fontSize="15" fill={MAP_COLORS.buildingText} fontWeight="800">舞台</text>
+                <text x="400" y="183" textAnchor="middle" fontSize="18" fill={MAP_COLORS.buildingText} fontWeight="800">舞台</text>
 
                 <rect
                   x="188"
@@ -287,9 +293,12 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   onMouseLeave={() => setHoveredArrow(null)}
                   style={{ cursor: "pointer" }}
                 >
-                  <path d="M 250 236 H 314 M 300 228 L 314 236 L 300 244" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.building} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M 360 236 H 424 M 410 228 L 424 236 L 410 244" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.building} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M 470 236 H 534 M 520 228 L 534 236 L 520 244" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.building} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M 262 236 H 320" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.building} strokeWidth="4" strokeLinecap="round" />
+                  <path d="M 320 236 L 304 228 M 320 236 L 304 244" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.building} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M 448 236 H 520" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.building} strokeWidth="4" strokeLinecap="round" />
+                  <path d="M 520 236 L 504 228 M 520 236 L 504 244" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.building} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M 180 382 H 648" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.building} strokeWidth="4" strokeLinecap="round" />
+                  <path d="M 648 382 L 632 374 M 648 382 L 632 390" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.building} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
                 </g>
 
                 {/* ── 攤位框框 ── */}
@@ -298,35 +307,54 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   const isSelected = selectedStall?.id === box.id;
                   const scale = isHovered ? 1.1 : isSelected ? 1.06 : 1;
                   return (
-                    <g key={box.id}>
+                    <g
+                      key={box.id}
+                      onClick={() => handleBoxClick(box.id)}
+                      onMouseEnter={() => setHoveredId(box.id)}
+                      onMouseLeave={() => setHoveredId(null)}
+                      style={{
+                        cursor: "pointer",
+                        transition: "transform 0.15s ease, filter 0.15s ease",
+                        transformBox: "fill-box",
+                        transformOrigin: "center",
+                        transform: `scale(${scale})`,
+                        filter: isHovered || isSelected ? "url(#map-shadow)" : "none",
+                      }}
+                    >
                       <rect
                         x={box.x}
-                        y={box.y}
+                        y={box.y + 8}
                         width={box.w}
-                        height={box.h}
+                        height={box.h - 8}
                         rx="6"
                         fill={isHovered || isSelected ? MAP_COLORS.stallHover : MAP_COLORS.stall}
                         stroke={isSelected ? MAP_COLORS.building : MAP_COLORS.campusBorder}
                         strokeWidth={isSelected ? 3.5 : 2.5}
-                        style={{
-                          cursor: "pointer",
-                          transition: "transform 0.15s ease, fill 0.15s ease, stroke 0.15s ease",
-                          transformBox: "fill-box",
-                          transformOrigin: "center",
-                          transform: `scale(${scale})`,
-                        }}
-                        onClick={() => handleBoxClick(box.id)}
-                        onMouseEnter={() => setHoveredId(box.id)}
-                        onMouseLeave={() => setHoveredId(null)}
+                      />
+                      <polygon
+                        points={`${box.x + 2},${box.y + 10} ${box.x + box.w / 2},${box.y} ${box.x + box.w - 2},${box.y + 10}`}
+                        fill={isHovered || isSelected ? MAP_COLORS.stallHover : MAP_COLORS.stall}
+                        stroke={isSelected ? MAP_COLORS.building : MAP_COLORS.campusBorder}
+                        strokeWidth={isSelected ? 3.5 : 2.5}
+                        strokeLinejoin="round"
+                      />
+                      <rect
+                        x={box.x + 4}
+                        y={box.y + 18}
+                        width={box.w - 8}
+                        height={Math.max(18, box.h - 26)}
+                        rx="5"
+                        fill={isHovered || isSelected ? MAP_COLORS.stallHover : MAP_COLORS.stall}
+                        stroke="none"
                       />
                       {/* 攤位編號小標 */}
                       <text
                         x={box.x + box.w / 2}
-                        y={box.y + box.h / 2}
+                        y={box.y + box.h / 2 + 3}
                         textAnchor="middle"
                         dominantBaseline="middle"
-                        fontSize="11"
-                        fontWeight="700"
+                        fontSize="10"
+                        fontWeight="800"
                         fill={MAP_COLORS.building}
                         style={{ cursor: "pointer", pointerEvents: "none" }}
                       >
