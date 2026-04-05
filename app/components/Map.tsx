@@ -133,7 +133,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                 🗺️ 校慶攤位地圖
               </h1>
               <p className="mt-1 text-base font-medium" style={{ color: MAP_COLORS.stall }}>
-                點擊橘色攤位框可查看詳情 ✨
+                點擊粉紅帳篷可查看攤位詳情 ✨
               </p>
             </div>
 
@@ -147,143 +147,161 @@ export default function Map({ onBack, isModal = false }: MapProps) {
               >
                 <defs>
                   <filter id="map-shadow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="0" dy="4" stdDeviation="3" floodColor="#1E4463" floodOpacity="0.18" />
+                    <feDropShadow dx="0" dy="4" stdDeviation="3" floodColor="#6E4F35" floodOpacity="0.2" />
                   </filter>
                 </defs>
 
                 <rect x="80" y="10" width="700" height="440" rx="8" fill="transparent" stroke={MAP_COLORS.campusBorder} strokeWidth="3" />
+                <rect x="83" y="13" width="694" height="434" rx="6" fill={MAP_COLORS.ground} />
 
-                <rect x="80" y="10" width="700" height="44" fill="#BC8F62" opacity="0.95" />
+                <rect x="80" y="10" width="700" height="44" fill={MAP_COLORS.roadAlt} opacity="0.95" />
                 <text x="430" y="40" textAnchor="middle" fontSize="34" fill="#FFFFFF" fontWeight="700">民權路</text>
 
-                <rect x="150" y="92" width="590" height="44" rx="18" fill={MAP_COLORS.roadAlt} opacity="0.7" pointerEvents="none" />
-                <rect x="150" y="150" width="580" height="152" rx="20" fill={MAP_COLORS.road} opacity="0.95" pointerEvents="none" />
-                <rect x="188" y="304" width="440" height="56" rx="16" fill={MAP_COLORS.roadAlt} opacity="0.92" pointerEvents="none" />
-
                 <rect
-                  x="10"
-                  y="10"
-                  width="62"
-                  height="80"
-                  rx="8"
-                  fill={MAP_COLORS.building}
-                  stroke={hoveredBuilding === "science" ? MAP_COLORS.stallHover : MAP_COLORS.building}
-                  strokeWidth="3"
-                  onMouseEnter={() => setHoveredBuilding("science")}
-                  onMouseLeave={() => setHoveredBuilding(null)}
-                  style={{ cursor: "pointer", transition: "stroke 0.15s ease, transform 0.15s ease" }}
-                />
-                <text x="41" y="58" textAnchor="middle" fontSize="13" fill={MAP_COLORS.buildingText} fontWeight="700">傳達室</text>
-
-                <rect
-                  x="160"
-                  y="10"
-                  width="80"
-                  height="46"
-                  rx="8"
+                  x="92"
+                  y="66"
+                  width="78"
+                  height="62"
+                  rx="4"
                   fill={MAP_COLORS.building}
                   stroke={hoveredBuilding === "gate" ? MAP_COLORS.stallHover : MAP_COLORS.building}
-                  strokeWidth="3"
+                  strokeWidth="2.5"
                   onMouseEnter={() => setHoveredBuilding("gate")}
                   onMouseLeave={() => setHoveredBuilding(null)}
-                  style={{ cursor: "pointer", transition: "stroke 0.15s ease, transform 0.15s ease" }}
+                  style={{ cursor: "pointer", transition: "stroke 0.15s ease" }}
                 />
-                <text x="200" y="38" textAnchor="middle" fontSize="13" fill={MAP_COLORS.buildingText} fontWeight="700">校門</text>
+                <text x="131" y="102" textAnchor="middle" fontSize="11" fill={MAP_COLORS.buildingText} fontWeight="700">校門</text>
 
                 <rect
-                  x="300"
-                  y="10"
-                  width="230"
-                  height="70"
+                  x="92"
+                  y="136"
+                  width="54"
+                  height="64"
+                  rx="4"
+                  fill={MAP_COLORS.building}
+                  stroke={hoveredBuilding === "office" ? MAP_COLORS.stallHover : MAP_COLORS.building}
+                  strokeWidth="2.5"
+                  onMouseEnter={() => setHoveredBuilding("office")}
+                  onMouseLeave={() => setHoveredBuilding(null)}
+                  style={{ cursor: "pointer", transition: "stroke 0.15s ease" }}
+                />
+                <text x="119" y="173" textAnchor="middle" fontSize="11" fill={MAP_COLORS.buildingText} fontWeight="700">傳達室</text>
+
+                <rect
+                  x="200"
+                  y="66"
+                  width="400"
+                  height="72"
                   rx="8"
                   fill={MAP_COLORS.building}
-                  stroke={hoveredBuilding === "library-new" ? MAP_COLORS.stallHover : MAP_COLORS.building}
+                  stroke={hoveredBuilding === "library" ? MAP_COLORS.stallHover : MAP_COLORS.building}
                   strokeWidth="3"
-                  onMouseEnter={() => setHoveredBuilding("library-new")}
+                  onMouseEnter={() => setHoveredBuilding("library")}
                   onMouseLeave={() => setHoveredBuilding(null)}
-                  style={{ cursor: "pointer", transition: "stroke 0.15s ease, transform 0.15s ease" }}
+                  style={{ cursor: "pointer", transition: "stroke 0.15s ease" }}
                 />
-                <text x="415" y="51" textAnchor="middle" fontSize="16" fill={MAP_COLORS.buildingText} fontWeight="700">圖書館大樓</text>
+                <text x="400" y="109" textAnchor="middle" fontSize="20" fill={MAP_COLORS.buildingText} fontWeight="700">圖資大樓</text>
 
                 <rect
-                  x="590"
-                  y="10"
-                  width="140"
-                  height="70"
-                  rx="8"
-                  fill={MAP_COLORS.building}
-                  stroke={hoveredBuilding === "library-old" ? MAP_COLORS.stallHover : MAP_COLORS.building}
-                  strokeWidth="3"
-                  onMouseEnter={() => setHoveredBuilding("library-old")}
-                  onMouseLeave={() => setHoveredBuilding(null)}
-                  style={{ cursor: "pointer", transition: "stroke 0.15s ease, transform 0.15s ease" }}
-                />
-                <text x="660" y="51" textAnchor="middle" fontSize="15" fill={MAP_COLORS.buildingText} fontWeight="700">圖書館大樓</text>
-
-                <rect
-                  x="80"
-                  y="10"
-                  width="68"
-                  height="440"
+                  x="92"
+                  y="155"
+                  width="92"
+                  height="250"
                   rx="8"
                   fill={MAP_COLORS.building}
                   stroke={hoveredBuilding === "complex" ? MAP_COLORS.stallHover : MAP_COLORS.building}
                   strokeWidth="3"
                   onMouseEnter={() => setHoveredBuilding("complex")}
                   onMouseLeave={() => setHoveredBuilding(null)}
-                  style={{ cursor: "pointer", transition: "stroke 0.15s ease, transform 0.15s ease" }}
+                  style={{ cursor: "pointer", transition: "stroke 0.15s ease" }}
                 />
-                <text x="114" y="220" textAnchor="middle" fontSize="13" fill={MAP_COLORS.buildingText} fontWeight="700" transform="rotate(-90 114 220)">綜合大樓</text>
+                <text x="138" y="282" textAnchor="middle" fontSize="22" fill={MAP_COLORS.buildingText} fontWeight="700" transform="rotate(-90 138 282)">綜合大樓</text>
 
                 <rect
-                  x="730"
-                  y="160"
-                  width="50"
-                  height="260"
+                  x="678"
+                  y="155"
+                  width="92"
+                  height="250"
                   rx="8"
                   fill={MAP_COLORS.building}
                   stroke={hoveredBuilding === "xinyi" ? MAP_COLORS.stallHover : MAP_COLORS.building}
                   strokeWidth="3"
                   onMouseEnter={() => setHoveredBuilding("xinyi")}
                   onMouseLeave={() => setHoveredBuilding(null)}
-                  style={{ cursor: "pointer", transition: "stroke 0.15s ease, transform 0.15s ease" }}
+                  style={{ cursor: "pointer", transition: "stroke 0.15s ease" }}
                 />
-                <text x="755" y="298" textAnchor="middle" fontSize="13" fill={MAP_COLORS.buildingText} fontWeight="700" transform="rotate(-90 755 298)">信義樓</text>
+                <text x="724" y="282" textAnchor="middle" fontSize="22" fill={MAP_COLORS.buildingText} fontWeight="700" transform="rotate(-90 724 282)">信義樓</text>
 
                 <rect
-                  x="188"
-                  y="168"
-                  width="116"
-                  height="138"
-                  rx="10"
+                  x="200"
+                  y="350"
+                  width="210"
+                  height="90"
+                  rx="8"
+                  fill={MAP_COLORS.building}
+                  stroke={hoveredBuilding === "academic" ? MAP_COLORS.stallHover : MAP_COLORS.building}
+                  strokeWidth="3"
+                  onMouseEnter={() => setHoveredBuilding("academic")}
+                  onMouseLeave={() => setHoveredBuilding(null)}
+                  style={{ cursor: "pointer", transition: "stroke 0.15s ease" }}
+                />
+                <text x="305" y="402" textAnchor="middle" fontSize="16" fill={MAP_COLORS.buildingText} fontWeight="700">教務處</text>
+
+                <rect
+                  x="430"
+                  y="350"
+                  width="240"
+                  height="90"
+                  rx="8"
+                  fill={MAP_COLORS.building}
+                  stroke={hoveredBuilding === "student" ? MAP_COLORS.stallHover : MAP_COLORS.building}
+                  strokeWidth="3"
+                  onMouseEnter={() => setHoveredBuilding("student")}
+                  onMouseLeave={() => setHoveredBuilding(null)}
+                  style={{ cursor: "pointer", transition: "stroke 0.15s ease" }}
+                />
+                <text x="550" y="402" textAnchor="middle" fontSize="16" fill={MAP_COLORS.buildingText} fontWeight="700">學務處</text>
+
+                <rect
+                  x="200"
+                  y="178"
+                  width="130"
+                  height="130"
+                  rx="4"
                   fill={MAP_COLORS.garden}
                   stroke={hoveredBuilding === "garden-left" ? MAP_COLORS.stallHover : MAP_COLORS.campusBorder}
                   strokeWidth="2.5"
                   onMouseEnter={() => setHoveredBuilding("garden-left")}
                   onMouseLeave={() => setHoveredBuilding(null)}
-                  style={{ cursor: "pointer", transition: "stroke 0.15s ease, transform 0.15s ease" }}
+                  style={{ cursor: "pointer", transition: "stroke 0.15s ease" }}
                 />
-                <text x="246" y="243" textAnchor="middle" fontSize="14" fill={MAP_COLORS.building} fontWeight="700">花園</text>
+                <circle cx="236" cy="216" r="10" fill={MAP_COLORS.gardenPlant} />
+                <circle cx="292" cy="216" r="9" fill={MAP_COLORS.gardenPlant} />
+                <circle cx="262" cy="252" r="12" fill={MAP_COLORS.gardenPlant} />
+                <text x="265" y="268" textAnchor="middle" fontSize="14" fill={MAP_COLORS.buildingText} fontWeight="700">花圃</text>
 
                 <rect
-                  x="388"
-                  y="168"
-                  width="148"
-                  height="138"
-                  rx="10"
+                  x="550"
+                  y="178"
+                  width="130"
+                  height="130"
+                  rx="4"
                   fill={MAP_COLORS.garden}
                   stroke={hoveredBuilding === "garden-right" ? MAP_COLORS.stallHover : MAP_COLORS.campusBorder}
                   strokeWidth="2.5"
                   onMouseEnter={() => setHoveredBuilding("garden-right")}
                   onMouseLeave={() => setHoveredBuilding(null)}
-                  style={{ cursor: "pointer", transition: "stroke 0.15s ease, transform 0.15s ease" }}
+                  style={{ cursor: "pointer", transition: "stroke 0.15s ease" }}
                 />
-                <text x="462" y="243" textAnchor="middle" fontSize="14" fill={MAP_COLORS.building} fontWeight="700">花園</text>
+                <circle cx="586" cy="216" r="10" fill={MAP_COLORS.gardenPlant} />
+                <circle cx="642" cy="216" r="9" fill={MAP_COLORS.gardenPlant} />
+                <circle cx="612" cy="252" r="12" fill={MAP_COLORS.gardenPlant} />
+                <text x="615" y="268" textAnchor="middle" fontSize="14" fill={MAP_COLORS.buildingText} fontWeight="700">花圃</text>
 
                 <rect
-                  x="334"
-                  y="134"
-                  width="132"
+                  x="360"
+                  y="156"
+                  width="160"
                   height="86"
                   rx="8"
                   fill={MAP_COLORS.stage}
@@ -291,68 +309,39 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   strokeWidth="3"
                   onMouseEnter={() => setHoveredBuilding("stage")}
                   onMouseLeave={() => setHoveredBuilding(null)}
-                  style={{ cursor: "pointer", transition: "stroke 0.15s ease, transform 0.15s ease" }}
+                  style={{ cursor: "pointer", transition: "stroke 0.15s ease" }}
                 />
-                <text x="400" y="183" textAnchor="middle" fontSize="18" fill={MAP_COLORS.buildingText} fontWeight="800">舞台</text>
-
-                <rect
-                  x="188"
-                  y="360"
-                  width="210"
-                  height="82"
-                  rx="8"
-                  fill={MAP_COLORS.building}
-                  stroke={hoveredBuilding === "academic" ? MAP_COLORS.stallHover : MAP_COLORS.building}
-                  strokeWidth="3"
-                  onMouseEnter={() => setHoveredBuilding("academic")}
-                  onMouseLeave={() => setHoveredBuilding(null)}
-                  style={{ cursor: "pointer", transition: "stroke 0.15s ease, transform 0.15s ease" }}
-                />
-                <text x="293" y="408" textAnchor="middle" fontSize="16" fill={MAP_COLORS.buildingText} fontWeight="700">教務處</text>
-
-                <rect
-                  x="418"
-                  y="360"
-                  width="210"
-                  height="82"
-                  rx="8"
-                  fill={MAP_COLORS.building}
-                  stroke={hoveredBuilding === "student" ? MAP_COLORS.stallHover : MAP_COLORS.building}
-                  strokeWidth="3"
-                  onMouseEnter={() => setHoveredBuilding("student")}
-                  onMouseLeave={() => setHoveredBuilding(null)}
-                  style={{ cursor: "pointer", transition: "stroke 0.15s ease, transform 0.15s ease" }}
-                />
-                <text x="523" y="408" textAnchor="middle" fontSize="16" fill={MAP_COLORS.buildingText} fontWeight="700">學務處</text>
+                <text x="440" y="208" textAnchor="middle" fontSize="30" fill={MAP_COLORS.buildingText} fontWeight="800">舞台</text>
 
                 <g
                   onMouseEnter={() => setHoveredArrow("a")}
                   onMouseLeave={() => setHoveredArrow(null)}
                   style={{ cursor: "pointer" }}
                 >
-                  <path d="M 270 236 H 318" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.building} strokeWidth="4" strokeLinecap="round" />
-                  <path d="M 318 236 L 304 228 M 318 236 L 304 244" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.building} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M 450 236 H 520" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.building} strokeWidth="4" strokeLinecap="round" />
-                  <path d="M 520 236 L 506 228 M 520 236 L 506 244" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.building} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M 180 382 H 648" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.building} strokeWidth="4" strokeLinecap="round" />
-                  <path d="M 648 382 L 634 374 M 648 382 L 634 390" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.building} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M 694 170 V 380" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.building} strokeWidth="4" strokeLinecap="round" />
-                  <path d="M 694 380 L 686 366 M 694 380 L 702 366" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.building} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M 188 334 H 650" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="5" strokeLinecap="round" />
+                  <path d="M 650 334 L 636 326 M 650 334 L 636 342" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M 186 148 V 312" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="5" strokeLinecap="round" />
+                  <path d="M 186 312 L 178 298 M 186 312 L 194 298" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M 664 148 V 334" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="5" strokeLinecap="round" />
+                  <path d="M 664 334 L 656 320 M 664 334 L 672 320" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M 560 168 H 640" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="5" strokeLinecap="round" />
+                  <path d="M 640 168 L 626 160 M 640 168 L 626 176" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
                 </g>
 
-                {/* ── 攤位框框 ── */}
-                {stallBoxes.map(box => {
-                  const isHovered = hoveredId === box.id;
-                  const isSelected = selectedStall?.id === box.id;
+                {/* ── 獨立帳篷攤位 ── */}
+                {tentIcons.map(tent => {
+                  const isInteractive = typeof tent.stallId === "number";
+                  const isHovered = isInteractive && hoveredId === tent.stallId;
+                  const isSelected = isInteractive && selectedStall?.id === tent.stallId;
                   const scale = isHovered ? 1.1 : isSelected ? 1.06 : 1;
                   return (
                     <g
-                      key={box.id}
-                      onClick={() => handleBoxClick(box.id)}
-                      onMouseEnter={() => setHoveredId(box.id)}
-                      onMouseLeave={() => setHoveredId(null)}
+                      key={tent.key}
+                      onClick={() => isInteractive && handleBoxClick(tent.stallId!)}
+                      onMouseEnter={() => isInteractive && setHoveredId(tent.stallId!)}
+                      onMouseLeave={() => isInteractive && setHoveredId(null)}
                       style={{
-                        cursor: "pointer",
+                        cursor: isInteractive ? "pointer" : "default",
                         transition: "transform 0.15s ease, filter 0.15s ease",
                         transformBox: "fill-box",
                         transformOrigin: "center",
@@ -361,48 +350,67 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                       }}
                     >
                       <rect
-                        x={box.x + 1}
-                        y={box.y + 14}
-                        width={box.w - 2}
-                        height={box.h - 14}
-                        rx="6"
+                        x={tent.x + 2}
+                        y={tent.y + 12}
+                        width={20}
+                        height={18}
+                        rx="4"
                         fill={isHovered || isSelected ? MAP_COLORS.stallHover : MAP_COLORS.stallTent}
-                        stroke={isSelected ? MAP_COLORS.building : MAP_COLORS.campusBorder}
-                        strokeWidth={isSelected ? 3.5 : 2.5}
+                        stroke={MAP_COLORS.campusBorder}
+                        strokeWidth="1.8"
+                      />
+                      <rect
+                        x={tent.x + 4}
+                        y={tent.y + 14}
+                        width={4}
+                        height={14}
+                        fill={MAP_COLORS.stallTentStripe}
+                      />
+                      <rect
+                        x={tent.x + 11}
+                        y={tent.y + 14}
+                        width={4}
+                        height={14}
+                        fill={MAP_COLORS.stallTentStripe}
+                      />
+                      <rect
+                        x={tent.x + 18}
+                        y={tent.y + 14}
+                        width={4}
+                        height={14}
+                        fill={MAP_COLORS.stallTentStripe}
                       />
                       <polygon
-                        points={`${box.x},${box.y + 15} ${box.x + box.w / 2},${box.y + 1} ${box.x + box.w},${box.y + 15}`}
+                        points={`${tent.x + 1},${tent.y + 13} ${tent.x + 12},${tent.y + 2} ${tent.x + 23},${tent.y + 13}`}
                         fill={isHovered || isSelected ? MAP_COLORS.stallHover : MAP_COLORS.stallTent}
-                        stroke={isSelected ? MAP_COLORS.building : MAP_COLORS.campusBorder}
-                        strokeWidth={isSelected ? 3.5 : 2.5}
+                        stroke={MAP_COLORS.campusBorder}
+                        strokeWidth="1.8"
                         strokeLinejoin="round"
                       />
-                      <rect x={box.x + 3} y={box.y + 18} width={Math.max(4, box.w - 6)} height={box.h - 22} rx="2" fill={MAP_COLORS.stallTentStripe} opacity="0.95" />
-                      <rect x={box.x + 8} y={box.y + 18} width={Math.max(4, box.w - 12)} height={box.h - 22} rx="2" fill={MAP_COLORS.stallTent} opacity="0.38" />
-                      {/* 攤位編號小標 */}
-                      <text
-                        x={box.x + box.w / 2}
-                        y={box.y + box.h / 2 + 3}
-                        textAnchor="middle"
-                        dominantBaseline="middle"
-                        fontSize="10"
-                        fontWeight="800"
-                        fill={MAP_COLORS.building}
-                        style={{ cursor: "pointer", pointerEvents: "none" }}
-                      >
-                        {box.id}
-                      </text>
+                      {isInteractive && (
+                        <text
+                          x={tent.x + 12}
+                          y={tent.y + 25}
+                          textAnchor="middle"
+                          fontSize="9"
+                          fontWeight="800"
+                          fill="#6E2C47"
+                          style={{ pointerEvents: "none" }}
+                        >
+                          {tent.stallId}
+                        </text>
+                      )}
                     </g>
                   );
                 })}
 
                 {/* 圖例 */}
-                <rect x="86" y="420" width="16" height="16" rx="3" fill={MAP_COLORS.stall} stroke={MAP_COLORS.campusBorder} strokeWidth="2.5" />
-                <text x="108" y="432" fontSize="12" fill={MAP_COLORS.building}>攤位（可點擊）</text>
+                <rect x="86" y="420" width="16" height="16" rx="3" fill={MAP_COLORS.stallTent} stroke={MAP_COLORS.campusBorder} strokeWidth="2.5" />
+                <text x="108" y="432" fontSize="12" fill={MAP_COLORS.road}>攤位（可點擊）</text>
                 <rect x="205" y="420" width="16" height="16" rx="3" fill={MAP_COLORS.garden} stroke={MAP_COLORS.campusBorder} strokeWidth="2.5" />
-                <text x="227" y="432" fontSize="12" fill={MAP_COLORS.building}>花園 / 空地</text>
+                <text x="227" y="432" fontSize="12" fill={MAP_COLORS.road}>花圃</text>
                 <rect x="320" y="420" width="16" height="16" rx="3" fill={MAP_COLORS.road} stroke={MAP_COLORS.roadAlt} strokeWidth="1.5" />
-                <text x="342" y="432" fontSize="12" fill={MAP_COLORS.building}>道路</text>
+                <text x="342" y="432" fontSize="12" fill={MAP_COLORS.road}>動線</text>
               </svg>
             </div>
 
