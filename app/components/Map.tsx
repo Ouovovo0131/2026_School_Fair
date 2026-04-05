@@ -137,10 +137,10 @@ export default function Map({ onBack, isModal = false }: MapProps) {
             {/* ── 校園平面圖 SVG ── */}
             <div className="premium-card clay-shadow-md p-4 mb-6 overflow-x-auto">
               <svg
-                viewBox="0 0 800 460"
+                viewBox="0 0 960 540"
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-full"
-                style={{ minWidth: "340px", maxWidth: "900px", display: "block", margin: "0 auto" }}
+                style={{ minWidth: "520px", maxWidth: "1080px", display: "block", margin: "0 auto" }}
               >
                 <defs>
                   <filter id="map-shadow" x="-20%" y="-20%" width="140%" height="140%">
@@ -148,17 +148,16 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   </filter>
                 </defs>
 
-                <rect x="80" y="10" width="700" height="440" rx="8" fill="transparent" stroke={MAP_COLORS.campusBorder} strokeWidth="3" />
-                <rect x="83" y="13" width="694" height="434" rx="6" fill={MAP_COLORS.ground} />
+                <rect x="40" y="10" width="880" height="520" rx="10" fill={MAP_COLORS.ground} stroke={MAP_COLORS.campusBorder} strokeWidth="3" />
 
-                <rect x="80" y="10" width="700" height="44" fill={MAP_COLORS.roadAlt} opacity="0.95" />
-                <text x="430" y="40" textAnchor="middle" fontSize="34" fill="#FFFFFF" fontWeight="700">民權路</text>
+                <rect x="40" y="10" width="880" height="64" fill={MAP_COLORS.roadAlt} opacity="0.96" />
+                <text x="480" y="53" textAnchor="middle" fontSize="40" fill="#FFFFFF" fontWeight="700">民權路</text>
 
                 <rect
-                  x="92"
-                  y="66"
-                  width="78"
-                  height="62"
+                  x="86"
+                  y="92"
+                  width="96"
+                  height="56"
                   rx="4"
                   fill={MAP_COLORS.building}
                   stroke={hoveredBuilding === "gate" ? MAP_COLORS.stallHover : MAP_COLORS.building}
@@ -167,13 +166,13 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   onMouseLeave={() => setHoveredBuilding(null)}
                   style={{ cursor: "pointer", transition: "stroke 0.15s ease" }}
                 />
-                <text x="131" y="102" textAnchor="middle" fontSize="11" fill={MAP_COLORS.buildingText} fontWeight="700">校門</text>
+                <text x="134" y="126" textAnchor="middle" fontSize="18" fill={MAP_COLORS.buildingText} fontWeight="700">校門</text>
 
                 <rect
-                  x="92"
-                  y="136"
-                  width="54"
-                  height="64"
+                  x="54"
+                  y="94"
+                  width="28"
+                  height="92"
                   rx="4"
                   fill={MAP_COLORS.building}
                   stroke={hoveredBuilding === "office" ? MAP_COLORS.stallHover : MAP_COLORS.building}
@@ -182,13 +181,13 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   onMouseLeave={() => setHoveredBuilding(null)}
                   style={{ cursor: "pointer", transition: "stroke 0.15s ease" }}
                 />
-                <text x="119" y="173" textAnchor="middle" fontSize="11" fill={MAP_COLORS.buildingText} fontWeight="700">傳達室</text>
+                <text x="68" y="141" textAnchor="middle" fontSize="10" fill={MAP_COLORS.buildingText} fontWeight="700" transform="rotate(-90 68 141)">傳達室</text>
 
                 <rect
-                  x="200"
-                  y="66"
-                  width="400"
-                  height="72"
+                  x="250"
+                  y="116"
+                  width="460"
+                  height="92"
                   rx="8"
                   fill={MAP_COLORS.building}
                   stroke={hoveredBuilding === "library" ? MAP_COLORS.stallHover : MAP_COLORS.building}
@@ -197,28 +196,28 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   onMouseLeave={() => setHoveredBuilding(null)}
                   style={{ cursor: "pointer", transition: "stroke 0.15s ease" }}
                 />
-                <text x="400" y="109" textAnchor="middle" fontSize="20" fill={MAP_COLORS.buildingText} fontWeight="700">圖資大樓</text>
+                <text x="480" y="170" textAnchor="middle" fontSize="34" fill={MAP_COLORS.buildingText} fontWeight="700">圖資大樓</text>
 
                 <rect
-                  x="92"
-                  y="155"
-                  width="92"
-                  height="250"
+                  x="76"
+                  y="210"
+                  width="120"
+                  height="252"
                   rx="8"
                   fill={MAP_COLORS.building}
-                  stroke={hoveredBuilding === "complex" ? MAP_COLORS.stallHover : MAP_COLORS.building}
+                  stroke={hoveredBuilding === "general" ? MAP_COLORS.stallHover : MAP_COLORS.building}
                   strokeWidth="3"
-                  onMouseEnter={() => setHoveredBuilding("complex")}
+                  onMouseEnter={() => setHoveredBuilding("general")}
                   onMouseLeave={() => setHoveredBuilding(null)}
                   style={{ cursor: "pointer", transition: "stroke 0.15s ease" }}
                 />
-                <text x="138" y="282" textAnchor="middle" fontSize="22" fill={MAP_COLORS.buildingText} fontWeight="700" transform="rotate(-90 138 282)">綜合大樓</text>
+                <text x="136" y="336" textAnchor="middle" fontSize="34" fill={MAP_COLORS.buildingText} fontWeight="700" transform="rotate(-90 136 336)">綜合大樓</text>
 
                 <rect
-                  x="678"
-                  y="155"
-                  width="92"
-                  height="250"
+                  x="760"
+                  y="210"
+                  width="120"
+                  height="252"
                   rx="8"
                   fill={MAP_COLORS.building}
                   stroke={hoveredBuilding === "xinyi" ? MAP_COLORS.stallHover : MAP_COLORS.building}
@@ -227,13 +226,13 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   onMouseLeave={() => setHoveredBuilding(null)}
                   style={{ cursor: "pointer", transition: "stroke 0.15s ease" }}
                 />
-                <text x="724" y="282" textAnchor="middle" fontSize="22" fill={MAP_COLORS.buildingText} fontWeight="700" transform="rotate(-90 724 282)">信義樓</text>
+                <text x="820" y="336" textAnchor="middle" fontSize="34" fill={MAP_COLORS.buildingText} fontWeight="700" transform="rotate(-90 820 336)">信義樓</text>
 
                 <rect
-                  x="200"
-                  y="350"
-                  width="210"
-                  height="90"
+                  x="230"
+                  y="430"
+                  width="250"
+                  height="82"
                   rx="8"
                   fill={MAP_COLORS.building}
                   stroke={hoveredBuilding === "academic" ? MAP_COLORS.stallHover : MAP_COLORS.building}
@@ -242,13 +241,13 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   onMouseLeave={() => setHoveredBuilding(null)}
                   style={{ cursor: "pointer", transition: "stroke 0.15s ease" }}
                 />
-                <text x="305" y="402" textAnchor="middle" fontSize="16" fill={MAP_COLORS.buildingText} fontWeight="700">教務處</text>
+                <text x="355" y="478" textAnchor="middle" fontSize="22" fill={MAP_COLORS.buildingText} fontWeight="700">教務處</text>
 
                 <rect
-                  x="430"
-                  y="350"
-                  width="240"
-                  height="90"
+                  x="500"
+                  y="430"
+                  width="250"
+                  height="82"
                   rx="8"
                   fill={MAP_COLORS.building}
                   stroke={hoveredBuilding === "student" ? MAP_COLORS.stallHover : MAP_COLORS.building}
@@ -257,13 +256,13 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   onMouseLeave={() => setHoveredBuilding(null)}
                   style={{ cursor: "pointer", transition: "stroke 0.15s ease" }}
                 />
-                <text x="550" y="402" textAnchor="middle" fontSize="16" fill={MAP_COLORS.buildingText} fontWeight="700">學務處</text>
+                <text x="625" y="478" textAnchor="middle" fontSize="22" fill={MAP_COLORS.buildingText} fontWeight="700">學務處</text>
 
                 <rect
-                  x="200"
-                  y="178"
-                  width="130"
-                  height="130"
+                  x="238"
+                  y="236"
+                  width="156"
+                  height="170"
                   rx="4"
                   fill={MAP_COLORS.garden}
                   stroke={hoveredBuilding === "garden-left" ? MAP_COLORS.stallHover : MAP_COLORS.campusBorder}
@@ -272,16 +271,16 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   onMouseLeave={() => setHoveredBuilding(null)}
                   style={{ cursor: "pointer", transition: "stroke 0.15s ease" }}
                 />
-                <circle cx="236" cy="216" r="10" fill={MAP_COLORS.gardenPlant} />
-                <circle cx="292" cy="216" r="9" fill={MAP_COLORS.gardenPlant} />
-                <circle cx="262" cy="252" r="12" fill={MAP_COLORS.gardenPlant} />
-                <text x="265" y="268" textAnchor="middle" fontSize="14" fill={MAP_COLORS.buildingText} fontWeight="700">花圃</text>
+                <circle cx="280" cy="276" r="14" fill={MAP_COLORS.gardenPlant} />
+                <circle cx="352" cy="276" r="13" fill={MAP_COLORS.gardenPlant} />
+                <circle cx="316" cy="322" r="16" fill={MAP_COLORS.gardenPlant} />
+                <text x="316" y="344" textAnchor="middle" fontSize="30" fill={MAP_COLORS.buildingText} fontWeight="700">花圃</text>
 
                 <rect
-                  x="550"
-                  y="178"
-                  width="130"
-                  height="130"
+                  x="556"
+                  y="236"
+                  width="156"
+                  height="170"
                   rx="4"
                   fill={MAP_COLORS.garden}
                   stroke={hoveredBuilding === "garden-right" ? MAP_COLORS.stallHover : MAP_COLORS.campusBorder}
@@ -290,16 +289,16 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   onMouseLeave={() => setHoveredBuilding(null)}
                   style={{ cursor: "pointer", transition: "stroke 0.15s ease" }}
                 />
-                <circle cx="586" cy="216" r="10" fill={MAP_COLORS.gardenPlant} />
-                <circle cx="642" cy="216" r="9" fill={MAP_COLORS.gardenPlant} />
-                <circle cx="612" cy="252" r="12" fill={MAP_COLORS.gardenPlant} />
-                <text x="615" y="268" textAnchor="middle" fontSize="14" fill={MAP_COLORS.buildingText} fontWeight="700">花圃</text>
+                <circle cx="598" cy="276" r="14" fill={MAP_COLORS.gardenPlant} />
+                <circle cx="670" cy="276" r="13" fill={MAP_COLORS.gardenPlant} />
+                <circle cx="634" cy="322" r="16" fill={MAP_COLORS.gardenPlant} />
+                <text x="634" y="344" textAnchor="middle" fontSize="30" fill={MAP_COLORS.buildingText} fontWeight="700">花圃</text>
 
                 <rect
-                  x="360"
-                  y="156"
-                  width="160"
-                  height="86"
+                  x="424"
+                  y="236"
+                  width="104"
+                  height="130"
                   rx="8"
                   fill={MAP_COLORS.stage}
                   stroke={MAP_COLORS.stageBorder}
@@ -308,21 +307,21 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   onMouseLeave={() => setHoveredBuilding(null)}
                   style={{ cursor: "pointer", transition: "stroke 0.15s ease" }}
                 />
-                <text x="440" y="208" textAnchor="middle" fontSize="30" fill={MAP_COLORS.buildingText} fontWeight="800">舞台</text>
+                <text x="476" y="312" textAnchor="middle" fontSize="38" fill={MAP_COLORS.buildingText} fontWeight="800">舞台</text>
 
                 <g
                   onMouseEnter={() => setHoveredArrow("a")}
                   onMouseLeave={() => setHoveredArrow(null)}
                   style={{ cursor: "pointer" }}
                 >
-                  <path d="M 188 334 H 650" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="5" strokeLinecap="round" />
-                  <path d="M 650 334 L 636 326 M 650 334 L 636 342" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M 186 148 V 312" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="5" strokeLinecap="round" />
-                  <path d="M 186 312 L 178 298 M 186 312 L 194 298" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M 664 148 V 334" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="5" strokeLinecap="round" />
-                  <path d="M 664 334 L 656 320 M 664 334 L 672 320" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M 560 168 H 640" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="5" strokeLinecap="round" />
-                  <path d="M 640 168 L 626 160 M 640 168 L 626 176" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M 210 418 H 736" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="6" strokeLinecap="round" />
+                  <path d="M 736 418 L 718 408 M 736 418 L 718 428" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M 210 192 V 406" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="6" strokeLinecap="round" />
+                  <path d="M 210 406 L 200 388 M 210 406 L 220 388" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M 742 206 V 418" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="6" strokeLinecap="round" />
+                  <path d="M 742 418 L 732 400 M 742 418 L 752 400" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M 644 224 H 742" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="6" strokeLinecap="round" />
+                  <path d="M 742 224 L 724 214 M 742 224 L 724 234" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
                 </g>
 
                 {/* ── 獨立帳篷攤位 ── */}
@@ -330,6 +329,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   const isInteractive = typeof tent.stallId === "number";
                   const isHovered = isInteractive && hoveredId === tent.stallId;
                   const isSelected = isInteractive && selectedStall?.id === tent.stallId;
+                  const isGeneralLinked = hoveredBuilding === "general" && tent.zone === "general-adjacent";
                   const scale = isHovered ? 1.1 : isSelected ? 1.06 : 1;
                   return (
                     <g
@@ -343,7 +343,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                         transformBox: "fill-box",
                         transformOrigin: "center",
                         transform: `scale(${scale})`,
-                        filter: isHovered || isSelected ? "url(#map-shadow)" : "none",
+                        filter: isHovered || isSelected || isGeneralLinked ? "url(#map-shadow)" : "none",
                       }}
                     >
                       <rect
@@ -353,7 +353,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                         height={18}
                         rx="4"
                         fill={isHovered || isSelected ? MAP_COLORS.stallHover : MAP_COLORS.stallTent}
-                        stroke={MAP_COLORS.campusBorder}
+                        stroke={isGeneralLinked ? MAP_COLORS.glow : MAP_COLORS.campusBorder}
                         strokeWidth="1.8"
                       />
                       <rect
@@ -380,34 +380,38 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                       <polygon
                         points={`${tent.x + 1},${tent.y + 13} ${tent.x + 12},${tent.y + 2} ${tent.x + 23},${tent.y + 13}`}
                         fill={isHovered || isSelected ? MAP_COLORS.stallHover : MAP_COLORS.stallTent}
-                        stroke={MAP_COLORS.campusBorder}
+                        stroke={isGeneralLinked ? MAP_COLORS.glow : MAP_COLORS.campusBorder}
                         strokeWidth="1.8"
                         strokeLinejoin="round"
                       />
-                      {isInteractive && (
-                        <text
-                          x={tent.x + 12}
-                          y={tent.y + 25}
-                          textAnchor="middle"
-                          fontSize="9"
-                          fontWeight="800"
-                          fill="#6E2C47"
-                          style={{ pointerEvents: "none" }}
-                        >
-                          {tent.stallId}
-                        </text>
-                      )}
+                      <text
+                        x={tent.x + 12}
+                        y={tent.y + 25}
+                        textAnchor="middle"
+                        fontSize="9"
+                        fontWeight="800"
+                        fill="#6E2C47"
+                        style={{ pointerEvents: "none" }}
+                      >
+                        {tent.label}
+                      </text>
                     </g>
                   );
                 })}
 
+                <g transform="translate(66 472)">
+                  <rect x="0" y="0" width="172" height="40" rx="10" fill="#FFFFFF" opacity="0.9" stroke={MAP_COLORS.campusBorder} strokeWidth="2" />
+                  <circle cx="20" cy="20" r="9" fill={MAP_COLORS.stallTent} />
+                  <text x="36" y="26" fontSize="17" fill={MAP_COLORS.road} fontWeight="700">2026 School Fair</text>
+                </g>
+
                 {/* 圖例 */}
-                <rect x="86" y="420" width="16" height="16" rx="3" fill={MAP_COLORS.stallTent} stroke={MAP_COLORS.campusBorder} strokeWidth="2.5" />
-                <text x="108" y="432" fontSize="12" fill={MAP_COLORS.road}>攤位（可點擊）</text>
-                <rect x="205" y="420" width="16" height="16" rx="3" fill={MAP_COLORS.garden} stroke={MAP_COLORS.campusBorder} strokeWidth="2.5" />
-                <text x="227" y="432" fontSize="12" fill={MAP_COLORS.road}>花圃</text>
-                <rect x="320" y="420" width="16" height="16" rx="3" fill={MAP_COLORS.road} stroke={MAP_COLORS.roadAlt} strokeWidth="1.5" />
-                <text x="342" y="432" fontSize="12" fill={MAP_COLORS.road}>動線</text>
+                <rect x="262" y="478" width="16" height="16" rx="3" fill={MAP_COLORS.stallTent} stroke={MAP_COLORS.campusBorder} strokeWidth="2.5" />
+                <text x="284" y="490" fontSize="12" fill={MAP_COLORS.road}>攤位（可點擊）</text>
+                <rect x="386" y="478" width="16" height="16" rx="3" fill={MAP_COLORS.garden} stroke={MAP_COLORS.campusBorder} strokeWidth="2.5" />
+                <text x="408" y="490" fontSize="12" fill={MAP_COLORS.road}>花圃</text>
+                <rect x="468" y="478" width="16" height="16" rx="3" fill={MAP_COLORS.road} stroke={MAP_COLORS.roadAlt} strokeWidth="1.5" />
+                <text x="490" y="490" fontSize="12" fill={MAP_COLORS.road}>動線</text>
               </svg>
             </div>
 
