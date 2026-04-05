@@ -29,41 +29,58 @@ const stalls: Stall[] = [
   { id: 8,  name: "攤位 D1", location: "信義樓側走廊",  icon: "💪", description: "健身體驗 & 示範",    highlight: "增進健康", category: 'other' },
 ];
 
-// ─── 攤位框框在地圖 SVG 中的位置 ──────────────────────────────────────────────
-// 參照圖片手動定位每個藍框，坐標以 viewBox="0 0 800 460" 為基準
-// 每個物件：{ id (對應 stall.id), x, y, w, h }
-const stallBoxes = [
-  // 左側小花園左邊的細長框 (A1)
-  { id: 1, x: 158, y: 178, w: 28, h: 118 },
-  // 左側小花園右邊的細長框 (A2)
-  { id: 2, x: 272, y: 178, w: 28, h: 118 },
-  // 中段兩個細長框左 (B1)
-  { id: 4, x: 322, y: 178, w: 28, h: 118 },
-  // 中段兩個細長框右 (B2)
-  { id: 5, x: 358, y: 178, w: 28, h: 118 },
-  // 右側小花園左邊的細長框 (C1)
-  { id: 6, x: 544, y: 178, w: 28, h: 118 },
-  // 右側小花園右邊的細長框 (C2)
-  { id: 7, x: 590, y: 178, w: 28, h: 118 },
-  // 信義樓左側最右邊的細長框 上 (D1 上)
-  { id: 8, x: 634, y: 178, w: 28,  h: 56  },
-  // 信義樓左側最右邊的細長框 下 (A3)
-  { id: 3, x: 634, y: 280, w: 28,  h: 56  },
+// ─── 帳篷圖示在地圖 SVG 中的位置 ───────────────────────────────────────────────
+// row 分布：最左6、左花圃與舞台間6、右花圃與舞台間6、最右7
+const tentIcons = [
+  // far-left row (6)
+  { key: "L1", x: 178, y: 180, stallId: 1 },
+  { key: "L2", x: 178, y: 208, stallId: 2 },
+  { key: "L3", x: 178, y: 236, stallId: 4 },
+  { key: "L4", x: 178, y: 264 },
+  { key: "L5", x: 178, y: 292 },
+  { key: "L6", x: 178, y: 320 },
+
+  // between left garden and stage (6)
+  { key: "LC1", x: 338, y: 180, stallId: 5 },
+  { key: "LC2", x: 338, y: 208, stallId: 3 },
+  { key: "LC3", x: 338, y: 236 },
+  { key: "LC4", x: 338, y: 264 },
+  { key: "LC5", x: 338, y: 292 },
+  { key: "LC6", x: 338, y: 320 },
+
+  // between right garden and stage (6)
+  { key: "RC1", x: 532, y: 180, stallId: 6 },
+  { key: "RC2", x: 532, y: 208, stallId: 7 },
+  { key: "RC3", x: 532, y: 236 },
+  { key: "RC4", x: 532, y: 264 },
+  { key: "RC5", x: 532, y: 292 },
+  { key: "RC6", x: 532, y: 320 },
+
+  // far-right row (7)
+  { key: "R1", x: 664, y: 170 },
+  { key: "R2", x: 664, y: 198, stallId: 8 },
+  { key: "R3", x: 664, y: 226 },
+  { key: "R4", x: 664, y: 254 },
+  { key: "R5", x: 664, y: 282 },
+  { key: "R6", x: 664, y: 310 },
+  { key: "R7", x: 664, y: 338 },
 ];
 
 const MAP_COLORS = {
-  building: "#1E4463",
-  buildingText: "#FFFFFF",
-  garden: "#FCF2CC",
-  road: "#F8FAFC",
-  roadAlt: "#E5E7EB",
-  stall: "#FF8A26",
-  stallHover: "#FFB00D",
-  stallTent: "#F59BB0",
+  building: "#B58963",
+  buildingText: "#FFF7EE",
+  ground: "#D7D7DC",
+  road: "#A1764F",
+  roadAlt: "#BA8C66",
+  stall: "#E95A8B",
+  stallHover: "#FF8FB5",
+  stallTent: "#E95A8B",
   stallTentStripe: "#FFF7FA",
-  stage: "#BD2D19",
+  stage: "#C6463E",
   stageBorder: "#000000",
-  campusBorder: "#1E4463",
+  campusBorder: "#8B694C",
+  garden: "#D6C09B",
+  gardenPlant: "#4C8E4C",
 };
 
 export default function Map({ onBack, isModal = false }: MapProps) {
