@@ -30,7 +30,7 @@ const stalls: Stall[] = [
 ];
 
 // ─── 帳篷圖示在地圖 SVG 中的位置 ───────────────────────────────────────────────
-// row 分布：最左6、左花圃與舞台間6、右花圃與舞台間6、最右7
+// row 分布：左花圃左側6、兩花圃中間左右各4、右花圃右側6、右花圃右上2
 const tentIcons = [
   { key: "A1", label: "A1", x: 220, y: 250, stallId: 1, zone: "general-adjacent" },
   { key: "A2", label: "A2", x: 220, y: 278, stallId: 2, zone: "general-adjacent" },
@@ -39,27 +39,25 @@ const tentIcons = [
   { key: "A5", label: "A5", x: 220, y: 362, zone: "general-adjacent" },
   { key: "A6", label: "A6", x: 220, y: 390, zone: "general-adjacent" },
 
-  { key: "B1", label: "B1", x: 402, y: 250, stallId: 4, zone: "left-inner" },
-  { key: "B2", label: "B2", x: 402, y: 278, stallId: 5, zone: "left-inner" },
-  { key: "B3", label: "B3", x: 402, y: 306, zone: "left-inner" },
-  { key: "B4", label: "B4", x: 402, y: 334, zone: "left-inner" },
-  { key: "B5", label: "B5", x: 402, y: 362, zone: "left-inner" },
-  { key: "B6", label: "B6", x: 402, y: 390, zone: "left-inner" },
+  { key: "B1", label: "B1", x: 402, y: 306, stallId: 4, zone: "left-inner" },
+  { key: "B2", label: "B2", x: 402, y: 334, stallId: 5, zone: "left-inner" },
+  { key: "B3", label: "B3", x: 402, y: 362, zone: "left-inner" },
+  { key: "B4", label: "B4", x: 402, y: 390, zone: "left-inner" },
 
-  { key: "C1", label: "C1", x: 548, y: 250, stallId: 6, zone: "right-inner" },
-  { key: "C2", label: "C2", x: 548, y: 278, stallId: 7, zone: "right-inner" },
-  { key: "C3", label: "C3", x: 548, y: 306, zone: "right-inner" },
-  { key: "C4", label: "C4", x: 548, y: 334, zone: "right-inner" },
-  { key: "C5", label: "C5", x: 548, y: 362, zone: "right-inner" },
-  { key: "C6", label: "C6", x: 548, y: 390, zone: "right-inner" },
+  { key: "C1", label: "C1", x: 548, y: 306, stallId: 6, zone: "right-inner" },
+  { key: "C2", label: "C2", x: 548, y: 334, stallId: 7, zone: "right-inner" },
+  { key: "C3", label: "C3", x: 548, y: 362, zone: "right-inner" },
+  { key: "C4", label: "C4", x: 548, y: 390, zone: "right-inner" },
 
-  { key: "D1", label: "D1", x: 744, y: 232, stallId: 8, zone: "xinyi-adjacent" },
-  { key: "D2", label: "D2", x: 744, y: 260, zone: "xinyi-adjacent" },
-  { key: "D3", label: "D3", x: 744, y: 288, zone: "xinyi-adjacent" },
-  { key: "D4", label: "D4", x: 744, y: 316, zone: "xinyi-adjacent" },
-  { key: "D5", label: "D5", x: 744, y: 344, zone: "xinyi-adjacent" },
-  { key: "D6", label: "D6", x: 744, y: 372, zone: "xinyi-adjacent" },
-  { key: "D7", label: "D7", x: 744, y: 400, zone: "xinyi-adjacent" },
+  { key: "D1", label: "D1", x: 744, y: 250, stallId: 8, zone: "xinyi-adjacent" },
+  { key: "D2", label: "D2", x: 744, y: 278, zone: "xinyi-adjacent" },
+  { key: "D3", label: "D3", x: 744, y: 306, zone: "xinyi-adjacent" },
+  { key: "D4", label: "D4", x: 744, y: 334, zone: "xinyi-adjacent" },
+  { key: "D5", label: "D5", x: 744, y: 362, zone: "xinyi-adjacent" },
+  { key: "D6", label: "D6", x: 744, y: 390, zone: "xinyi-adjacent" },
+
+  { key: "E1", label: "E1", x: 650, y: 236, zone: "right-upper" },
+  { key: "E2", label: "E2", x: 692, y: 236, zone: "right-upper" },
 ];
 
 const MAP_COLORS = {
@@ -198,6 +196,13 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                 />
                 <text x="480" y="170" textAnchor="middle" fontSize="34" fill={MAP_COLORS.buildingText} fontWeight="700">圖資大樓</text>
 
+                <g>
+                  <text x="232" y="114" fontSize="22">🗑️</text>
+                  <text x="232" y="146" fontSize="22">🍴</text>
+                  <text x="210" y="112" textAnchor="end" fontSize="12" fill={MAP_COLORS.road} fontWeight="700">垃圾分類區</text>
+                  <text x="210" y="144" textAnchor="end" fontSize="12" fill={MAP_COLORS.road} fontWeight="700">餐具借用車</text>
+                </g>
+
                 <rect
                   x="76"
                   y="210"
@@ -264,16 +269,13 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   width="156"
                   height="170"
                   rx="4"
-                  fill={MAP_COLORS.garden}
+                  fill={MAP_COLORS.building}
                   stroke={hoveredBuilding === "garden-left" ? MAP_COLORS.stallHover : MAP_COLORS.campusBorder}
                   strokeWidth="2.5"
                   onMouseEnter={() => setHoveredBuilding("garden-left")}
                   onMouseLeave={() => setHoveredBuilding(null)}
                   style={{ cursor: "pointer", transition: "stroke 0.15s ease" }}
                 />
-                <circle cx="280" cy="276" r="14" fill={MAP_COLORS.gardenPlant} />
-                <circle cx="352" cy="276" r="13" fill={MAP_COLORS.gardenPlant} />
-                <circle cx="316" cy="322" r="16" fill={MAP_COLORS.gardenPlant} />
                 <text x="316" y="344" textAnchor="middle" fontSize="30" fill={MAP_COLORS.buildingText} fontWeight="700">花圃</text>
 
                 <rect
@@ -282,16 +284,13 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   width="156"
                   height="170"
                   rx="4"
-                  fill={MAP_COLORS.garden}
+                  fill={MAP_COLORS.building}
                   stroke={hoveredBuilding === "garden-right" ? MAP_COLORS.stallHover : MAP_COLORS.campusBorder}
                   strokeWidth="2.5"
                   onMouseEnter={() => setHoveredBuilding("garden-right")}
                   onMouseLeave={() => setHoveredBuilding(null)}
                   style={{ cursor: "pointer", transition: "stroke 0.15s ease" }}
                 />
-                <circle cx="598" cy="276" r="14" fill={MAP_COLORS.gardenPlant} />
-                <circle cx="670" cy="276" r="13" fill={MAP_COLORS.gardenPlant} />
-                <circle cx="634" cy="322" r="16" fill={MAP_COLORS.gardenPlant} />
                 <text x="634" y="344" textAnchor="middle" fontSize="30" fill={MAP_COLORS.buildingText} fontWeight="700">花圃</text>
 
                 <rect
@@ -300,14 +299,15 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   width="104"
                   height="130"
                   rx="8"
-                  fill={MAP_COLORS.stage}
+                  fill={MAP_COLORS.ground}
                   stroke={MAP_COLORS.stageBorder}
                   strokeWidth="3"
                   onMouseEnter={() => setHoveredBuilding("stage")}
                   onMouseLeave={() => setHoveredBuilding(null)}
                   style={{ cursor: "pointer", transition: "stroke 0.15s ease" }}
                 />
-                <text x="476" y="312" textAnchor="middle" fontSize="38" fill={MAP_COLORS.buildingText} fontWeight="800">舞台</text>
+                <rect x="424" y="236" width="104" height="66" rx="8" fill={MAP_COLORS.stage} />
+                <text x="476" y="272" textAnchor="middle" fontSize="44" fill={MAP_COLORS.buildingText} fontWeight="800">舞台</text>
 
                 <g
                   onMouseEnter={() => setHoveredArrow("a")}
@@ -316,12 +316,16 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                 >
                   <path d="M 210 418 H 736" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="6" strokeLinecap="round" />
                   <path d="M 736 418 L 718 408 M 736 418 L 718 428" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M 736 442 H 210" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="6" strokeLinecap="round" />
+                  <path d="M 210 442 L 228 432 M 210 442 L 228 452" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
                   <path d="M 210 192 V 406" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="6" strokeLinecap="round" />
-                  <path d="M 210 406 L 200 388 M 210 406 L 220 388" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M 210 192 L 200 210 M 210 192 L 220 210" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
                   <path d="M 742 206 V 418" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="6" strokeLinecap="round" />
                   <path d="M 742 418 L 732 400 M 742 418 L 752 400" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
                   <path d="M 644 224 H 742" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="6" strokeLinecap="round" />
                   <path d="M 742 224 L 724 214 M 742 224 L 724 234" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M 742 260 H 640" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="6" strokeLinecap="round" />
+                  <path d="M 640 260 L 658 250 M 640 260 L 658 270" fill="none" stroke={hoveredArrow === "a" ? MAP_COLORS.stallHover : MAP_COLORS.road} strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
                 </g>
 
                 {/* ── 獨立帳篷攤位 ── */}
