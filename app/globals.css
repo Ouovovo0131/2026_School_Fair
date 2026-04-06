@@ -168,7 +168,7 @@ p {
   background: var(--warning-500);
   color: #ffffff;
   border: 3px solid #111111;
-  border-radius: 0.7rem;
+  border-radius: 0.15rem;
   transform: rotate(-12deg);
   box-shadow: 3px 3px 0 #111111;
   font-size: 0.82rem;
