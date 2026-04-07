@@ -43,6 +43,14 @@ const stalls: Stall[] = [
   { id: 19, name: "D5 樂團周邊店", location: "右側第二列（信義樓旁）", icon: "🎸", description: "學生樂團貼紙、徽章與應援卡限量發售。", highlight: "粉絲必收", category: 'other' },
   { id: 20, name: "D6 社團招募站", location: "右側第二列（信義樓旁）", icon: "📣", description: "各社團成果展示與入社資訊一次看齊。", highlight: "找到同好", category: 'other' },
   { id: 21, name: "D7 打卡任務區", location: "右側第二列（信義樓旁）", icon: "🗺️", description: "完成地圖打卡任務可兌換校慶限定小禮。", highlight: "全場串聯", category: 'other' },
+  { id: 22, name: "D8 休憩補給站", location: "右側第二列（信義樓旁）", icon: "🧃", description: "提供飲水與短暫休息空間，補充體力再出發。", highlight: "能量補給", category: 'other' },
+
+  { id: 23, name: "E1 經典雞蛋糕", location: "後排 E 區", icon: "🧇", description: "現烤雞蛋糕，原味與巧克力口味熱騰騰出爐。", highlight: "香甜現烤", category: 'food' },
+  { id: 24, name: "E2 鐵板炒麵屋", location: "後排 E 區", icon: "🍜", description: "鐵板現炒麵食，提供加蛋與起司加料。", highlight: "熱炒人氣", category: 'food' },
+  { id: 25, name: "E3 迷你籃球賽", location: "後排 E 區", icon: "🏀", description: "限時投籃挑戰，累計命中可兌換小禮品。", highlight: "手感爆發", category: 'game' },
+  { id: 26, name: "E4 立體拼豆坊", location: "後排 E 區", icon: "🧩", description: "挑選模板製作拼豆作品，完成後可帶回收藏。", highlight: "創意滿點", category: 'craft' },
+  { id: 27, name: "E5 文創貼紙舖", location: "後排 E 區", icon: "🧷", description: "原創貼紙與小卡販售，支持學生文創設計。", highlight: "限定設計", category: 'other' },
+  { id: 28, name: "E6 終章集章站", location: "後排 E 區", icon: "🏁", description: "完成 E 區任務可蓋章，蒐集章點兌換紀念品。", highlight: "集章衝刺", category: 'other' },
 ];
 
 const MAP_COLORS = {
