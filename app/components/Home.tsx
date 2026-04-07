@@ -151,7 +151,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
   const goGameHub = () => setUserMode('game');
 
   // ─── 渲染分支：地圖 ───────────────────────────────────
-  if (userMode === 'map') return <MapComponent onBack={() => setUserMode('select')} isModal={false} />;
+  if (userMode === 'map') return <MapComponent onBack={() => setUserMode('home')} isModal={false} />;
   if (userMode === 'game-map') return <MapComponent onBack={() => setUserMode('game')} isModal={false} />;
 
   return (
