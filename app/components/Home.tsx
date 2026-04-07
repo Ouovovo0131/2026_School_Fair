@@ -148,7 +148,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
 
   const pct = Math.round((completed.length / TOTAL_QUESTS) * 100);
   const goHome = () => setUserMode('home');
-  const goGameHub = () => setUserMode('select');
+  const goGameHub = () => setUserMode('game');
 
   // ─── 渲染分支：地圖 ───────────────────────────────────
   if (userMode === 'map') return <MapComponent onBack={() => setUserMode('select')} isModal={false} />;
@@ -546,7 +546,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
               <button onClick={() => setShowPrivacyModal(false)}
                 className="flex-1 py-3 rounded-2xl font-bold text-sm border" style={{borderColor: 'var(--border)', color: 'var(--text-secondary)', background: 'var(--surface)'}}>返回修改暱稱</button>
               <button
-                onClick={() => { if (privacyAgreed) { setShowPrivacyModal(false); setUserMode('select'); } else alert("請勾選同意框才能繼續"); }}
+                onClick={() => { if (privacyAgreed) { setShowPrivacyModal(false); setUserMode('game'); } else alert("請勾選同意框才能繼續"); }}
                 disabled={!privacyAgreed}
                 className={`flex-1 !text-sm ${privacyAgreed ? 'clay-button' : 'py-3 rounded-2xl font-bold cursor-not-allowed'}`}
                 style={!privacyAgreed ? {background: 'var(--bg-200)', color: 'var(--text-muted)'} : undefined}>
