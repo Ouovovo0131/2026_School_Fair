@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { auth, db } from "@/lib/firebase";
 import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 import { doc, getDoc, setDoc, updateDoc, collection, getDocs, deleteDoc } from "firebase/firestore";
-import { LogOut, Map, Settings, Lock, ChevronRight, CalendarDays, Clock3 } from "lucide-react";
+import { LogOut, Map, Settings, Lock, ChevronRight, CalendarDays, Clock3, ArrowLeft } from "lucide-react";
 import { THEME_NAMES } from "./tasks";
 import { QUESTS } from "../../constants/quests";
 import MapComponent from "./Map";
@@ -26,6 +26,8 @@ interface LocalUser {
   photoURL?: string | null;
 }
 
+type ViewMode = 'home' | 'select' | 'game' | 'map' | 'game-map';
+
 export default function Home({ unlockedTasks = [] }: HomeProps) {
   const [user, setUser] = useState<LocalUser | null>(null);
   const [completed, setCompleted] = useState<number[]>([]);
@@ -42,12 +44,12 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
   const [showPrivacyModal, setShowPrivacyModal] = useState(false);
   const [privacyAgreed, setPrivacyAgreed] = useState(false);
 
-  const [userMode, setUserMode] = useState<'select' | 'game' | 'map' | 'game-map'>(() => {
+  const [userMode, setUserMode] = useState<ViewMode>(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('userMode');
-      if (saved === 'game') return 'game';
+      if (saved === 'home' || saved === 'select' || saved === 'game' || saved === 'map' || saved === 'game-map') return saved;
     }
-    return 'select';
+    return 'home';
   });
 
   useEffect(() => {
@@ -145,6 +147,8 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
   );
 
   const pct = Math.round((completed.length / TOTAL_QUESTS) * 100);
+  const goHome = () => setUserMode('home');
+  const goGameHub = () => setUserMode('select');
 
   // ─── 渲染分支：地圖 ───────────────────────────────────
   if (userMode === 'map') return <MapComponent onBack={() => setUserMode('select')} isModal={false} />;
@@ -185,8 +189,8 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
       {/* ── 主內容 ── */}
       <main className="px-4 md:px-6 py-6 max-w-6xl mx-auto space-y-6 animate-[fade-in_0.25s_ease]">
 
-        {/* 未登入 - Hero Section */}
-        {!user ? (
+        {/* 主畫面 */}
+        {userMode === 'home' ? (
           <div className="space-y-6 mt-0">
             {/* Hero 背景容器 */}
             <div className="animated-background premium-card p-8 sm:p-10 md:p-12 relative overflow-hidden">
@@ -217,10 +221,10 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6">
                   <button
-                    onClick={handleLogin}
+                    onClick={goGameHub}
                     className="btn-cta-large w-full"
                   >
-                    🔐 使用 Google 登入
+                    🎮 前往玩遊戲
                   </button>
                   <button
                     onClick={() => setUserMode('map')}
@@ -267,9 +271,25 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
             <Timeline />
           </div>
 
-        /* 流程選擇 */
         ) : userMode === 'select' ? (
           <div className="space-y-3 mt-6">
+            <div className="flex items-center justify-between gap-3 mb-2">
+              <button
+                onClick={goHome}
+                className="flex items-center gap-2 clay-button clay-button-blue !py-2 !px-3 !rounded-xl"
+              >
+                <ArrowLeft size={16} />
+                返回主畫面
+              </button>
+              {!user && (
+                <button
+                  onClick={handleLogin}
+                  className="flex items-center gap-2 clay-button !py-2 !px-3 !rounded-xl"
+                >
+                  🔐 登入同步進度
+                </button>
+              )}
+            </div>
             <p className="text-center text-sm font-semibold mb-4" style={{color: 'var(--primary)'}}>選擇您想要進行的活動</p>
             <button onClick={() => setUserMode('game')}
               className="w-full premium-card clay-shadow-sm p-5 flex items-center justify-between transition-all hover:-translate-y-1 active:scale-[0.98] border-b-4"
@@ -294,16 +314,43 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
         /* 遊戲主畫面 */
         ) : (
           <>
+            <div className="flex items-center justify-between gap-3 mb-2">
+              <button
+                onClick={goHome}
+                className="flex items-center gap-2 clay-button clay-button-blue !py-2 !px-3 !rounded-xl"
+              >
+                <ArrowLeft size={16} />
+                回主畫面
+              </button>
+              {!user && (
+                <button
+                  onClick={handleLogin}
+                  className="flex items-center gap-2 clay-button !py-2 !px-3 !rounded-xl"
+                >
+                  🔐 登入同步進度
+                </button>
+              )}
+            </div>
+
+            {!user && (
+              <div className="premium-card clay-shadow-sm p-4" style={{background: 'var(--surface)'}}>
+                <p className="text-sm font-bold" style={{color: 'var(--text)'}}>👋 目前是訪客模式</p>
+                <p className="text-xs mt-1" style={{color: 'var(--text-muted)'}}>
+                  可以先瀏覽任務與地圖；登入後可同步完成進度與兌換獎勵。
+                </p>
+              </div>
+            )}
+
             {/* 玩家資訊卡 */}
             <div className="premium-card clay-shadow-sm p-4">
               <div className="flex items-center gap-3 mb-3">
-                {user.photoURL
+                {user?.photoURL
                   ? <img src={user.photoURL} alt="頭像" className="w-11 h-11 rounded-full object-cover shrink-0" style={{border: '2px solid var(--primary)'}}/>
                   : <div className="w-11 h-11 rounded-full flex items-center justify-center text-xl shrink-0" style={{background: 'linear-gradient(135deg,var(--primary),var(--secondary))',color:'white'}}>🦆</div>
                 }
                 <div className="min-w-0">
-                  <p className="font-bold text-sm truncate" style={{color: 'var(--text)'}}>{nickname || user.displayName}</p>
-                  <p className="text-xs" style={{color: 'var(--text-muted)'}}>ID: {user.email?.split('@')[0].slice(0,6).toUpperCase()}</p>
+                  <p className="font-bold text-sm truncate" style={{color: 'var(--text)'}}>{nickname || user?.displayName || '訪客'}</p>
+                  <p className="text-xs" style={{color: 'var(--text-muted)'}}>ID: {user?.email?.split('@')[0].slice(0,6).toUpperCase() || 'GUEST'}</p>
                 </div>
                 <div className="ml-auto shrink-0 text-right">
                   <p className="text-xs font-semibold" style={{color: 'var(--primary)'}}>進度</p>
