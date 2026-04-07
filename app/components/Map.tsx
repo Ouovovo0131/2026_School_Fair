@@ -127,6 +127,18 @@ export default function Map({ onBack, isModal = false }: MapProps) {
               />
             </div>
 
+            <div
+              className="premium-card clay-shadow-sm px-4 py-3 mb-6"
+              style={{
+                borderLeft: `5px solid ${MAP_COLORS.stall}`,
+                background: `linear-gradient(135deg, #FFFFFF, ${MAP_COLORS.garden})`,
+              }}
+            >
+              <p className="text-sm font-bold" style={{ color: MAP_COLORS.building }}>
+                🧭 地圖備註：右側為北方，箭頭方向為建議路徑。
+              </p>
+            </div>
+
             {/* ── 攤位列表 ── */}
             <div className="premium-card clay-shadow-md p-6">
               <h2 className="text-xl font-bold mb-4" style={{ color: "var(--text)" }}>🏪 帳棚攤位總覽（共 {stalls.length} 攤）</h2>
