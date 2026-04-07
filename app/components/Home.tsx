@@ -149,10 +149,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
   const pct = Math.round((completed.length / TOTAL_QUESTS) * 100);
   const goHome = () => setUserMode('home');
   const goGameHub = () => setUserMode('game');
-
-  // ─── 渲染分支：地圖 ───────────────────────────────────
-  if (userMode === 'map') return <MapComponent onBack={() => setUserMode('home')} isModal={false} />;
-  if (userMode === 'game-map') return <MapComponent onBack={() => setUserMode('game')} isModal={false} />;
+  const isMapMode = userMode === 'map' || userMode === 'game-map';
 
   return (
     <div className="min-h-screen" style={{background: 'var(--bg)'}}>
@@ -270,6 +267,12 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
             {/* 活動時程 */}
             <Timeline />
           </div>
+
+        ) : isMapMode ? (
+          <MapComponent
+            onBack={() => setUserMode(userMode === 'game-map' ? 'game' : 'home')}
+            isModal={false}
+          />
 
         ) : userMode === 'select' ? (
           <div className="space-y-3 mt-6">
