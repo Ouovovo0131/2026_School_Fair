@@ -130,8 +130,8 @@ export default function Map({ onBack, isModal = false }: MapProps) {
             <div
               className="premium-card clay-shadow-sm px-4 py-3 mb-6"
               style={{
-                borderLeft: `5px solid ${MAP_COLORS.stall}`,
-                background: `linear-gradient(135deg, #FFFFFF, ${MAP_COLORS.garden})`,
+                border: `1.5px solid ${MAP_COLORS.campusBorder}`,
+                background: "#FFFFFF",
               }}
             >
               <p className="text-sm font-bold" style={{ color: MAP_COLORS.building }}>
