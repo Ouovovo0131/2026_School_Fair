@@ -17,6 +17,18 @@ interface Stall {
   category: 'food' | 'game' | 'craft' | 'other';
 }
 
+type ZoneId = 'A' | 'B' | 'C' | 'D' | 'E';
+
+interface MapHotspot {
+  zone: ZoneId;
+  label: string;
+  note: string;
+  left: string;
+  top: string;
+  width: string;
+  height: string;
+}
+
 // 攤位資料（帳棚數與位置對齊地圖圖面）
 const stalls: Stall[] = [
   { id: 1, name: "A1 蜜香紅茶鋪", location: "左側第一列（綜合大樓旁）", icon: "🧋", description: "手搖紅茶、珍珠奶茶與冬瓜檸檬，現點現搖。", highlight: "清涼解渴", category: 'food' },
@@ -71,34 +83,58 @@ const MAP_COLORS = {
   glow: "#FFD37B",
 };
 
-const getSpotlightConfig = (stall: Stall) => {
-  const zone = stall.name.charAt(0);
+const MAP_HOTSPOTS: MapHotspot[] = [
+  { zone: 'A', label: 'A 區', note: '餐飲', left: '2%', top: '11%', width: '18%', height: '54%' },
+  { zone: 'B', label: 'B 區', note: '南側花圃', left: '22%', top: '38%', width: '24%', height: '30%' },
+  { zone: 'C', label: 'C 區', note: '北側花圃', left: '54%', top: '38%', width: '24%', height: '30%' },
+  { zone: 'D', label: 'D 區', note: '右側攤位', left: '78%', top: '26%', width: '20%', height: '44%' },
+  { zone: 'E', label: 'E 區', note: '後排任務', left: '54%', top: '78%', width: '28%', height: '16%' },
+];
+
+const getZoneFromStall = (stall: Stall): ZoneId => stall.name.charAt(0) as ZoneId;
+
+const getSpotlightConfig = (zone: ZoneId) => {
 
   switch (zone) {
     case "A":
-      return { left: "22%", top: "44%", size: "26%" };
+      return { left: "11%", top: "40%", size: "30%" };
     case "B":
-      return { left: "31%", top: "67%", size: "24%" };
+      return { left: "34%", top: "55%", size: "25%" };
     case "C":
-      return { left: "68%", top: "40%", size: "24%" };
+      return { left: "66%", top: "55%", size: "25%" };
     case "D":
-      return { left: "77%", top: "56%", size: "28%" };
+      return { left: "91%", top: "42%", size: "22%" };
     case "E":
-      return { left: "72%", top: "28%", size: "24%" };
+      return { left: "66%", top: "88%", size: "22%" };
     default:
       return { left: "50%", top: "50%", size: "22%" };
   }
 };
 
+const zoneCounts = MAP_HOTSPOTS.reduce<Record<ZoneId, number>>((counts, hotspot) => {
+  counts[hotspot.zone] = stalls.filter(stall => getZoneFromStall(stall) === hotspot.zone).length;
+  return counts;
+}, { A: 0, B: 0, C: 0, D: 0, E: 0 });
+
 export default function Map({ onBack, isModal = false }: MapProps) {
   const [selectedStall, setSelectedStall] = useState<Stall | null>(null);
   const [filterCategory, setFilterCategory] = useState<'all' | 'food' | 'game' | 'craft' | 'other'>('all');
-  const spotlight = selectedStall ? getSpotlightConfig(selectedStall) : null;
+  const [activeZone, setActiveZone] = useState<'all' | ZoneId>('all');
+
+  const spotlightZone = selectedStall ? getZoneFromStall(selectedStall) : activeZone === 'all' ? null : activeZone;
+  const spotlight = spotlightZone ? getSpotlightConfig(spotlightZone) : null;
+
+  const handleZoneSelect = (zone: 'all' | ZoneId) => {
+    setActiveZone(zone);
+    setSelectedStall(null);
+  };
 
   // 篩選攤位
-  const filteredStalls = filterCategory === 'all' 
-    ? stalls 
-    : stalls.filter(s => s.category === filterCategory);
+  const filteredStalls = stalls.filter(stall => {
+    const matchesCategory = filterCategory === 'all' || stall.category === filterCategory;
+    const matchesZone = activeZone === 'all' || getZoneFromStall(stall) === activeZone;
+    return matchesCategory && matchesZone;
+  });
 
   return (
     <div
@@ -139,21 +175,60 @@ export default function Map({ onBack, isModal = false }: MapProps) {
 
             {/* ── 校園平面圖 ── */}
             <div className="premium-card clay-shadow-md p-4 mb-6 overflow-x-auto relative">
-              <img
-                src="/Map.png"
-                alt="校慶地圖"
-                className={`w-full h-auto rounded-xl border transition-all duration-300 ${selectedStall ? "brightness-75 saturate-75" : ""}`}
-                style={{ maxWidth: "1080px", display: "block", margin: "0 auto", borderColor: MAP_COLORS.campusBorder }}
-              />
-              {selectedStall && spotlight && (
-                <div
-                  className="pointer-events-none absolute inset-4 rounded-xl"
-                  style={{
-                    background: `radial-gradient(circle ${spotlight.size} at ${spotlight.left} ${spotlight.top}, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.72) 18%, rgba(255,255,255,0.2) 32%, rgba(0,0,0,0.18) 44%, rgba(0,0,0,0.74) 72%, rgba(0,0,0,0.92) 100%)`,
-                    boxShadow: `inset 0 0 0 2px rgba(255,255,255,0.18), inset 0 0 80px rgba(255,255,255,0.08)`,
-                  }}
+              <div className="relative mx-auto" style={{ maxWidth: "1080px" }}>
+                <img
+                  src="/Map.png"
+                  alt="校慶地圖"
+                  className={`w-full h-auto rounded-xl border transition-all duration-300 ${spotlightZone ? "brightness-60 saturate-75" : ""}`}
+                  style={{ display: "block", borderColor: MAP_COLORS.campusBorder }}
                 />
-              )}
+                {spotlight && (
+                  <div
+                    className="pointer-events-none absolute inset-4 rounded-xl"
+                    style={{
+                      background: `radial-gradient(circle ${spotlight.size} at ${spotlight.left} ${spotlight.top}, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.72) 18%, rgba(255,255,255,0.2) 32%, rgba(0,0,0,0.18) 44%, rgba(0,0,0,0.74) 72%, rgba(0,0,0,0.92) 100%)`,
+                      boxShadow: `inset 0 0 0 2px rgba(255,255,255,0.18), inset 0 0 80px rgba(255,255,255,0.08)`,
+                    }}
+                  />
+                )}
+                <div className="absolute inset-0">
+                  {MAP_HOTSPOTS.map(hotspot => {
+                    const isActive = spotlightZone === hotspot.zone;
+                    return (
+                      <button
+                        key={hotspot.zone}
+                        type="button"
+                        aria-label={`${hotspot.label} ${hotspot.note}`}
+                        onClick={() => handleZoneSelect(hotspot.zone)}
+                        className="absolute flex items-center justify-center rounded-2xl border-2 transition-all duration-200"
+                        style={{
+                          left: hotspot.left,
+                          top: hotspot.top,
+                          width: hotspot.width,
+                          height: hotspot.height,
+                          borderColor: isActive ? MAP_COLORS.stallHover : 'rgba(139, 99, 63, 0.45)',
+                          background: isActive ? 'rgba(255, 149, 188, 0.22)' : 'rgba(255,255,255,0.04)',
+                          boxShadow: isActive
+                            ? '0 0 0 2px rgba(255,255,255,0.45), 0 10px 24px rgba(0,0,0,0.18)'
+                            : '0 6px 18px rgba(0,0,0,0.10)',
+                        }}
+                      >
+                        <div className="text-center px-2 select-none">
+                          <p className="text-sm font-black" style={{ color: MAP_COLORS.building }}>
+                            {hotspot.label}
+                          </p>
+                          <p className="text-[10px] font-bold mt-0.5" style={{ color: 'var(--text)' }}>
+                            {hotspot.note}
+                          </p>
+                          <p className="text-[10px] font-bold mt-1" style={{ color: isActive ? MAP_COLORS.stall : 'var(--text-muted)' }}>
+                            {zoneCounts[hotspot.zone]} 攤
+                          </p>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
 
             <div
@@ -206,7 +281,10 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                 {filteredStalls.map(stall => (
                   <button
                     key={stall.id}
-                    onClick={() => setSelectedStall(stall)}
+                    onClick={() => {
+                      setActiveZone(getZoneFromStall(stall));
+                      setSelectedStall(stall);
+                    }}
                     className="premium-card clay-shadow-sm p-4 text-left transition-all hover:shadow-md hover:-translate-y-1"
                     style={{
                       border: selectedStall?.id === stall.id ? `2.5px solid ${MAP_COLORS.stallHover}` : `1.5px solid ${MAP_COLORS.campusBorder}`,
