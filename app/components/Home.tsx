@@ -227,7 +227,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                     onClick={() => setUserMode('map')}
                     className="clay-button clay-button-yellow w-full"
                   >
-                    🗺️ 直接查看地圖
+                    🗺️ 查看地圖
                   </button>
                 </div>
 
