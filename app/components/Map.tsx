@@ -71,9 +71,29 @@ const MAP_COLORS = {
   glow: "#FFD37B",
 };
 
+const getSpotlightConfig = (stall: Stall) => {
+  const zone = stall.name.charAt(0);
+
+  switch (zone) {
+    case "A":
+      return { left: "22%", top: "44%", size: "26%" };
+    case "B":
+      return { left: "31%", top: "67%", size: "24%" };
+    case "C":
+      return { left: "68%", top: "40%", size: "24%" };
+    case "D":
+      return { left: "77%", top: "56%", size: "28%" };
+    case "E":
+      return { left: "72%", top: "28%", size: "24%" };
+    default:
+      return { left: "50%", top: "50%", size: "22%" };
+  }
+};
+
 export default function Map({ onBack, isModal = false }: MapProps) {
   const [selectedStall, setSelectedStall] = useState<Stall | null>(null);
   const [filterCategory, setFilterCategory] = useState<'all' | 'food' | 'game' | 'craft' | 'other'>('all');
+  const spotlight = selectedStall ? getSpotlightConfig(selectedStall) : null;
 
   // 篩選攤位
   const filteredStalls = filterCategory === 'all' 
@@ -118,13 +138,22 @@ export default function Map({ onBack, isModal = false }: MapProps) {
             </div>
 
             {/* ── 校園平面圖 ── */}
-            <div className="premium-card clay-shadow-md p-4 mb-6 overflow-x-auto">
+            <div className="premium-card clay-shadow-md p-4 mb-6 overflow-x-auto relative">
               <img
                 src="/Map.png"
                 alt="校慶地圖"
-                className="w-full h-auto rounded-xl border"
+                className={`w-full h-auto rounded-xl border transition-all duration-300 ${selectedStall ? "brightness-75 saturate-75" : ""}`}
                 style={{ maxWidth: "1080px", display: "block", margin: "0 auto", borderColor: MAP_COLORS.campusBorder }}
               />
+              {selectedStall && spotlight && (
+                <div
+                  className="pointer-events-none absolute inset-4 rounded-xl"
+                  style={{
+                    background: `radial-gradient(circle ${spotlight.size} at ${spotlight.left} ${spotlight.top}, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.72) 18%, rgba(255,255,255,0.2) 32%, rgba(0,0,0,0.18) 44%, rgba(0,0,0,0.74) 72%, rgba(0,0,0,0.92) 100%)`,
+                    boxShadow: `inset 0 0 0 2px rgba(255,255,255,0.18), inset 0 0 80px rgba(255,255,255,0.08)`,
+                  }}
+                />
+              )}
             </div>
 
             <div
