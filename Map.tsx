@@ -229,8 +229,8 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                     }}
                   >
                     <div className="flex items-center justify-between mb-1">
-                      <span className="inline-flex h-10 w-10 items-center justify-center rounded-full text-xl" style={{ background: 'rgba(255, 138, 38, 0.14)', color: MAP_COLORS.stall }}>
-                        {stall.icon}
+                      <span className="inline-flex h-10 w-10 items-center justify-center rounded-full" style={{ background: 'rgba(255, 138, 38, 0.14)' }}>
+                        <img src="/Map_icon.png" alt={`${stall.name} icon`} className="h-6 w-6 object-contain" />
                       </span>
                       <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: MAP_COLORS.stallHover, color: MAP_COLORS.building }}>
                         {stall.highlight}
@@ -273,7 +273,9 @@ export default function Map({ onBack, isModal = false }: MapProps) {
             >
               ✕
             </button>
-            <div className="text-5xl text-center mb-3">{selectedStall.icon}</div>
+            <div className="flex justify-center mb-3">
+              <img src="/Map_icon.png" alt={`${selectedStall.name} icon`} className="h-14 w-14 object-contain" />
+            </div>
             <h3 className="text-2xl font-bold text-center mb-1" style={{ color: "var(--text)" }}>
               {selectedStall.name}
             </h3>
