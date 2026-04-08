@@ -19,16 +19,6 @@ interface Stall {
 
 type ZoneId = 'A' | 'B' | 'C' | 'D' | 'E';
 
-interface MapHotspot {
-  zone: ZoneId;
-  label: string;
-  note: string;
-  left: string;
-  top: string;
-  width: string;
-  height: string;
-}
-
 // 攤位資料（帳棚數與位置對齊地圖圖面）
 const stalls: Stall[] = [
   { id: 1, name: "A1 蜜香紅茶鋪", location: "左側第一列（綜合大樓旁）", icon: "🧋", description: "手搖紅茶、珍珠奶茶與冬瓜檸檬，現點現搖。", highlight: "清涼解渴", category: 'food' },
@@ -83,14 +73,6 @@ const MAP_COLORS = {
   glow: "#FFD37B",
 };
 
-const MAP_HOTSPOTS: MapHotspot[] = [
-  { zone: 'A', label: 'A 區', note: '餐飲', left: '2%', top: '11%', width: '18%', height: '54%' },
-  { zone: 'B', label: 'B 區', note: '南側花圃', left: '22%', top: '38%', width: '24%', height: '30%' },
-  { zone: 'C', label: 'C 區', note: '北側花圃', left: '54%', top: '38%', width: '24%', height: '30%' },
-  { zone: 'D', label: 'D 區', note: '右側攤位', left: '78%', top: '26%', width: '20%', height: '44%' },
-  { zone: 'E', label: 'E 區', note: '後排任務', left: '54%', top: '78%', width: '28%', height: '16%' },
-];
-
 const getZoneFromStall = (stall: Stall): ZoneId => stall.name.charAt(0) as ZoneId;
 
 const getSpotlightConfig = (zone: ZoneId) => {
@@ -109,11 +91,6 @@ const getSpotlightConfig = (zone: ZoneId) => {
       return { left: "50%", top: "50%", size: "22%" };
   }
 };
-
-const zoneCounts = MAP_HOTSPOTS.reduce<Record<ZoneId, number>>((counts, hotspot) => {
-  counts[hotspot.zone] = stalls.filter(stall => getZoneFromStall(stall) === hotspot.zone).length;
-  return counts;
-}, { A: 0, B: 0, C: 0, D: 0, E: 0 });
 
 export default function Map({ onBack, isModal = false }: MapProps) {
   const [selectedStall, setSelectedStall] = useState<Stall | null>(null);
@@ -185,40 +162,6 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   }}
                 />
               )}
-              <div className="absolute inset-0">
-                {MAP_HOTSPOTS.map(hotspot => {
-                  const isActive = spotlightZone === hotspot.zone;
-                  return (
-                    <div
-                      key={hotspot.zone}
-                      className="absolute flex items-center justify-center rounded-2xl border-2 transition-all duration-200 pointer-events-none"
-                      style={{
-                        left: hotspot.left,
-                        top: hotspot.top,
-                        width: hotspot.width,
-                        height: hotspot.height,
-                        borderColor: isActive ? MAP_COLORS.stallHover : 'rgba(139, 99, 63, 0.45)',
-                        background: isActive ? 'rgba(255, 149, 188, 0.22)' : 'rgba(255,255,255,0.04)',
-                        boxShadow: isActive
-                          ? '0 0 0 2px rgba(255,255,255,0.45), 0 10px 24px rgba(0,0,0,0.18)'
-                          : '0 6px 18px rgba(0,0,0,0.10)',
-                      }}
-                    >
-                      <div className="text-center px-2 select-none">
-                        <p className="text-sm font-black" style={{ color: MAP_COLORS.building }}>
-                          {hotspot.label}
-                        </p>
-                        <p className="text-[10px] font-bold mt-0.5" style={{ color: 'var(--text)' }}>
-                          {hotspot.note}
-                        </p>
-                        <p className="text-[10px] font-bold mt-1" style={{ color: isActive ? MAP_COLORS.stall : 'var(--text-muted)' }}>
-                          {zoneCounts[hotspot.zone]} 攤
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
               </div>
             </div>
 
