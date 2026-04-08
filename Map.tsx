@@ -124,11 +124,6 @@ export default function Map({ onBack, isModal = false }: MapProps) {
   const spotlightZone = selectedStall ? getZoneFromStall(selectedStall) : activeZone === 'all' ? null : activeZone;
   const spotlight = spotlightZone ? getSpotlightConfig(spotlightZone) : null;
 
-  const handleZoneSelect = (zone: 'all' | ZoneId) => {
-    setActiveZone(zone);
-    setSelectedStall(null);
-  };
-
   // 篩選攤位
   const filteredStalls = stalls.filter(stall => {
     const matchesCategory = filterCategory === 'all' || stall.category === filterCategory;
@@ -195,12 +190,9 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   {MAP_HOTSPOTS.map(hotspot => {
                     const isActive = spotlightZone === hotspot.zone;
                     return (
-                      <button
+                      <div
                         key={hotspot.zone}
-                        type="button"
-                        aria-label={`${hotspot.label} ${hotspot.note}`}
-                        onClick={() => handleZoneSelect(hotspot.zone)}
-                        className="absolute flex items-center justify-center rounded-2xl border-2 transition-all duration-200"
+                        className="absolute flex items-center justify-center rounded-2xl border-2 transition-all duration-200 pointer-events-none"
                         style={{
                           left: hotspot.left,
                           top: hotspot.top,
@@ -224,7 +216,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                             {zoneCounts[hotspot.zone]} 攤
                           </p>
                         </div>
-                      </button>
+                      </div>
                     );
                   })}
                 </div>
