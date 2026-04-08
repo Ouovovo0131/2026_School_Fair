@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { auth, db } from "@/lib/firebase";
 import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 import { doc, getDoc, setDoc, updateDoc, collection, getDocs, deleteDoc } from "firebase/firestore";
-import { LogOut, Map, Settings, Lock, ChevronRight, CalendarDays, Clock3, ArrowLeft } from "lucide-react";
+import { LogOut, Settings, Lock, ChevronRight, CalendarDays, Clock3, ArrowLeft } from "lucide-react";
 import { THEME_NAMES } from "./tasks";
 import { QUESTS } from "../../constants/quests";
 import MapComponent from "./Map";
@@ -162,7 +162,8 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
             {(userMode === 'game' || !user) && (
               <button onClick={() => setUserMode(user ? 'game-map' : 'map')}
                 className="clay-button clay-button-yellow flex items-center gap-1 !py-2 !px-3 !text-sm !rounded-xl">
-                <Map size={15}/><span>地圖</span>
+                <img src="/Map_icon.png" alt="" aria-hidden="true" className="h-4 w-4 object-contain" />
+                <span>地圖</span>
               </button>
             )}
             {user && (
@@ -173,9 +174,11 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
               </button>
             )}
             {user && (
-              <button onClick={handleLogout}
+              <button
+                onClick={handleLogout}
                 className="w-9 h-9 flex items-center justify-center rounded-full transition-all"
-                style={{color: 'var(--bg-100)', background: 'transparent'}}>
+                style={{color: 'var(--bg-100)', background: 'transparent'}}
+              >
                 <LogOut size={20}/>
               </button>
             )}
@@ -307,7 +310,10 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
               className="w-full premium-card clay-shadow-sm p-5 flex items-center justify-between transition-all hover:-translate-y-1 active:scale-[0.98] border-b-4"
               style={{borderColor: 'var(--secondary)', background: 'var(--surface)'}}>
               <div className="text-left">
-                <p className="text-base font-bold" style={{color: 'var(--text)'}}>🗺️ 查看地圖</p>
+                <p className="text-base font-bold flex items-center gap-2" style={{color: 'var(--text)'}}>
+                  <img src="/Map_icon.png" alt="" aria-hidden="true" className="h-5 w-5 object-contain" />
+                  <span>查看地圖</span>
+                </p>
                 <p className="text-xs mt-0.5 font-medium" style={{color: 'var(--primary)'}}>瀏覽校慶園遊會的所有攤位位置</p>
               </div>
               <ChevronRight size={20} style={{color: 'var(--secondary)', flexShrink: 0}}/>

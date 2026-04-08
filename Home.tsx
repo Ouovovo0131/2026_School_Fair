@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { auth, db } from "@/lib/firebase";
 import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 import { doc, getDoc, setDoc, updateDoc, collection, getDocs, deleteDoc } from "firebase/firestore";
-import { LogOut, Map, Settings, Lock, ChevronRight, CalendarDays, Clock3 } from "lucide-react";
+import { LogOut, Settings, Lock, ChevronRight, CalendarDays, Clock3 } from "lucide-react";
 import { THEME_NAMES } from "./tasks";
 import { QUESTS } from "../../constants/quests";
 import MapComponent from "./Map";
@@ -161,7 +161,8 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
             {(userMode === 'game' || !user) && (
               <button onClick={() => setUserMode(user ? 'game-map' : 'map')}
                 className="clay-button clay-button-yellow flex items-center gap-1 !py-2 !px-3 !text-sm !rounded-xl">
-                <Map size={15}/><span>地圖</span>
+                <img src="/Map_icon.png" alt="" aria-hidden="true" className="h-4 w-4 object-contain" />
+                <span>地圖</span>
               </button>
             )}
             {user && (
@@ -226,7 +227,10 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                     onClick={() => setUserMode('map')}
                     className="clay-button clay-button-yellow w-full"
                   >
-                    🗺️ 直接查看地圖
+                    <span className="inline-flex items-center justify-center gap-2">
+                      <img src="/Map_icon.png" alt="" aria-hidden="true" className="h-5 w-5 object-contain" />
+                      <span>直接查看地圖</span>
+                    </span>
                   </button>
                 </div>
 
