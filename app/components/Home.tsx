@@ -28,6 +28,26 @@ interface LocalUser {
 
 type ViewMode = 'home' | 'select' | 'game' | 'map' | 'game-map';
 
+function GamepadIcon({ className = "h-5 w-5" }: { className?: string }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`inline-block ${className}`}
+      style={{
+        backgroundColor: "currentColor",
+        WebkitMaskImage: "url('/game.png')",
+        WebkitMaskRepeat: "no-repeat",
+        WebkitMaskPosition: "center",
+        WebkitMaskSize: "contain",
+        maskImage: "url('/game.png')",
+        maskRepeat: "no-repeat",
+        maskPosition: "center",
+        maskSize: "contain",
+      }}
+    />
+  );
+}
+
 export default function Home({ unlockedTasks = [] }: HomeProps) {
   const [user, setUser] = useState<LocalUser | null>(null);
   const [completed, setCompleted] = useState<number[]>([]);
@@ -224,7 +244,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                     onClick={goGameHub}
                     className="btn-cta-large w-full inline-flex items-center justify-center gap-2"
                   >
-                    <img src="/game.png" alt="遊戲 icon" className="h-5 w-5 object-contain" />
+                    <GamepadIcon className="h-5 w-5" />
                     <span>前往玩遊戲</span>
                   </button>
                   <button
@@ -260,7 +280,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                 >
                   <div className="text-3xl mb-1 flex justify-center">
                     {item.isImage ? (
-                      <img src={item.icon} alt="遊戲 icon" className="h-8 w-8 object-contain" />
+                      <GamepadIcon className="h-8 w-8" />
                     ) : (
                       item.icon
                     )}
@@ -437,7 +457,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
             {/* 任務格子 */}
             <div className="premium-card clay-shadow-sm p-4">
               <h3 className="text-base font-bold mb-3 px-3 py-2 rounded-lg inline-flex items-center gap-2" style={{color: 'white', backgroundColor: 'var(--primary)'}}>
-                <img src="/game.png" alt="遊戲 icon" className="h-5 w-5 object-contain" />
+                <GamepadIcon className="h-5 w-5" />
                 <span>任務列表 ({TOTAL_QUESTS} 關)</span>
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3 mt-4">
@@ -502,7 +522,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
               <p className="text-sm font-semibold" style={{color: 'var(--text)'}}>👤 {nickname || user?.displayName}</p>
               <p className="text-xs" style={{color: 'var(--primary)'}}>✉️ {user?.email}</p>
               <p className="text-sm font-semibold flex items-center gap-1" style={{color: 'var(--text)'}}>
-                <img src="/game.png" alt="遊戲 icon" className="h-4 w-4 object-contain" />
+                <GamepadIcon className="h-4 w-4" />
                 <span>完成：<span style={{color: 'var(--secondary)'}}>{completed.length}/{TOTAL_QUESTS} 關</span></span>
               </p>
             </div>

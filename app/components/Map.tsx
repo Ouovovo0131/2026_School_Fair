@@ -92,6 +92,26 @@ const getSpotlightConfig = (zone: ZoneId) => {
   }
 };
 
+function GamepadIcon({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`inline-block ${className}`}
+      style={{
+        backgroundColor: "currentColor",
+        WebkitMaskImage: "url('/game.png')",
+        WebkitMaskRepeat: "no-repeat",
+        WebkitMaskPosition: "center",
+        WebkitMaskSize: "contain",
+        maskImage: "url('/game.png')",
+        maskRepeat: "no-repeat",
+        maskPosition: "center",
+        maskSize: "contain",
+      }}
+    />
+  );
+}
+
 export default function Map({ onBack, isModal = false }: MapProps) {
   const [selectedStall, setSelectedStall] = useState<Stall | null>(null);
   const [filterCategory, setFilterCategory] = useState<'all' | 'food' | 'game' | 'craft' | 'other'>('all');
@@ -201,7 +221,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                 {[
                   { id: 'all' as const, label: '全部', emoji: '🎪' },
                   { id: 'food' as const, label: '美食', emoji: '🍱' },
-                  { id: 'game' as const, label: '遊戲', emoji: '', iconSrc: '/game.png' },
+                  { id: 'game' as const, label: '遊戲', emoji: '', isGame: true },
                   { id: 'craft' as const, label: '手作', emoji: '🎨' },
                   { id: 'other' as const, label: '其他', emoji: '✨' },
                 ].map(cat => (
@@ -220,8 +240,8 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                       transform: filterCategory === cat.id ? 'scale(1.05)' : 'scale(1)'
                     }}
                   >
-                    {cat.iconSrc ? (
-                      <img src={cat.iconSrc} alt="遊戲 icon" className="h-4 w-4 object-contain" />
+                    {cat.isGame ? (
+                      <GamepadIcon className="h-4 w-4" />
                     ) : (
                       cat.emoji
                     )} {cat.label}
