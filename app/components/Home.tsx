@@ -236,7 +236,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                 </p>
                 <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
                   <span className="site-pill"><CalendarDays size={14} /> 5/23</span>
-                  <span className="site-pill"><Clock3 size={14} /> 09:00 - 14:00</span>
+                  <span className="site-pill"><Clock3 size={14} /> 10:00 - 14:00</span>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6">

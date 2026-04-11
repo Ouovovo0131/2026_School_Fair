@@ -15,7 +15,7 @@ export default function Countdown() {
 
   useEffect(() => {
     const calculateTimeLeft = () => {
-      const eventDate = new Date('2026-05-23T09:00:00+08:00').getTime();
+      const eventDate = new Date('2026-05-23T10:00:00+08:00').getTime();
       const now = new Date().getTime();
       const difference = eventDate - now;
 
@@ -42,7 +42,7 @@ export default function Countdown() {
   return (
     <section className="countdown-board">
       <div className="flex items-center justify-between mb-3">
-        <p className="countdown-title text-base">校慶倒數 2026/05/23 09:00</p>
+        <p className="countdown-title text-base">校慶倒數 2026/05/23 10:00</p>
         <span className="countdown-live">Live</span>
       </div>
 

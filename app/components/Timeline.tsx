@@ -9,14 +9,12 @@ interface TimelineItem {
 }
 
 const TIMELINE_EVENTS: TimelineItem[] = [
-  { id: 1, time: '09:00', title: '活動開始', description: '校園各處開始營運', icon: '🎪' },
-  { id: 2, time: '10:00', title: '校長致詞', description: '大禮堂進行開幕式', icon: '🎤' },
-  { id: 3, time: '11:00', title: '特色表演', description: '舞蹈隊、樂隊精彩演出', icon: '🎭' },
-  { id: 4, time: '12:00', title: '攤位高峰期', description: '美食、手作、遊戲攤位大開放', icon: '🍔' },
-  { id: 5, time: '14:00', title: '摸彩抽獎', description: '大獎、小獎輪流抽取', icon: '🎁' },
-  { id: 6, time: '16:00', title: '大隊接力', description: '班級競賽，精彩刺激', icon: '🏃' },
-  { id: 7, time: '17:00', title: '晚會演出', description: '學生表演及頒獎典禮', icon: '✨' },
-  { id: 8, time: '18:30', title: '活動結束', description: '感謝大家參與', icon: '👋' },
+  { id: 1, time: '10:00', title: '活動開始', description: '各區攤位開放、來賓進場', icon: '🎪' },
+  { id: 2, time: '10:00 - 13:30', title: '舞台表演時段', description: '社團與班級演出輪番登場', icon: '🎭' },
+  { id: 3, time: '11:30', title: '互動抽獎', description: '現場小活動與驚喜獎品', icon: '🎁' },
+  { id: 4, time: '12:00', title: '攤位高峰時段', description: '美食、手作與遊戲體驗最熱鬧', icon: '🍔' },
+  { id: 5, time: '13:30', title: '表演尾聲', description: '舞台節目收尾與合影', icon: '🎤' },
+  { id: 6, time: '14:00', title: '活動結束', description: '感謝大家參與，期待下次相見', icon: '👋' },
 ];
 
 export default function Timeline() {
