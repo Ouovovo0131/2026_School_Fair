@@ -137,7 +137,21 @@ export default function Map({ onBack, isModal = false }: MapProps) {
             {/* 標題 */}
             <div className="mb-6">
               <h1 className="text-3xl font-bold inline-flex items-center gap-2" style={{ color: MAP_COLORS.building }}>
-                <img src="/Map_icon.png" alt="地圖 icon" className="h-8 w-8 object-contain" />
+                <span
+                  aria-hidden="true"
+                  className="inline-block h-8 w-8"
+                  style={{
+                    backgroundColor: MAP_COLORS.building,
+                    WebkitMaskImage: "url('/Map_icon.png')",
+                    WebkitMaskRepeat: "no-repeat",
+                    WebkitMaskPosition: "center",
+                    WebkitMaskSize: "contain",
+                    maskImage: "url('/Map_icon.png')",
+                    maskRepeat: "no-repeat",
+                    maskPosition: "center",
+                    maskSize: "contain",
+                  }}
+                />
                 <span>校慶攤位地圖</span>
               </h1>
               <p className="mt-1 text-base font-medium" style={{ color: MAP_COLORS.stall }}>
