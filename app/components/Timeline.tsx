@@ -11,7 +11,6 @@ interface TimelineItem {
 const TIMELINE_EVENTS: TimelineItem[] = [
   { id: 1, time: '10:00', title: '活動開始', description: '各區攤位開放、來賓進場', icon: '🎪' },
   { id: 2, time: '10:00 - 13:30', title: '舞台表演時段', description: '社團與班級演出輪番登場', icon: '🎭' },
-  { id: 3, time: '11:30', title: '互動抽獎', description: '現場小活動與驚喜獎品', icon: '🎁' },
   { id: 4, time: '12:00', title: '攤位高峰時段', description: '美食、手作與遊戲體驗最熱鬧', icon: '🍔' },
   { id: 5, time: '13:30', title: '表演尾聲', description: '舞台節目收尾與合影', icon: '🎤' },
   { id: 6, time: '14:00', title: '活動結束', description: '感謝大家參與，期待下次相見', icon: '👋' },
