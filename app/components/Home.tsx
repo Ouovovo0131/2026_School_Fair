@@ -162,7 +162,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
             {(userMode === 'game' || !user) && (
               <button onClick={() => setUserMode(user ? 'game-map' : 'map')}
                 className="clay-button clay-button-yellow flex items-center gap-1 !py-2 !px-3 !text-sm !rounded-xl">
-                <img src="/game.png" alt="" aria-hidden="true" className="h-4 w-4 object-contain" />
+                <img src="/Map_icon.png" alt="" aria-hidden="true" className="h-4 w-4 object-contain" />
                 <span>地圖</span>
               </button>
             )}
@@ -222,15 +222,16 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6">
                   <button
                     onClick={goGameHub}
-                    className="btn-cta-large w-full"
+                    className="btn-cta-large w-full inline-flex items-center justify-center gap-2"
                   >
-                    🎮 前往玩遊戲
+                    <img src="/game.png" alt="遊戲 icon" className="h-5 w-5 object-contain" />
+                    <span>前往玩遊戲</span>
                   </button>
                   <button
                     onClick={() => setUserMode('map')}
                     className="clay-button clay-button-yellow w-full inline-flex items-center justify-center gap-2"
                   >
-                    <img src="/game.png" alt="地圖 icon" className="h-5 w-5 object-contain" />
+                    <img src="/Map_icon.png" alt="地圖 icon" className="h-5 w-5 object-contain" />
                     <span>查看地圖</span>
                   </button>
                 </div>
@@ -248,7 +249,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
             {/* 活動亮點卡片 */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {[
-                { icon: '🎮', label: '20 關任務', desc: '挑戰完成' },
+                { icon: '/game.png', label: '20 關任務', desc: '挑戰完成', isImage: true },
                 { icon: '🏆', label: '分級獎品', desc: '等你領取' },
                 { icon: '📸', label: '相機上傳', desc: '留下回憶' }
               ].map((item, idx) => (
@@ -257,7 +258,13 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                   className="premium-card clay-shadow-sm p-3 text-center"
                   style={{ background: 'var(--surface)' }}
                 >
-                  <div className="text-3xl mb-1">{item.icon}</div>
+                  <div className="text-3xl mb-1 flex justify-center">
+                    {item.isImage ? (
+                      <img src={item.icon} alt="遊戲 icon" className="h-8 w-8 object-contain" />
+                    ) : (
+                      item.icon
+                    )}
+                  </div>
                   <p className="text-xs font-bold" style={{ color: 'var(--text)' }}>
                     {item.label}
                   </p>
@@ -312,7 +319,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
               style={{borderColor: 'var(--secondary)', background: 'var(--surface)'}}>
               <div className="text-left">
                 <p className="text-base font-bold flex items-center gap-2" style={{color: 'var(--text)'}}>
-                  <img src="/game.png" alt="" aria-hidden="true" className="h-5 w-5 object-contain" />
+                  <img src="/Map_icon.png" alt="" aria-hidden="true" className="h-5 w-5 object-contain" />
                   <span>查看地圖</span>
                 </p>
                 <p className="text-xs mt-0.5 font-medium" style={{color: 'var(--primary)'}}>瀏覽校慶園遊會的所有攤位位置</p>
@@ -429,7 +436,10 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
 
             {/* 任務格子 */}
             <div className="premium-card clay-shadow-sm p-4">
-              <h3 className="text-base font-bold mb-3 px-3 py-2 rounded-lg inline-block" style={{color: 'white', backgroundColor: 'var(--primary)'}}>🎮 任務列表 ({TOTAL_QUESTS} 關)</h3>
+              <h3 className="text-base font-bold mb-3 px-3 py-2 rounded-lg inline-flex items-center gap-2" style={{color: 'white', backgroundColor: 'var(--primary)'}}>
+                <img src="/game.png" alt="遊戲 icon" className="h-5 w-5 object-contain" />
+                <span>任務列表 ({TOTAL_QUESTS} 關)</span>
+              </h3>
               <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3 mt-4">
                 {Array.from({ length: TOTAL_QUESTS }).map((_, index) => {
                   const questId = index + 1;
@@ -491,7 +501,10 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
             <div className="premium-card clay-shadow-sm p-3 mb-4 space-y-1">
               <p className="text-sm font-semibold" style={{color: 'var(--text)'}}>👤 {nickname || user?.displayName}</p>
               <p className="text-xs" style={{color: 'var(--primary)'}}>✉️ {user?.email}</p>
-              <p className="text-sm font-semibold" style={{color: 'var(--text)'}}>🎮 完成：<span style={{color: 'var(--secondary)'}}>{completed.length}/{TOTAL_QUESTS} 關</span></p>
+              <p className="text-sm font-semibold flex items-center gap-1" style={{color: 'var(--text)'}}>
+                <img src="/game.png" alt="遊戲 icon" className="h-4 w-4 object-contain" />
+                <span>完成：<span style={{color: 'var(--secondary)'}}>{completed.length}/{TOTAL_QUESTS} 關</span></span>
+              </p>
             </div>
             <div className="mb-4">
               <label className="block text-sm font-bold mb-1.5" style={{color: 'var(--text)'}}>⚠️ 工作人員確認碼</label>

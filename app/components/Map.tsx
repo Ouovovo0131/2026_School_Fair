@@ -142,11 +142,11 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   className="inline-block h-8 w-8"
                   style={{
                     backgroundColor: MAP_COLORS.building,
-                    WebkitMaskImage: "url('/game.png')",
+                    WebkitMaskImage: "url('/Map_icon.png')",
                     WebkitMaskRepeat: "no-repeat",
                     WebkitMaskPosition: "center",
                     WebkitMaskSize: "contain",
-                    maskImage: "url('/game.png')",
+                    maskImage: "url('/Map_icon.png')",
                     maskRepeat: "no-repeat",
                     maskPosition: "center",
                     maskSize: "contain",
@@ -201,14 +201,14 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                 {[
                   { id: 'all' as const, label: '全部', emoji: '🎪' },
                   { id: 'food' as const, label: '美食', emoji: '🍱' },
-                  { id: 'game' as const, label: '遊戲', emoji: '🎮' },
+                  { id: 'game' as const, label: '遊戲', emoji: '', iconSrc: '/game.png' },
                   { id: 'craft' as const, label: '手作', emoji: '🎨' },
                   { id: 'other' as const, label: '其他', emoji: '✨' },
                 ].map(cat => (
                   <button
                     key={cat.id}
                     onClick={() => setFilterCategory(cat.id)}
-                    className="px-4 py-2 rounded-full font-bold text-sm transition-all hover:-translate-y-0.5"
+                    className="px-4 py-2 rounded-full font-bold text-sm transition-all hover:-translate-y-0.5 inline-flex items-center gap-1"
                     style={{
                       background: filterCategory === cat.id 
                         ? MAP_COLORS.building
@@ -220,7 +220,11 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                       transform: filterCategory === cat.id ? 'scale(1.05)' : 'scale(1)'
                     }}
                   >
-                    {cat.emoji} {cat.label}
+                    {cat.iconSrc ? (
+                      <img src={cat.iconSrc} alt="遊戲 icon" className="h-4 w-4 object-contain" />
+                    ) : (
+                      cat.emoji
+                    )} {cat.label}
                   </button>
                 ))}
               </div>
@@ -244,7 +248,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   >
                     <div className="flex items-center justify-between mb-1">
                       <span className="inline-flex h-10 w-10 items-center justify-center rounded-full" style={{ background: 'rgba(255, 138, 38, 0.14)' }}>
-                        <img src="/game.png" alt={`${stall.name} icon`} className="h-6 w-6 object-contain" />
+                        <img src="/Map_icon.png" alt={`${stall.name} icon`} className="h-6 w-6 object-contain" />
                       </span>
                       <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: MAP_COLORS.stallHover, color: MAP_COLORS.building }}>
                         {stall.highlight}
@@ -288,7 +292,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
               ✕
             </button>
             <div className="flex justify-center mb-3">
-              <img src="/game.png" alt={`${selectedStall.name} icon`} className="h-14 w-14 object-contain" />
+              <img src="/Map_icon.png" alt={`${selectedStall.name} icon`} className="h-14 w-14 object-contain" />
             </div>
             <h3 className="text-2xl font-bold text-center mb-1" style={{ color: "var(--text)" }}>
               {selectedStall.name}
