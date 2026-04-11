@@ -14,6 +14,7 @@ const TIMELINE_EVENTS: TimelineItem[] = [
   { id: 4, time: '12:00', title: '攤位高峰時段', description: '美食、手作與遊戲體驗最熱鬧', icon: '🍔' },
   { id: 5, time: '13:30', title: '表演尾聲', description: '舞台節目收尾與合影', icon: '🎤' },
   { id: 6, time: '14:00', title: '活動結束', description: '感謝大家參與，期待下次相見', icon: '👋' },
+  { id: 7, time: '14:10', title: '高三傳承盃比賽', description: '園遊會結束後接續進行高三傳承盃賽事', icon: '🏆' },
 ];
 
 export default function Timeline() {
