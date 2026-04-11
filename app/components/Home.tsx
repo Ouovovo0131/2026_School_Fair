@@ -228,9 +228,10 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                   </button>
                   <button
                     onClick={() => setUserMode('map')}
-                    className="clay-button clay-button-yellow w-full"
+                    className="clay-button clay-button-yellow w-full inline-flex items-center justify-center gap-2"
                   >
-                    🗺️ 查看地圖
+                    <img src="/Map_icon.png" alt="地圖 icon" className="h-5 w-5 object-contain" />
+                    <span>查看地圖</span>
                   </button>
                 </div>
 

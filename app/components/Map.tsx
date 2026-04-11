@@ -136,8 +136,9 @@ export default function Map({ onBack, isModal = false }: MapProps) {
 
             {/* 標題 */}
             <div className="mb-6">
-              <h1 className="text-3xl font-bold" style={{ color: MAP_COLORS.building }}>
-                🗺️ 校慶攤位地圖
+              <h1 className="text-3xl font-bold inline-flex items-center gap-2" style={{ color: MAP_COLORS.building }}>
+                <img src="/Map_icon.png" alt="地圖 icon" className="h-8 w-8 object-contain" />
+                <span>校慶攤位地圖</span>
               </h1>
               <p className="mt-1 text-base font-medium" style={{ color: MAP_COLORS.stall }}>
                 點擊下方攤位卡片可查看各帳棚詳情 ✨
