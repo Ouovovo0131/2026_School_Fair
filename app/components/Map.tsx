@@ -378,9 +378,9 @@ export default function Map({ onBack, isModal = false }: MapProps) {
     []
   );
 
-  const buildingMap = useMemo(() => new Map(buildingData.map((item) => [item.id, item])), []);
-  const stallMap = useMemo(() => new Map(stallsData.map((item) => [item.id, item])), []);
-  const facilityMap = useMemo(() => new Map(facilityData.map((item) => [item.id, item])), []);
+  const buildingMap = useMemo(() => new globalThis.Map(buildingData.map((item) => [item.id, item])), []);
+  const stallMap = useMemo(() => new globalThis.Map(stallsData.map((item) => [item.id, item])), []);
+  const facilityMap = useMemo(() => new globalThis.Map(facilityData.map((item) => [item.id, item])), []);
 
   const allClickable = [...facilities, ...buildings, ...stalls];
 
