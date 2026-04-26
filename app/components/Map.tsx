@@ -240,8 +240,8 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       { id: "1", domId: "stall_1", label: "1", type: "stall", x: 924, y: 352, w: 40, h: 40, fill: COLORS.stallPink },
       { id: "班", domId: "stall_class", label: "班", type: "stall", x: 924, y: 396, w: 40, h: 40, fill: COLORS.stallPink },
 
-      { id: "貴A", domId: "stall_vip_1", label: "貴", type: "stall", x: 611, y: 322, w: 40, h: 40, fill: "#ffffff" },
-      { id: "貴B", domId: "stall_vip_2", label: "貴", type: "stall", x: 701, y: 322, w: 40, h: 40, fill: "#ffffff" },
+      { id: "貴A", domId: "stall_vip_1", label: "貴", type: "stall", x: 611, y: 288, w: 40, h: 40, fill: "#ffffff" },
+      { id: "貴B", domId: "stall_vip_2", label: "貴", type: "stall", x: 701, y: 288, w: 40, h: 40, fill: "#ffffff" },
     ],
     []
   );
