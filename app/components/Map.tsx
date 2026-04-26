@@ -198,7 +198,7 @@ function SvgRectButton({
         y={feature.y}
         width={feature.w}
         height={feature.h}
-        rx={feature.rounded ?? 8}
+        rx={feature.rounded ?? (feature.type === "stall" ? 10 : 8)}
         fill={feature.fill}
         stroke={COLORS.stroke}
         strokeWidth={selected ? 3 : 1.2}
@@ -213,35 +213,35 @@ export default function Map({ onBack, isModal = false }: MapProps) {
 
   const stallFeatures = useMemo<RectFeature[]>(
     () => [
-      { id: "21", domId: "stall_21", label: "21", type: "stall", x: 284, y: 26, w: 42, h: 39, fill: COLORS.stallPurple },
-      { id: "20", domId: "stall_20", label: "20", type: "stall", x: 284, y: 69, w: 42, h: 39, fill: COLORS.stallPurple },
-      { id: "19", domId: "stall_19", label: "19", type: "stall", x: 284, y: 120, w: 42, h: 39, fill: COLORS.stallPurple },
-      { id: "18", domId: "stall_18", label: "18", type: "stall", x: 284, y: 163, w: 42, h: 39, fill: COLORS.stallPurple },
-      { id: "17", domId: "stall_17", label: "17", type: "stall", x: 284, y: 214, w: 42, h: 39, fill: COLORS.stallPurple },
-      { id: "16", domId: "stall_16", label: "16", type: "stall", x: 284, y: 257, w: 42, h: 39, fill: COLORS.stallPurple },
-      { id: "15", domId: "stall_15", label: "15", type: "stall", x: 284, y: 308, w: 42, h: 39, fill: COLORS.stallPurple },
-      { id: "14", domId: "stall_14", label: "14", type: "stall", x: 284, y: 351, w: 42, h: 40, fill: COLORS.stallPurple },
+      { id: "21", domId: "stall_21", label: "21", type: "stall", x: 284, y: 26, w: 40, h: 40, fill: COLORS.stallPurple },
+      { id: "20", domId: "stall_20", label: "20", type: "stall", x: 284, y: 70, w: 40, h: 40, fill: COLORS.stallPurple },
+      { id: "19", domId: "stall_19", label: "19", type: "stall", x: 284, y: 154, w: 40, h: 40, fill: COLORS.stallPurple },
+      { id: "18", domId: "stall_18", label: "18", type: "stall", x: 284, y: 198, w: 40, h: 40, fill: COLORS.stallPurple },
+      { id: "17", domId: "stall_17", label: "17", type: "stall", x: 284, y: 282, w: 40, h: 40, fill: COLORS.stallPurple },
+      { id: "16", domId: "stall_16", label: "16", type: "stall", x: 284, y: 326, w: 40, h: 40, fill: COLORS.stallPurple },
+      { id: "15", domId: "stall_15", label: "15", type: "stall", x: 284, y: 410, w: 40, h: 40, fill: COLORS.stallPurple },
+      { id: "14", domId: "stall_14", label: "14", type: "stall", x: 284, y: 454, w: 40, h: 40, fill: COLORS.stallPurple },
 
-      { id: "13", domId: "stall_13", label: "13", type: "stall", x: 378, y: 120, w: 42, h: 41, fill: COLORS.stallBlue },
-      { id: "12", domId: "stall_12", label: "12", type: "stall", x: 378, y: 165, w: 42, h: 42, fill: COLORS.stallBlue },
+      { id: "13", domId: "stall_13", label: "13", type: "stall", x: 378, y: 140, w: 40, h: 40, fill: COLORS.stallBlue },
+      { id: "12", domId: "stall_12", label: "12", type: "stall", x: 378, y: 184, w: 40, h: 40, fill: COLORS.stallBlue },
 
-      { id: "11", domId: "stall_11", label: "11", type: "stall", x: 611, y: 150, w: 38, h: 37, fill: COLORS.stallBlue },
-      { id: "10", domId: "stall_10", label: "10", type: "stall", x: 611, y: 191, w: 38, h: 38, fill: COLORS.stallBlue },
-      { id: "9", domId: "stall_9", label: "9", type: "stall", x: 611, y: 242, w: 38, h: 40, fill: COLORS.stallBlue },
+      { id: "11", domId: "stall_11", label: "11", type: "stall", x: 611, y: 150, w: 40, h: 40, fill: COLORS.stallBlue },
+      { id: "10", domId: "stall_10", label: "10", type: "stall", x: 611, y: 194, w: 40, h: 40, fill: COLORS.stallBlue },
+      { id: "9", domId: "stall_9", label: "9", type: "stall", x: 611, y: 278, w: 40, h: 40, fill: COLORS.stallBlue },
 
-      { id: "8", domId: "stall_8", label: "8", type: "stall", x: 703, y: 150, w: 38, h: 37, fill: COLORS.stallIvory },
-      { id: "7", domId: "stall_7", label: "7", type: "stall", x: 703, y: 191, w: 38, h: 38, fill: COLORS.stallIvory },
-      { id: "6", domId: "stall_6", label: "6", type: "stall", x: 703, y: 242, w: 38, h: 40, fill: COLORS.stallIvory },
+      { id: "8", domId: "stall_8", label: "8", type: "stall", x: 701, y: 150, w: 40, h: 40, fill: COLORS.stallIvory },
+      { id: "7", domId: "stall_7", label: "7", type: "stall", x: 701, y: 194, w: 40, h: 40, fill: COLORS.stallIvory },
+      { id: "6", domId: "stall_6", label: "6", type: "stall", x: 701, y: 278, w: 40, h: 40, fill: COLORS.stallIvory },
 
-      { id: "5", domId: "stall_5", label: "5", type: "stall", x: 924, y: 96, w: 42, h: 36, fill: COLORS.stallBlue },
-      { id: "4", domId: "stall_4", label: "4", type: "stall", x: 924, y: 136, w: 42, h: 39, fill: COLORS.stallBlue },
-      { id: "3", domId: "stall_3", label: "3", type: "stall", x: 924, y: 188, w: 42, h: 44, fill: COLORS.stallBlue },
-      { id: "2", domId: "stall_2", label: "2", type: "stall", x: 924, y: 236, w: 42, h: 40, fill: COLORS.stallBlue },
-      { id: "1", domId: "stall_1", label: "1", type: "stall", x: 924, y: 289, w: 42, h: 56, fill: COLORS.stallPink },
-      { id: "班", domId: "stall_class", label: "班", type: "stall", x: 924, y: 349, w: 42, h: 46, fill: COLORS.stallPink },
+      { id: "5", domId: "stall_5", label: "5", type: "stall", x: 924, y: 96, w: 40, h: 40, fill: COLORS.stallBlue },
+      { id: "4", domId: "stall_4", label: "4", type: "stall", x: 924, y: 140, w: 40, h: 40, fill: COLORS.stallBlue },
+      { id: "3", domId: "stall_3", label: "3", type: "stall", x: 924, y: 224, w: 40, h: 40, fill: COLORS.stallBlue },
+      { id: "2", domId: "stall_2", label: "2", type: "stall", x: 924, y: 268, w: 40, h: 40, fill: COLORS.stallBlue },
+      { id: "1", domId: "stall_1", label: "1", type: "stall", x: 924, y: 352, w: 40, h: 40, fill: COLORS.stallPink },
+      { id: "班", domId: "stall_class", label: "班", type: "stall", x: 924, y: 396, w: 40, h: 40, fill: COLORS.stallPink },
 
-      { id: "貴A", domId: "stall_vip_1", label: "貴", type: "stall", x: 611, y: 286, w: 38, h: 40, fill: "#ffffff" },
-      { id: "貴B", domId: "stall_vip_2", label: "貴", type: "stall", x: 703, y: 286, w: 38, h: 40, fill: "#ffffff" },
+      { id: "貴A", domId: "stall_vip_1", label: "貴", type: "stall", x: 611, y: 322, w: 40, h: 40, fill: "#ffffff" },
+      { id: "貴B", domId: "stall_vip_2", label: "貴", type: "stall", x: 701, y: 322, w: 40, h: 40, fill: "#ffffff" },
     ],
     []
   );
@@ -264,10 +264,10 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         domId: "building_academic_affairs",
         label: "教務處",
         type: "building",
-        x: 700,
-        y: 18,
-        w: 222,
-        h: 44,
+        x: 606,
+        y: 370,
+        w: 136,
+        h: 180,
         fill: COLORS.building,
       },
       {
@@ -344,10 +344,10 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         domId: "building_stage",
         label: "表演舞台",
         type: "building",
-        x: 610,
-        y: 382,
-        w: 132,
-        h: 168,
+        x: 606,
+        y: 422,
+        w: 136,
+        h: 128,
         fill: COLORS.stage,
         rounded: 9,
       },
@@ -365,7 +365,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         x: 430,
         y: 82,
         w: 180,
-        h: 300,
+        h: 340,
         fill: COLORS.grass,
         rounded: 10,
       },
@@ -377,7 +377,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         x: 742,
         y: 82,
         w: 180,
-        h: 300,
+        h: 340,
         fill: COLORS.grass,
         rounded: 10,
       },
