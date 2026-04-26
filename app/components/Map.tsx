@@ -8,57 +8,36 @@ interface MapProps {
   isModal?: boolean;
 }
 
-type FeatureKind = "stall" | "building" | "facility" | "zone";
+type FeatureType = "stall" | "building" | "facility" | "zone";
 
 interface RectFeature {
   id: string;
+  domId: string;
   label: string;
-  kind: FeatureKind;
+  type: FeatureType;
   x: number;
   y: number;
   w: number;
   h: number;
   fill: string;
-  textColor?: string;
   verticalText?: boolean;
   rounded?: number;
 }
 
-interface StallInfo {
-  id: string;
-  name: string;
-  product: string;
-  unit: string;
-}
-
-interface BuildingInfo {
-  id: string;
-  name: string;
-  restroomDetail: string;
-}
-
-interface FacilityInfo {
-  id: string;
-  name: string;
-  detail: string;
-}
-
-interface SelectedInfo {
-  id: string;
+interface ModalState {
   title: string;
-  body: React.ReactNode;
+  message: string;
+  id: string;
 }
 
 const COLORS = {
   mapBg: "#f2f2f2",
   grass: "#c9ddcb",
   building: "#efefef",
-  buildingStroke: "#8e8e8e",
+  stroke: "#8e8e8e",
   stage: "#fbfbfb",
-  stageStroke: "#3f3f3f",
-  stallPink: "#f3dee5",
   stallBlue: "#dceaf8",
-  stallPurple: "#e8d9f1",
+  stallPink: "#f3dee5",
   stallIvory: "#f8f5ea",
   text: "#2f2f2f",
 };
@@ -66,156 +45,29 @@ const COLORS = {
 const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(max, value));
 
 const estimateCharUnits = (label: string) =>
-  Array.from(label).reduce((sum, char) => sum + (/[0-9A-Za-z]/.test(char) ? 0.62 : 1), 0);
+  Array.from(label).reduce((sum, ch) => sum + (/[0-9A-Za-z]/.test(ch) ? 0.62 : 1), 0);
 
-function getFittedFontSize(label: string, w: number, h: number, vertical = false) {
-  const padding = 8;
+const fittedFontSize = (label: string, w: number, h: number, vertical = false) => {
+  const pad = 8;
   if (vertical) {
-    const byHeight = ((h - padding * 2) / Math.max(label.length, 1)) * 0.95;
-    const byWidth = w - padding * 2;
+    const byHeight = ((h - pad * 2) / Math.max(label.length, 1)) * 0.95;
+    const byWidth = w - pad * 2;
     return clamp(Math.floor(Math.min(byHeight, byWidth)), 11, 34);
   }
+
   const units = Math.max(estimateCharUnits(label), 1);
-  const byWidth = ((w - padding * 2) / units) * 0.95;
-  const byHeight = (h - padding * 2) * 0.8;
+  const byWidth = ((w - pad * 2) / units) * 0.95;
+  const byHeight = (h - pad * 2) * 0.78;
   return clamp(Math.floor(Math.min(byWidth, byHeight)), 11, 34);
-}
-
-const stallsData: StallInfo[] = [
-  ...Array.from({ length: 21 }, (_, i) => ({
-    id: String(i + 1),
-    name: `攤位 ${i + 1}`,
-    product: "販售內容待補充（例如：飲品、點心、遊戲）",
-    unit: "班級/單位待補充",
-  })),
-  {
-    id: "班",
-    name: "班級服務台",
-    product: "活動諮詢與班級導覽資訊（佔位文字）",
-    unit: "班聯會 / 值班同學（待補充）",
-  },
-  {
-    id: "貴A",
-    name: "貴賓席 A",
-    product: "貴賓休息座位（佔位文字）",
-    unit: "接待組（待補充）",
-  },
-  {
-    id: "貴B",
-    name: "貴賓席 B",
-    product: "貴賓休息座位（佔位文字）",
-    unit: "接待組（待補充）",
-  },
-];
-
-const buildingData: BuildingInfo[] = [
-  {
-    id: "xinyi",
-    name: "信義樓",
-    restroomDetail: "本樓層女廁位於左側走廊盡頭，男廁位於一樓入口右側。",
-  },
-  {
-    id: "complex",
-    name: "綜合大樓",
-    restroomDetail: "本樓層女廁位於中段電梯旁，無障礙廁所在一樓服務台後方。",
-  },
-  {
-    id: "student-affairs",
-    name: "學務處",
-    restroomDetail: "鄰近學務處左側有女廁，走廊直行到底可見指標。",
-  },
-  {
-    id: "academic-affairs",
-    name: "教務處",
-    restroomDetail: "教務處右側走廊轉角有女廁，男廁在同層另一端。",
-  },
-  {
-    id: "old-library",
-    name: "舊圖書館",
-    restroomDetail: "舊圖書館一樓入口旁設有洗手間，請依現場指示進入。",
-  },
-  {
-    id: "library-building",
-    name: "圖資大樓",
-    restroomDetail: "圖資大樓廁所位於一樓東側，靠近回收區與樓梯口。",
-  },
-  {
-    id: "office",
-    name: "傳達室",
-    restroomDetail: "傳達室旁無獨立廁所，請前往圖資大樓一樓使用。",
-  },
-  {
-    id: "gate",
-    name: "大門",
-    restroomDetail: "大門區無廁所，最近廁所位於圖資大樓一樓。",
-  },
-];
-
-const facilityData: FacilityInfo[] = [
-  {
-    id: "stage",
-    name: "表演舞台",
-    detail: "舞台活動區，節目表演與頒獎會在此進行。",
-  },
-  {
-    id: "lawn-left",
-    name: "草地區 A",
-    detail: "中央左側草地區，請保持通道淨空並注意安全。",
-  },
-  {
-    id: "lawn-right",
-    name: "草地區 B",
-    detail: "中央右側草地區，可供休憩與觀賞舞台活動。",
-  },
-  {
-    id: "female-1",
-    name: "女廁 A",
-    detail: "女廁位置，請依現場動線排隊使用。",
-  },
-  {
-    id: "female-2",
-    name: "女廁 B",
-    detail: "女廁位置，請依現場動線排隊使用。",
-  },
-  {
-    id: "female-3",
-    name: "女廁 C",
-    detail: "女廁位置，請依現場動線排隊使用。",
-  },
-  {
-    id: "female-4",
-    name: "女廁 D",
-    detail: "女廁位置，請依現場動線排隊使用。",
-  },
-  {
-    id: "female-5",
-    name: "女廁 E",
-    detail: "女廁位置，請依現場動線排隊使用。",
-  },
-  {
-    id: "audio-room",
-    name: "音控室",
-    detail: "音響設備與麥克風控制區，請勿任意進入。",
-  },
-  {
-    id: "utensils",
-    name: "餐具回收區",
-    detail: "請先倒乾淨再分類回收，維護園遊會環境整潔。",
-  },
-  {
-    id: "trash",
-    name: "垃圾桶",
-    detail: "一般垃圾投放處，請確實分類。",
-  },
-];
+};
 
 function Modal({
   title,
-  body,
+  message,
   onClose,
 }: {
   title: string;
-  body: React.ReactNode;
+  message: string;
   onClose: () => void;
 }) {
   return (
@@ -234,25 +86,25 @@ function Modal({
             關閉
           </button>
         </div>
-        <div className="text-sm leading-7 text-slate-700">{body}</div>
+        <p className="text-sm leading-7 text-slate-700">{message}</p>
       </div>
     </div>
   );
 }
 
-function RectText({ feature }: { feature: RectFeature }) {
+function FeatureText({ feature }: { feature: RectFeature }) {
   if (feature.id === "stage") {
-    const size = clamp(Math.floor(Math.min((feature.w - 16) / 2.1, (feature.h - 16) / 2.25)), 15, 34);
+    const size = clamp(Math.floor(Math.min((feature.w - 16) / 2.1, (feature.h - 16) / 2.2)), 15, 34);
     return (
       <>
         <text
           x={feature.x + feature.w / 2}
           y={feature.y + feature.h / 2 - size * 0.15}
           textAnchor="middle"
-          fill={feature.textColor ?? COLORS.text}
+          fill={COLORS.text}
           fontSize={size}
           fontWeight={700}
-          style={{ userSelect: "none", pointerEvents: "none" }}
+          style={{ pointerEvents: "none", userSelect: "none" }}
         >
           表演
         </text>
@@ -260,10 +112,10 @@ function RectText({ feature }: { feature: RectFeature }) {
           x={feature.x + feature.w / 2}
           y={feature.y + feature.h / 2 + size * 0.95}
           textAnchor="middle"
-          fill={feature.textColor ?? COLORS.text}
+          fill={COLORS.text}
           fontSize={size}
           fontWeight={700}
-          style={{ userSelect: "none", pointerEvents: "none" }}
+          style={{ pointerEvents: "none", userSelect: "none" }}
         >
           舞台
         </text>
@@ -272,19 +124,20 @@ function RectText({ feature }: { feature: RectFeature }) {
   }
 
   if (feature.verticalText) {
-    const size = getFittedFontSize(feature.label, feature.w, feature.h, true);
+    const size = fittedFontSize(feature.label, feature.w, feature.h, true);
     const lineHeight = size * 1.08;
     const totalHeight = feature.label.length * lineHeight;
     const startY = feature.y + (feature.h - totalHeight) / 2 + size;
+
     return (
       <text
         x={feature.x + feature.w / 2}
         y={startY}
         textAnchor="middle"
-        fill={feature.textColor ?? COLORS.text}
+        fill={COLORS.text}
         fontSize={size}
         fontWeight={700}
-        style={{ userSelect: "none", pointerEvents: "none" }}
+        style={{ pointerEvents: "none", userSelect: "none" }}
       >
         {feature.label.split("").map((char, idx) => (
           <tspan key={`${feature.id}-${idx}`} x={feature.x + feature.w / 2} dy={idx === 0 ? 0 : lineHeight}>
@@ -295,144 +148,335 @@ function RectText({ feature }: { feature: RectFeature }) {
     );
   }
 
-  const size = getFittedFontSize(feature.label, feature.w, feature.h, false);
+  const size = fittedFontSize(feature.label, feature.w, feature.h, false);
   return (
     <text
       x={feature.x + feature.w / 2}
       y={feature.y + feature.h / 2 + size * 0.34}
       textAnchor="middle"
-      fill={feature.textColor ?? COLORS.text}
+      fill={COLORS.text}
       fontSize={size}
       fontWeight={700}
-      style={{ userSelect: "none", pointerEvents: "none" }}
+      style={{ pointerEvents: "none", userSelect: "none" }}
     >
       {feature.label}
     </text>
   );
 }
 
+function SvgRectButton({
+  feature,
+  selected,
+  onActivate,
+}: {
+  feature: RectFeature;
+  selected: boolean;
+  onActivate: () => void;
+}) {
+  return (
+    <a
+      id={feature.domId}
+      href="#"
+      role="button"
+      tabIndex={0}
+      aria-label={feature.label || feature.id}
+      onClick={(event) => {
+        event.preventDefault();
+        onActivate();
+      }}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          onActivate();
+        }
+      }}
+      style={{ cursor: "pointer" }}
+    >
+      <rect
+        x={feature.x}
+        y={feature.y}
+        width={feature.w}
+        height={feature.h}
+        rx={feature.rounded ?? 8}
+        fill={feature.fill}
+        stroke={COLORS.stroke}
+        strokeWidth={selected ? 3 : 1.2}
+      />
+      {feature.label ? <FeatureText feature={feature} /> : null}
+    </a>
+  );
+}
+
 export default function Map({ onBack, isModal = false }: MapProps) {
-  const [selectedInfo, setSelectedInfo] = useState<SelectedInfo | null>(null);
+  const [modalState, setModalState] = useState<ModalState | null>(null);
 
-  const stalls = useMemo<RectFeature[]>(
+  const stallFeatures = useMemo<RectFeature[]>(
     () => [
-      { id: "1", label: "1", kind: "stall", x: 860, y: 270, w: 42, h: 56, fill: COLORS.stallPink },
-      { id: "2", label: "2", kind: "stall", x: 860, y: 226, w: 42, h: 40, fill: COLORS.stallPink },
-      { id: "3", label: "3", kind: "stall", x: 860, y: 178, w: 42, h: 44, fill: COLORS.stallPink },
-      { id: "4", label: "4", kind: "stall", x: 860, y: 135, w: 42, h: 39, fill: COLORS.stallPink },
-      { id: "5", label: "5", kind: "stall", x: 860, y: 95, w: 42, h: 36, fill: COLORS.stallPink },
-      { id: "班", label: "班", kind: "stall", x: 860, y: 328, w: 42, h: 46, fill: COLORS.stallPink },
+      { id: "21", domId: "stall_21", label: "21", type: "stall", x: 284, y: 26, w: 42, h: 39, fill: COLORS.stallBlue },
+      { id: "20", domId: "stall_20", label: "20", type: "stall", x: 284, y: 69, w: 42, h: 39, fill: COLORS.stallBlue },
+      { id: "19", domId: "stall_19", label: "19", type: "stall", x: 284, y: 112, w: 42, h: 39, fill: COLORS.stallBlue },
+      { id: "18", domId: "stall_18", label: "18", type: "stall", x: 284, y: 155, w: 42, h: 39, fill: COLORS.stallBlue },
+      { id: "17", domId: "stall_17", label: "17", type: "stall", x: 284, y: 198, w: 42, h: 39, fill: COLORS.stallBlue },
+      { id: "16", domId: "stall_16", label: "16", type: "stall", x: 284, y: 241, w: 42, h: 39, fill: COLORS.stallBlue },
+      { id: "15", domId: "stall_15", label: "15", type: "stall", x: 284, y: 284, w: 42, h: 39, fill: COLORS.stallBlue },
+      { id: "14", domId: "stall_14", label: "14", type: "stall", x: 284, y: 327, w: 42, h: 40, fill: COLORS.stallBlue },
 
-      { id: "6", label: "6", kind: "stall", x: 690, y: 216, w: 38, h: 40, fill: COLORS.stallIvory },
-      { id: "7", label: "7", kind: "stall", x: 690, y: 174, w: 38, h: 38, fill: COLORS.stallIvory },
-      { id: "8", label: "8", kind: "stall", x: 690, y: 133, w: 38, h: 37, fill: COLORS.stallIvory },
-      { id: "貴B", label: "貴", kind: "stall", x: 690, y: 258, w: 38, h: 40, fill: "#ffffff" },
+      { id: "13", domId: "stall_13", label: "13", type: "stall", x: 378, y: 120, w: 42, h: 41, fill: COLORS.stallBlue },
+      { id: "12", domId: "stall_12", label: "12", type: "stall", x: 378, y: 165, w: 42, h: 42, fill: COLORS.stallBlue },
 
-      { id: "9", label: "9", kind: "stall", x: 607, y: 216, w: 38, h: 40, fill: COLORS.stallBlue },
-      { id: "10", label: "10", kind: "stall", x: 607, y: 174, w: 38, h: 38, fill: COLORS.stallBlue },
-      { id: "11", label: "11", kind: "stall", x: 607, y: 133, w: 38, h: 37, fill: COLORS.stallBlue },
-      { id: "貴A", label: "貴", kind: "stall", x: 607, y: 258, w: 38, h: 40, fill: "#ffffff" },
+      { id: "11", domId: "stall_11", label: "11", type: "stall", x: 607, y: 133, w: 38, h: 37, fill: COLORS.stallBlue },
+      { id: "10", domId: "stall_10", label: "10", type: "stall", x: 607, y: 174, w: 38, h: 38, fill: COLORS.stallBlue },
+      { id: "9", domId: "stall_9", label: "9", type: "stall", x: 607, y: 216, w: 38, h: 40, fill: COLORS.stallBlue },
 
-      { id: "12", label: "12", kind: "stall", x: 378, y: 165, w: 42, h: 42, fill: COLORS.stallBlue },
-      { id: "13", label: "13", kind: "stall", x: 378, y: 120, w: 42, h: 41, fill: COLORS.stallBlue },
+      { id: "8", domId: "stall_8", label: "8", type: "stall", x: 690, y: 133, w: 38, h: 37, fill: COLORS.stallBlue },
+      { id: "7", domId: "stall_7", label: "7", type: "stall", x: 690, y: 174, w: 38, h: 38, fill: COLORS.stallBlue },
+      { id: "6", domId: "stall_6", label: "6", type: "stall", x: 690, y: 216, w: 38, h: 40, fill: COLORS.stallBlue },
 
-      { id: "14", label: "14", kind: "stall", x: 284, y: 327, w: 42, h: 40, fill: COLORS.stallPurple },
-      { id: "15", label: "15", kind: "stall", x: 284, y: 284, w: 42, h: 39, fill: COLORS.stallPurple },
-      { id: "16", label: "16", kind: "stall", x: 284, y: 241, w: 42, h: 39, fill: COLORS.stallPurple },
-      { id: "17", label: "17", kind: "stall", x: 284, y: 198, w: 42, h: 39, fill: COLORS.stallPurple },
-      { id: "18", label: "18", kind: "stall", x: 284, y: 155, w: 42, h: 39, fill: COLORS.stallPurple },
-      { id: "19", label: "19", kind: "stall", x: 284, y: 112, w: 42, h: 39, fill: COLORS.stallPurple },
-      { id: "20", label: "20", kind: "stall", x: 284, y: 69, w: 42, h: 39, fill: COLORS.stallPurple },
-      { id: "21", label: "21", kind: "stall", x: 284, y: 26, w: 42, h: 39, fill: COLORS.stallPurple },
+      { id: "5", domId: "stall_5", label: "5", type: "stall", x: 860, y: 95, w: 42, h: 36, fill: COLORS.stallBlue },
+      { id: "4", domId: "stall_4", label: "4", type: "stall", x: 860, y: 135, w: 42, h: 39, fill: COLORS.stallBlue },
+      { id: "3", domId: "stall_3", label: "3", type: "stall", x: 860, y: 178, w: 42, h: 44, fill: COLORS.stallBlue },
+      { id: "2", domId: "stall_2", label: "2", type: "stall", x: 860, y: 226, w: 42, h: 40, fill: COLORS.stallBlue },
+      { id: "1", domId: "stall_1", label: "1", type: "stall", x: 860, y: 270, w: 42, h: 56, fill: COLORS.stallPink },
+      { id: "班", domId: "stall_class", label: "班", type: "stall", x: 860, y: 328, w: 42, h: 46, fill: COLORS.stallPink },
+
+      { id: "貴A", domId: "stall_vip_1", label: "貴", type: "stall", x: 607, y: 258, w: 38, h: 40, fill: COLORS.stallBlue },
+      { id: "貴B", domId: "stall_vip_2", label: "貴", type: "stall", x: 690, y: 258, w: 38, h: 40, fill: COLORS.stallBlue },
     ],
     []
   );
 
-  const buildings = useMemo<RectFeature[]>(
+  const buildingFeatures = useMemo<RectFeature[]>(
     () => [
-      { id: "student-affairs", label: "學務處", kind: "building", x: 420, y: 18, w: 180, h: 44, fill: COLORS.building },
-      { id: "academic-affairs", label: "教務處", kind: "building", x: 620, y: 18, w: 180, h: 44, fill: COLORS.building },
-      { id: "xinyi", label: "信義樓", kind: "building", x: 210, y: 20, w: 62, h: 525, fill: COLORS.building, verticalText: true },
-      { id: "complex", label: "綜合大樓", kind: "building", x: 1008, y: 84, w: 64, h: 430, fill: COLORS.building, verticalText: true },
-      { id: "old-library", label: "舊圖書館", kind: "building", x: 275, y: 550, w: 188, h: 118, fill: COLORS.building },
-      { id: "library-building", label: "圖資大樓", kind: "building", x: 520, y: 550, w: 308, h: 118, fill: COLORS.building },
-      { id: "office", label: "傳達室", kind: "building", x: 980, y: 555, w: 80, h: 115, fill: COLORS.building, verticalText: true },
-      { id: "gate", label: "大門", kind: "building", x: 865, y: 670, w: 120, h: 60, fill: COLORS.building },
+      {
+        id: "student-affairs",
+        domId: "building_student_affairs",
+        label: "學務處",
+        type: "building",
+        x: 420,
+        y: 18,
+        w: 180,
+        h: 44,
+        fill: COLORS.building,
+      },
+      {
+        id: "academic-affairs",
+        domId: "building_academic_affairs",
+        label: "教務處",
+        type: "building",
+        x: 620,
+        y: 18,
+        w: 180,
+        h: 44,
+        fill: COLORS.building,
+      },
+      {
+        id: "xinyi",
+        domId: "building_xinyi",
+        label: "信義樓",
+        type: "building",
+        x: 210,
+        y: 20,
+        w: 62,
+        h: 525,
+        fill: COLORS.building,
+        verticalText: true,
+      },
+      {
+        id: "complex",
+        domId: "building_complex",
+        label: "綜合大樓",
+        type: "building",
+        x: 1008,
+        y: 84,
+        w: 64,
+        h: 430,
+        fill: COLORS.building,
+        verticalText: true,
+      },
+      {
+        id: "old-library",
+        domId: "building_old_library",
+        label: "舊圖書館",
+        type: "building",
+        x: 275,
+        y: 550,
+        w: 188,
+        h: 118,
+        fill: COLORS.building,
+      },
+      {
+        id: "library-building",
+        domId: "building_library_building",
+        label: "圖資大樓",
+        type: "building",
+        x: 520,
+        y: 550,
+        w: 308,
+        h: 118,
+        fill: COLORS.building,
+      },
+      {
+        id: "office",
+        domId: "building_office",
+        label: "傳達室",
+        type: "building",
+        x: 980,
+        y: 555,
+        w: 80,
+        h: 115,
+        fill: COLORS.building,
+        verticalText: true,
+      },
+      {
+        id: "gate",
+        domId: "building_gate",
+        label: "大門",
+        type: "building",
+        x: 865,
+        y: 670,
+        w: 120,
+        h: 60,
+        fill: COLORS.building,
+      },
+      {
+        id: "stage",
+        domId: "building_stage",
+        label: "表演舞台",
+        type: "building",
+        x: 600,
+        y: 395,
+        w: 150,
+        h: 150,
+        fill: COLORS.stage,
+        rounded: 9,
+      },
     ],
     []
   );
 
-  const facilities = useMemo<RectFeature[]>(
+  const otherFeatures = useMemo<RectFeature[]>(
     () => [
-      { id: "lawn-left", label: "", kind: "zone", x: 430, y: 110, w: 205, h: 300, fill: COLORS.grass, rounded: 10 },
-      { id: "lawn-right", label: "", kind: "zone", x: 735, y: 110, w: 205, h: 300, fill: COLORS.grass, rounded: 10 },
-      { id: "stage", label: "表演舞台", kind: "facility", x: 600, y: 395, w: 150, h: 150, fill: COLORS.stage, rounded: 9 },
+      {
+        id: "lawn-left",
+        domId: "zone_lawn_left",
+        label: "",
+        type: "zone",
+        x: 430,
+        y: 62,
+        w: 205,
+        h: 348,
+        fill: COLORS.grass,
+        rounded: 10,
+      },
+      {
+        id: "lawn-right",
+        domId: "zone_lawn_right",
+        label: "",
+        type: "zone",
+        x: 735,
+        y: 62,
+        w: 205,
+        h: 348,
+        fill: COLORS.grass,
+        rounded: 10,
+      },
 
-      { id: "female-1", label: "女", kind: "facility", x: 428, y: 362, w: 40, h: 40, fill: COLORS.stallPink },
-      { id: "female-2", label: "女", kind: "facility", x: 470, y: 362, w: 40, h: 40, fill: COLORS.stallPink },
-      { id: "female-3", label: "女", kind: "facility", x: 512, y: 362, w: 40, h: 40, fill: COLORS.stallPink },
-      { id: "female-4", label: "女", kind: "facility", x: 378, y: 252, w: 42, h: 46, fill: COLORS.stallBlue },
-      { id: "female-5", label: "女", kind: "facility", x: 378, y: 299, w: 42, h: 46, fill: COLORS.stallBlue },
-      { id: "audio-room", label: "音", kind: "facility", x: 760, y: 530, w: 34, h: 40, fill: "#f7f7f7" },
+      {
+        id: "female-left-1",
+        domId: "facility_female_left_1",
+        label: "女",
+        type: "facility",
+        x: 378,
+        y: 212,
+        w: 42,
+        h: 46,
+        fill: COLORS.stallBlue,
+      },
+      {
+        id: "female-left-2",
+        domId: "facility_female_left_2",
+        label: "女",
+        type: "facility",
+        x: 378,
+        y: 262,
+        w: 42,
+        h: 46,
+        fill: COLORS.stallBlue,
+      },
+
+      {
+        id: "female-center-1",
+        domId: "facility_female_center_1",
+        label: "女",
+        type: "facility",
+        x: 434,
+        y: 366,
+        w: 40,
+        h: 40,
+        fill: COLORS.stallPink,
+      },
+      {
+        id: "female-center-2",
+        domId: "facility_female_center_2",
+        label: "女",
+        type: "facility",
+        x: 476,
+        y: 366,
+        w: 40,
+        h: 40,
+        fill: COLORS.stallPink,
+      },
+      {
+        id: "female-center-3",
+        domId: "facility_female_center_3",
+        label: "女",
+        type: "facility",
+        x: 518,
+        y: 366,
+        w: 40,
+        h: 40,
+        fill: COLORS.stallPink,
+      },
+
+      {
+        id: "audio-room",
+        domId: "facility_audio_room",
+        label: "音",
+        type: "facility",
+        x: 755,
+        y: 550,
+        w: 36,
+        h: 34,
+        fill: "#ececec",
+      },
     ],
     []
   );
 
-  const buildingMap = useMemo(() => new globalThis.Map(buildingData.map((item) => [item.id, item])), []);
-  const stallMap = useMemo(() => new globalThis.Map(stallsData.map((item) => [item.id, item])), []);
-  const facilityMap = useMemo(() => new globalThis.Map(facilityData.map((item) => [item.id, item])), []);
+  const selectedId = modalState?.id;
 
-  const allClickable = [...facilities, ...buildings, ...stalls];
-
-  const openFeatureModal = (feature: RectFeature) => {
-    if (feature.kind === "stall") {
-      const stall = stallMap.get(feature.id);
-      if (!stall) return;
-      setSelectedInfo({
-        id: feature.id,
-        title: stall.name,
-        body: (
-          <>
-            <p>
-              <span className="font-bold text-slate-800">攤位名稱：</span>
-              {stall.name}
-            </p>
-            <p>
-              <span className="font-bold text-slate-800">販售內容：</span>
-              {stall.product}
-            </p>
-            <p>
-              <span className="font-bold text-slate-800">班級/單位：</span>
-              {stall.unit}
-            </p>
-          </>
-        ),
-      });
-      return;
-    }
-
-    if (feature.kind === "building") {
-      const building = buildingMap.get(feature.id);
-      if (!building) return;
-      setSelectedInfo({
-        id: feature.id,
-        title: building.name,
-        body: (
-          <p>
-            <span className="font-bold text-slate-800">廁所位置詳細資訊：</span>
-            {building.restroomDetail}
-          </p>
-        ),
-      });
-      return;
-    }
-
-    const facility = facilityMap.get(feature.id);
-    if (!facility) return;
-    setSelectedInfo({
+  const onStallClick = (feature: RectFeature) => {
+    setModalState({
       id: feature.id,
-      title: facility.name,
-      body: <p>{facility.detail}</p>,
+      title: feature.label === "班" ? "班級服務台" : `攤位 ${feature.label}`,
+      message: `[攤位名稱]販售：[販售內容]`,
+    });
+  };
+
+  const onBuildingClick = (feature: RectFeature) => {
+    const buildingName = feature.id === "stage" ? "表演舞台" : feature.label;
+    setModalState({
+      id: feature.id,
+      title: buildingName,
+      message: `[建築名稱] 廁所資訊：[廁所位置描述]`,
+    });
+  };
+
+  const onFacilityClick = (feature: RectFeature) => {
+    setModalState({
+      id: feature.id,
+      title: feature.id === "audio-room" ? "音控室" : feature.label === "女" ? "女廁" : "場域資訊",
+      message: "此區域資訊可於後續功能中設定。",
     });
   };
 
@@ -451,7 +495,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
             <button
               type="button"
               onClick={onBack}
-              className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow-sm"
+              className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-bold text-slate-700"
             >
               <ArrowLeft className="h-4 w-4" />
               {isModal ? "關閉地圖" : "返回"}
@@ -462,7 +506,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         <div className={isModal ? "p-4 sm:p-6" : "mx-auto max-w-6xl p-4 sm:p-6"}>
           <h1 className="mb-2 text-center text-2xl font-black text-slate-800 sm:text-3xl">互動式園遊會地圖</h1>
           <p className="mb-4 text-center text-sm text-slate-600 sm:text-base">
-            每個獨立物件皆可點擊，文字會依框尺寸自動縮放。
+            點擊攤位可查看攤位資訊，點擊建築可查看廁所資訊。
           </p>
 
           <div className="rounded-2xl border border-slate-300 bg-white p-2 sm:p-4">
@@ -476,73 +520,86 @@ export default function Map({ onBack, isModal = false }: MapProps) {
               >
                 <rect x={180} y={0} width={950} height={760} fill={COLORS.mapBg} />
 
-                <text x={1000} y={58} textAnchor="middle" fontSize={28} fontWeight={800} fill={COLORS.text}>
-                  園遊會地圖
-                </text>
-
-                <rect x={600} y={95} width={150} height={295} rx={6} fill="none" stroke={COLORS.buildingStroke} strokeDasharray="5 6" />
-
-                {allClickable.map((feature) => (
-                  <g key={feature.id}>
-                    <rect
-                      x={feature.x}
-                      y={feature.y}
-                      width={feature.w}
-                      height={feature.h}
-                      rx={feature.rounded ?? 8}
-                      fill={feature.fill}
-                      stroke={feature.id === "stage" ? COLORS.stageStroke : COLORS.buildingStroke}
-                      strokeWidth={selectedInfo?.id === feature.id ? 3 : 1.2}
-                      className="cursor-pointer"
-                      onClick={() => openFeatureModal(feature)}
+                {otherFeatures
+                  .filter((feature) => feature.type === "zone")
+                  .map((feature) => (
+                    <SvgRectButton
+                      key={feature.id}
+                      feature={feature}
+                      selected={selectedId === feature.id}
+                      onActivate={() => onFacilityClick(feature)}
                     />
-                    {feature.label ? <RectText feature={feature} /> : null}
-                  </g>
+                  ))}
+
+                <rect x={600} y={95} width={150} height={295} rx={6} fill="none" stroke={COLORS.stroke} strokeDasharray="5 6" />
+
+                {buildingFeatures.map((feature) => (
+                  <SvgRectButton
+                    key={feature.id}
+                    feature={feature}
+                    selected={selectedId === feature.id}
+                    onActivate={() => onBuildingClick(feature)}
+                  />
                 ))}
 
-                <text x={1075} y={742} textAnchor="middle" fontSize={52} fill={COLORS.text}>
-                  ↑
-                </text>
-                <text x={1075} y={706} textAnchor="middle" fontSize={30} fontWeight={700} fill={COLORS.text}>
-                  N
-                </text>
+                {otherFeatures
+                  .filter((feature) => feature.type === "facility")
+                  .map((feature) => (
+                    <SvgRectButton
+                      key={feature.id}
+                      feature={feature}
+                      selected={selectedId === feature.id}
+                      onActivate={() => onFacilityClick(feature)}
+                    />
+                  ))}
+
+                {stallFeatures.map((feature) => (
+                  <SvgRectButton
+                    key={feature.id}
+                    feature={feature}
+                    selected={selectedId === feature.id}
+                    onActivate={() => onStallClick(feature)}
+                  />
+                ))}
               </svg>
 
-              <div className="absolute right-[17.5%] top-[74.2%] flex flex-col gap-2">
+              <div className="absolute right-[17.6%] top-[74.1%] flex flex-col gap-2">
                 <button
+                  id="facility_utensils"
                   type="button"
-                  className="flex h-11 w-11 items-center justify-center rounded-lg border border-slate-400 bg-white/95 shadow"
-                  onClick={() => {
-                    const feature = facilities.find((item) => item.id === "utensils");
-                    if (feature) openFeatureModal(feature);
-                  }}
-                  aria-label="餐具回收區"
+                  className="flex h-11 w-11 items-center justify-center rounded-lg border border-slate-400 bg-white"
+                  onClick={() =>
+                    setModalState({
+                      id: "utensils",
+                      title: "餐具回收區",
+                      message: "此區域資訊可於後續功能中設定。",
+                    })
+                  }
                 >
-                  <UtensilsCrossed className="h-6 w-6 text-slate-700" />
+                  <UtensilsCrossed className="h-5 w-5 text-slate-700" strokeWidth={1.8} />
                 </button>
                 <button
+                  id="facility_trash"
                   type="button"
-                  className="flex h-11 w-11 items-center justify-center rounded-lg border border-slate-400 bg-white/95 shadow"
-                  onClick={() => {
-                    const feature = facilities.find((item) => item.id === "trash");
-                    if (feature) openFeatureModal(feature);
-                  }}
-                  aria-label="垃圾桶"
+                  className="flex h-11 w-11 items-center justify-center rounded-lg border border-slate-400 bg-white"
+                  onClick={() =>
+                    setModalState({
+                      id: "trash",
+                      title: "垃圾桶",
+                      message: "此區域資訊可於後續功能中設定。",
+                    })
+                  }
                 >
-                  <Trash2 className="h-6 w-6 text-slate-700" />
+                  <Trash2 className="h-5 w-5 text-slate-700" strokeWidth={1.8} />
                 </button>
               </div>
             </div>
           </div>
-
-          <div className="mt-4 rounded-2xl border border-slate-300 bg-white p-4 text-sm text-slate-700">
-            可點擊物件包含：草地區、舞台、建築、攤位、女廁、音控室、餐具回收與垃圾桶。
-          </div>
         </div>
       </div>
 
-      {selectedInfo && (
-        <Modal title={selectedInfo.title} body={selectedInfo.body} onClose={() => setSelectedInfo(null)} />
+      {modalState && (
+        <Modal title={modalState.title} message={modalState.message} onClose={() => setModalState(null)} />
       )}
     </div>
   );
