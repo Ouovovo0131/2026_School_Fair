@@ -225,23 +225,23 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       { id: "13", domId: "stall_13", label: "13", type: "stall", x: 378, y: 120, w: 42, h: 41, fill: COLORS.stallBlue },
       { id: "12", domId: "stall_12", label: "12", type: "stall", x: 378, y: 165, w: 42, h: 42, fill: COLORS.stallBlue },
 
-      { id: "11", domId: "stall_11", label: "11", type: "stall", x: 620, y: 150, w: 38, h: 37, fill: COLORS.stallBlue },
-      { id: "10", domId: "stall_10", label: "10", type: "stall", x: 620, y: 191, w: 38, h: 38, fill: COLORS.stallBlue },
-      { id: "9", domId: "stall_9", label: "9", type: "stall", x: 620, y: 242, w: 38, h: 40, fill: COLORS.stallBlue },
+      { id: "11", domId: "stall_11", label: "11", type: "stall", x: 611, y: 150, w: 38, h: 37, fill: COLORS.stallBlue },
+      { id: "10", domId: "stall_10", label: "10", type: "stall", x: 611, y: 191, w: 38, h: 38, fill: COLORS.stallBlue },
+      { id: "9", domId: "stall_9", label: "9", type: "stall", x: 611, y: 242, w: 38, h: 40, fill: COLORS.stallBlue },
 
-      { id: "8", domId: "stall_8", label: "8", type: "stall", x: 664, y: 150, w: 38, h: 37, fill: COLORS.stallIvory },
-      { id: "7", domId: "stall_7", label: "7", type: "stall", x: 664, y: 191, w: 38, h: 38, fill: COLORS.stallIvory },
-      { id: "6", domId: "stall_6", label: "6", type: "stall", x: 664, y: 242, w: 38, h: 40, fill: COLORS.stallIvory },
+      { id: "8", domId: "stall_8", label: "8", type: "stall", x: 703, y: 150, w: 38, h: 37, fill: COLORS.stallIvory },
+      { id: "7", domId: "stall_7", label: "7", type: "stall", x: 703, y: 191, w: 38, h: 38, fill: COLORS.stallIvory },
+      { id: "6", domId: "stall_6", label: "6", type: "stall", x: 703, y: 242, w: 38, h: 40, fill: COLORS.stallIvory },
 
-      { id: "5", domId: "stall_5", label: "5", type: "stall", x: 860, y: 96, w: 42, h: 36, fill: COLORS.stallBlue },
-      { id: "4", domId: "stall_4", label: "4", type: "stall", x: 860, y: 136, w: 42, h: 39, fill: COLORS.stallBlue },
-      { id: "3", domId: "stall_3", label: "3", type: "stall", x: 860, y: 188, w: 42, h: 44, fill: COLORS.stallBlue },
-      { id: "2", domId: "stall_2", label: "2", type: "stall", x: 860, y: 236, w: 42, h: 40, fill: COLORS.stallBlue },
-      { id: "1", domId: "stall_1", label: "1", type: "stall", x: 860, y: 289, w: 42, h: 56, fill: COLORS.stallPink },
-      { id: "班", domId: "stall_class", label: "班", type: "stall", x: 860, y: 349, w: 42, h: 46, fill: COLORS.stallPink },
+      { id: "5", domId: "stall_5", label: "5", type: "stall", x: 924, y: 96, w: 42, h: 36, fill: COLORS.stallBlue },
+      { id: "4", domId: "stall_4", label: "4", type: "stall", x: 924, y: 136, w: 42, h: 39, fill: COLORS.stallBlue },
+      { id: "3", domId: "stall_3", label: "3", type: "stall", x: 924, y: 188, w: 42, h: 44, fill: COLORS.stallBlue },
+      { id: "2", domId: "stall_2", label: "2", type: "stall", x: 924, y: 236, w: 42, h: 40, fill: COLORS.stallBlue },
+      { id: "1", domId: "stall_1", label: "1", type: "stall", x: 924, y: 289, w: 42, h: 56, fill: COLORS.stallPink },
+      { id: "班", domId: "stall_class", label: "班", type: "stall", x: 924, y: 349, w: 42, h: 46, fill: COLORS.stallPink },
 
-      { id: "貴A", domId: "stall_vip_1", label: "貴", type: "stall", x: 620, y: 286, w: 38, h: 40, fill: "#ffffff" },
-      { id: "貴B", domId: "stall_vip_2", label: "貴", type: "stall", x: 664, y: 286, w: 38, h: 40, fill: "#ffffff" },
+      { id: "貴A", domId: "stall_vip_1", label: "貴", type: "stall", x: 611, y: 286, w: 38, h: 40, fill: "#ffffff" },
+      { id: "貴B", domId: "stall_vip_2", label: "貴", type: "stall", x: 703, y: 286, w: 38, h: 40, fill: "#ffffff" },
     ],
     []
   );
@@ -344,10 +344,10 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         domId: "building_stage",
         label: "表演舞台",
         type: "building",
-        x: 606,
-        y: 406,
-        w: 150,
-        h: 150,
+        x: 610,
+        y: 382,
+        w: 132,
+        h: 168,
         fill: COLORS.stage,
         rounded: 9,
       },
@@ -535,8 +535,6 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                 <text x={783} y={58} fontSize={14} fill="#b8b8b8">1F</text>
                 <text x={196} y={36} fontSize={16} fill="#b8b8b8">♀♂</text>
                 <text x={228} y={548} fontSize={16} fill="#b8b8b8">♂</text>
-
-                <rect x={614} y={132} width={96} height={280} rx={6} fill="none" stroke={COLORS.stroke} strokeDasharray="5 6" />
 
                 {buildingFeatures.map((feature) => (
                   <SvgRectButton
