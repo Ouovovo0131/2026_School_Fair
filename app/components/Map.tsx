@@ -322,7 +322,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         label: "傳達室",
         type: "building",
         x: 972,
-        y: 554,
+        y: 552,
         w: 76,
         h: 108,
         fill: COLORS.building,
@@ -333,8 +333,8 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         domId: "building_gate",
         label: "大門",
         type: "building",
-        x: 866,
-        y: 666,
+        x: 886,
+        y: 670,
         w: 120,
         h: 60,
         fill: COLORS.building,
@@ -345,7 +345,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         label: "表演舞台",
         type: "building",
         x: 620,
-        y: 418,
+        y: 390,
         w: 150,
         h: 150,
         fill: COLORS.stage,
@@ -444,8 +444,8 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         domId: "facility_audio_room",
         label: "音",
         type: "facility",
-        x: 775,
-        y: 528,
+        x: 777,
+        y: 504,
         w: 36,
         h: 34,
         fill: "#ececec",
@@ -505,10 +505,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         )}
 
         <div className={isModal ? "p-4 sm:p-6" : "mx-auto max-w-6xl p-4 sm:p-6"}>
-          <h1 className="mb-2 text-center text-2xl font-black text-slate-800 sm:text-3xl">互動式園遊會地圖</h1>
-          <p className="mb-4 text-center text-sm text-slate-600 sm:text-base">
-            點擊攤位可查看攤位資訊，點擊建築可查看廁所資訊。
-          </p>
+          <div className="mb-4" />
 
           <div className="rounded-2xl border border-slate-300 bg-white p-2 sm:p-4">
             <div className="relative mx-auto w-full max-w-[1100px]">
@@ -531,22 +528,6 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                       onActivate={() => onFacilityClick(feature)}
                     />
                   ))}
-
-                <text x={1048} y={34} textAnchor="middle" fontSize={16} fontWeight={700} fill={COLORS.text}>
-                  園
-                </text>
-                <text x={1048} y={56} textAnchor="middle" fontSize={16} fontWeight={700} fill={COLORS.text}>
-                  遊
-                </text>
-                <text x={1048} y={78} textAnchor="middle" fontSize={16} fontWeight={700} fill={COLORS.text}>
-                  會
-                </text>
-                <text x={1048} y={100} textAnchor="middle" fontSize={16} fontWeight={700} fill={COLORS.text}>
-                  地
-                </text>
-                <text x={1048} y={122} textAnchor="middle" fontSize={16} fontWeight={700} fill={COLORS.text}>
-                  圖
-                </text>
 
                 <text x={429} y={42} fontSize={14} fill="#b8b8b8">2F</text>
                 <text x={429} y={58} fontSize={14} fill="#b8b8b8">1F</text>
@@ -586,7 +567,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   />
                 ))}
 
-                <foreignObject x={868} y={588} width={44} height={44}>
+                <foreignObject x={832} y={566} width={44} height={44}>
                   <button
                     id="facility_utensils"
                     type="button"
@@ -603,7 +584,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   </button>
                 </foreignObject>
 
-                <foreignObject x={868} y={636} width={44} height={44}>
+                <foreignObject x={832} y={614} width={44} height={44}>
                   <button
                     id="facility_trash"
                     type="button"
