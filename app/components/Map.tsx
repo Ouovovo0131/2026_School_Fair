@@ -224,13 +224,13 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       { id: "13", domId: "stall_13", label: "13", type: "stall", x: 378, y: 120, w: 42, h: 41, fill: COLORS.stallBlue },
       { id: "12", domId: "stall_12", label: "12", type: "stall", x: 378, y: 165, w: 42, h: 42, fill: COLORS.stallBlue },
 
-      { id: "11", domId: "stall_11", label: "11", type: "stall", x: 607, y: 133, w: 38, h: 37, fill: COLORS.stallBlue },
-      { id: "10", domId: "stall_10", label: "10", type: "stall", x: 607, y: 174, w: 38, h: 38, fill: COLORS.stallBlue },
-      { id: "9", domId: "stall_9", label: "9", type: "stall", x: 607, y: 216, w: 38, h: 40, fill: COLORS.stallBlue },
+      { id: "11", domId: "stall_11", label: "11", type: "stall", x: 642, y: 133, w: 38, h: 37, fill: COLORS.stallBlue },
+      { id: "10", domId: "stall_10", label: "10", type: "stall", x: 642, y: 174, w: 38, h: 38, fill: COLORS.stallBlue },
+      { id: "9", domId: "stall_9", label: "9", type: "stall", x: 642, y: 216, w: 38, h: 40, fill: COLORS.stallBlue },
 
-      { id: "8", domId: "stall_8", label: "8", type: "stall", x: 690, y: 133, w: 38, h: 37, fill: COLORS.stallBlue },
-      { id: "7", domId: "stall_7", label: "7", type: "stall", x: 690, y: 174, w: 38, h: 38, fill: COLORS.stallBlue },
-      { id: "6", domId: "stall_6", label: "6", type: "stall", x: 690, y: 216, w: 38, h: 40, fill: COLORS.stallBlue },
+      { id: "8", domId: "stall_8", label: "8", type: "stall", x: 686, y: 133, w: 38, h: 37, fill: COLORS.stallBlue },
+      { id: "7", domId: "stall_7", label: "7", type: "stall", x: 686, y: 174, w: 38, h: 38, fill: COLORS.stallBlue },
+      { id: "6", domId: "stall_6", label: "6", type: "stall", x: 686, y: 216, w: 38, h: 40, fill: COLORS.stallBlue },
 
       { id: "5", domId: "stall_5", label: "5", type: "stall", x: 860, y: 95, w: 42, h: 36, fill: COLORS.stallBlue },
       { id: "4", domId: "stall_4", label: "4", type: "stall", x: 860, y: 135, w: 42, h: 39, fill: COLORS.stallBlue },
@@ -239,8 +239,8 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       { id: "1", domId: "stall_1", label: "1", type: "stall", x: 860, y: 270, w: 42, h: 56, fill: COLORS.stallPink },
       { id: "班", domId: "stall_class", label: "班", type: "stall", x: 860, y: 328, w: 42, h: 46, fill: COLORS.stallPink },
 
-      { id: "貴A", domId: "stall_vip_1", label: "貴", type: "stall", x: 607, y: 258, w: 38, h: 40, fill: COLORS.stallBlue },
-      { id: "貴B", domId: "stall_vip_2", label: "貴", type: "stall", x: 690, y: 258, w: 38, h: 40, fill: COLORS.stallBlue },
+      { id: "貴A", domId: "stall_vip_1", label: "貴", type: "stall", x: 642, y: 258, w: 38, h: 40, fill: COLORS.stallBlue },
+      { id: "貴B", domId: "stall_vip_2", label: "貴", type: "stall", x: 686, y: 258, w: 38, h: 40, fill: COLORS.stallBlue },
     ],
     []
   );
@@ -344,7 +344,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         label: "表演舞台",
         type: "building",
         x: 600,
-        y: 395,
+        y: 400,
         w: 150,
         h: 150,
         fill: COLORS.stage,
@@ -364,7 +364,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         x: 430,
         y: 62,
         w: 205,
-        h: 348,
+        h: 320,
         fill: COLORS.grass,
         rounded: 10,
       },
@@ -376,7 +376,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         x: 735,
         y: 62,
         w: 205,
-        h: 348,
+        h: 320,
         fill: COLORS.grass,
         rounded: 10,
       },
@@ -443,8 +443,8 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         domId: "facility_audio_room",
         label: "音",
         type: "facility",
-        x: 755,
-        y: 550,
+        x: 760,
+        y: 556,
         w: 36,
         h: 34,
         fill: "#ececec",
@@ -531,7 +531,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                     />
                   ))}
 
-                <rect x={600} y={95} width={150} height={295} rx={6} fill="none" stroke={COLORS.stroke} strokeDasharray="5 6" />
+                <rect x={638} y={95} width={90} height={295} rx={6} fill="none" stroke={COLORS.stroke} strokeDasharray="5 6" />
 
                 {buildingFeatures.map((feature) => (
                   <SvgRectButton
@@ -561,38 +561,41 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                     onActivate={() => onStallClick(feature)}
                   />
                 ))}
-              </svg>
 
-              <div className="absolute right-[17.6%] top-[74.1%] flex flex-col gap-2">
-                <button
-                  id="facility_utensils"
-                  type="button"
-                  className="flex h-11 w-11 items-center justify-center rounded-lg border border-slate-400 bg-white"
-                  onClick={() =>
-                    setModalState({
-                      id: "utensils",
-                      title: "餐具回收區",
-                      message: "此區域資訊可於後續功能中設定。",
-                    })
-                  }
-                >
-                  <UtensilsCrossed className="h-5 w-5 text-slate-700" strokeWidth={1.8} />
-                </button>
-                <button
-                  id="facility_trash"
-                  type="button"
-                  className="flex h-11 w-11 items-center justify-center rounded-lg border border-slate-400 bg-white"
-                  onClick={() =>
-                    setModalState({
-                      id: "trash",
-                      title: "垃圾桶",
-                      message: "此區域資訊可於後續功能中設定。",
-                    })
-                  }
-                >
-                  <Trash2 className="h-5 w-5 text-slate-700" strokeWidth={1.8} />
-                </button>
-              </div>
+                <foreignObject x={866} y={588} width={44} height={44}>
+                  <button
+                    id="facility_utensils"
+                    type="button"
+                    className="flex h-11 w-11 items-center justify-center rounded-lg border border-slate-400 bg-white"
+                    onClick={() =>
+                      setModalState({
+                        id: "utensils",
+                        title: "餐具回收區",
+                        message: "此區域資訊可於後續功能中設定。",
+                      })
+                    }
+                  >
+                    <UtensilsCrossed className="h-5 w-5 text-slate-700" strokeWidth={1.8} />
+                  </button>
+                </foreignObject>
+
+                <foreignObject x={918} y={588} width={44} height={44}>
+                  <button
+                    id="facility_trash"
+                    type="button"
+                    className="flex h-11 w-11 items-center justify-center rounded-lg border border-slate-400 bg-white"
+                    onClick={() =>
+                      setModalState({
+                        id: "trash",
+                        title: "垃圾桶",
+                        message: "此區域資訊可於後續功能中設定。",
+                      })
+                    }
+                  >
+                    <Trash2 className="h-5 w-5 text-slate-700" strokeWidth={1.8} />
+                  </button>
+                </foreignObject>
+              </svg>
             </div>
           </div>
         </div>
