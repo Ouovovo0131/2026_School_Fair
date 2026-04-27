@@ -416,7 +416,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         label: "女",
         type: "stall",
         x: 388,
-        y: 278,
+        y: 296,
         w: 40,
         h: 40,
         fill: COLORS.stallBlue,
@@ -427,7 +427,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         label: "女",
         type: "stall",
         x: 388,
-        y: 322,
+        y: 338,
         w: 40,
         h: 40,
         fill: COLORS.stallBlue,
@@ -439,7 +439,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         label: "女",
         type: "stall",
         x: 430,
-        y: 82,
+        y: 378,
         w: 40,
         h: 40,
         fill: COLORS.stallPink,
@@ -450,7 +450,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         label: "女",
         type: "stall",
         x: 470,
-        y: 82,
+        y: 378,
         w: 40,
         h: 40,
         fill: COLORS.stallPink,
@@ -461,7 +461,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         label: "女",
         type: "stall",
         x: 510,
-        y: 82,
+        y: 378,
         w: 40,
         h: 40,
         fill: COLORS.stallPink,
@@ -478,8 +478,8 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         label: "女",
         type: "facility",
         x: 216,
-        y: 24,
-        w: 20,
+        y: 22,
+        w: 26,
         h: 20,
         fill: "#fde2ee",
         iconSrc: "/woman.png",
@@ -491,9 +491,9 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         domId: "toilet_xinyi_top_man",
         label: "男",
         type: "facility",
-        x: 238,
-        y: 24,
-        w: 20,
+        x: 244,
+        y: 22,
+        w: 26,
         h: 20,
         fill: "#deecff",
         iconSrc: "/man.png",
@@ -505,9 +505,9 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         domId: "toilet_xinyi_bottom_man",
         label: "男",
         type: "facility",
-        x: 228,
-        y: 526,
-        w: 20,
+        x: 216,
+        y: 523,
+        w: 54,
         h: 20,
         fill: "#deecff",
         iconSrc: "/man.png",
@@ -519,10 +519,10 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         domId: "toilet_student_affairs_left_woman",
         label: "女",
         type: "facility",
-        x: 394,
-        y: 24,
+        x: 390,
+        y: 20,
         w: 20,
-        h: 20,
+        h: 19,
         fill: "#fde2ee",
         iconSrc: "/woman.png",
         showFrame: true,
@@ -533,10 +533,10 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         domId: "toilet_student_affairs_left_man",
         label: "男",
         type: "facility",
-        x: 394,
-        y: 46,
+        x: 390,
+        y: 41,
         w: 20,
-        h: 20,
+        h: 19,
         fill: "#deecff",
         iconSrc: "/man.png",
         showFrame: true,
@@ -547,10 +547,10 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         domId: "toilet_academic_affairs_right_woman",
         label: "女",
         type: "facility",
-        x: 954,
-        y: 24,
+        x: 960,
+        y: 20,
         w: 20,
-        h: 20,
+        h: 19,
         fill: "#fde2ee",
         iconSrc: "/woman.png",
         showFrame: true,
@@ -561,10 +561,10 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         domId: "toilet_academic_affairs_right_man",
         label: "男",
         type: "facility",
-        x: 954,
-        y: 46,
+        x: 960,
+        y: 41,
         w: 20,
-        h: 20,
+        h: 19,
         fill: "#deecff",
         iconSrc: "/man.png",
         showFrame: true,
@@ -691,15 +691,15 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   />
                 ))}
 
-                <text x={215} y={58} fontSize={10} fontWeight={700} fill="#d94694">1F</text>
-                <text x={238} y={58} fontSize={10} fontWeight={700} fill="#2563eb">1F</text>
-                <text x={228} y={546} fontSize={10} fontWeight={700} fill="#2563eb">1F</text>
+                <text x={216} y={56} fontSize={10} fontWeight={700} fill="#d94694">1F</text>
+                <text x={244} y={56} fontSize={10} fontWeight={700} fill="#2563eb">1F</text>
+                <text x={243} y={561} textAnchor="middle" fontSize={10} fontWeight={700} fill="#2563eb">1F</text>
 
-                <text x={404} y={58} textAnchor="middle" fontSize={10} fontWeight={700} fill="#d94694">2F</text>
-                <text x={404} y={80} textAnchor="middle" fontSize={10} fontWeight={700} fill="#2563eb">1F</text>
+                <text x={414} y={34} fontSize={10} fontWeight={700} fill="#d94694">2F</text>
+                <text x={414} y={54} fontSize={10} fontWeight={700} fill="#2563eb">1F</text>
 
-                <text x={964} y={20} textAnchor="middle" fontSize={10} fontWeight={700} fill="#d94694">2F</text>
-                <text x={964} y={42} textAnchor="middle" fontSize={10} fontWeight={700} fill="#2563eb">1F</text>
+                <text x={956} y={34} textAnchor="end" fontSize={10} fontWeight={700} fill="#d94694">2F</text>
+                <text x={956} y={54} textAnchor="end" fontSize={10} fontWeight={700} fill="#2563eb">1F</text>
 
                 {stallFeatures.map((feature) => (
                   <SvgRectButton
