@@ -229,25 +229,25 @@ export default function Map({ onBack, isModal = false }: MapProps) {
 
   const stallFeatures = useMemo<RectFeature[]>(
     () => [
-      { id: "21", domId: "stall_21", label: "21", type: "stall", x: 284, y: 26, w: 40, h: 40, fill: COLORS.stallPurple },
-      { id: "20", domId: "stall_20", label: "20", type: "stall", x: 284, y: 70, w: 40, h: 40, fill: COLORS.stallPurple },
-      { id: "19", domId: "stall_19", label: "19", type: "stall", x: 284, y: 150, w: 40, h: 40, fill: COLORS.stallPurple },
-      { id: "18", domId: "stall_18", label: "18", type: "stall", x: 284, y: 194, w: 40, h: 40, fill: COLORS.stallPurple },
-      { id: "17", domId: "stall_17", label: "17", type: "stall", x: 284, y: 278, w: 40, h: 40, fill: COLORS.stallPurple },
-      { id: "16", domId: "stall_16", label: "16", type: "stall", x: 284, y: 322, w: 40, h: 40, fill: COLORS.stallPurple },
-      { id: "15", domId: "stall_15", label: "15", type: "stall", x: 284, y: 406, w: 40, h: 40, fill: COLORS.stallPurple },
-      { id: "14", domId: "stall_14", label: "14", type: "stall", x: 284, y: 450, w: 40, h: 40, fill: COLORS.stallPurple },
+      { id: "21", domId: "stall_21", label: "21", type: "stall", x: 274, y: 26, w: 40, h: 40, fill: COLORS.stallPurple },
+      { id: "20", domId: "stall_20", label: "20", type: "stall", x: 274, y: 70, w: 40, h: 40, fill: COLORS.stallPurple },
+      { id: "19", domId: "stall_19", label: "19", type: "stall", x: 274, y: 150, w: 40, h: 40, fill: COLORS.stallPurple },
+      { id: "18", domId: "stall_18", label: "18", type: "stall", x: 274, y: 194, w: 40, h: 40, fill: COLORS.stallPurple },
+      { id: "17", domId: "stall_17", label: "17", type: "stall", x: 274, y: 278, w: 40, h: 40, fill: COLORS.stallPurple },
+      { id: "16", domId: "stall_16", label: "16", type: "stall", x: 274, y: 322, w: 40, h: 40, fill: COLORS.stallPurple },
+      { id: "15", domId: "stall_15", label: "15", type: "stall", x: 274, y: 406, w: 40, h: 40, fill: COLORS.stallPurple },
+      { id: "14", domId: "stall_14", label: "14", type: "stall", x: 274, y: 450, w: 40, h: 40, fill: COLORS.stallPurple },
 
-      { id: "13", domId: "stall_13", label: "13", type: "stall", x: 378, y: 120, w: 40, h: 40, fill: COLORS.stallBlue },
-      { id: "12", domId: "stall_12", label: "12", type: "stall", x: 378, y: 164, w: 40, h: 40, fill: COLORS.stallBlue },
+      { id: "13", domId: "stall_13", label: "13", type: "stall", x: 388, y: 120, w: 40, h: 40, fill: COLORS.stallBlue },
+      { id: "12", domId: "stall_12", label: "12", type: "stall", x: 388, y: 164, w: 40, h: 40, fill: COLORS.stallBlue },
 
-      { id: "11", domId: "stall_11", label: "11", type: "stall", x: 611, y: 120, w: 40, h: 40, fill: COLORS.stallBlue },
-      { id: "10", domId: "stall_10", label: "10", type: "stall", x: 611, y: 164, w: 40, h: 40, fill: COLORS.stallBlue },
-      { id: "9", domId: "stall_9", label: "9", type: "stall", x: 611, y: 278, w: 40, h: 40, fill: COLORS.stallBlue },
+      { id: "11", domId: "stall_11", label: "11", type: "stall", x: 612, y: 120, w: 40, h: 40, fill: COLORS.stallBlue },
+      { id: "10", domId: "stall_10", label: "10", type: "stall", x: 612, y: 164, w: 40, h: 40, fill: COLORS.stallBlue },
+      { id: "9", domId: "stall_9", label: "9", type: "stall", x: 612, y: 278, w: 40, h: 40, fill: COLORS.stallBlue },
 
-      { id: "8", domId: "stall_8", label: "8", type: "stall", x: 701, y: 120, w: 40, h: 40, fill: COLORS.stallIvory },
-      { id: "7", domId: "stall_7", label: "7", type: "stall", x: 701, y: 164, w: 40, h: 40, fill: COLORS.stallIvory },
-      { id: "6", domId: "stall_6", label: "6", type: "stall", x: 701, y: 278, w: 40, h: 40, fill: COLORS.stallIvory },
+      { id: "8", domId: "stall_8", label: "8", type: "stall", x: 700, y: 120, w: 40, h: 40, fill: COLORS.stallIvory },
+      { id: "7", domId: "stall_7", label: "7", type: "stall", x: 700, y: 164, w: 40, h: 40, fill: COLORS.stallIvory },
+      { id: "6", domId: "stall_6", label: "6", type: "stall", x: 700, y: 278, w: 40, h: 40, fill: COLORS.stallIvory },
 
       { id: "5", domId: "stall_5", label: "5", type: "stall", x: 924, y: 82, w: 40, h: 40, fill: COLORS.stallBlue },
       { id: "4", domId: "stall_4", label: "4", type: "stall", x: 924, y: 126, w: 40, h: 40, fill: COLORS.stallBlue },
@@ -256,8 +256,8 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       { id: "1", domId: "stall_1", label: "1", type: "stall", x: 924, y: 338, w: 40, h: 40, fill: COLORS.stallPink },
       { id: "班", domId: "stall_class", label: "班", type: "stall", x: 924, y: 382, w: 40, h: 40, fill: COLORS.stallPink },
 
-      { id: "貴A", domId: "stall_vip_1", label: "貴", type: "stall", x: 611, y: 322, w: 40, h: 40, fill: "#ffffff" },
-      { id: "貴B", domId: "stall_vip_2", label: "貴", type: "stall", x: 701, y: 322, w: 40, h: 40, fill: "#ffffff" },
+      { id: "貴A", domId: "stall_vip_1", label: "貴", type: "stall", x: 612, y: 322, w: 40, h: 40, fill: "#ffffff" },
+      { id: "貴B", domId: "stall_vip_2", label: "貴", type: "stall", x: 700, y: 322, w: 40, h: 40, fill: "#ffffff" },
     ],
     []
   );
@@ -404,7 +404,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         label: "音",
         type: "facility",
         x: 742,
-        y: 507,
+        y: 514,
         w: 36,
         h: 34,
         fill: "#ececec",
@@ -415,8 +415,8 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         domId: "stall_flower_girl_left_1",
         label: "女",
         type: "stall",
-        x: 378,
-        y: 208,
+        x: 388,
+        y: 278,
         w: 40,
         h: 40,
         fill: COLORS.stallBlue,
@@ -426,8 +426,8 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         domId: "stall_flower_girl_left_2",
         label: "女",
         type: "stall",
-        x: 378,
-        y: 252,
+        x: 388,
+        y: 322,
         w: 40,
         h: 40,
         fill: COLORS.stallBlue,
@@ -695,11 +695,11 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                 <text x={238} y={58} fontSize={10} fontWeight={700} fill="#2563eb">1F</text>
                 <text x={228} y={546} fontSize={10} fontWeight={700} fill="#2563eb">1F</text>
 
-                <text x={394} y={58} fontSize={10} fontWeight={700} fill="#d94694">2F</text>
-                <text x={394} y={80} fontSize={10} fontWeight={700} fill="#2563eb">1F</text>
+                <text x={404} y={58} textAnchor="middle" fontSize={10} fontWeight={700} fill="#d94694">2F</text>
+                <text x={404} y={80} textAnchor="middle" fontSize={10} fontWeight={700} fill="#2563eb">1F</text>
 
-                <text x={954} y={20} fontSize={10} fontWeight={700} fill="#d94694">2F</text>
-                <text x={954} y={42} fontSize={10} fontWeight={700} fill="#2563eb">1F</text>
+                <text x={964} y={20} textAnchor="middle" fontSize={10} fontWeight={700} fill="#d94694">2F</text>
+                <text x={964} y={42} textAnchor="middle" fontSize={10} fontWeight={700} fill="#2563eb">1F</text>
 
                 {stallFeatures.map((feature) => (
                   <SvgRectButton
