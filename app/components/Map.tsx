@@ -20,8 +20,10 @@ interface RectFeature {
   w: number;
   h: number;
   fill: string;
+  iconSrc?: string;
   verticalText?: boolean;
   rounded?: number;
+  showFrame?: boolean;
 }
 
 interface ModalState {
@@ -193,17 +195,31 @@ function SvgRectButton({
       }}
       style={{ cursor: "pointer" }}
     >
-      <rect
-        x={feature.x}
-        y={feature.y}
-        width={feature.w}
-        height={feature.h}
-        rx={feature.rounded ?? (feature.type === "stall" ? 10 : 8)}
-        fill={feature.fill}
-        stroke={COLORS.stroke}
-        strokeWidth={selected ? 3 : 1.2}
-      />
-      {feature.label ? <FeatureText feature={feature} /> : null}
+      {feature.showFrame !== false && (
+        <rect
+          x={feature.x}
+          y={feature.y}
+          width={feature.w}
+          height={feature.h}
+          rx={feature.rounded ?? (feature.type === "stall" ? 10 : 8)}
+          fill={feature.fill}
+          stroke={COLORS.stroke}
+          strokeWidth={selected ? 3 : 1.2}
+        />
+      )}
+      {feature.iconSrc ? (
+        <image
+          href={feature.iconSrc}
+          x={feature.x}
+          y={feature.y}
+          width={feature.w}
+          height={feature.h}
+          preserveAspectRatio="xMidYMid meet"
+          style={{ pointerEvents: "none" }}
+        />
+      ) : feature.label ? (
+        <FeatureText feature={feature} />
+      ) : null}
     </a>
   );
 }
@@ -255,7 +271,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         type: "building",
         x: 388,
         y: 18,
-        w: 222,
+        w: 240,
         h: 44,
         fill: COLORS.building,
       },
@@ -266,7 +282,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         type: "building",
         x: 742,
         y: 18,
-        w: 222,
+        w: 240,
         h: 44,
         fill: COLORS.building,
       },
@@ -383,63 +399,6 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       },
 
       {
-        id: "female-left-1",
-        domId: "facility_female_left_1",
-        label: "女",
-        type: "facility",
-        x: 378,
-        y: 278,
-        w: 40,
-        h: 40,
-        fill: COLORS.stallBlue,
-      },
-      {
-        id: "female-left-2",
-        domId: "facility_female_left_2",
-        label: "女",
-        type: "facility",
-        x: 378,
-        y: 322,
-        w: 40,
-        h: 40,
-        fill: COLORS.stallBlue,
-      },
-
-      {
-        id: "female-center-1",
-        domId: "facility_female_center_1",
-        label: "女",
-        type: "facility",
-        x: 432,
-        y: 378,
-        w: 40,
-        h: 40,
-        fill: COLORS.stallPink,
-      },
-      {
-        id: "female-center-2",
-        domId: "facility_female_center_2",
-        label: "女",
-        type: "facility",
-        x: 474,
-        y: 378,
-        w: 40,
-        h: 40,
-        fill: COLORS.stallPink,
-      },
-      {
-        id: "female-center-3",
-        domId: "facility_female_center_3",
-        label: "女",
-        type: "facility",
-        x: 516,
-        y: 378,
-        w: 40,
-        h: 40,
-        fill: COLORS.stallPink,
-      },
-
-      {
         id: "audio-room",
         domId: "facility_audio_room",
         label: "音",
@@ -449,6 +408,103 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         w: 36,
         h: 34,
         fill: "#ececec",
+      },
+    ],
+    []
+  );
+
+  const toiletFeatures = useMemo<RectFeature[]>(
+    () => [
+      {
+        id: "xinyi-top-woman",
+        domId: "toilet_xinyi_top_woman",
+        label: "女",
+        type: "facility",
+        x: 214,
+        y: 0,
+        w: 26,
+        h: 26,
+        fill: "transparent",
+        iconSrc: "/woman.png",
+        showFrame: false,
+      },
+      {
+        id: "xinyi-top-man",
+        domId: "toilet_xinyi_top_man",
+        label: "男",
+        type: "facility",
+        x: 242,
+        y: 0,
+        w: 26,
+        h: 26,
+        fill: "transparent",
+        iconSrc: "/man.png",
+        showFrame: false,
+      },
+      {
+        id: "xinyi-bottom-man",
+        domId: "toilet_xinyi_bottom_man",
+        label: "男",
+        type: "facility",
+        x: 228,
+        y: 548,
+        w: 26,
+        h: 26,
+        fill: "transparent",
+        iconSrc: "/man.png",
+        showFrame: false,
+      },
+      {
+        id: "student-affairs-left-woman",
+        domId: "toilet_student_affairs_left_woman",
+        label: "女",
+        type: "facility",
+        x: 356,
+        y: 18,
+        w: 26,
+        h: 26,
+        fill: "transparent",
+        iconSrc: "/woman.png",
+        showFrame: false,
+      },
+      {
+        id: "student-affairs-left-man",
+        domId: "toilet_student_affairs_left_man",
+        label: "男",
+        type: "facility",
+        x: 356,
+        y: 42,
+        w: 26,
+        h: 26,
+        fill: "transparent",
+        iconSrc: "/man.png",
+        showFrame: false,
+      },
+      {
+        id: "academic-affairs-right-woman",
+        domId: "toilet_academic_affairs_right_woman",
+        label: "女",
+        type: "facility",
+        x: 984,
+        y: 18,
+        w: 26,
+        h: 26,
+        fill: "transparent",
+        iconSrc: "/woman.png",
+        showFrame: false,
+      },
+      {
+        id: "academic-affairs-right-man",
+        domId: "toilet_academic_affairs_right_man",
+        label: "男",
+        type: "facility",
+        x: 984,
+        y: 42,
+        w: 26,
+        h: 26,
+        fill: "transparent",
+        iconSrc: "/man.png",
+        showFrame: false,
       },
     ],
     []
@@ -476,7 +532,14 @@ export default function Map({ onBack, isModal = false }: MapProps) {
   const onFacilityClick = (feature: RectFeature) => {
     setModalState({
       id: feature.id,
-      title: feature.id === "audio-room" ? "音控室" : feature.label === "女" ? "女廁" : "場域資訊",
+      title:
+        feature.id === "audio-room"
+          ? "音控室"
+          : feature.label === "女"
+            ? "女廁"
+            : feature.label === "男"
+              ? "男廁"
+              : "場域資訊",
       message: "此區域資訊可於後續功能中設定。",
     });
   };
@@ -555,6 +618,15 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                       onActivate={() => onFacilityClick(feature)}
                     />
                   ))}
+
+                {toiletFeatures.map((feature) => (
+                  <SvgRectButton
+                    key={feature.id}
+                    feature={feature}
+                    selected={selectedId === feature.id}
+                    onActivate={() => onFacilityClick(feature)}
+                  />
+                ))}
 
                 {stallFeatures.map((feature) => (
                   <SvgRectButton
