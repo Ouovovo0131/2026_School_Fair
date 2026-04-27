@@ -403,8 +403,8 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         domId: "facility_audio_room",
         label: "音",
         type: "facility",
-        x: 764,
-        y: 504,
+        x: 742,
+        y: 507,
         w: 36,
         h: 34,
         fill: "#ececec",
@@ -416,7 +416,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         label: "女",
         type: "stall",
         x: 378,
-        y: 278,
+        y: 208,
         w: 40,
         h: 40,
         fill: COLORS.stallBlue,
@@ -427,7 +427,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         label: "女",
         type: "stall",
         x: 378,
-        y: 322,
+        y: 252,
         w: 40,
         h: 40,
         fill: COLORS.stallBlue,
@@ -438,8 +438,8 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         domId: "stall_flower_girl_1",
         label: "女",
         type: "stall",
-        x: 432,
-        y: 390,
+        x: 430,
+        y: 82,
         w: 40,
         h: 40,
         fill: COLORS.stallPink,
@@ -449,8 +449,8 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         domId: "stall_flower_girl_2",
         label: "女",
         type: "stall",
-        x: 474,
-        y: 390,
+        x: 470,
+        y: 82,
         w: 40,
         h: 40,
         fill: COLORS.stallPink,
@@ -460,8 +460,8 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         domId: "stall_flower_girl_3",
         label: "女",
         type: "stall",
-        x: 516,
-        y: 390,
+        x: 510,
+        y: 82,
         w: 40,
         h: 40,
         fill: COLORS.stallPink,
@@ -660,7 +660,6 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                 <text x={429} y={58} fontSize={14} fill="#b8b8b8">1F</text>
                 <text x={783} y={42} fontSize={14} fill="#b8b8b8">2F</text>
                 <text x={783} y={58} fontSize={14} fill="#b8b8b8">1F</text>
-                <text x={196} y={36} fontSize={16} fill="#b8b8b8">♀♂</text>
                 <text x={228} y={548} fontSize={16} fill="#b8b8b8">♂</text>
 
                 {buildingFeatures.map((feature) => (
@@ -692,15 +691,15 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   />
                 ))}
 
-                <text x={215} y={22} fontSize={10} fontWeight={700} fill="#d94694">2F</text>
-                <text x={238} y={22} fontSize={10} fontWeight={700} fill="#2563eb">1F</text>
+                <text x={215} y={58} fontSize={10} fontWeight={700} fill="#d94694">1F</text>
+                <text x={238} y={58} fontSize={10} fontWeight={700} fill="#2563eb">1F</text>
                 <text x={228} y={546} fontSize={10} fontWeight={700} fill="#2563eb">1F</text>
 
-                <text x={394} y={16} fontSize={10} fontWeight={700} fill="#d94694">2F</text>
-                <text x={394} y={68} fontSize={10} fontWeight={700} fill="#2563eb">1F</text>
+                <text x={394} y={58} fontSize={10} fontWeight={700} fill="#d94694">2F</text>
+                <text x={394} y={80} fontSize={10} fontWeight={700} fill="#2563eb">1F</text>
 
-                <text x={954} y={16} fontSize={10} fontWeight={700} fill="#d94694">2F</text>
-                <text x={954} y={68} fontSize={10} fontWeight={700} fill="#2563eb">1F</text>
+                <text x={954} y={20} fontSize={10} fontWeight={700} fill="#d94694">2F</text>
+                <text x={954} y={42} fontSize={10} fontWeight={700} fill="#2563eb">1F</text>
 
                 {stallFeatures.map((feature) => (
                   <SvgRectButton
