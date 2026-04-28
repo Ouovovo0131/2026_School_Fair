@@ -60,6 +60,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
   const [redeemedRewards, setRedeemedRewards] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
   const [showIntro, setShowIntro] = useState(false);
+  const [isStudent, setIsStudent] = useState(false);
   const [showRedeemModal, setShowRedeemModal] = useState(false);
   const [redeemConfirmCode, setRedeemConfirmCode] = useState("");
   const [redeemLevel, setRedeemLevel] = useState<number | null>(null);
@@ -88,17 +89,8 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
-        if (!isStudentEmail(currentUser.email)) {
-          setUser(null);
-          setCompleted([]);
-          setRedeemedRewards([]);
-          setNickname("");
-          setLoading(false);
-          await signOut(auth);
-          alert("此遊戲僅限花中學生帳號（@hlhs.hlc.edu.tw）登入遊玩");
-          return;
-        }
-
+        // allow any user to sign in, but remember whether they're a student
+        setIsStudent(isStudentEmail(currentUser.email));
         setUser(currentUser);
         const docRef = doc(db, "users", currentUser.email!);
         const docSnap = await getDoc(docRef);
@@ -231,6 +223,11 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                 className="clay-button clay-button-yellow flex items-center gap-1 !py-2 !px-3 !text-sm !rounded-xl">
                 <img src="/Map_icon.png" alt="" aria-hidden="true" className="h-4 w-4 object-contain" />
                 <span>地圖</span>
+              </button>
+            )}
+            {!user && (
+              <button onClick={handleLogin} className="clay-button !py-2 !px-3 !rounded-xl">
+                🔐 登入
               </button>
             )}
             {user && (
