@@ -561,8 +561,8 @@ export default function Map({ onBack, isModal = false }: MapProps) {
     <div
       className={
         isModal
-          ? "fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/45 p-4"
-          : "min-h-screen"
+          ? "map-page fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/45 p-4"
+          : "map-page min-h-screen"
       }
       style={!isModal ? { background: "var(--bg)" } : undefined}
     >

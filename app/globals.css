@@ -119,6 +119,26 @@ p {
 
 .premium-card,
 .clay-card {
+  position: relative;
+  background: #ffffff;
+  border: 4px solid #111111;
+  border-radius: 1rem;
+  box-shadow: 6px 6px 0 #111111;
+}
+
+.countdown-board {
+  position: relative;
+  background: #ffffff;
+  border: 4px solid #111111;
+  border-radius: 1rem;
+  box-shadow: 6px 6px 0 #111111;
+  padding: 1.1rem;
+}
+
+.map-page .premium-card,
+.map-page .clay-card,
+.map-page .countdown-board {
+  position: relative;
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 0.75rem;
@@ -201,14 +221,6 @@ p {
 
 .quest-card-link:hover .number-sticker {
   transform: rotate(-14deg) scale(1.05);
-}
-
-.countdown-board {
-  background: #ffffff;
-  border: 4px solid #111111;
-  border-radius: 1rem;
-  box-shadow: 6px 6px 0 #111111;
-  padding: 1.1rem;
 }
 
 .countdown-title {
