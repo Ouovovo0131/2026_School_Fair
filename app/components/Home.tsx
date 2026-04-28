@@ -211,8 +211,8 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
     if (!user) {
       try {
         const result = await signInWithPopup(auth, new GoogleAuthProvider());
-        const email = result.user?.email || "";
-        if (!isStudentEmail(email)) {
+        const email = (result.user?.email || "").toLowerCase();
+        if (!(isStudentEmail(email) || email === ADMIN_EMAIL)) {
           await signOut(auth);
           alert("此遊戲僅限花中學生帳號（@hlhs.hlc.edu.tw）登入遊玩");
           return;
@@ -231,13 +231,14 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
     }
 
     // user already logged in: check domain
-    if (!isStudentEmail(user?.email)) {
+    const currentEmail = (user?.email || '').toLowerCase();
+    if (!(isStudentEmail(currentEmail) || currentEmail === ADMIN_EMAIL)) {
       await signOut(auth);
       alert("此遊戲僅限花中學生帳號（@hlhs.hlc.edu.tw）登入遊玩");
       return;
     }
 
-    if ((user.email || '').toLowerCase() === ADMIN_EMAIL) {
+    if (currentEmail === ADMIN_EMAIL) {
       const all = Array.from({ length: TOTAL_QUESTS }, (_, i) => i + 1);
       persistUnlockedTasks(all);
     }
