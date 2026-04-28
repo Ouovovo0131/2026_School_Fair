@@ -2,6 +2,7 @@
 
 import { ArrowLeft, Trash2, UtensilsCrossed } from "lucide-react";
 import { useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 
 interface MapProps {
   onBack?: () => void;
@@ -73,8 +74,10 @@ function Modal({
   message: string;
   onClose: () => void;
 }) {
-  return (
-    <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/50 p-4" onClick={onClose}>
+  if (typeof document === "undefined") return null;
+
+  return createPortal(
+    <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/50 p-4 sm:p-6" onClick={onClose}>
       <div
         className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-5 shadow-xl"
         onClick={(event) => event.stopPropagation()}
@@ -91,7 +94,8 @@ function Modal({
         </div>
         <p className="text-sm leading-7 text-slate-700">{message}</p>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 
