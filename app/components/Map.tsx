@@ -126,14 +126,27 @@ function Modal({
       }}
     >
       <div
-        className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-5 shadow-xl"
+        className="w-full max-w-md bg-white p-5"
         onClick={(event) => event.stopPropagation()}
+        style={{
+          border: "4px solid #111111",
+          borderRadius: "1rem",
+          boxShadow: "6px 6px 0 #111111",
+        }}
       >
         <div className="mb-3 flex items-start justify-between gap-3">
           <h3 className="text-xl font-extrabold text-slate-800">{title}</h3>
           <button
             type="button"
-            className="rounded-full border border-slate-300 px-3 py-1 text-sm font-bold text-slate-600"
+            className="font-bold text-slate-600"
+            style={{
+              border: "2px solid #111111",
+              borderRadius: "999px",
+              padding: "0.25rem 0.6rem",
+              fontSize: "0.875rem",
+              background: "#ffffff",
+              cursor: "pointer",
+            }}
             onClick={onClose}
           >
             關閉
@@ -634,7 +647,14 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         <div className={isModal ? "p-4 sm:p-6" : "mx-auto max-w-6xl p-4 sm:p-6"}>
           <div className="mb-4" />
 
-          <div className="rounded-2xl border border-slate-300 bg-white p-2 sm:p-4">
+          <div
+            className="bg-white p-2 sm:p-4"
+            style={{
+              border: "4px solid #111111",
+              borderRadius: "1rem",
+              boxShadow: "6px 6px 0 #111111",
+            }}
+          >
             <div className="relative mx-auto w-full max-w-[1100px]">
               <svg
                 viewBox="180 0 950 760"
