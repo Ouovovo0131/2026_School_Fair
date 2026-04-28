@@ -572,7 +572,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
             <button
               type="button"
               onClick={onBack}
-              className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-bold text-slate-700"
+              className="flex items-center gap-2 clay-button clay-button-blue !py-2 !px-3 !rounded-xl"
             >
               <ArrowLeft className="h-4 w-4" />
               {isModal ? "關閉地圖" : "返回"}

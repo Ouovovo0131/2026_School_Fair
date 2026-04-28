@@ -53,6 +53,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
   const [completed, setCompleted] = useState<number[]>([]);
   const [redeemedRewards, setRedeemedRewards] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showIntro, setShowIntro] = useState(false);
   const [showRedeemModal, setShowRedeemModal] = useState(false);
   const [redeemConfirmCode, setRedeemConfirmCode] = useState("");
   const [redeemLevel, setRedeemLevel] = useState<number | null>(null);
@@ -101,6 +102,18 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
       setLoading(false);
     });
     return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const seenIntro = window.localStorage.getItem('seenHomeIntro');
+    if (seenIntro === '1') return;
+
+    setShowIntro(true);
+    window.localStorage.setItem('seenHomeIntro', '1');
+
+    const timer = window.setTimeout(() => setShowIntro(false), 1600);
+    return () => window.clearTimeout(timer);
   }, []);
 
   const handleLogin = async () => {
@@ -173,6 +186,17 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
 
   return (
     <div className="min-h-screen" style={{background: 'var(--bg)'}}>
+      {showIntro && (
+        <div className="fixed inset-0 z-[90] flex items-center justify-center bg-[rgba(252,242,204,0.92)] backdrop-blur-sm animate-[intro-overlay_1.6s_ease]">
+          <div className="premium-card flex flex-col items-center gap-3 px-6 py-5 text-center animate-[intro-pop_1.6s_ease]">
+            <div className="text-5xl">🎪</div>
+            <div>
+              <p className="text-xs font-black tracking-[0.3em]" style={{ color: 'var(--primary)' }}>2026</p>
+              <h2 className="text-2xl font-black" style={{ color: 'var(--text)' }}>校慶拾光地圖</h2>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ── 導航列 ── */}
       <header className="sticky-header">
