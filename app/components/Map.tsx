@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowLeft, Trash2, UtensilsCrossed } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 
 interface MapProps {
@@ -74,10 +74,57 @@ function Modal({
   message: string;
   onClose: () => void;
 }) {
+  const [viewport, setViewport] = useState({ top: 0, left: 0, width: 0, height: 0 });
+
+  useEffect(() => {
+    const updateViewport = () => {
+      const visualViewport = window.visualViewport;
+      if (visualViewport) {
+        setViewport({
+          top: visualViewport.offsetTop,
+          left: visualViewport.offsetLeft,
+          width: visualViewport.width,
+          height: visualViewport.height,
+        });
+        return;
+      }
+
+      setViewport({
+        top: 0,
+        left: 0,
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    updateViewport();
+
+    const visualViewport = window.visualViewport;
+    visualViewport?.addEventListener("resize", updateViewport);
+    visualViewport?.addEventListener("scroll", updateViewport);
+    window.addEventListener("resize", updateViewport);
+
+    return () => {
+      visualViewport?.removeEventListener("resize", updateViewport);
+      visualViewport?.removeEventListener("scroll", updateViewport);
+      window.removeEventListener("resize", updateViewport);
+    };
+  }, []);
+
   if (typeof document === "undefined") return null;
 
   return createPortal(
-    <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/50 p-4 sm:p-6" onClick={onClose}>
+    <div
+      className="z-[80] flex items-center justify-center bg-black/50 p-4 sm:p-6"
+      onClick={onClose}
+      style={{
+        position: "fixed",
+        top: viewport.height ? viewport.top : 0,
+        left: viewport.width ? viewport.left : 0,
+        width: viewport.width ? viewport.width : "100vw",
+        height: viewport.height ? viewport.height : "100vh",
+      }}
+    >
       <div
         className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-5 shadow-xl"
         onClick={(event) => event.stopPropagation()}
