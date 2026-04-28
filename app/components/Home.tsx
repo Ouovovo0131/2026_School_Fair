@@ -54,7 +54,7 @@ function isStudentEmail(email?: string | null) {
   return Boolean(email && email.toLowerCase().endsWith(STUDENT_EMAIL_DOMAIN));
 }
 
-export default function Home({ unlockedTasks = [] }: HomeProps) {
+export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProps) {
   const [user, setUser] = useState<LocalUser | null>(null);
   const [completed, setCompleted] = useState<number[]>([]);
   const [redeemedRewards, setRedeemedRewards] = useState<number[]>([]);
@@ -85,6 +85,19 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
       localStorage.setItem('userMode', userMode);
     }
   }, [userMode]);
+
+  // unlocked tasks state (writable) - initialize from localStorage or prop
+  const [unlockedTasks, setUnlockedTasks] = useState<number[]>(() => {
+    if (typeof window === 'undefined') return unlockedTasksProp || [];
+    const saved = window.localStorage.getItem('unlockedTasks');
+    return saved ? JSON.parse(saved) : (unlockedTasksProp || []);
+  });
+
+  // helper to persist unlocked tasks
+  const persistUnlockedTasks = (arr: number[]) => {
+    setUnlockedTasks(arr);
+    if (typeof window !== 'undefined') window.localStorage.setItem('unlockedTasks', JSON.stringify(arr));
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -176,6 +189,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
       const snapshot = await getDocs(collection(db, "users"));
       for (const d of snapshot.docs) await deleteDoc(doc(db, "users", d.id));
       localStorage.removeItem("unlockedTasks");
+      persistUnlockedTasks([]);
       alert("✅ 所有用戶數據已清除");
       setAdminPassword(""); setShowAdminMode(false);
       window.location.reload();
@@ -190,10 +204,42 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
 
   const pct = Math.round((completed.length / TOTAL_QUESTS) * 100);
   const goHome = () => setUserMode('home');
-  const goGameHub = () => {
+  const ADMIN_EMAIL = "cheiling0131@gmail.com";
+
+  const goGameHub = async () => {
+    // if not logged in, trigger popup login first
+    if (!user) {
+      try {
+        const result = await signInWithPopup(auth, new GoogleAuthProvider());
+        const email = result.user?.email || "";
+        if (!isStudentEmail(email)) {
+          await signOut(auth);
+          alert("此遊戲僅限花中學生帳號（@hlhs.hlc.edu.tw）登入遊玩");
+          return;
+        }
+        // admin auto-unlock
+        if (email.toLowerCase() === ADMIN_EMAIL) {
+          const all = Array.from({ length: TOTAL_QUESTS }, (_, i) => i + 1);
+          persistUnlockedTasks(all);
+        }
+        setUserMode('game');
+      } catch (err) {
+        console.error(err);
+        alert('登入失敗，請重試');
+      }
+      return;
+    }
+
+    // user already logged in: check domain
     if (!isStudentEmail(user?.email)) {
+      await signOut(auth);
       alert("此遊戲僅限花中學生帳號（@hlhs.hlc.edu.tw）登入遊玩");
       return;
+    }
+
+    if ((user.email || '').toLowerCase() === ADMIN_EMAIL) {
+      const all = Array.from({ length: TOTAL_QUESTS }, (_, i) => i + 1);
+      persistUnlockedTasks(all);
     }
     setUserMode('game');
   };
