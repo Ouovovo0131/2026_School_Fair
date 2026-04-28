@@ -460,7 +460,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         domId: "facility_audio_room",
         label: "音",
         type: "facility",
-        x: 743,
+        x: 745,
         y: 514,
         w: 36,
         h: 34,
