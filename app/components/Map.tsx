@@ -256,11 +256,11 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       { id: "1", domId: "stall_1", label: "1", type: "stall", x: 924, y: 338, w: 40, h: 40, fill: COLORS.stallPink },
       { id: "班", domId: "stall_class", label: "班", type: "stall", x: 924, y: 382, w: 40, h: 40, fill: COLORS.stallPink },
 
-      { id: "flower-girl-left-1", domId: "stall_flower_girl_left_1", label: "女", type: "stall", x: 356, y: 288, w: 40, h: 40, fill: COLORS.stallBlue },
-      { id: "flower-girl-left-2", domId: "stall_flower_girl_left_2", label: "女", type: "stall", x: 356, y: 332, w: 40, h: 40, fill: COLORS.stallBlue },
-      { id: "flower-girl-1", domId: "stall_flower_girl_1", label: "女", type: "stall", x: 434, y: 392, w: 40, h: 40, fill: COLORS.stallPink },
-      { id: "flower-girl-2", domId: "stall_flower_girl_2", label: "女", type: "stall", x: 474, y: 392, w: 40, h: 40, fill: COLORS.stallPink },
-      { id: "flower-girl-3", domId: "stall_flower_girl_3", label: "女", type: "stall", x: 514, y: 392, w: 40, h: 40, fill: COLORS.stallPink },
+      { id: "flower-girl-left-1", domId: "stall_flower_girl_left_1", label: "女", type: "stall", x: 388, y: 278, w: 40, h: 40, fill: COLORS.stallBlue },
+      { id: "flower-girl-left-2", domId: "stall_flower_girl_left_2", label: "女", type: "stall", x: 388, y: 322, w: 40, h: 40, fill: COLORS.stallBlue },
+      { id: "flower-girl-1", domId: "stall_flower_girl_1", label: "女", type: "stall", x: 432, y: 378, w: 40, h: 40, fill: COLORS.stallPink },
+      { id: "flower-girl-2", domId: "stall_flower_girl_2", label: "女", type: "stall", x: 472, y: 378, w: 40, h: 40, fill: COLORS.stallPink },
+      { id: "flower-girl-3", domId: "stall_flower_girl_3", label: "女", type: "stall", x: 512, y: 378, w: 40, h: 40, fill: COLORS.stallPink },
 
       { id: "貴A", domId: "stall_vip_1", label: "貴", type: "stall", x: 612, y: 322, w: 40, h: 40, fill: "#ffffff" },
       { id: "貴B", domId: "stall_vip_2", label: "貴", type: "stall", x: 700, y: 322, w: 40, h: 40, fill: "#ffffff" },
