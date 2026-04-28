@@ -304,7 +304,10 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
         {userMode === 'home' ? (
           <div className="space-y-6 mt-0">
             {/* Hero 背景容器 */}
-            <div className="animated-background premium-card p-8 sm:p-10 md:p-12 relative overflow-hidden">
+            <div
+              className="animated-background countdown-board p-8 sm:p-10 md:p-12 relative overflow-hidden"
+              style={{ background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(247, 250, 255, 0.98) 100%)' }}
+            >
               {/* 漸進色背景 */}
               <div
                 className="absolute inset-0"
@@ -367,11 +370,11 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                 { icon: '🏆', label: '分級獎品', desc: '等你領取' },
                 { icon: '📸', label: '相機上傳', desc: '留下回憶' }
               ].map((item, idx) => (
-                <div
-                  key={idx}
-                  className="premium-card clay-shadow-sm p-3 text-center"
-                  style={{ background: 'var(--surface)' }}
-                >
+                  <div
+                    key={idx}
+                    className="countdown-board p-3 text-center h-full"
+                    style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(247,250,255,0.98) 100%)' }}
+                  >
                   <div className="text-3xl mb-1 flex justify-center">
                     {item.isImage ? (
                       <GamepadIcon className="h-8 w-8" />

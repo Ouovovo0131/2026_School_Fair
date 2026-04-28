@@ -54,7 +54,7 @@ const TIMELINE_EVENTS: TimelineItem[] = [
 
 export default function Timeline() {
   return (
-    <section className="premium-card clay-shadow-sm p-5 sm:p-6">
+    <section className="countdown-board p-5 sm:p-6">
       <div className="mb-5 sm:mb-6">
         <h2 className="text-xl sm:text-2xl font-bold" style={{ color: 'var(--text)' }}>
           活動時程
