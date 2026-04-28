@@ -48,6 +48,12 @@ function GamepadIcon({ className = "h-5 w-5" }: { className?: string }) {
   );
 }
 
+const STUDENT_EMAIL_DOMAIN = "@hlhs.hlc.edu.tw";
+
+function isStudentEmail(email?: string | null) {
+  return Boolean(email && email.toLowerCase().endsWith(STUDENT_EMAIL_DOMAIN));
+}
+
 export default function Home({ unlockedTasks = [] }: HomeProps) {
   const [user, setUser] = useState<LocalUser | null>(null);
   const [completed, setCompleted] = useState<number[]>([]);
@@ -82,6 +88,17 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
+        if (!isStudentEmail(currentUser.email)) {
+          setUser(null);
+          setCompleted([]);
+          setRedeemedRewards([]);
+          setNickname("");
+          setLoading(false);
+          await signOut(auth);
+          alert("此遊戲僅限花中學生帳號（@hlhs.hlc.edu.tw）登入遊玩");
+          return;
+        }
+
         setUser(currentUser);
         const docRef = doc(db, "users", currentUser.email!);
         const docSnap = await getDoc(docRef);
@@ -181,7 +198,13 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
 
   const pct = Math.round((completed.length / TOTAL_QUESTS) * 100);
   const goHome = () => setUserMode('home');
-  const goGameHub = () => setUserMode('game');
+  const goGameHub = () => {
+    if (!isStudentEmail(user?.email)) {
+      alert("此遊戲僅限花中學生帳號（@hlhs.hlc.edu.tw）登入遊玩");
+      return;
+    }
+    setUserMode('game');
+  };
   const isMapMode = userMode === 'map' || userMode === 'game-map';
 
   return (
@@ -270,6 +293,9 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                   >
                     <GamepadIcon className="h-5 w-5" />
                     <span>前往玩遊戲</span>
+                    <span className="text-[11px] font-black tracking-wide" style={{ color: 'var(--warning)' }}>
+                      （限花中學生遊玩）
+                    </span>
                   </button>
                   <button
                     onClick={() => setUserMode('map')}
