@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
 import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 import { doc, getDoc, setDoc, updateDoc, collection, getDocs, deleteDoc } from "firebase/firestore";
@@ -55,16 +56,13 @@ function isStudentEmail(email?: string | null) {
 }
 
 export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProps) {
+  const router = useRouter();
   const [user, setUser] = useState<LocalUser | null>(null);
   const [completed, setCompleted] = useState<number[]>([]);
   const [redeemedRewards, setRedeemedRewards] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
   const [showIntro, setShowIntro] = useState(false);
   const [isStudent, setIsStudent] = useState(false);
-  const [showRedeemModal, setShowRedeemModal] = useState(false);
-  const [redeemConfirmCode, setRedeemConfirmCode] = useState("");
-  const [redeemLevel, setRedeemLevel] = useState<number | null>(null);
-  const [redeemError, setRedeemError] = useState("");
   const [showAdminMode, setShowAdminMode] = useState(false);
   const [adminPassword, setAdminPassword] = useState("");
   const [showNicknameModal, setShowNicknameModal] = useState(false);
@@ -145,32 +143,6 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
 
   const handleLogout = async () => { await signOut(auth); window.location.reload(); };
 
-  const openRedeemModal = (level: number) => {
-    setRedeemLevel(level); setShowRedeemModal(true);
-    setRedeemConfirmCode(""); setRedeemError("");
-  };
-  const closeRedeemModal = () => {
-    setShowRedeemModal(false); setRedeemConfirmCode("");
-    setRedeemError(""); setRedeemLevel(null);
-  };
-
-  const handleRedeemSubmit = async () => {
-    if (!redeemConfirmCode.trim()) { setRedeemError("請輸入確認碼"); return; }
-    if (!user?.email) { setRedeemError("使用者資料異常，請重新登入"); return; }
-    const smallPassword = process.env.NEXT_PUBLIC_STAFF_SMALL_PASSWORD || "STAFF10";
-    const bigPassword = process.env.NEXT_PUBLIC_STAFF_BIG_PASSWORD || "STAFF20";
-    const expectedCode = redeemLevel === SMALL_REWARD_THRESHOLD ? smallPassword : bigPassword;
-    if (redeemConfirmCode.toUpperCase() !== expectedCode) { setRedeemError("❌ 確認碼錯誤"); return; }
-    try {
-      const userRef = doc(db, "users", user.email);
-      const newRedeemedRewards = [...redeemedRewards, redeemLevel!];
-      await updateDoc(userRef, { redeemedRewards: newRedeemedRewards });
-      setRedeemedRewards(newRedeemedRewards);
-      alert(`🎉 ${redeemLevel === SMALL_REWARD_THRESHOLD ? "小" : "大"}獎品兌換成功！`);
-      closeRedeemModal();
-    } catch { setRedeemError("連線錯誤，請重試"); }
-  };
-
   const handleSaveNickname = async () => {
     if (!nickname.trim()) { alert("請輸入暱稱"); return; }
     if (!user?.email) { alert("使用者資料異常，請重新登入"); return; }
@@ -189,6 +161,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
       const snapshot = await getDocs(collection(db, "users"));
       for (const d of snapshot.docs) await deleteDoc(doc(db, "users", d.id));
       localStorage.removeItem("unlockedTasks");
+      localStorage.removeItem("adminAccessGranted");
       persistUnlockedTasks([]);
       alert("✅ 所有用戶數據已清除");
       setAdminPassword(""); setShowAdminMode(false);
@@ -232,6 +205,14 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
       persistUnlockedTasks(all);
     }
     setUserMode('game');
+  };
+
+  const openAdminRedeemPage = () => {
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("adminAccessGranted", "1");
+    }
+    setShowAdminMode(false);
+    router.push("/admin/redeem");
   };
   const isMapMode = userMode === 'map' || userMode === 'game-map';
 
@@ -500,13 +481,14 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                   </span>
                 </div>
                 <p className="text-xs" style={{color: 'var(--primary)'}}>完成 {SMALL_REWARD_THRESHOLD} 關領取</p>
-                {redeemedRewards.includes(SMALL_REWARD_THRESHOLD) ? (
-                  <button disabled className="w-full clay-button !text-xs !py-2 !rounded-none" style={{opacity:0.5}}>✅ 已領取</button>
-                ) : completed.length >= SMALL_REWARD_THRESHOLD ? (
-                  <button onClick={() => openRedeemModal(SMALL_REWARD_THRESHOLD)} className="w-full clay-button !text-xs !py-2 !rounded-none">🎊 兌換</button>
-                ) : (
-                  <button disabled className="w-full clay-button !text-xs !py-2 !rounded-none" style={{opacity:0.5}}>差 {SMALL_REWARD_THRESHOLD - completed.length} 關</button>
-                )}
+                <div className="flex flex-wrap gap-2">
+                  <span className="inline-flex items-center rounded-none border-2 border-black px-2 py-1 text-[11px] font-black" style={{background: redeemedRewards.includes(SMALL_REWARD_THRESHOLD) ? 'var(--primary-yellow)' : '#ffffff', color: '#121212'}}>
+                    {redeemedRewards.includes(SMALL_REWARD_THRESHOLD) ? '已由管理員兌換' : '等待管理員兌換'}
+                  </span>
+                  <span className="inline-flex items-center rounded-none border-2 border-black px-2 py-1 text-[11px] font-black" style={{background: 'var(--bg-100)', color: '#121212'}}>
+                    管理員操作
+                  </span>
+                </div>
               </div>
 
               {/* 大獎品 */}
@@ -521,13 +503,14 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                   </span>
                 </div>
                 <p className="text-xs" style={{color: 'var(--primary)'}}>完成 {BIG_REWARD_THRESHOLD} 關領取</p>
-                {redeemedRewards.includes(BIG_REWARD_THRESHOLD) ? (
-                  <button disabled className="w-full clay-button clay-button-blue !text-xs !py-2 !rounded-none" style={{opacity:0.5,color:'white'}}>✅ 已領取</button>
-                ) : completed.length >= BIG_REWARD_THRESHOLD ? (
-                  <button onClick={() => openRedeemModal(BIG_REWARD_THRESHOLD)} className="w-full clay-button clay-button-blue !text-xs !py-2 !rounded-none" style={{color:'white'}}>👑 兌換</button>
-                ) : (
-                  <button disabled className="w-full clay-button clay-button-blue !text-xs !py-2 !rounded-none" style={{opacity:0.5,color:'white'}}>差 {BIG_REWARD_THRESHOLD - completed.length} 關</button>
-                )}
+                <div className="flex flex-wrap gap-2">
+                  <span className="inline-flex items-center rounded-none border-2 border-black px-2 py-1 text-[11px] font-black" style={{background: redeemedRewards.includes(BIG_REWARD_THRESHOLD) ? 'var(--primary-red)' : '#ffffff', color: redeemedRewards.includes(BIG_REWARD_THRESHOLD) ? '#ffffff' : '#121212'}}>
+                    {redeemedRewards.includes(BIG_REWARD_THRESHOLD) ? '已由管理員兌換' : '等待管理員兌換'}
+                  </span>
+                  <span className="inline-flex items-center rounded-none border-2 border-black px-2 py-1 text-[11px] font-black" style={{background: 'var(--bg-100)', color: '#121212'}}>
+                    管理員操作
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -584,39 +567,6 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
           </>
         )}
       </main>
-
-      {/* ── 兌換模態 ── */}
-      {showRedeemModal && (
-        <div className="fixed inset-0 modal-overlay flex items-end sm:items-center justify-center z-50 p-0 sm:p-4">
-          <div className="modal-content w-full sm:max-w-sm p-6 rounded-t-3xl sm:rounded-3xl clay-shadow-lg">
-            <div className="flex justify-between items-center mb-5">
-              <h3 className="text-lg font-bold" style={{color: 'var(--text)'}}>
-                {redeemLevel === 10 ? '🎁 兌換小獎品' : '🏆 兌換大獎品'}
-              </h3>
-              <button onClick={closeRedeemModal} className="w-8 h-8 flex items-center justify-center rounded-full font-bold text-lg" style={{color: 'var(--text-muted)', background: 'transparent'}}>✕</button>
-            </div>
-            <div className="premium-card clay-shadow-sm p-3 mb-4 space-y-1">
-              <p className="text-sm font-semibold" style={{color: 'var(--text)'}}>👤 {nickname || user?.displayName}</p>
-              <p className="text-xs" style={{color: 'var(--primary)'}}>✉️ {user?.email}</p>
-              <p className="text-sm font-semibold flex items-center gap-1" style={{color: 'var(--text)'}}>
-                <GamepadIcon className="h-4 w-4" />
-                <span>完成：<span style={{color: 'var(--secondary)'}}>{completed.length}/{TOTAL_QUESTS} 關</span></span>
-              </p>
-            </div>
-            <div className="mb-4">
-              <label className="block text-sm font-bold mb-1.5" style={{color: 'var(--text)'}}>⚠️ 工作人員確認碼</label>
-              <input type="text" placeholder="請輸入確認碼" value={redeemConfirmCode}
-                onChange={e => setRedeemConfirmCode(e.target.value)} className="w-full clay-input text-black font-bold border-2" style={{borderColor: 'var(--border)'}}/>
-              {redeemError && <p className="text-xs mt-1.5 font-bold" style={{color: 'var(--warning)'}}>{redeemError}</p>}
-            </div>
-            <div className="flex gap-2">
-              <button onClick={closeRedeemModal}
-                className="flex-1 py-3 rounded-none font-bold text-sm border" style={{borderColor: 'var(--border)', color: 'var(--text-secondary)', background: 'var(--surface)'}}>取消</button>
-              <button onClick={handleRedeemSubmit} className="flex-1 clay-button !text-sm">✅ 確認兌換</button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* ── 暱稱模態 ── */}
       {showNicknameModal && (
@@ -691,6 +641,13 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
             </div>
             <input type="password" placeholder="請輸入管理員密碼" value={adminPassword}
               onChange={e => setAdminPassword(e.target.value)} className="w-full clay-input mb-4 text-black font-bold border-2" style={{borderColor: 'var(--warning-200)'}}/>
+            <button
+              type="button"
+              onClick={openAdminRedeemPage}
+              className="w-full clay-button clay-button-yellow rounded-none mb-3"
+            >
+              前往兌換管理頁
+            </button>
             <div className="flex gap-2">
               <button onClick={() => { setShowAdminMode(false); setAdminPassword(""); }}
                 className="flex-1 py-3 rounded-none font-bold text-sm border" style={{borderColor: 'var(--border)', color: 'var(--text-secondary)', background: 'var(--surface)'}}>取消</button>
