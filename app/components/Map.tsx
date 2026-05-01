@@ -113,6 +113,19 @@ function Modal({
 
   if (typeof document === "undefined") return null;
 
+  // 計算 modal 大小：使用固定長寬比 (aspect ratio)，以 viewport 寬度為基準計算寬度與高度；
+  // 若高度超過視窗上限，則以最大高度顯示並啟用內部捲軸
+  const ASPECT_RATIO = 0.65; // 寬 / 高 (0.65 => 高度約為寬度 / 0.65 ≈ 1.54x)
+  const MIN_WIDTH = 300;
+  const MAX_WIDTH = 1100;
+  const viewportWidth = viewport.width || window.innerWidth || 360;
+  const viewportHeight = viewport.height || window.innerHeight || 800;
+  const desiredWidth = Math.max(MIN_WIDTH, Math.min(viewportWidth * 0.86, MAX_WIDTH));
+  let desiredHeight = Math.round(desiredWidth / ASPECT_RATIO);
+  const maxAllowedHeight = Math.floor(viewportHeight * 0.88);
+  const needsScroll = desiredHeight > maxAllowedHeight;
+  if (needsScroll) desiredHeight = maxAllowedHeight;
+
   return createPortal(
     <div
       className="z-[80] flex items-center justify-center bg-black/50 p-4 sm:p-6"
@@ -132,11 +145,11 @@ function Modal({
           borderRadius: "1rem",
           boxShadow: "6px 6px 0 #111111",
           background: '#ffffff',
-          // 動態寬高：依 visualViewport 大小計算像素寬度與最大高度，讓放大時 modal 跟著變大但維持比例
-          width: viewport.width ? Math.max(280, Math.min(viewport.width * 0.9, 1100)) : '100%',
+          width: desiredWidth,
+          height: desiredHeight,
           maxWidth: '1100px',
-          maxHeight: viewport.height ? Math.max(200, Math.min(viewport.height * 0.9, 1200)) : '90vh',
-          overflowY: 'auto',
+          boxSizing: 'border-box',
+          overflowY: needsScroll ? 'auto' : 'visible',
           padding: '1.25rem',
         }}
       >
