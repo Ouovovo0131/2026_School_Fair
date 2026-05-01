@@ -374,9 +374,9 @@ export default function AdminRedeemPage() {
               </div>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="space-y-3">
               <label className="block">
-                <span className="mb-2 block bauhaus-label" style={{ color: 'var(--text)' }}>管理員名稱</span>
+                <span className="mb-2 block bauhaus-label text-sm font-black uppercase tracking-[0.12em]" style={{ color: 'var(--text)' }}>管理員名稱</span>
                 <input
                   value={adminName}
                   onChange={(event) => setAdminName(event.target.value)}
@@ -386,7 +386,7 @@ export default function AdminRedeemPage() {
               </label>
 
               <label className="block">
-                <span className="mb-2 block bauhaus-label" style={{ color: 'var(--text)' }}>玩家 Gmail</span>
+                <span className="mb-2 block bauhaus-label text-sm font-black uppercase tracking-[0.12em]" style={{ color: 'var(--text)' }}>玩家 Gmail</span>
                 <input
                   value={playerEmail}
                   onChange={(event) => setPlayerEmail(event.target.value)}
@@ -394,11 +394,9 @@ export default function AdminRedeemPage() {
                   className="clay-input rounded-none"
                 />
               </label>
-            </div>
 
-            <div className="mt-4 grid gap-4 md:grid-cols-[1fr_auto] md:items-end">
               <label className="block">
-                <span className="mb-2 block bauhaus-label" style={{ color: 'var(--text)' }}>選擇獎品</span>
+                <span className="mb-3 block bauhaus-label text-sm font-black uppercase tracking-[0.12em]" style={{ color: 'var(--text)' }}>選擇獎品</span>
                 <div className="grid grid-cols-2 gap-3">
                   {REWARDS.map((reward) => {
                     const active = selectedReward === reward.level;
@@ -407,45 +405,44 @@ export default function AdminRedeemPage() {
                         key={reward.level}
                         type="button"
                         onClick={() => setSelectedReward(reward.level)}
-                        className="bauhaus-frame px-3 py-3 text-left font-black uppercase transition-transform hover:-translate-y-1"
+                        className="bauhaus-frame px-4 py-4 text-center font-black uppercase transition-transform hover:-translate-y-1 active:translate-y-0 min-h-[60px] flex flex-col items-center justify-center"
                         style={{
                           background: active ? (reward.theme === 'yellow' ? 'var(--primary-yellow)' : 'var(--primary-red)') : '#ffffff',
                           color: active && reward.theme === 'red' ? '#ffffff' : '#121212',
+                          borderWidth: '4px'
                         }}
                       >
-                        <div className="flex items-center justify-between gap-3">
-                          <span>{reward.label}</span>
-                          <span className="text-xl">{reward.level}</span>
-                        </div>
+                        <span className="text-xs sm:text-sm">{reward.label}</span>
+                        <span className="text-2xl sm:text-3xl font-black">{reward.level}</span>
                       </button>
                     );
                   })}
                 </div>
               </label>
 
-              <button
-                type="button"
-                onClick={loadPlayer}
-                className="clay-button clay-button-yellow rounded-none md:min-w-[180px]"
-              >
-                <Search className="mr-2 h-4 w-4" />
-                載入玩家
-              </button>
-            </div>
+              <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={loadPlayer}
+                  className="clay-button clay-button-yellow rounded-none flex-1 sm:flex-none py-3"
+                >
+                  <Search className="mr-2 h-5 w-5" />
+                  載入玩家
+                </button>
+                <button
+                  type="button"
+                  onClick={handleRedeem}
+                  disabled={busy}
+                  className="clay-button clay-button-blue rounded-none flex-1 sm:flex-none py-3 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  <ShieldCheck className="mr-2 h-5 w-5" />
+                  {busy ? '處理中…' : '執行兌換'}
+                </button>
+              </div>
 
-            <div className="mt-4 flex flex-wrap gap-3">
-              <button
-                type="button"
-                onClick={handleRedeem}
-                disabled={busy}
-                className="clay-button clay-button-blue rounded-none disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                <ShieldCheck className="mr-2 h-4 w-4" />
-                {busy ? '處理中…' : '執行兌換'}
-              </button>
-              <div className="flex items-center gap-2 rounded-none border-4 border-black bg-white px-3 py-2 font-bold">
-                <Clock3 className="h-4 w-4" />
-                <span>{user?.displayName || user?.email || '未登入'}</span>
+              <div className="flex items-center gap-2 rounded-none border-4 border-black bg-white px-4 py-3 font-black text-sm">
+                <Clock3 className="h-5 w-5 shrink-0" />
+                <span className="break-all">{user?.displayName || user?.email || '未登入'}</span>
               </div>
             </div>
 
@@ -479,14 +476,14 @@ export default function AdminRedeemPage() {
             {playerProfile ? (
               <div className="space-y-4">
                 <div className="bauhaus-frame bg-white p-4">
-                  <p className="text-sm font-black uppercase tracking-[0.12em]" style={{ color: 'var(--primary)' }}>玩家資訊</p>
-                  <p className="mt-1 text-lg font-black">{playerProfile.nickname || playerProfile.name || playerProfile.email}</p>
-                  <p className="text-sm font-medium text-[var(--text-secondary)]">{playerProfile.email}</p>
+                  <p className="text-xs font-black uppercase tracking-[0.12em]" style={{ color: 'var(--primary)' }}>玩家資訊</p>
+                  <p className="mt-2 text-base sm:text-lg font-black break-all">{playerProfile.nickname || playerProfile.name || playerProfile.email}</p>
+                  <p className="text-xs sm:text-sm font-medium text-[var(--text-secondary)] break-all mt-1">{playerProfile.email}</p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {playerRewardStatus.map((reward) => (
                       <span
                         key={reward.level}
-                        className="inline-flex items-center rounded-none border-2 border-black px-2 py-1 text-[11px] font-black"
+                        className="inline-flex items-center rounded-none border-2 border-black px-3 py-2 text-xs font-black"
                         style={{
                           background: reward.redeemed ? (reward.theme === 'yellow' ? 'var(--primary-yellow)' : 'var(--primary-red)') : '#ffffff',
                           color: reward.redeemed && reward.theme === 'red' ? '#ffffff' : '#121212',
@@ -551,51 +548,53 @@ export default function AdminRedeemPage() {
               <p className="text-xs font-medium text-[var(--text-secondary)] mt-2">當管理員進行兌換時，紀錄會出現在此</p>
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full border-collapse">
-                <thead>
-                  <tr className="border-4 border-black bg-[#121212] text-white">
-                    <th className="border-2 border-black px-4 py-3 text-left text-xs font-black uppercase tracking-[0.12em]">兌換獎品</th>
-                    <th className="border-2 border-black px-4 py-3 text-left text-xs font-black uppercase tracking-[0.12em]">玩家 Email</th>
-                    <th className="border-2 border-black px-4 py-3 text-left text-xs font-black uppercase tracking-[0.12em]">玩家名稱</th>
-                    <th className="border-2 border-black px-4 py-3 text-left text-xs font-black uppercase tracking-[0.12em]">管理員</th>
-                    <th className="border-2 border-black px-4 py-3 text-left text-xs font-black uppercase tracking-[0.12em]">狀態</th>
-                    <th className="border-2 border-black px-4 py-3 text-left text-xs font-black uppercase tracking-[0.12em]">時間</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {allAdminRecords.map((record, index) => (
-                    <tr key={record.id} className={`border-2 border-black ${index % 2 === 0 ? 'bg-white' : 'bg-[#F9F9F9]'}`}>
-                      <td className="border-2 border-black px-4 py-3">
-                        <span
-                          className="inline-flex items-center rounded-none border-2 border-black px-2 py-1 text-xs font-black uppercase tracking-[0.12em]"
-                          style={{
-                            background: record.rewardLevel === 20 ? 'var(--primary-red)' : 'var(--primary-yellow)',
-                            color: record.rewardLevel === 20 ? '#ffffff' : '#121212'
-                          }}
-                        >
-                          {record.rewardLabel}
-                        </span>
-                      </td>
-                      <td className="border-2 border-black px-4 py-3 text-xs font-medium text-[var(--text-secondary)]">{record.playerEmail}</td>
-                      <td className="border-2 border-black px-4 py-3 text-xs font-black">{record.playerName}</td>
-                      <td className="border-2 border-black px-4 py-3 text-xs font-black">{record.adminName}</td>
-                      <td className="border-2 border-black px-4 py-3">
-                        <span
-                          className="inline-flex items-center rounded-none border-2 border-black px-2 py-1 text-xs font-black uppercase tracking-[0.12em]"
-                          style={{
-                            background: record.alreadyRedeemed ? 'var(--primary-red)' : 'var(--primary-blue)',
-                            color: '#ffffff'
-                          }}
-                        >
-                          {record.alreadyRedeemed ? '重複' : '新兌'}
-                        </span>
-                      </td>
-                      <td className="border-2 border-black px-4 py-3 text-xs font-medium text-[var(--text-secondary)] whitespace-nowrap">{formatTime(record.createdAtMs)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="space-y-3 max-h-[500px] overflow-y-auto pr-2">
+              {allAdminRecords.map((record) => (
+                <div key={record.id} className="bauhaus-frame bg-white p-4 sm:p-5">
+                  <div className="space-y-3">
+                    {/* 獎品與狀態 */}
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span
+                        className="inline-flex items-center rounded-none border-3 border-black px-3 py-2 text-sm font-black uppercase tracking-[0.12em]"
+                        style={{
+                          background: record.rewardLevel === 20 ? 'var(--primary-red)' : 'var(--primary-yellow)',
+                          color: record.rewardLevel === 20 ? '#ffffff' : '#121212'
+                        }}
+                      >
+                        {record.rewardLabel}
+                      </span>
+                      <span
+                        className="inline-flex items-center rounded-none border-2 border-black px-2 py-1 text-xs font-black uppercase tracking-[0.12em]"
+                        style={{
+                          background: record.alreadyRedeemed ? 'var(--primary-red)' : 'var(--primary-blue)',
+                          color: '#ffffff'
+                        }}
+                      >
+                        {record.alreadyRedeemed ? '重複兌換' : '新兌換'}
+                      </span>
+                    </div>
+
+                    {/* 玩家資訊 */}
+                    <div className="border-t-2 border-black pt-3 space-y-1">
+                      <p className="text-xs font-black uppercase tracking-[0.12em] text-[var(--primary)]">玩家</p>
+                      <p className="text-sm font-black break-all">{record.playerName}</p>
+                      <p className="text-xs font-medium text-[var(--text-secondary)] break-all">{record.playerEmail}</p>
+                    </div>
+
+                    {/* 管理員資訊 */}
+                    <div className="border-t-2 border-black pt-3 space-y-1">
+                      <p className="text-xs font-black uppercase tracking-[0.12em] text-[var(--primary)]">管理員</p>
+                      <p className="text-sm font-black">{record.adminName}</p>
+                      <p className="text-xs font-medium text-[var(--text-secondary)] break-all">{record.adminEmail}</p>
+                    </div>
+
+                    {/* 時間 */}
+                    <div className="border-t-2 border-black pt-3">
+                      <p className="text-xs font-medium text-[var(--text-secondary)]">{formatTime(record.createdAtMs)}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           )}
         </section>
