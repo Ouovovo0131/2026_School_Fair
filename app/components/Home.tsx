@@ -286,7 +286,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
               <div className="relative z-10 text-center space-y-4">
                 <div className="text-6xl sm:text-7xl mb-2" style={{ lineHeight: 1 }}>◎</div>
                 <h1 className="hero-title" style={{marginBottom: '1rem', color: 'var(--text)'}}>
-                  校慶拾光地圖
+                  拾光地圖:重返1936
                 </h1>
                 <p className="text-lg font-black uppercase" style={{ color: 'var(--primary)', letterSpacing: '0.18em' }}>
                   2026 校園盛事
