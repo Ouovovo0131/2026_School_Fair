@@ -283,6 +283,11 @@ export default function AdminRedeemPage() {
     return records.filter((record) => record.playerEmail === normalizedPlayerEmail);
   }, [records, normalizedPlayerEmail]);
 
+  // 所有管理員的兌換紀錄，不被玩家搜尋過濾
+  const allAdminRecords = useMemo(() => {
+    return records;
+  }, [records]);
+
   const accessMissing = !accessGranted;
 
   if (loading) {
@@ -529,52 +534,70 @@ export default function AdminRedeemPage() {
         </section>
 
         <section className="bauhaus-frame bg-white p-5 sm:p-6">
-          <div className="mb-4 flex items-center gap-3">
+          <div className="mb-6 flex items-center gap-3">
             <div className="flex h-12 w-12 items-center justify-center border-4 border-black bg-[#D02020] text-white">
               <Clock3 className="h-6 w-6" />
             </div>
             <div>
               <p className="bauhaus-label" style={{ color: 'var(--primary)' }}>Shared Log</p>
               <h2 className="text-2xl font-black tracking-tighter uppercase">所有管理員的兌換紀錄</h2>
+              <p className="text-xs font-medium text-[var(--text-secondary)] mt-1">所有兌換操作都會在此顯示，實時更新</p>
             </div>
           </div>
 
-          <div className="grid gap-3 lg:grid-cols-2">
-            {filteredRecords.length === 0 ? (
-              <div className="bauhaus-frame bg-white p-4 text-sm font-medium text-[var(--text-secondary)] lg:col-span-2">
-                目前還沒有任何兌換紀錄。
-              </div>
-            ) : (
-              filteredRecords.map((record) => (
-                <article key={record.id} className="bauhaus-frame bg-white p-4">
-                  <div className="flex flex-wrap items-start justify-between gap-2">
-                    <div>
-                      <p className="text-sm font-black uppercase tracking-[0.12em]" style={{ color: 'var(--primary)' }}>
-                        {record.rewardLabel}
-                      </p>
-                      <h3 className="text-lg font-black">{record.playerEmail}</h3>
-                      <p className="text-xs font-medium text-[var(--text-secondary)]">玩家：{record.playerName}</p>
-                    </div>
-                    <span
-                      className="inline-flex items-center rounded-none border-2 border-black px-2 py-1 text-[11px] font-black"
-                      style={{ background: record.alreadyRedeemed ? 'var(--primary-red)' : 'var(--primary-yellow)', color: record.alreadyRedeemed ? '#ffffff' : '#121212' }}
-                    >
-                      {record.alreadyRedeemed ? '已兌換過' : '正常兌換'}
-                    </span>
-                  </div>
-                  <div className="mt-3 flex flex-wrap gap-2 text-xs font-black uppercase tracking-[0.12em]">
-                    <span className="inline-flex items-center rounded-none border-2 border-black px-2 py-1" style={{ background: 'var(--primary-blue)', color: '#ffffff' }}>
-                      管理員：{record.adminName}
-                    </span>
-                    <span className="inline-flex items-center rounded-none border-2 border-black px-2 py-1" style={{ background: '#ffffff', color: '#121212' }}>
-                      {record.adminEmail}
-                    </span>
-                  </div>
-                  <p className="mt-3 text-xs font-medium text-[var(--text-secondary)]">{formatTime(record.createdAtMs)}</p>
-                </article>
-              ))
-            )}
-          </div>
+          {allAdminRecords.length === 0 ? (
+            <div className="bauhaus-frame bg-[#F0F0F0] p-6 text-center">
+              <p className="text-sm font-black uppercase tracking-[0.12em]">還沒有任何兌換紀錄</p>
+              <p className="text-xs font-medium text-[var(--text-secondary)] mt-2">當管理員進行兌換時，紀錄會出現在此</p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="border-4 border-black bg-[#121212] text-white">
+                    <th className="border-2 border-black px-4 py-3 text-left text-xs font-black uppercase tracking-[0.12em]">兌換獎品</th>
+                    <th className="border-2 border-black px-4 py-3 text-left text-xs font-black uppercase tracking-[0.12em]">玩家 Email</th>
+                    <th className="border-2 border-black px-4 py-3 text-left text-xs font-black uppercase tracking-[0.12em]">玩家名稱</th>
+                    <th className="border-2 border-black px-4 py-3 text-left text-xs font-black uppercase tracking-[0.12em]">管理員</th>
+                    <th className="border-2 border-black px-4 py-3 text-left text-xs font-black uppercase tracking-[0.12em]">狀態</th>
+                    <th className="border-2 border-black px-4 py-3 text-left text-xs font-black uppercase tracking-[0.12em]">時間</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {allAdminRecords.map((record, index) => (
+                    <tr key={record.id} className={`border-2 border-black ${index % 2 === 0 ? 'bg-white' : 'bg-[#F9F9F9]'}`}>
+                      <td className="border-2 border-black px-4 py-3">
+                        <span
+                          className="inline-flex items-center rounded-none border-2 border-black px-2 py-1 text-xs font-black uppercase tracking-[0.12em]"
+                          style={{
+                            background: record.rewardLevel === 20 ? 'var(--primary-red)' : 'var(--primary-yellow)',
+                            color: record.rewardLevel === 20 ? '#ffffff' : '#121212'
+                          }}
+                        >
+                          {record.rewardLabel}
+                        </span>
+                      </td>
+                      <td className="border-2 border-black px-4 py-3 text-xs font-medium text-[var(--text-secondary)]">{record.playerEmail}</td>
+                      <td className="border-2 border-black px-4 py-3 text-xs font-black">{record.playerName}</td>
+                      <td className="border-2 border-black px-4 py-3 text-xs font-black">{record.adminName}</td>
+                      <td className="border-2 border-black px-4 py-3">
+                        <span
+                          className="inline-flex items-center rounded-none border-2 border-black px-2 py-1 text-xs font-black uppercase tracking-[0.12em]"
+                          style={{
+                            background: record.alreadyRedeemed ? 'var(--primary-red)' : 'var(--primary-blue)',
+                            color: '#ffffff'
+                          }}
+                        >
+                          {record.alreadyRedeemed ? '重複' : '新兌'}
+                        </span>
+                      </td>
+                      <td className="border-2 border-black px-4 py-3 text-xs font-medium text-[var(--text-secondary)] whitespace-nowrap">{formatTime(record.createdAtMs)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </section>
 
         {!user && (
