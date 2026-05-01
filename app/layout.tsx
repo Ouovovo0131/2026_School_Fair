@@ -1,20 +1,15 @@
 import type { Metadata } from "next";
-import { Inter, Noto_Sans_TC } from "next/font/google";
+import { Outfit } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
-
-const notoSansTC = Noto_Sans_TC({
-  variable: "--font-noto-sans-tc",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "🎪 校慶拾光地圖",
-  description: "2026校園校慶互動遊戲平台 | 完成任務蒐集徽章領取獎品",
+  title: "Bauhaus 校慶拾光地圖",
+  description: "以 Bauhaus 視覺重構的校園校慶互動遊戲平台",
 };
 
 export default function RootLayout({
@@ -25,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="zh-TW">
       <body
-        className={`${inter.variable} ${notoSansTC.variable} antialiased`}
+        className={`${outfit.variable} antialiased`}
         suppressHydrationWarning={true}
       >
         {children}

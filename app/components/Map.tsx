@@ -704,10 +704,10 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       className={isModal ? "map-page fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/45 p-4" : "map-page min-h-screen"}
       style={!isModal ? { background: "var(--bg)" } : undefined}
     >
-      <div className={isModal ? "w-full max-w-6xl rounded-2xl bg-white" : "w-full"}>
+      <div className={isModal ? "w-full max-w-6xl bg-white bauhaus-frame" : "w-full"}>
         {onBack && (
           <div className={isModal ? "border-b p-4" : "mx-auto max-w-6xl px-4 pt-4"}>
-            <button type="button" onClick={onBack} className="flex items-center gap-2 clay-button clay-button-blue !py-2 !px-3 !rounded-xl">
+            <button type="button" onClick={onBack} className="flex items-center gap-2 clay-button clay-button-blue !py-2 !px-3 !rounded-none">
               <ArrowLeft className="h-4 w-4" />
               {isModal ? "關閉地圖" : "返回"}
             </button>

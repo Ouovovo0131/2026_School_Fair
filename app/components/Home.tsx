@@ -256,13 +256,13 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
           <div className="flex items-center gap-2 shrink-0">
             {(userMode === 'game' || !user) && (
               <button onClick={() => setUserMode(user ? 'game-map' : 'map')}
-                className="clay-button clay-button-yellow flex items-center gap-1 !py-2 !px-3 !text-sm !rounded-xl">
+                className="clay-button clay-button-yellow flex items-center gap-1 !py-2 !px-3 !text-sm !rounded-none">
                 <img src="/Map_icon.png" alt="" aria-hidden="true" className="h-4 w-4 object-contain" />
                 <span>地圖</span>
               </button>
             )}
             {!user && (
-              <button onClick={handleLogin} className="clay-button !py-2 !px-3 !rounded-xl">
+              <button onClick={handleLogin} className="clay-button !py-2 !px-3 !rounded-none">
                 🔐 登入
               </button>
             )}
@@ -294,24 +294,20 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
           <div className="space-y-6 mt-0">
             {/* Hero 背景容器 */}
             <div
-              className="animated-background countdown-board p-8 sm:p-10 md:p-12 relative overflow-hidden"
-              style={{ background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(247, 250, 255, 0.98) 100%)' }}
+              className="bauhaus-frame relative overflow-hidden bg-white p-8 sm:p-10 md:p-12"
+              style={{ background: '#ffffff' }}
             >
-              {/* 漸進色背景 */}
-              <div
-                className="absolute inset-0"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(79, 70, 229, 0.10) 0%, rgba(34, 197, 94, 0.08) 100%)'
-                }}
-              />
+              <div className="absolute right-0 top-0 h-24 w-24 border-l-4 border-b-4 border-black bg-[#1040C0]" />
+              <div className="absolute right-14 top-14 h-16 w-16 rotate-45 border-4 border-black bg-[#F0C020]" />
+              <div className="absolute left-5 bottom-5 h-12 w-12 rounded-full border-4 border-black bg-[#D02020]" />
 
               {/* 內容 */}
               <div className="relative z-10 text-center space-y-4">
-                <div className="text-7xl mb-2 animate-bounce" style={{ animationDuration: '2s' }}>🎪</div>
+                <div className="text-6xl sm:text-7xl mb-2" style={{ lineHeight: 1 }}>◎</div>
                 <h1 className="hero-title" style={{marginBottom: '1rem', color: 'var(--text)'}}>
                   校慶拾光地圖
                 </h1>
-                <p className="text-lg font-bold" style={{ color: 'var(--primary)', letterSpacing: '0.5px' }}>
+                <p className="text-lg font-black uppercase" style={{ color: 'var(--primary)', letterSpacing: '0.18em' }}>
                   2026 校園盛事
                 </p>
                 <p className="text-sm" style={{ color: 'var(--text-muted)', lineHeight: '1.7' }}>
@@ -359,8 +355,8 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
               ].map((item, idx) => (
                   <div
                     key={idx}
-                    className="countdown-board p-3 text-center h-full"
-                    style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(247,250,255,0.98) 100%)' }}
+                    className="bauhaus-frame p-3 text-center h-full"
+                    style={{ background: idx === 0 ? '#F0C020' : idx === 1 ? '#1040C0' : '#D02020', color: idx === 0 ? '#121212' : '#ffffff' }}
                   >
                   <div className="text-3xl mb-1 flex justify-center">
                     {item.isImage ? (
@@ -369,10 +365,10 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                       item.icon
                     )}
                   </div>
-                  <p className="text-xs font-bold" style={{ color: 'var(--text)' }}>
+                  <p className="text-xs font-bold" style={{ color: idx === 0 ? '#121212' : '#ffffff' }}>
                     {item.label}
                   </p>
-                  <p className="text-[10px]" style={{ color: 'var(--primary)' }}>
+                  <p className="text-[10px] font-bold uppercase" style={{ color: idx === 0 ? '#121212' : '#ffffff', letterSpacing: '0.12em' }}>
                     {item.desc}
                   </p>
                 </div>
@@ -394,7 +390,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
             <div className="flex items-center justify-between gap-3 mb-2">
               <button
                 onClick={goHome}
-                className="flex items-center gap-2 clay-button clay-button-blue !py-2 !px-3 !rounded-xl"
+                className="flex items-center gap-2 clay-button clay-button-blue !py-2 !px-3 !rounded-none"
               >
                 <ArrowLeft size={16} />
                 返回主畫面
@@ -402,7 +398,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
               {!user && (
                 <button
                   onClick={handleLogin}
-                  className="flex items-center gap-2 clay-button !py-2 !px-3 !rounded-xl"
+                  className="flex items-center gap-2 clay-button !py-2 !px-3 !rounded-none"
                 >
                   🔐 登入同步進度
                 </button>
@@ -438,7 +434,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
             <div className="flex items-center justify-between gap-3 mb-2">
               <button
                 onClick={goHome}
-                className="flex items-center gap-2 clay-button clay-button-blue !py-2 !px-3 !rounded-xl"
+                className="flex items-center gap-2 clay-button clay-button-blue !py-2 !px-3 !rounded-none"
               >
                 <ArrowLeft size={16} />
                 回主畫面
@@ -446,7 +442,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
               {!user && (
                 <button
                   onClick={handleLogin}
-                  className="flex items-center gap-2 clay-button !py-2 !px-3 !rounded-xl"
+                  className="flex items-center gap-2 clay-button !py-2 !px-3 !rounded-none"
                 >
                   🔐 登入同步進度
                 </button>
@@ -467,7 +463,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
               <div className="flex items-center gap-3 mb-3">
                 {user?.photoURL
                   ? <img src={user.photoURL} alt="頭像" className="w-11 h-11 rounded-full object-cover shrink-0" style={{border: '2px solid var(--primary)'}}/>
-                  : <div className="w-11 h-11 rounded-full flex items-center justify-center text-xl shrink-0" style={{background: 'linear-gradient(135deg,var(--primary),var(--secondary))',color:'white'}}>🦆</div>
+                  : <div className="w-11 h-11 rounded-full flex items-center justify-center text-xl shrink-0" style={{background: 'var(--primary-blue)',color:'#ffffff', border: '2px solid #121212'}}>◼</div>
                 }
                 <div className="min-w-0">
                   <p className="font-bold text-sm truncate" style={{color: 'var(--text)'}}>{nickname || user?.displayName || '訪客'}</p>
@@ -483,10 +479,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                 <div className="progress-bar-fill h-full rounded-full transition-all duration-500" 
                   style={{
                     width: `${pct}%`,
-                    background: 'linear-gradient(90deg, var(--primary), var(--secondary))',
-                    backgroundImage: 'linear-gradient(45deg, rgba(255,255,255,0.3) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.3) 75%, transparent 75%, transparent)',
-                    backgroundSize: '1rem 1rem',
-                    animation: 'progress-stripes 2s linear infinite'
+                    background: 'var(--primary-blue)'
                   }}
                 />
               </div>
@@ -498,7 +491,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
               {/* 小獎品 */}
               <div className={`premium-card clay-shadow-sm p-3 flex flex-col gap-2 ${completed.length >= SMALL_REWARD_THRESHOLD && !redeemedRewards.includes(SMALL_REWARD_THRESHOLD) ? 'reward-available' : ''}`}
                 style={{background: completed.length >= SMALL_REWARD_THRESHOLD && !redeemedRewards.includes(SMALL_REWARD_THRESHOLD)
-                  ? 'linear-gradient(135deg,rgba(79,70,229,0.18),rgba(34,197,94,0.14))' : undefined}}>
+                  ? 'var(--primary-yellow)' : '#ffffff'}}>
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-bold" style={{color: 'var(--text)'}}>🎁 小獎</span>
                   <span className="text-xs font-bold px-2 py-0.5 rounded-full"
@@ -508,18 +501,18 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                 </div>
                 <p className="text-xs" style={{color: 'var(--primary)'}}>完成 {SMALL_REWARD_THRESHOLD} 關領取</p>
                 {redeemedRewards.includes(SMALL_REWARD_THRESHOLD) ? (
-                  <button disabled className="w-full clay-button !text-xs !py-2 !rounded-2xl" style={{opacity:0.5}}>✅ 已領取</button>
+                  <button disabled className="w-full clay-button !text-xs !py-2 !rounded-none" style={{opacity:0.5}}>✅ 已領取</button>
                 ) : completed.length >= SMALL_REWARD_THRESHOLD ? (
-                  <button onClick={() => openRedeemModal(SMALL_REWARD_THRESHOLD)} className="w-full clay-button !text-xs !py-2 !rounded-2xl animate-pulse">🎊 兌換</button>
+                  <button onClick={() => openRedeemModal(SMALL_REWARD_THRESHOLD)} className="w-full clay-button !text-xs !py-2 !rounded-none">🎊 兌換</button>
                 ) : (
-                  <button disabled className="w-full clay-button !text-xs !py-2 !rounded-2xl" style={{opacity:0.5}}>差 {SMALL_REWARD_THRESHOLD - completed.length} 關</button>
+                  <button disabled className="w-full clay-button !text-xs !py-2 !rounded-none" style={{opacity:0.5}}>差 {SMALL_REWARD_THRESHOLD - completed.length} 關</button>
                 )}
               </div>
 
               {/* 大獎品 */}
               <div className={`premium-card clay-shadow-sm p-3 flex flex-col gap-2 ${completed.length >= BIG_REWARD_THRESHOLD && !redeemedRewards.includes(BIG_REWARD_THRESHOLD) ? 'reward-available' : ''}`}
                 style={{background: completed.length >= BIG_REWARD_THRESHOLD && !redeemedRewards.includes(BIG_REWARD_THRESHOLD)
-                  ? 'linear-gradient(135deg,rgba(79,70,229,0.18),rgba(34,197,94,0.14))' : undefined}}>
+                  ? 'var(--primary-red)' : '#ffffff', color: completed.length >= BIG_REWARD_THRESHOLD && !redeemedRewards.includes(BIG_REWARD_THRESHOLD) ? '#ffffff' : 'inherit'}}>
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-bold" style={{color: 'var(--text)'}}>🏆 大獎</span>
                   <span className="text-xs font-bold px-2 py-0.5 rounded-full"
@@ -529,11 +522,11 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                 </div>
                 <p className="text-xs" style={{color: 'var(--primary)'}}>完成 {BIG_REWARD_THRESHOLD} 關領取</p>
                 {redeemedRewards.includes(BIG_REWARD_THRESHOLD) ? (
-                  <button disabled className="w-full clay-button clay-button-blue !text-xs !py-2 !rounded-2xl" style={{opacity:0.5,color:'white'}}>✅ 已領取</button>
+                  <button disabled className="w-full clay-button clay-button-blue !text-xs !py-2 !rounded-none" style={{opacity:0.5,color:'white'}}>✅ 已領取</button>
                 ) : completed.length >= BIG_REWARD_THRESHOLD ? (
-                  <button onClick={() => openRedeemModal(BIG_REWARD_THRESHOLD)} className="w-full clay-button clay-button-blue !text-xs !py-2 !rounded-2xl animate-pulse" style={{color:'white'}}>👑 兌換</button>
+                  <button onClick={() => openRedeemModal(BIG_REWARD_THRESHOLD)} className="w-full clay-button clay-button-blue !text-xs !py-2 !rounded-none" style={{color:'white'}}>👑 兌換</button>
                 ) : (
-                  <button disabled className="w-full clay-button clay-button-blue !text-xs !py-2 !rounded-2xl" style={{opacity:0.5,color:'white'}}>差 {BIG_REWARD_THRESHOLD - completed.length} 關</button>
+                  <button disabled className="w-full clay-button clay-button-blue !text-xs !py-2 !rounded-none" style={{opacity:0.5,color:'white'}}>差 {BIG_REWARD_THRESHOLD - completed.length} 關</button>
                 )}
               </div>
             </div>
@@ -618,7 +611,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
             </div>
             <div className="flex gap-2">
               <button onClick={closeRedeemModal}
-                className="flex-1 py-3 rounded-2xl font-bold text-sm border" style={{borderColor: 'var(--border)', color: 'var(--text-secondary)', background: 'var(--surface)'}}>取消</button>
+                className="flex-1 py-3 rounded-none font-bold text-sm border" style={{borderColor: 'var(--border)', color: 'var(--text-secondary)', background: 'var(--surface)'}}>取消</button>
               <button onClick={handleRedeemSubmit} className="flex-1 clay-button !text-sm">✅ 確認兌換</button>
             </div>
           </div>
@@ -640,7 +633,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
               className="w-full clay-input mb-4 text-black font-bold border-2" style={{borderColor: 'var(--border)'}}/>
             <div className="flex gap-2">
               <button onClick={() => setShowNicknameModal(false)}
-                className="flex-1 py-3 rounded-2xl font-bold text-sm border" style={{borderColor: 'var(--border)', color: 'var(--text-secondary)', background: 'var(--surface)'}}>稍後設定</button>
+                className="flex-1 py-3 rounded-none font-bold text-sm border" style={{borderColor: 'var(--border)', color: 'var(--text-secondary)', background: 'var(--surface)'}}>稍後設定</button>
               <button onClick={handleSaveNickname} className="flex-1 clay-button !text-sm">✅ 確認</button>
             </div>
           </div>
@@ -671,11 +664,11 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
             </label>
             <div className="flex gap-2">
               <button onClick={() => setShowPrivacyModal(false)}
-                className="flex-1 py-3 rounded-2xl font-bold text-sm border" style={{borderColor: 'var(--border)', color: 'var(--text-secondary)', background: 'var(--surface)'}}>返回修改暱稱</button>
+                className="flex-1 py-3 rounded-none font-bold text-sm border" style={{borderColor: 'var(--border)', color: 'var(--text-secondary)', background: 'var(--surface)'}}>返回修改暱稱</button>
               <button
                 onClick={() => { if (privacyAgreed) { setShowPrivacyModal(false); setUserMode('game'); } else alert("請勾選同意框才能繼續"); }}
                 disabled={!privacyAgreed}
-                className={`flex-1 !text-sm ${privacyAgreed ? 'clay-button' : 'py-3 rounded-2xl font-bold cursor-not-allowed'}`}
+                className={`flex-1 !text-sm ${privacyAgreed ? 'clay-button' : 'py-3 rounded-none font-bold cursor-not-allowed'}`}
                 style={!privacyAgreed ? {background: 'var(--bg-200)', color: 'var(--text-muted)'} : undefined}>
                 ✅ 我已同意
               </button>
@@ -700,9 +693,9 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
               onChange={e => setAdminPassword(e.target.value)} className="w-full clay-input mb-4 text-black font-bold border-2" style={{borderColor: 'var(--warning-200)'}}/>
             <div className="flex gap-2">
               <button onClick={() => { setShowAdminMode(false); setAdminPassword(""); }}
-                className="flex-1 py-3 rounded-2xl font-bold text-sm border" style={{borderColor: 'var(--border)', color: 'var(--text-secondary)', background: 'var(--surface)'}}>取消</button>
+                className="flex-1 py-3 rounded-none font-bold text-sm border" style={{borderColor: 'var(--border)', color: 'var(--text-secondary)', background: 'var(--surface)'}}>取消</button>
               <button onClick={handleClearAllData}
-                className="flex-1 py-3 rounded-2xl font-bold text-sm text-white" style={{background: 'linear-gradient(135deg, var(--warning-500), var(--warning-700))'}}>🗑️ 清除數據</button>
+                className="flex-1 py-3 rounded-none font-bold text-sm text-white" style={{background: 'var(--primary-red)'}}>🗑️ 清除數據</button>
             </div>
           </div>
         </div>
