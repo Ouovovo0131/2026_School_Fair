@@ -126,12 +126,18 @@ function Modal({
       }}
     >
       <div
-        className="w-full max-w-md bg-white p-5"
         onClick={(event) => event.stopPropagation()}
         style={{
           border: "4px solid #111111",
           borderRadius: "1rem",
           boxShadow: "6px 6px 0 #111111",
+          background: '#ffffff',
+          // 動態寬高：依 visualViewport 大小計算像素寬度與最大高度，讓放大時 modal 跟著變大但維持比例
+          width: viewport.width ? Math.max(280, Math.min(viewport.width * 0.9, 1100)) : '100%',
+          maxWidth: '1100px',
+          maxHeight: viewport.height ? Math.max(200, Math.min(viewport.height * 0.9, 1200)) : '90vh',
+          overflowY: 'auto',
+          padding: '1.25rem',
         }}
       >
         <div className="mb-3 flex items-start justify-between gap-3">
