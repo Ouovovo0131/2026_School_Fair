@@ -65,10 +65,38 @@ const fittedFontSize = (label: string, w: number, h: number, vertical = false) =
   return clamp(Math.floor(Math.min(byWidth, byHeight)), 11, 34);
 };
 
-function Modal({ title, message, onClose }: { title: string; message: string; onClose: () => void }) {
+function Modal({
+  title: initialTitle,
+  message: initialMessage,
+  id,
+  onClose,
+  onSave,
+}: {
+  title: string;
+  message: string;
+  id?: string;
+  onClose: () => void;
+  onSave?: (t: string, m: string) => void;
+}) {
   const [viewport, setViewport] = useState({ top: 0, left: 0, width: 0, height: 0 });
+  const [editing, setEditing] = useState(false);
+  const [title, setTitle] = useState(initialTitle);
+  const [message, setMessage] = useState(initialMessage);
 
   useEffect(() => {
+    // 畫面開啟時若有 id，嘗試從 localStorage 載入已儲存的攤位資料
+    if (id) {
+      try {
+        const raw = localStorage.getItem(`stall:${id}`);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed?.title) setTitle(parsed.title);
+          if (parsed?.message) setMessage(parsed.message);
+        }
+      } catch (e) {
+        // ignore
+      }
+    }
     const updateViewport = () => {
       const visualViewport = (window as any).visualViewport;
       if (visualViewport) {
@@ -112,6 +140,19 @@ function Modal({ title, message, onClose }: { title: string; message: string; on
   const needsScroll = desiredHeight > maxAllowedHeight;
   if (needsScroll) desiredHeight = maxAllowedHeight;
 
+  const handleSave = () => {
+    if (id) {
+      try {
+        localStorage.setItem(
+          `stall:${id}`,
+          JSON.stringify({ title: title || initialTitle, message: message || initialMessage })
+        );
+      } catch (e) {}
+    }
+    if (onSave) onSave(title, message);
+    setEditing(false);
+  };
+
   return createPortal(
     <div
       className="z-[80] flex items-center justify-center bg-black/50 p-4 sm:p-6"
@@ -140,54 +181,86 @@ function Modal({ title, message, onClose }: { title: string; message: string; on
           position: "relative",
         }}
       >
-        <div style={{ paddingRight: "3.5rem" }}>
-          <h3
-            style={{
-              fontSize: "clamp(18px, 4.5vw, 28px)",
-              margin: 0,
-              lineHeight: 1.1,
-              fontWeight: 800,
-              color: "#0f172a",
-              wordBreak: "break-word",
-            }}
-          >
-            {title}
-          </h3>
-
-          <button
-            type="button"
-            aria-label="關閉"
-            onClick={onClose}
-            style={{
-              position: "absolute",
-              right: "1rem",
-              top: "1rem",
-              border: "2px solid #111111",
-              borderRadius: "999px",
-              padding: "0.25rem 0.6rem",
-              fontSize: "0.95rem",
-              background: "#ffffff",
-              cursor: "pointer",
-              zIndex: 12,
-            }}
-          >
-            關閉
-          </button>
+        <div style={{ paddingRight: "4rem" }}>
+          {/* Title / 编辑 */}
+          {!editing ? (
+            <>
+              <h3
+                style={{
+                  fontSize: "clamp(18px, 4.5vw, 28px)",
+                  margin: 0,
+                  lineHeight: 1.1,
+                  fontWeight: 800,
+                  color: "#0f172a",
+                  wordBreak: "break-word",
+                }}
+              >
+                {title}
+              </h3>
+              <button
+                type="button"
+                onClick={() => setEditing(true)}
+                style={{
+                  position: "absolute",
+                  right: "1rem",
+                  top: "1rem",
+                  border: "2px solid #111111",
+                  borderRadius: "999px",
+                  padding: "0.25rem 0.6rem",
+                  fontSize: "0.95rem",
+                  background: "#ffffff",
+                  cursor: "pointer",
+                  zIndex: 12,
+                }}
+              >
+                編輯
+              </button>
+            </>
+          ) : (
+            <>
+              <input
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="攤位名稱"
+                style={{
+                  width: "100%",
+                  fontSize: "18px",
+                  padding: "6px 8px",
+                  boxSizing: "border-box",
+                }}
+              />
+              <div style={{ position: "absolute", right: "1rem", top: "1rem", display: "flex", gap: "0.5rem" }}>
+                <button type="button" onClick={() => setEditing(false)} style={{ border: "2px solid #111111", borderRadius: 8, padding: "6px 8px", background: "#fff" }}>取消</button>
+                <button type="button" onClick={handleSave} style={{ border: "2px solid #111111", borderRadius: 8, padding: "6px 8px", background: "#fff" }}>儲存</button>
+              </div>
+            </>
+          )}
         </div>
 
         <div style={{ marginTop: "0.75rem" }}>
-          <p
-            style={{
-              fontSize: "clamp(13px, 3.6vw, 16px)",
-              lineHeight: 1.6,
-              color: "#334155",
-              margin: 0,
-              whiteSpace: "pre-wrap",
-              wordBreak: "break-word",
-            }}
-          >
-            {message}
-          </p>
+          {editing ? (
+            <>
+              <textarea
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="在此輸入販售內容，例如：飲料、鹹酥雞、手作..."
+                style={{ width: "100%", minHeight: 120, padding: "8px", boxSizing: "border-box", fontSize: "14px" }}
+              />
+            </>
+          ) : (
+            <p
+              style={{
+                fontSize: "clamp(13px, 3.6vw, 16px)",
+                lineHeight: 1.6,
+                color: "#334155",
+                margin: 0,
+                whiteSpace: "pre-wrap",
+                wordBreak: "break-word",
+              }}
+            >
+              {message}
+            </p>
+          )}
         </div>
       </div>
     </div>,
@@ -732,7 +805,15 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         </div>
       </div>
 
-      {modalState && <Modal title={modalState.title} message={modalState.message} onClose={() => setModalState(null)} />}
+      {modalState && (
+        <Modal
+          id={modalState.id}
+          title={modalState.title}
+          message={modalState.message}
+          onClose={() => setModalState(null)}
+          onSave={(t, m) => setModalState((s) => (s ? { ...s, title: t, message: m } : s))}
+        />
+      )}
     </div>
   );
 }
