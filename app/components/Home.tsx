@@ -212,12 +212,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
       try {
         const result = await signInWithPopup(auth, new GoogleAuthProvider());
         const email = (result.user?.email || "").toLowerCase();
-        if (!(isStudentEmail(email) || email === ADMIN_EMAIL)) {
-          await signOut(auth);
-          alert("此遊戲僅限花中學生帳號（@hlhs.hlc.edu.tw）登入遊玩");
-          return;
-        }
-        // admin auto-unlock
+        // 允許任何已登入的使用者進入遊戲；管理員仍自動解鎖所有關卡
         if (email.toLowerCase() === ADMIN_EMAIL) {
           const all = Array.from({ length: TOTAL_QUESTS }, (_, i) => i + 1);
           persistUnlockedTasks(all);
@@ -230,14 +225,8 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
       return;
     }
 
-    // user already logged in: check domain
+    // 已登入使用者可以直接進入遊戲；管理員自動解鎖所有關卡
     const currentEmail = (user?.email || '').toLowerCase();
-    if (!(isStudentEmail(currentEmail) || currentEmail === ADMIN_EMAIL)) {
-      await signOut(auth);
-      alert("此遊戲僅限花中學生帳號（@hlhs.hlc.edu.tw）登入遊玩");
-      return;
-    }
-
     if (currentEmail === ADMIN_EMAIL) {
       const all = Array.from({ length: TOTAL_QUESTS }, (_, i) => i + 1);
       persistUnlockedTasks(all);
@@ -340,9 +329,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                   >
                     <GamepadIcon className="h-5 w-5" />
                     <span>前往玩遊戲</span>
-                    <span className="text-[11px] font-black tracking-wide" style={{ color: 'var(--warning)' }}>
-                      （限花中學生遊玩）
-                    </span>
+                    
                   </button>
                   <button
                     onClick={() => setUserMode('map')}
