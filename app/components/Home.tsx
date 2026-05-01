@@ -224,7 +224,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
             <div className="text-5xl">🎪</div>
             <div>
               <p className="text-xs font-black tracking-[0.3em]" style={{ color: 'var(--primary)' }}>2026</p>
-              <h2 className="text-2xl font-black" style={{ color: 'var(--text)' }}>校慶拾光地圖</h2>
+              <h2 className="text-2xl font-black" style={{ color: 'var(--text)' }}>拾光地圖:重返1936</h2>
             </div>
           </div>
         </div>
