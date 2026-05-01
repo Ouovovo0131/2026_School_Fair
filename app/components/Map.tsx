@@ -65,41 +65,28 @@ const fittedFontSize = (label: string, w: number, h: number, vertical = false) =
   return clamp(Math.floor(Math.min(byWidth, byHeight)), 11, 34);
 };
 
-function Modal({
-  title,
-  message,
-  onClose,
-}: {
-  title: string;
-  message: string;
-  onClose: () => void;
-}) {
+function Modal({ title, message, onClose }: { title: string; message: string; onClose: () => void }) {
   const [viewport, setViewport] = useState({ top: 0, left: 0, width: 0, height: 0 });
 
   useEffect(() => {
     const updateViewport = () => {
-      const visualViewport = window.visualViewport;
+      const visualViewport = (window as any).visualViewport;
       if (visualViewport) {
         setViewport({
-          top: visualViewport.offsetTop,
-          left: visualViewport.offsetLeft,
-          width: visualViewport.width,
-          height: visualViewport.height,
+          top: visualViewport.offsetTop || 0,
+          left: visualViewport.offsetLeft || 0,
+          width: visualViewport.width || window.innerWidth,
+          height: visualViewport.height || window.innerHeight,
         });
         return;
       }
 
-      setViewport({
-        top: 0,
-        left: 0,
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
+      setViewport({ top: 0, left: 0, width: window.innerWidth, height: window.innerHeight });
     };
 
     updateViewport();
 
-    const visualViewport = window.visualViewport;
+    const visualViewport = (window as any).visualViewport;
     visualViewport?.addEventListener("resize", updateViewport);
     visualViewport?.addEventListener("scroll", updateViewport);
     window.addEventListener("resize", updateViewport);
@@ -113,16 +100,15 @@ function Modal({
 
   if (typeof document === "undefined") return null;
 
-  // 計算 modal 大小：使用固定長寬比 (aspect ratio)，以 viewport 寬度為基準計算寬度與高度；
-  // 若高度超過視窗上限，則以最大高度顯示並啟用內部捲軸
-  const ASPECT_RATIO = 0.65; // 寬 / 高 (0.65 => 高度約為寬度 / 0.65 ≈ 1.54x)
+  // 固定長寬比計算（寬 / 高），以 viewport 寬度為基準
+  const ASPECT_RATIO = 0.65; // 寬/高
   const MIN_WIDTH = 300;
   const MAX_WIDTH = 1100;
-  const viewportWidth = viewport.width || window.innerWidth || 360;
-  const viewportHeight = viewport.height || window.innerHeight || 800;
-  const desiredWidth = Math.max(MIN_WIDTH, Math.min(viewportWidth * 0.86, MAX_WIDTH));
+  const vw = viewport.width || window.innerWidth || 360;
+  const vh = viewport.height || window.innerHeight || 800;
+  const desiredWidth = Math.max(MIN_WIDTH, Math.min(vw * 0.86, MAX_WIDTH));
   let desiredHeight = Math.round(desiredWidth / ASPECT_RATIO);
-  const maxAllowedHeight = Math.floor(viewportHeight * 0.88);
+  const maxAllowedHeight = Math.floor(vh * 0.88);
   const needsScroll = desiredHeight > maxAllowedHeight;
   if (needsScroll) desiredHeight = maxAllowedHeight;
 
@@ -139,39 +125,70 @@ function Modal({
       }}
     >
       <div
-        onClick={(event) => event.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
         style={{
           border: "4px solid #111111",
           borderRadius: "1rem",
-          boxShadow: "6px 6px 0 #111111",
-          background: '#ffffff',
+          boxShadow: "4px 4px 0 #111111",
+          background: "#ffffff",
           width: desiredWidth,
           height: desiredHeight,
-          maxWidth: '1100px',
-          boxSizing: 'border-box',
-          overflowY: needsScroll ? 'auto' : 'visible',
-          padding: '1.25rem',
+          maxWidth: MAX_WIDTH,
+          boxSizing: "border-box",
+          overflowY: needsScroll ? "auto" : "visible",
+          padding: "1.25rem",
+          position: "relative",
         }}
       >
-        <div className="mb-3 flex items-start justify-between gap-3">
-          <h3 className="text-xl font-extrabold text-slate-800">{title}</h3>
+        <div style={{ paddingRight: "3.5rem" }}>
+          <h3
+            style={{
+              fontSize: "clamp(18px, 4.5vw, 28px)",
+              margin: 0,
+              lineHeight: 1.1,
+              fontWeight: 800,
+              color: "#0f172a",
+              wordBreak: "break-word",
+            }}
+          >
+            {title}
+          </h3>
+
           <button
             type="button"
-            className="font-bold text-slate-600"
+            aria-label="關閉"
+            onClick={onClose}
             style={{
+              position: "absolute",
+              right: "1rem",
+              top: "1rem",
               border: "2px solid #111111",
               borderRadius: "999px",
               padding: "0.25rem 0.6rem",
-              fontSize: "0.875rem",
+              fontSize: "0.95rem",
               background: "#ffffff",
               cursor: "pointer",
+              zIndex: 12,
             }}
-            onClick={onClose}
           >
             關閉
           </button>
         </div>
-        <p className="text-sm leading-7 text-slate-700">{message}</p>
+
+        <div style={{ marginTop: "0.75rem" }}>
+          <p
+            style={{
+              fontSize: "clamp(13px, 3.6vw, 16px)",
+              lineHeight: 1.6,
+              color: "#334155",
+              margin: 0,
+              whiteSpace: "pre-wrap",
+              wordBreak: "break-word",
+            }}
+          >
+            {message}
+          </p>
+        </div>
       </div>
     </div>,
     document.body
@@ -250,15 +267,7 @@ function FeatureText({ feature }: { feature: RectFeature }) {
   );
 }
 
-function SvgRectButton({
-  feature,
-  selected,
-  onActivate,
-}: {
-  feature: RectFeature;
-  selected: boolean;
-  onActivate: () => void;
-}) {
+function SvgRectButton({ feature, selected, onActivate }: { feature: RectFeature; selected: boolean; onActivate: () => void }) {
   return (
     <a
       id={feature.domId}
@@ -291,15 +300,7 @@ function SvgRectButton({
         />
       )}
       {feature.iconSrc ? (
-        <image
-          href={feature.iconSrc}
-          x={feature.x}
-          y={feature.y}
-          width={feature.w}
-          height={feature.h}
-          preserveAspectRatio="xMidYMid meet"
-          style={{ pointerEvents: "none" }}
-        />
+        <image href={feature.iconSrc} x={feature.x} y={feature.y} width={feature.w} height={feature.h} preserveAspectRatio="xMidYMid meet" style={{ pointerEvents: "none" }} />
       ) : feature.label ? (
         <FeatureText feature={feature} />
       ) : null}
@@ -609,54 +610,31 @@ export default function Map({ onBack, isModal = false }: MapProps) {
   const selectedId = modalState?.id;
 
   const onStallClick = (feature: RectFeature) => {
-    setModalState({
-      id: feature.id,
-      title: feature.label === "班" ? "班級服務台" : `攤位 ${feature.label}`,
-      message: `[攤位名稱]販售：[販售內容]`,
-    });
+    setModalState({ id: feature.id, title: feature.label === "班" ? "班級服務台" : `攤位 ${feature.label}`, message: `[攤位名稱]販售：[販售內容]` });
   };
 
   const onBuildingClick = (feature: RectFeature) => {
     const buildingName = feature.id === "stage" ? "表演舞台" : feature.label;
-    setModalState({
-      id: feature.id,
-      title: buildingName,
-      message: `[建築名稱] 廁所資訊：[廁所位置描述]`,
-    });
+    setModalState({ id: feature.id, title: buildingName, message: `[建築名稱] 廁所資訊：[廁所位置描述]` });
   };
 
   const onFacilityClick = (feature: RectFeature) => {
     setModalState({
       id: feature.id,
-      title:
-        feature.id === "audio-room"
-          ? "音控室"
-          : feature.label === "女"
-            ? "女廁"
-            : feature.label === "男"
-              ? "男廁"
-              : "場域資訊",
+      title: feature.id === "audio-room" ? "音控室" : feature.label === "女" ? "女廁" : feature.label === "男" ? "男廁" : "場域資訊",
       message: "此區域資訊可於後續功能中設定。",
     });
   };
 
   return (
     <div
-      className={
-        isModal
-          ? "map-page fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/45 p-4"
-          : "map-page min-h-screen"
-      }
+      className={isModal ? "map-page fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/45 p-4" : "map-page min-h-screen"}
       style={!isModal ? { background: "var(--bg)" } : undefined}
     >
       <div className={isModal ? "w-full max-w-6xl rounded-2xl bg-white" : "w-full"}>
         {onBack && (
           <div className={isModal ? "border-b p-4" : "mx-auto max-w-6xl px-4 pt-4"}>
-            <button
-              type="button"
-              onClick={onBack}
-              className="flex items-center gap-2 clay-button clay-button-blue !py-2 !px-3 !rounded-xl"
-            >
+            <button type="button" onClick={onBack} className="flex items-center gap-2 clay-button clay-button-blue !py-2 !px-3 !rounded-xl">
               <ArrowLeft className="h-4 w-4" />
               {isModal ? "關閉地圖" : "返回"}
             </button>
@@ -666,119 +644,79 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         <div className={isModal ? "p-4 sm:p-6" : "mx-auto max-w-6xl p-4 sm:p-6"}>
           <div className="mb-4" />
 
-          <div
-            className="bg-white p-2 sm:p-4"
-            style={{
-              border: "4px solid #111111",
-              borderRadius: "1rem",
-              boxShadow: "6px 6px 0 #111111",
-            }}
-          >
+          <div className="bg-white p-2 sm:p-4" style={{ border: "4px solid #111111", borderRadius: "1rem", boxShadow: "6px 6px 0 #111111" }}>
             <div className="relative mx-auto w-full max-w-[1100px]">
-              <svg
-                viewBox="180 0 950 760"
-                role="img"
-                aria-label="園遊會互動地圖"
-                className="h-auto w-full"
-                style={{ background: COLORS.mapBg, borderRadius: 12, touchAction: "manipulation" }}
-              >
+              <svg viewBox="180 0 950 760" role="img" aria-label="園遊會互動地圖" className="h-auto w-full" style={{ background: COLORS.mapBg, borderRadius: 12, touchAction: "manipulation" }}>
                 <rect x={180} y={0} width={950} height={760} fill={COLORS.mapBg} />
 
-                {otherFeatures
-                  .filter((feature) => feature.type === "zone")
-                  .map((feature) => (
-                    <SvgRectButton
-                      key={feature.id}
-                      feature={feature}
-                      selected={selectedId === feature.id}
-                      onActivate={() => onFacilityClick(feature)}
-                    />
-                  ))}
+                {otherFeatures.filter((feature) => feature.type === "zone").map((feature) => (
+                  <SvgRectButton key={feature.id} feature={feature} selected={selectedId === feature.id} onActivate={() => onFacilityClick(feature)} />
+                ))}
 
-                <text x={429} y={42} fontSize={14} fill="#b8b8b8">2F</text>
-                <text x={429} y={58} fontSize={14} fill="#b8b8b8">1F</text>
-                <text x={783} y={42} fontSize={14} fill="#b8b8b8">2F</text>
-                <text x={783} y={58} fontSize={14} fill="#b8b8b8">1F</text>
-                <text x={228} y={548} fontSize={16} fill="#b8b8b8">♂</text>
+                <text x={429} y={42} fontSize={14} fill="#b8b8b8">
+                  2F
+                </text>
+                <text x={429} y={58} fontSize={14} fill="#b8b8b8">
+                  1F
+                </text>
+                <text x={783} y={42} fontSize={14} fill="#b8b8b8">
+                  2F
+                </text>
+                <text x={783} y={58} fontSize={14} fill="#b8b8b8">
+                  1F
+                </text>
+                <text x={228} y={548} fontSize={16} fill="#b8b8b8">
+                  ♂
+                </text>
 
                 {buildingFeatures.map((feature) => (
-                  <SvgRectButton
-                    key={feature.id}
-                    feature={feature}
-                    selected={selectedId === feature.id}
-                    onActivate={() => onBuildingClick(feature)}
-                  />
+                  <SvgRectButton key={feature.id} feature={feature} selected={selectedId === feature.id} onActivate={() => onBuildingClick(feature)} />
                 ))}
 
-                {otherFeatures
-                  .filter((feature) => feature.type === "facility")
-                  .map((feature) => (
-                    <SvgRectButton
-                      key={feature.id}
-                      feature={feature}
-                      selected={selectedId === feature.id}
-                      onActivate={() => onFacilityClick(feature)}
-                    />
-                  ))}
+                {otherFeatures.filter((feature) => feature.type === "facility").map((feature) => (
+                  <SvgRectButton key={feature.id} feature={feature} selected={selectedId === feature.id} onActivate={() => onFacilityClick(feature)} />
+                ))}
 
                 {toiletFeatures.map((feature) => (
-                  <SvgRectButton
-                    key={feature.id}
-                    feature={feature}
-                    selected={selectedId === feature.id}
-                    onActivate={() => onFacilityClick(feature)}
-                  />
+                  <SvgRectButton key={feature.id} feature={feature} selected={selectedId === feature.id} onActivate={() => onFacilityClick(feature)} />
                 ))}
 
-                <text x={216} y={56} fontSize={10} fontWeight={700} fill="#d94694">1F</text>
-                <text x={244} y={56} fontSize={10} fontWeight={700} fill="#2563eb">1F</text>
-                <text x={243} y={561} textAnchor="middle" fontSize={10} fontWeight={700} fill="#2563eb">1F</text>
+                <text x={216} y={56} fontSize={10} fontWeight={700} fill="#d94694">
+                  1F
+                </text>
+                <text x={244} y={56} fontSize={10} fontWeight={700} fill="#2563eb">
+                  1F
+                </text>
+                <text x={243} y={561} textAnchor="middle" fontSize={10} fontWeight={700} fill="#2563eb">
+                  1F
+                </text>
 
-                <text x={414} y={34} fontSize={10} fontWeight={700} fill="#d94694">2F</text>
-                <text x={414} y={54} fontSize={10} fontWeight={700} fill="#2563eb">1F</text>
+                <text x={414} y={34} fontSize={10} fontWeight={700} fill="#d94694">
+                  2F
+                </text>
+                <text x={414} y={54} fontSize={10} fontWeight={700} fill="#2563eb">
+                  1F
+                </text>
 
-                <text x={956} y={34} textAnchor="end" fontSize={10} fontWeight={700} fill="#d94694">2F</text>
-                <text x={956} y={54} textAnchor="end" fontSize={10} fontWeight={700} fill="#2563eb">1F</text>
+                <text x={956} y={34} textAnchor="end" fontSize={10} fontWeight={700} fill="#d94694">
+                  2F
+                </text>
+                <text x={956} y={54} textAnchor="end" fontSize={10} fontWeight={700} fill="#2563eb">
+                  1F
+                </text>
 
                 {stallFeatures.map((feature) => (
-                  <SvgRectButton
-                    key={feature.id}
-                    feature={feature}
-                    selected={selectedId === feature.id}
-                    onActivate={() => onStallClick(feature)}
-                  />
+                  <SvgRectButton key={feature.id} feature={feature} selected={selectedId === feature.id} onActivate={() => onStallClick(feature)} />
                 ))}
 
                 <foreignObject x={832} y={566} width={44} height={44}>
-                  <button
-                    id="facility_utensils"
-                    type="button"
-                    className="flex h-11 w-11 items-center justify-center rounded-lg border border-slate-400 bg-white"
-                    onClick={() =>
-                      setModalState({
-                        id: "utensils",
-                        title: "餐具回收區",
-                        message: "此區域資訊可於後續功能中設定。",
-                      })
-                    }
-                  >
+                  <button id="facility_utensils" type="button" className="flex h-11 w-11 items-center justify-center rounded-lg border border-slate-400 bg-white" onClick={() => setModalState({ id: "utensils", title: "餐具回收區", message: "此區域資訊可於後續功能中設定。" })}>
                     <UtensilsCrossed className="h-5 w-5 text-slate-700" strokeWidth={1.8} />
                   </button>
                 </foreignObject>
 
                 <foreignObject x={832} y={614} width={44} height={44}>
-                  <button
-                    id="facility_trash"
-                    type="button"
-                    className="flex h-11 w-11 items-center justify-center rounded-lg border border-slate-400 bg-white"
-                    onClick={() =>
-                      setModalState({
-                        id: "trash",
-                        title: "垃圾桶",
-                        message: "此區域資訊可於後續功能中設定。",
-                      })
-                    }
-                  >
+                  <button id="facility_trash" type="button" className="flex h-11 w-11 items-center justify-center rounded-lg border border-slate-400 bg-white" onClick={() => setModalState({ id: "trash", title: "垃圾桶", message: "此區域資訊可於後續功能中設定。" })}>
                     <Trash2 className="h-5 w-5 text-slate-700" strokeWidth={1.8} />
                   </button>
                 </foreignObject>
@@ -794,9 +732,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         </div>
       </div>
 
-      {modalState && (
-        <Modal title={modalState.title} message={modalState.message} onClose={() => setModalState(null)} />
-      )}
+      {modalState && <Modal title={modalState.title} message={modalState.message} onClose={() => setModalState(null)} />}
     </div>
   );
 }
