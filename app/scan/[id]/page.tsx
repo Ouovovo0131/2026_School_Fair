@@ -131,53 +131,39 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
         style={{background: 'var(--bg)'}}
       >
         <div className="absolute inset-0 pointer-events-none">
-          <div style={{position: 'absolute', top: '10%', left: '10%', fontSize: '60px', animation: 'float-gentle 3s ease-in-out infinite'}}>🎊</div>
-          <div style={{position: 'absolute', top: '20%', right: '15%', fontSize: '60px', animation: 'float-gentle 3.5s ease-in-out infinite'}}>🎈</div>
-          <div style={{position: 'absolute', bottom: '20%', left: '20%', fontSize: '60px', animation: 'float-gentle 4s ease-in-out infinite'}}>✨</div>
-          <div style={{position: 'absolute', bottom: '30%', right: '10%', fontSize: '60px', animation: 'float-gentle 3.2s ease-in-out infinite'}}>🏆</div>
+          <div style={{position: 'absolute', top: '10%', left: '10%', width: '72px', height: '72px', border: '4px solid #121212', background: '#f0c020'}} />
+          <div style={{position: 'absolute', top: '20%', right: '15%', width: '56px', height: '56px', border: '4px solid #121212', background: '#1040c0', transform: 'rotate(45deg)'}} />
+          <div style={{position: 'absolute', bottom: '20%', left: '20%', width: '60px', height: '60px', border: '4px solid #121212', background: '#d02020', borderRadius: '9999px'}} />
+          <div style={{position: 'absolute', bottom: '30%', right: '10%', width: '84px', height: '20px', border: '4px solid #121212', background: '#ffffff'}} />
         </div>
 
         <div className="text-center relative z-10">
-          <div style={{fontSize: '120px', marginBottom: '20px', textShadow: '0 10px 20px rgba(0,0,0,0.1)'}} className="animate-bounce">
-            🎢
+          <div className="mb-5 mx-auto flex h-28 w-28 items-center justify-center border-4 border-black bg-[#1040c0] text-6xl text-white">
+            ◎
           </div>
 
-          <h1 className="text-7xl font-black mb-4 tracking-tighter" style={{
+          <h1 className="text-5xl sm:text-7xl font-black mb-4 tracking-tighter uppercase" style={{
             color: 'var(--text)',
-            textShadow: '0 4px 20px rgba(93, 173, 226, 0.3)',
             marginBottom: '10px',
           }}>
             任務完成！
           </h1>
 
-          <p className="text-3xl font-bold mb-8" style={{
-            background: 'linear-gradient(135deg, var(--primary), var(--secondary))',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text'
-          }}>
+          <p className="text-2xl sm:text-3xl font-black mb-8 uppercase" style={{ color: 'var(--primary)' }}>
             太棒了！🌟
           </p>
 
-          <div className="premium-card clay-shadow-md p-8 mb-8 max-w-md" style={{
-            animation: 'modal-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)'
-          }}>
+          <div className="premium-card clay-shadow-md p-8 mb-8 max-w-md" style={{ animation: 'modal-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)' }}>
             <div className="text-center">
               <p className="text-lg font-bold mb-3" style={{color: 'var(--text)'}}>📊 您的進度</p>
-              <p className="text-4xl font-black mb-2" style={{
-                background: 'linear-gradient(90deg, var(--primary), var(--secondary))',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
-              }}>
+              <p className="text-4xl font-black mb-2" style={{ color: 'var(--primary-blue)' }}>
                 {completedCount}
               </p>
-              <div className="h-2 bg-gray-200 rounded-full overflow-hidden mb-3">
+              <div className="h-3 border-4 border-black bg-white overflow-hidden mb-3 rounded-none">
                 <div style={{
                   width: `${(completedCount / 20) * 100}%`,
                   height: '100%',
-                  background: 'linear-gradient(90deg, var(--primary), var(--secondary))',
-                  animation: 'shimmer 2s infinite'
+                  background: 'var(--primary-red)'
                 }}></div>
               </div>
               <p style={{color: 'var(--primary)', fontWeight: '600'}}>已完成 {completedCount}/20 關</p>
@@ -214,7 +200,7 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
       {/* 返回按鈕 */}
       <button 
         onClick={() => router.push("/")} 
-        className="m-6 flex items-center font-bold text-sm clay-button clay-button-blue" 
+        className="m-6 flex items-center font-bold text-sm clay-button clay-button-blue rounded-none" 
       >
         <ArrowLeft className="w-4 h-4 mr-2" /> 回首頁
       </button>
@@ -229,7 +215,7 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
               <div className="text-sm font-black tracking-widest uppercase" style={{color: 'var(--primary)', marginBottom: '8px'}}>Mission #{quest.id}</div>
               <h1 className="text-3xl font-black" style={{color: 'var(--text)'}}>《{quest.title}》</h1>
             </div>
-            <span className="badge-blue py-2 px-4 text-xs font-bold rounded-full">
+            <span className="badge-blue py-2 px-4 text-xs font-bold rounded-none">
               {quest.type === 'quiz' ? '📝 問答題' : '📷 照片'}
             </span>
           </div>
@@ -267,12 +253,12 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
           ) : (
             <div className="space-y-6">
               {quest.referenceImage && (
-                <div className="premium-card clay-shadow-md overflow-hidden border-4 border-yellow-100">
+                <div className="bauhaus-frame overflow-hidden bg-white">
                   <img src={quest.referenceImage} className="w-full h-auto object-cover" alt="範例" />
                 </div>
               )}
 
-              <label className={`block w-full text-center font-bold py-6 rounded-2xl transition-all cursor-pointer clay-button ${ 
+              <label className={`block w-full text-center font-bold py-6 rounded-none transition-all cursor-pointer clay-button ${ 
                 uploading 
                   ? 'clay-button opacity-60' 
                   : 'clay-button-yellow'
