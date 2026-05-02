@@ -232,35 +232,35 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
 
       {/* ── 導航列 ── */}
       <header className="sticky-header">
-        <div className="flex items-center justify-between px-4 md:px-6 h-16 max-w-6xl mx-auto">
-          <h1 className="text-lg sm:text-xl md:text-2xl font-black truncate tracking-tight" style={{color: 'var(--bg-100)', maxWidth: '65%'}}>🎪 校慶拾光地圖</h1>
-          <div className="flex items-center gap-2 shrink-0">
+        <div className="flex items-center justify-between px-3 sm:px-4 md:px-6 h-14 sm:h-16 max-w-6xl mx-auto gap-2">
+          <h1 className="text-sm sm:text-base md:text-lg lg:text-xl font-black truncate tracking-tight" style={{color: 'var(--bg-100)', maxWidth: '60%'}}>🎪 拾光地圖</h1>
+          <div className="flex items-center gap-1 sm:gap-2 shrink-0">
             {(userMode === 'game' || !user) && (
               <button onClick={() => setUserMode(user ? 'game-map' : 'map')}
-                className="clay-button clay-button-yellow flex items-center gap-1 !py-2 !px-3 !text-sm !rounded-none">
-                <img src="/Map_icon.png" alt="" aria-hidden="true" className="h-4 w-4 object-contain" />
-                <span>地圖</span>
+                className="clay-button clay-button-yellow flex items-center gap-0.5 !py-1.5 sm:!py-2 !px-2 sm:!px-3 !text-xs sm:!text-sm !rounded-none">
+                <img src="/Map_icon.png" alt="" aria-hidden="true" className="h-3.5 sm:h-4 w-3.5 sm:w-4 object-contain" />
+                <span className="hidden sm:inline">地圖</span>
               </button>
             )}
             {!user && (
-              <button onClick={handleLogin} className="clay-button !py-2 !px-3 !rounded-none">
-                🔐 登入
+              <button onClick={handleLogin} className="clay-button !py-1.5 sm:!py-2 !px-2 sm:!px-3 !text-xs sm:!text-sm !rounded-none">
+                🔐 <span className="hidden sm:inline">登入</span>
               </button>
             )}
             {user && (
               <button onClick={() => setShowAdminMode(!showAdminMode)}
-                className="w-9 h-9 flex items-center justify-center rounded-full transition-all"
+                className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-full transition-all hover:bg-white/10"
                 style={{color: 'var(--bg-100)', background: 'transparent'}}>
-                <Settings size={20}/>
+                <Settings size={18}/>
               </button>
             )}
             {user && (
               <button
                 onClick={handleLogout}
-                className="w-9 h-9 flex items-center justify-center rounded-full transition-all"
+                className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-full transition-all hover:bg-white/10"
                 style={{color: 'var(--bg-100)', background: 'transparent'}}
               >
-                <LogOut size={20}/>
+                <LogOut size={18}/>
               </button>
             )}
           </div>
@@ -268,57 +268,57 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
       </header>
 
       {/* ── 主內容 ── */}
-      <main className="px-4 md:px-6 py-6 max-w-6xl mx-auto space-y-6 animate-[fade-in_0.25s_ease]">
+      <main className="px-3 sm:px-4 md:px-6 py-4 sm:py-6 md:py-8 max-w-6xl mx-auto space-y-4 sm:space-y-6 animate-[fade-in_0.25s_ease]">
 
         {/* 主畫面 */}
         {userMode === 'home' ? (
           <div className="space-y-6 mt-0">
             {/* Hero 背景容器 */}
             <div
-              className="bauhaus-frame relative overflow-hidden bg-white p-8 sm:p-10 md:p-12"
+              className="bauhaus-frame relative overflow-hidden bg-white p-4 sm:p-6 md:p-8 lg:p-12"
               style={{ background: '#ffffff' }}
             >
-              <div className="absolute right-0 top-0 h-24 w-24 border-l-4 border-b-4 border-black bg-[#1040C0]" />
-              <div className="absolute right-14 top-14 h-16 w-16 rotate-45 border-4 border-black bg-[#F0C020]" />
-              <div className="absolute left-5 bottom-5 h-12 w-12 rounded-full border-4 border-black bg-[#D02020]" />
+              {/* 手機上隱藏或縮小幾何形狀 */}
+              <div className="hidden sm:block absolute right-0 top-0 h-16 sm:h-20 md:h-24 w-16 sm:w-20 md:w-24 border-l-3 sm:border-l-4 border-b-3 sm:border-b-4 border-black bg-[#1040C0]" />
+              <div className="hidden sm:block absolute right-8 sm:right-12 md:right-14 top-8 sm:top-12 md:top-14 h-12 sm:h-16 w-12 sm:w-16 rotate-45 border-3 sm:border-4 border-black bg-[#F0C020]" />
+              <div className="absolute left-3 sm:left-5 bottom-3 sm:bottom-5 h-8 sm:h-12 w-8 sm:w-12 rounded-full border-2 sm:border-4 border-black bg-[#D02020]" />
 
               {/* 內容 */}
-              <div className="relative z-10 text-center space-y-4">
-                <div className="text-6xl sm:text-7xl mb-2" style={{ lineHeight: 1 }}>◎</div>
-                <h1 className="hero-title" style={{marginBottom: '1rem', color: 'var(--text)'}}>
+              <div className="relative z-10 text-center space-y-3 sm:space-y-4">
+                <div className="text-4xl sm:text-5xl md:text-6xl mb-1 sm:mb-2" style={{ lineHeight: 1 }}>◎</div>
+                <h1 className="hero-title" style={{marginBottom: '0.75rem', color: 'var(--text)'}}>
                   拾光地圖:重返1936
                 </h1>
-                <p className="text-lg font-black uppercase" style={{ color: 'var(--primary)', letterSpacing: '0.18em' }}>
+                <p className="text-sm sm:text-base md:text-lg font-black uppercase" style={{ color: 'var(--primary)', letterSpacing: '0.18em' }}>
                   2026 校園盛事
                 </p>
-                <p className="text-sm" style={{ color: 'var(--text-muted)', lineHeight: '1.7' }}>
+                <p className="text-xs sm:text-sm" style={{ color: 'var(--text-muted)', lineHeight: '1.6' }}>
                   完成各處任務、蒐集徽章、領取獎品<br/>在校園各角落發現驚喜冒險！
                 </p>
-                <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
-                  <span className="site-pill"><CalendarDays size={14} /> 5/23</span>
-                  <span className="site-pill"><Clock3 size={14} /> 10:00 - 14:00</span>
+                <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 pt-1">
+                  <span className="site-pill"><CalendarDays size={12} className="sm:size-4" /> <span className="text-xs sm:text-sm">5/23</span></span>
+                  <span className="site-pill"><Clock3 size={12} className="sm:size-4" /> <span className="text-xs sm:text-sm">10:00 - 14:00</span></span>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 mt-4 sm:mt-6">
                   <button
                     onClick={goGameHub}
-                    className="btn-cta-large w-full inline-flex items-center justify-center gap-2"
+                    className="btn-cta-large w-full inline-flex items-center justify-center gap-1.5 sm:gap-2"
                   >
-                    <GamepadIcon className="h-5 w-5" />
-                    <span>前往玩遊戲</span>
-                    
+                    <GamepadIcon className="h-4 w-4 sm:h-5 sm:w-5" />
+                    <span>玩遊戲</span>
                   </button>
                   <button
                     onClick={() => setUserMode('map')}
-                    className="clay-button clay-button-yellow w-full inline-flex items-center justify-center gap-2"
+                    className="clay-button clay-button-yellow w-full inline-flex items-center justify-center gap-1.5 sm:gap-2"
                   >
-                    <img src="/Map_icon.png" alt="地圖 icon" className="h-5 w-5 object-contain" />
-                    <span>查看地圖</span>
+                    <img src="/Map_icon.png" alt="地圖 icon" className="h-4 w-4 sm:h-5 sm:w-5 object-contain" />
+                    <span>地圖</span>
                   </button>
                 </div>
 
                 {/* 次要 CTA */}
-                <p className="text-xs pt-4" style={{ color: 'var(--text-muted)' }}>
+                <p className="text-xs pt-2 sm:pt-4" style={{ color: 'var(--text-muted)' }}>
                   一起來參加校慶冒險吧！
                 </p>
               </div>
@@ -328,7 +328,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
             <Countdown />
 
             {/* 活動亮點卡片 */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
               {[
                 { icon: '/game.png', label: '20 關任務', desc: '挑戰完成', isImage: true },
                 { icon: '🏆', label: '分級獎品', desc: '等你領取' },
@@ -336,12 +336,12 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
               ].map((item, idx) => (
                   <div
                     key={idx}
-                    className="bauhaus-frame p-3 text-center h-full"
+                    className="bauhaus-frame p-2.5 sm:p-3 text-center h-full"
                     style={{ background: idx === 0 ? '#F0C020' : idx === 1 ? '#1040C0' : '#D02020', color: idx === 0 ? '#121212' : '#ffffff' }}
                   >
-                  <div className="text-3xl mb-1 flex justify-center">
+                  <div className="text-2xl sm:text-3xl mb-1 flex justify-center">
                     {item.isImage ? (
-                      <GamepadIcon className="h-8 w-8" />
+                      <GamepadIcon className="h-6 w-6 sm:h-8 sm:w-8" />
                     ) : (
                       item.icon
                     )}
@@ -349,7 +349,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                   <p className="text-xs font-bold" style={{ color: idx === 0 ? '#121212' : '#ffffff' }}>
                     {item.label}
                   </p>
-                  <p className="text-[10px] font-bold uppercase" style={{ color: idx === 0 ? '#121212' : '#ffffff', letterSpacing: '0.12em' }}>
+                  <p className="text-[9px] sm:text-[10px] font-bold uppercase" style={{ color: idx === 0 ? '#121212' : '#ffffff', letterSpacing: '0.12em' }}>
                     {item.desc}
                   </p>
                 </div>
@@ -367,97 +367,97 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
           />
 
         ) : userMode === 'select' ? (
-          <div className="space-y-3 mt-6">
-            <div className="flex items-center justify-between gap-3 mb-2">
+          <div className="space-y-2 sm:space-y-3 mt-4 sm:mt-6">
+            <div className="flex items-center justify-between gap-2 sm:gap-3 mb-2">
               <button
                 onClick={goHome}
-                className="flex items-center gap-2 clay-button clay-button-blue !py-2 !px-3 !rounded-none"
+                className="flex items-center gap-1 sm:gap-2 clay-button clay-button-blue !py-1.5 sm:!py-2 !px-2 sm:!px-3 !text-xs sm:!text-sm !rounded-none"
               >
-                <ArrowLeft size={16} />
-                返回主畫面
+                <ArrowLeft size={14} className="sm:size-4" />
+                <span className="hidden sm:inline">返回</span>
               </button>
               {!user && (
                 <button
                   onClick={handleLogin}
-                  className="flex items-center gap-2 clay-button !py-2 !px-3 !rounded-none"
+                  className="flex items-center gap-1 sm:gap-2 clay-button !py-1.5 sm:!py-2 !px-2 sm:!px-3 !text-xs sm:!text-sm !rounded-none"
                 >
-                  🔐 登入同步進度
+                  🔐 <span className="hidden sm:inline">登入</span>
                 </button>
               )}
             </div>
-            <p className="text-center text-sm font-semibold mb-4" style={{color: 'var(--primary)'}}>選擇您想要進行的活動</p>
+            <p className="text-center text-xs sm:text-sm font-semibold mb-3 sm:mb-4" style={{color: 'var(--primary)'}}>選擇活動</p>
             <button onClick={() => setUserMode('game')}
-              className="w-full premium-card clay-shadow-sm p-5 flex items-center justify-between transition-all hover:-translate-y-1 active:scale-[0.98] border-b-4"
+              className="w-full premium-card clay-shadow-sm p-3 sm:p-4 sm:p-5 flex items-center justify-between transition-all hover:-translate-y-1 active:scale-[0.98] border-b-2 sm:border-b-4"
               style={{borderColor: 'var(--primary)', background: 'var(--surface)'}}>
-              <div className="text-left">
-                <p className="text-base font-bold" style={{color: 'var(--text)'}}>🎯 玩遊戲</p>
-                <p className="text-xs mt-0.5 font-medium" style={{color: 'var(--primary)'}}>完成任務，蒐集徽章、領取獎品</p>
+              <div className="text-left min-w-0">
+                <p className="text-sm sm:text-base font-bold" style={{color: 'var(--text)'}}>🎯 玩遊戲</p>
+                <p className="text-xs mt-0.5 font-medium" style={{color: 'var(--primary)'}}>完成任務、領獎品</p>
               </div>
-              <ChevronRight size={20} style={{color: 'var(--primary)', flexShrink: 0}}/>
+              <ChevronRight size={18} className="sm:size-5" style={{color: 'var(--primary)', flexShrink: 0}}/>
             </button>
             <button onClick={() => setUserMode('map')}
-              className="w-full premium-card clay-shadow-sm p-5 flex items-center justify-between transition-all hover:-translate-y-1 active:scale-[0.98] border-b-4"
+              className="w-full premium-card clay-shadow-sm p-3 sm:p-4 sm:p-5 flex items-center justify-between transition-all hover:-translate-y-1 active:scale-[0.98] border-b-2 sm:border-b-4"
               style={{borderColor: 'var(--secondary)', background: 'var(--surface)'}}>
-              <div className="text-left">
-                <p className="text-base font-bold flex items-center gap-2" style={{color: 'var(--text)'}}>
-                  <img src="/Map_icon.png" alt="" aria-hidden="true" className="h-5 w-5 object-contain" />
+              <div className="text-left min-w-0">
+                <p className="text-sm sm:text-base font-bold flex items-center gap-1.5 sm:gap-2" style={{color: 'var(--text)'}}>
+                  <img src="/Map_icon.png" alt="" aria-hidden="true" className="h-4 w-4 sm:h-5 sm:w-5 object-contain" />
                   <span>查看地圖</span>
                 </p>
-                <p className="text-xs mt-0.5 font-medium" style={{color: 'var(--primary)'}}>瀏覽校慶園遊會的所有攤位位置</p>
+                <p className="text-xs mt-0.5 font-medium" style={{color: 'var(--primary)'}}>瀏覽園遊會位置</p>
               </div>
-              <ChevronRight size={20} style={{color: 'var(--secondary)', flexShrink: 0}}/>
+              <ChevronRight size={18} className="sm:size-5" style={{color: 'var(--secondary)', flexShrink: 0}}/>
             </button>
           </div>
 
         /* 遊戲主畫面 */
         ) : (
           <>
-            <div className="flex items-center justify-between gap-3 mb-2">
+            <div className="flex items-center justify-between gap-2 sm:gap-3 mb-2 sm:mb-3">
               <button
                 onClick={goHome}
-                className="flex items-center gap-2 clay-button clay-button-blue !py-2 !px-3 !rounded-none"
+                className="flex items-center gap-1 sm:gap-2 clay-button clay-button-blue !py-1.5 sm:!py-2 !px-2 sm:!px-3 !text-xs sm:!text-sm !rounded-none"
               >
-                <ArrowLeft size={16} />
-                回主畫面
+                <ArrowLeft size={14} className="sm:size-4" />
+                <span className="hidden sm:inline">返回</span>
               </button>
               {!user && (
                 <button
                   onClick={handleLogin}
-                  className="flex items-center gap-2 clay-button !py-2 !px-3 !rounded-none"
+                  className="flex items-center gap-1 sm:gap-2 clay-button !py-1.5 sm:!py-2 !px-2 sm:!px-3 !text-xs sm:!text-sm !rounded-none"
                 >
-                  🔐 登入同步進度
+                  🔐 <span className="hidden sm:inline">登入</span>
                 </button>
               )}
             </div>
 
             {!user && (
-              <div className="premium-card clay-shadow-sm p-4" style={{background: 'var(--surface)'}}>
-                <p className="text-sm font-bold" style={{color: 'var(--text)'}}>👋 目前是訪客模式</p>
+              <div className="premium-card clay-shadow-sm p-3 sm:p-4" style={{background: 'var(--surface)'}}>
+                <p className="text-xs sm:text-sm font-bold" style={{color: 'var(--text)'}}>👋 訪客模式</p>
                 <p className="text-xs mt-1" style={{color: 'var(--text-muted)'}}>
-                  可以先瀏覽任務與地圖；登入後可同步完成進度與兌換獎勵。
+                  可瀏覽任務與地圖；登入後可同步進度與兌換獎勵。
                 </p>
               </div>
             )}
 
             {/* 玩家資訊卡 */}
-            <div className="premium-card clay-shadow-sm p-4">
-              <div className="flex items-center gap-3 mb-3">
+            <div className="premium-card clay-shadow-sm p-3 sm:p-4">
+              <div className="flex items-center gap-2 sm:gap-3 mb-3">
                 {user?.photoURL
-                  ? <img src={user.photoURL} alt="頭像" className="w-11 h-11 rounded-full object-cover shrink-0" style={{border: '2px solid var(--primary)'}}/>
-                  : <div className="w-11 h-11 rounded-full flex items-center justify-center text-xl shrink-0" style={{background: 'var(--primary-blue)',color:'#ffffff', border: '2px solid #121212'}}>◼</div>
+                  ? <img src={user.photoURL} alt="頭像" className="w-9 h-9 sm:w-11 sm:h-11 rounded-full object-cover shrink-0" style={{border: '2px solid var(--primary)'}}/>
+                  : <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center text-lg sm:text-xl shrink-0" style={{background: 'var(--primary-blue)',color:'#ffffff', border: '2px solid #121212'}}>◼</div>
                 }
-                <div className="min-w-0">
-                  <p className="font-bold text-sm truncate" style={{color: 'var(--text)'}}>{nickname || user?.displayName || '訪客'}</p>
+                <div className="min-w-0 flex-1">
+                  <p className="font-bold text-xs sm:text-sm truncate" style={{color: 'var(--text)'}}>{nickname || user?.displayName || '訪客'}</p>
                   <p className="text-xs" style={{color: 'var(--text-muted)'}}>ID: {user?.email?.split('@')[0].slice(0,6).toUpperCase() || 'GUEST'}</p>
                 </div>
-                <div className="ml-auto shrink-0 text-right">
+                <div className="shrink-0 text-right">
                   <p className="text-xs font-semibold" style={{color: 'var(--primary)'}}>進度</p>
-                  <p className="text-sm font-bold" style={{color: 'var(--text)'}}>{completed.length}/{TOTAL_QUESTS}</p>
+                  <p className="text-xs sm:text-sm font-bold" style={{color: 'var(--text)'}}>{completed.length}/{TOTAL_QUESTS}</p>
                 </div>
               </div>
               {/* 進度條 */}
-              <div className="progress-bar-container rounded-full h-3 overflow-hidden mt-2" style={{background: 'var(--bg-100)', borderColor: 'var(--border)'}}>
-                <div className="progress-bar-fill h-full rounded-full transition-all duration-500" 
+              <div className="progress-bar-container rounded-none h-2.5 sm:h-3 overflow-hidden mt-2 sm:mt-3" style={{background: 'var(--bg-100)', borderColor: 'var(--border)'}}>
+                <div className="progress-bar-fill h-full rounded-none transition-all duration-500" 
                   style={{
                     width: `${pct}%`,
                     background: 'var(--primary-blue)'
@@ -468,59 +468,53 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
             </div>
 
             {/* 獎品區 — 橫排兩張卡 */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-2 sm:gap-3">
               {/* 小獎品 */}
-              <div className={`premium-card clay-shadow-sm p-3 flex flex-col gap-2 ${completed.length >= SMALL_REWARD_THRESHOLD && !redeemedRewards.includes(SMALL_REWARD_THRESHOLD) ? 'reward-available' : ''}`}
+              <div className={`premium-card clay-shadow-sm p-2.5 sm:p-3 flex flex-col gap-1.5 sm:gap-2 ${completed.length >= SMALL_REWARD_THRESHOLD && !redeemedRewards.includes(SMALL_REWARD_THRESHOLD) ? 'reward-available' : ''}`}
                 style={{background: completed.length >= SMALL_REWARD_THRESHOLD && !redeemedRewards.includes(SMALL_REWARD_THRESHOLD)
                   ? 'var(--primary-yellow)' : '#ffffff'}}>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-bold" style={{color: 'var(--text)'}}>🎁 小獎</span>
-                  <span className="text-xs font-bold px-2 py-0.5 rounded-full"
-                    style={{background: 'var(--primary)', color: 'white', whiteSpace: 'nowrap'}}>
+                  <span className="text-xs sm:text-sm font-bold" style={{color: 'var(--text)'}}>🎁 小獎</span>
+                  <span className="text-xs font-bold px-1.5 sm:px-2 py-0.5 rounded-full"
+                    style={{background: 'var(--primary)', color: 'white', whiteSpace: 'nowrap', fontSize: '0.65rem'}}>
                     {completed.length}/{SMALL_REWARD_THRESHOLD}
                   </span>
                 </div>
-                <p className="text-xs" style={{color: 'var(--primary)'}}>完成 {SMALL_REWARD_THRESHOLD} 關領取</p>
-                <div className="flex flex-wrap gap-2">
-                  <span className="inline-flex items-center rounded-none border-2 border-black px-2 py-1 text-[11px] font-black" style={{background: redeemedRewards.includes(SMALL_REWARD_THRESHOLD) ? 'var(--primary-yellow)' : '#ffffff', color: '#121212'}}>
-                    {redeemedRewards.includes(SMALL_REWARD_THRESHOLD) ? '已由管理員兌換' : '等待管理員兌換'}
-                  </span>
-                  <span className="inline-flex items-center rounded-none border-2 border-black px-2 py-1 text-[11px] font-black" style={{background: 'var(--bg-100)', color: '#121212'}}>
-                    管理員操作
+                <p className="text-xs" style={{color: 'var(--primary)'}}>完成 {SMALL_REWARD_THRESHOLD} 關</p>
+                <div className="flex flex-wrap gap-1">
+                  <span className="inline-flex items-center rounded-none border border-black sm:border-2 px-1 sm:px-2 py-0.5 text-[10px] sm:text-[11px] font-black" style={{background: redeemedRewards.includes(SMALL_REWARD_THRESHOLD) ? 'var(--primary-yellow)' : '#ffffff', color: '#121212'}}>
+                    {redeemedRewards.includes(SMALL_REWARD_THRESHOLD) ? '已兌換' : '待兌換'}
                   </span>
                 </div>
               </div>
 
               {/* 大獎品 */}
-              <div className={`premium-card clay-shadow-sm p-3 flex flex-col gap-2 ${completed.length >= BIG_REWARD_THRESHOLD && !redeemedRewards.includes(BIG_REWARD_THRESHOLD) ? 'reward-available' : ''}`}
+              <div className={`premium-card clay-shadow-sm p-2.5 sm:p-3 flex flex-col gap-1.5 sm:gap-2 ${completed.length >= BIG_REWARD_THRESHOLD && !redeemedRewards.includes(BIG_REWARD_THRESHOLD) ? 'reward-available' : ''}`}
                 style={{background: completed.length >= BIG_REWARD_THRESHOLD && !redeemedRewards.includes(BIG_REWARD_THRESHOLD)
                   ? 'var(--primary-red)' : '#ffffff', color: completed.length >= BIG_REWARD_THRESHOLD && !redeemedRewards.includes(BIG_REWARD_THRESHOLD) ? '#ffffff' : 'inherit'}}>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-bold" style={{color: 'var(--text)'}}>🏆 大獎</span>
-                  <span className="text-xs font-bold px-2 py-0.5 rounded-full"
-                    style={{background: 'var(--secondary)', color: 'white', whiteSpace: 'nowrap'}}>
+                  <span className="text-xs sm:text-sm font-bold" style={{color: 'var(--text)'}}>🏆 大獎</span>
+                  <span className="text-xs font-bold px-1.5 sm:px-2 py-0.5 rounded-full"
+                    style={{background: 'var(--secondary)', color: 'white', whiteSpace: 'nowrap', fontSize: '0.65rem'}}>
                     {completed.length}/{BIG_REWARD_THRESHOLD}
                   </span>
                 </div>
-                <p className="text-xs" style={{color: 'var(--primary)'}}>完成 {BIG_REWARD_THRESHOLD} 關領取</p>
-                <div className="flex flex-wrap gap-2">
-                  <span className="inline-flex items-center rounded-none border-2 border-black px-2 py-1 text-[11px] font-black" style={{background: redeemedRewards.includes(BIG_REWARD_THRESHOLD) ? 'var(--primary-red)' : '#ffffff', color: redeemedRewards.includes(BIG_REWARD_THRESHOLD) ? '#ffffff' : '#121212'}}>
-                    {redeemedRewards.includes(BIG_REWARD_THRESHOLD) ? '已由管理員兌換' : '等待管理員兌換'}
-                  </span>
-                  <span className="inline-flex items-center rounded-none border-2 border-black px-2 py-1 text-[11px] font-black" style={{background: 'var(--bg-100)', color: '#121212'}}>
-                    管理員操作
+                <p className="text-xs" style={{color: 'var(--primary)'}}>完成 {BIG_REWARD_THRESHOLD} 關</p>
+                <div className="flex flex-wrap gap-1">
+                  <span className="inline-flex items-center rounded-none border border-black sm:border-2 px-1 sm:px-2 py-0.5 text-[10px] sm:text-[11px] font-black" style={{background: redeemedRewards.includes(BIG_REWARD_THRESHOLD) ? 'var(--primary-red)' : '#ffffff', color: redeemedRewards.includes(BIG_REWARD_THRESHOLD) ? '#ffffff' : '#121212'}}>
+                    {redeemedRewards.includes(BIG_REWARD_THRESHOLD) ? '已兌換' : '待兌換'}
                   </span>
                 </div>
               </div>
             </div>
 
             {/* 任務格子 */}
-            <div className="premium-card clay-shadow-sm p-4">
-              <h3 className="text-base font-bold mb-3 px-3 py-2 rounded-lg inline-flex items-center gap-2" style={{color: 'white', backgroundColor: 'var(--primary)'}}>
-                <GamepadIcon className="h-5 w-5" />
-                <span>任務列表 ({TOTAL_QUESTS} 關)</span>
+            <div className="premium-card clay-shadow-sm p-3 sm:p-4">
+              <h3 className="text-xs sm:text-base font-bold mb-3 px-2 sm:px-3 py-1.5 sm:py-2 rounded-none inline-flex items-center gap-1.5 sm:gap-2" style={{color: 'white', backgroundColor: 'var(--primary)'}}>
+                <GamepadIcon className="h-4 w-4 sm:h-5 sm:w-5" />
+                <span>任務 ({TOTAL_QUESTS})</span>
               </h3>
-              <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3 mt-4">
+              <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-3 mt-3 sm:mt-4">
                 {Array.from({ length: TOTAL_QUESTS }).map((_, index) => {
                   const questId = index + 1;
                   const quest = QUESTS.find(q => q.id === questId);
@@ -530,8 +524,8 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                   if (!isUnlocked) return (
                     <ComicCard key={questId} className="quest-card-shell quest-card-locked">
                       <NumberBadge value={questId} />
-                      <Lock size={17} style={{color: 'var(--text-muted)'}}/>
-                      <span className="text-[11px] font-bold" style={{color: 'var(--text-muted)'}}>未解鎖</span>
+                      <Lock size={14} style={{color: 'var(--text-muted)'}}/>
+                      <span className="text-[10px] sm:text-[11px] font-bold" style={{color: 'var(--text-muted)'}}>鎖</span>
                     </ComicCard>
                   );
 
@@ -540,9 +534,9 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                   if (isCompleted) return (
                     <ComicCard key={questId} className="quest-card-shell quest-card-completed" highlighted={questId === 4}>
                       <NumberBadge value={questId} />
-                      <span className="text-2xl" style={{animation: 'bounce-pop 0.6s ease'}}>✓</span>
-                      <span className="text-[11px] font-bold" style={{color: 'var(--primary-700)'}}>
-                        已完成
+                      <span className="text-xl sm:text-2xl" style={{animation: 'bounce-pop 0.6s ease'}}>✓</span>
+                      <span className="text-[10px] sm:text-[11px] font-bold" style={{color: 'var(--primary-700)'}}>
+                        完成
                       </span>
                     </ComicCard>
                   );
@@ -551,12 +545,12 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                     <a key={questId} href={`/scan/${quest.slug}`} className="quest-card-link">
                       <ComicCard className="quest-card-shell" highlighted={questId === 4}>
                         <NumberBadge value={questId} />
-                        <p className="text-lg font-black text-[var(--primary-700)] leading-none">
+                        <p className="text-base sm:text-lg font-black text-[var(--primary-700)] leading-none">
                           GO
                         </p>
-                        <span className="text-[10px] font-bold text-center px-1 leading-tight"
+                        <span className="text-[9px] sm:text-[10px] font-bold text-center px-0.5 leading-tight"
                           style={{color: 'var(--text)', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden', maxWidth: '90%'}}>
-                          {THEME_NAMES[questId] || "任務"}
+                          {THEME_NAMES[questId] || "任"}
                         </span>
                       </ComicCard>
                     </a>
@@ -570,21 +564,21 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
 
       {/* ── 暱稱模態 ── */}
       {showNicknameModal && (
-        <div className="fixed inset-0 modal-overlay flex items-end sm:items-center justify-center z-50 p-0 sm:p-4">
-          <div className="modal-content w-full sm:max-w-sm p-6 rounded-t-3xl sm:rounded-3xl clay-shadow-lg">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-bold" style={{color: 'var(--text)'}}>👤 設定暱稱</h3>
-              <button onClick={() => setShowNicknameModal(false)} className="w-8 h-8 flex items-center justify-center rounded-full font-bold text-lg" style={{color: 'var(--text-muted)', background: 'transparent'}}>✕</button>
+        <div className="fixed inset-0 modal-overlay flex items-end sm:items-center justify-center z-50 p-0 sm:p-3 md:p-4">
+          <div className="modal-content w-full sm:max-w-sm p-4 sm:p-6 rounded-t-2xl sm:rounded-none clay-shadow-lg max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-3 sm:mb-4">
+              <h3 className="text-base sm:text-lg font-bold" style={{color: 'var(--text)'}}>👤 設定暱稱</h3>
+              <button onClick={() => setShowNicknameModal(false)} className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full font-bold text-lg" style={{color: 'var(--text-muted)', background: 'transparent'}}>✕</button>
             </div>
-            <p className="text-sm font-medium mb-4" style={{color: 'var(--primary)'}}>請設定您的遊戲暱稱，這將代替您的真實姓名顯示在遊戲中。</p>
-            <input type="text" placeholder="輸入您喜歡的暱稱" value={nickname}
+            <p className="text-xs sm:text-sm font-medium mb-3 sm:mb-4" style={{color: 'var(--primary)'}}>設定遊戲暱稱，將代替真實姓名顯示。</p>
+            <input type="text" placeholder="輸入暱稱" value={nickname}
               onChange={e => setNickname(e.target.value)}
               onKeyPress={e => e.key === 'Enter' && handleSaveNickname()}
-              className="w-full clay-input mb-4 text-black font-bold border-2" style={{borderColor: 'var(--border)'}}/>
+              className="w-full clay-input mb-3 sm:mb-4 text-black font-bold border-2 sm:border-2" style={{borderColor: 'var(--border)'}}/>
             <div className="flex gap-2">
               <button onClick={() => setShowNicknameModal(false)}
-                className="flex-1 py-3 rounded-none font-bold text-sm border" style={{borderColor: 'var(--border)', color: 'var(--text-secondary)', background: 'var(--surface)'}}>稍後設定</button>
-              <button onClick={handleSaveNickname} className="flex-1 clay-button !text-sm">✅ 確認</button>
+                className="flex-1 py-2.5 sm:py-3 rounded-none font-bold text-xs sm:text-sm border" style={{borderColor: 'var(--border)', color: 'var(--text-secondary)', background: 'var(--surface)'}}>稍後</button>
+              <button onClick={handleSaveNickname} className="flex-1 clay-button !text-xs sm:!text-sm">✅ 確認</button>
             </div>
           </div>
         </div>
@@ -592,35 +586,35 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
 
       {/* ── 隱私說明模態 ── */}
       {showPrivacyModal && (
-        <div className="fixed inset-0 modal-overlay flex items-end sm:items-center justify-center z-50 p-0 sm:p-4">
-          <div className="modal-content w-full sm:max-w-md p-6 rounded-t-3xl sm:rounded-3xl clay-shadow-lg max-h-[85vh] overflow-y-auto">
-            <h3 className="text-lg font-bold mb-4" style={{color: 'var(--text)'}}>📸 圖片隱私說明</h3>
-            <div className="space-y-3 mb-4">
+        <div className="fixed inset-0 modal-overlay flex items-end sm:items-center justify-center z-50 p-0 sm:p-3 md:p-4">
+          <div className="modal-content w-full sm:max-w-md p-4 sm:p-6 rounded-t-2xl sm:rounded-none clay-shadow-lg max-h-[90vh] overflow-y-auto">
+            <h3 className="text-base sm:text-lg font-bold mb-3 sm:mb-4" style={{color: 'var(--text)'}}>📸 圖片隱私說明</h3>
+            <div className="space-y-2 sm:space-y-3 mb-3 sm:mb-4">
               {[
-                { icon: '📺', title: '當天大螢幕', color: 'var(--primary-hover)', text: '您上傳的圖片將在活動現場的大螢幕上播放，讓全校同學看到您的精彩表現。' },
-                { icon: '🎁', title: '紀念保存', color: 'var(--primary)', text: '您的圖片將被保存，作為校慶拾光地圖的活動紀念，讓我們永遠記住這美好的回憶。' },
-                { icon: '⚠️', title: '自制提醒', color: 'var(--secondary-hover)', text: '請上傳得體、適合全校播放的圖片，確保圖片符合校園文化。' },
+                { icon: '📺', title: '當天大螢幕', color: 'var(--primary-hover)', text: '圖片將在活動現場播放。' },
+                { icon: '🎁', title: '紀念保存', color: 'var(--primary)', text: '作為校慶活動紀念。' },
+                { icon: '⚠️', title: '自制提醒', color: 'var(--secondary-hover)', text: '上傳得體的圖片。' },
               ].map(item => (
-                <div key={item.title} className="premium-card clay-shadow-sm p-3">
-                  <p className="text-sm font-bold mb-1" style={{color: item.color}}>{item.icon} {item.title}</p>
+                <div key={item.title} className="premium-card clay-shadow-sm p-2.5 sm:p-3">
+                  <p className="text-xs sm:text-sm font-bold mb-1" style={{color: item.color}}>{item.icon} {item.title}</p>
                   <p className="text-xs font-medium" style={{color: 'var(--primary)'}}>{item.text}</p>
                 </div>
               ))}
             </div>
-            <label className="flex items-center gap-3 premium-card clay-shadow-sm p-3 mb-4 cursor-pointer">
+            <label className="flex items-center gap-2 sm:gap-3 premium-card clay-shadow-sm p-2.5 sm:p-3 mb-3 sm:mb-4 cursor-pointer">
               <input type="checkbox" checked={privacyAgreed} onChange={e => setPrivacyAgreed(e.target.checked)}
-                className="w-5 h-5 rounded" style={{borderColor: 'var(--border)'}}/>
-              <span className="text-sm font-semibold" style={{color: 'var(--text)'}}>我已了解上述說明，同意上傳符合要求的圖片</span>
+                className="w-4 h-4 sm:w-5 sm:h-5 rounded" style={{borderColor: 'var(--border)'}}/>
+              <span className="text-xs sm:text-sm font-semibold" style={{color: 'var(--text)'}}>我已了解，同意上傳</span>
             </label>
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-col sm:flex-row">
               <button onClick={() => setShowPrivacyModal(false)}
-                className="flex-1 py-3 rounded-none font-bold text-sm border" style={{borderColor: 'var(--border)', color: 'var(--text-secondary)', background: 'var(--surface)'}}>返回修改暱稱</button>
+                className="flex-1 py-2 sm:py-3 rounded-none font-bold text-xs sm:text-sm border" style={{borderColor: 'var(--border)', color: 'var(--text-secondary)', background: 'var(--surface)'}}>返回</button>
               <button
                 onClick={() => { if (privacyAgreed) { setShowPrivacyModal(false); setUserMode('game'); } else alert("請勾選同意框才能繼續"); }}
                 disabled={!privacyAgreed}
-                className={`flex-1 !text-sm ${privacyAgreed ? 'clay-button' : 'py-3 rounded-none font-bold cursor-not-allowed'}`}
+                className={`flex-1 !text-xs sm:!text-sm ${privacyAgreed ? 'clay-button' : 'py-2 sm:py-3 rounded-none font-bold cursor-not-allowed'}`}
                 style={!privacyAgreed ? {background: 'var(--bg-200)', color: 'var(--text-muted)'} : undefined}>
-                ✅ 我已同意
+                ✅ 同意
               </button>
             </div>
           </div>
@@ -629,30 +623,30 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
 
       {/* ── 管理員模態 ── */}
       {showAdminMode && (
-        <div className="fixed inset-0 modal-overlay flex items-end sm:items-center justify-center z-50 p-0 sm:p-4">
-          <div className="modal-content w-full sm:max-w-sm p-6 rounded-t-3xl sm:rounded-3xl clay-shadow-lg" style={{borderColor: 'var(--warning-300)'}}>
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-bold" style={{color: 'var(--warning-700)'}}>⚙️ 管理員面板</h3>
+        <div className="fixed inset-0 modal-overlay flex items-end sm:items-center justify-center z-50 p-0 sm:p-3 md:p-4">
+          <div className="modal-content w-full sm:max-w-sm p-4 sm:p-6 rounded-t-2xl sm:rounded-none clay-shadow-lg" style={{borderColor: 'var(--warning-300)'}}>
+            <div className="flex justify-between items-center mb-3 sm:mb-4">
+              <h3 className="text-base sm:text-lg font-bold" style={{color: 'var(--warning-700)'}}>⚙️ 管理員面板</h3>
               <button onClick={() => { setShowAdminMode(false); setAdminPassword(""); }}
-                className="w-8 h-8 flex items-center justify-center rounded-full font-bold text-lg" style={{color: 'var(--warning-500)'}}>✕</button>
+                className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full font-bold text-lg" style={{color: 'var(--warning-500)'}}>✕</button>
             </div>
-            <div className="premium-card clay-shadow-sm p-3 mb-4 border-l-4" style={{borderLeftColor: 'var(--warning-500)'}}>
-              <p className="text-sm font-semibold" style={{color: 'var(--warning-700)'}}>⚠️ 此操作將清除<strong>所有用戶的遊戲進度</strong>，無法復原！</p>
+            <div className="premium-card clay-shadow-sm p-2.5 sm:p-3 mb-3 sm:mb-4 border-l-3 sm:border-l-4" style={{borderLeftColor: 'var(--warning-500)'}}>
+              <p className="text-xs sm:text-sm font-semibold" style={{color: 'var(--warning-700)'}}>⚠️ 將清除<strong>所有用戶</strong>遊戲進度</p>
             </div>
-            <input type="password" placeholder="請輸入管理員密碼" value={adminPassword}
-              onChange={e => setAdminPassword(e.target.value)} className="w-full clay-input mb-4 text-black font-bold border-2" style={{borderColor: 'var(--warning-200)'}}/>
+            <input type="password" placeholder="管理員密碼" value={adminPassword}
+              onChange={e => setAdminPassword(e.target.value)} className="w-full clay-input mb-3 sm:mb-4 text-black font-bold border-2" style={{borderColor: 'var(--warning-200)'}}/>
             <button
               type="button"
               onClick={openAdminRedeemPage}
-              className="w-full clay-button clay-button-yellow rounded-none mb-3"
+              className="w-full clay-button clay-button-yellow rounded-none mb-2 !text-xs sm:!text-sm"
             >
-              前往兌換管理頁
+              兌換管理
             </button>
             <div className="flex gap-2">
               <button onClick={() => { setShowAdminMode(false); setAdminPassword(""); }}
-                className="flex-1 py-3 rounded-none font-bold text-sm border" style={{borderColor: 'var(--border)', color: 'var(--text-secondary)', background: 'var(--surface)'}}>取消</button>
+                className="flex-1 py-2 sm:py-3 rounded-none font-bold text-xs sm:text-sm border" style={{borderColor: 'var(--border)', color: 'var(--text-secondary)', background: 'var(--surface)'}}>取消</button>
               <button onClick={handleClearAllData}
-                className="flex-1 py-3 rounded-none font-bold text-sm text-white" style={{background: 'var(--primary-red)'}}>🗑️ 清除數據</button>
+                className="flex-1 py-2 sm:py-3 rounded-none font-bold text-xs sm:text-sm text-white" style={{background: 'var(--primary-red)'}}>清除</button>
             </div>
           </div>
         </div>
