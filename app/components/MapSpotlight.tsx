@@ -29,8 +29,30 @@ const getCategoryColor = (category: StallCategory | StallCategory[]): string => 
     craft: "#A78BFA",
     food: "#EC4899",
     class: BAUHAUS_COLORS.blue,
+    student: BAUHAUS_COLORS.black,
+    other: BAUHAUS_COLORS.red,
   };
   return categoryColors[cat];
+};
+
+const getCategoryBadgeStyle = (category: StallCategory | StallCategory[]) => {
+  const cat = Array.isArray(category) ? category[0] : category;
+
+  if (cat === "student") {
+    return {
+      backgroundColor: BAUHAUS_COLORS.black,
+      borderColor: BAUHAUS_COLORS.yellow,
+      color: BAUHAUS_COLORS.yellow,
+    };
+  }
+
+  const backgroundColor = getCategoryColor(category);
+
+  return {
+    backgroundColor,
+    borderColor: BAUHAUS_COLORS.black,
+    color: backgroundColor === BAUHAUS_COLORS.yellow ? BAUHAUS_COLORS.black : BAUHAUS_COLORS.white,
+  };
 };
 
 const getCategoryLabel = (category: StallCategory | StallCategory[]): string => {
@@ -126,7 +148,7 @@ export function StallDetailPanel({
   spotlight: SpotlightState;
   onClose: () => void;
 }) {
-  const categoryColor = getCategoryColor(spotlight.stallCategory);
+  const categoryBadgeStyle = getCategoryBadgeStyle(spotlight.stallCategory);
   const categoryLabel = getCategoryLabel(spotlight.stallCategory);
 
   return (
@@ -212,16 +234,17 @@ export function StallDetailPanel({
         <div
           style={{
             display: "inline-block",
-            backgroundColor: categoryColor,
-            color: categoryColor === BAUHAUS_COLORS.yellow ? "#121212" : "#FFFFFF",
+            backgroundColor: categoryBadgeStyle.backgroundColor,
+            color: categoryBadgeStyle.color,
             padding: "0.5rem 1rem",
             fontSize: "12px",
             fontWeight: 700,
-            border: "2px solid #121212",
+            border: `2px solid ${categoryBadgeStyle.borderColor}`,
             borderRadius: 0,
             marginBottom: "1.25rem",
             fontFamily: "Outfit, sans-serif",
             letterSpacing: "0.05em",
+            boxShadow: `3px 3px 0 ${categoryBadgeStyle.borderColor}`,
           }}
         >
           {categoryLabel}

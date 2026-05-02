@@ -677,7 +677,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
               className="clay-button clay-button-blue rounded-none"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
-              ← 返回首頁
+              返回首頁
             </button>
           </div>
         )}
