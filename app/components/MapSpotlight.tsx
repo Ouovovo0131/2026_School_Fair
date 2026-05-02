@@ -259,42 +259,4 @@ export function StallDetailPanel({
   );
 }
 
-/**
- * 聚光燈模式的返回概覽按鈕
- */
-export function BackToOverviewButton({ onClick }: { onClick: () => void }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      style={{
-        position: "fixed",
-        top: "1.5rem",
-        left: "1.5rem",
-        zIndex: 95,
-        background: BAUHAUS_COLORS.red,
-        border: "3px solid #121212",
-        borderRadius: 0,
-        color: "#FFFFFF",
-        padding: "0.75rem 1.25rem",
-        fontSize: "14px",
-        fontWeight: 700,
-        cursor: "pointer",
-        fontFamily: "Outfit, sans-serif",
-        boxShadow: "4px 4px 0 rgba(0,0,0,0.2)",
-        transition: "all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)",
-        letterSpacing: "0.05em",
-      }}
-      onMouseEnter={(e) => {
-        (e.currentTarget as HTMLElement).style.transform = "translate(-2px, -2px)";
-        (e.currentTarget as HTMLElement).style.boxShadow = "6px 6px 0 rgba(0,0,0,0.3)";
-      }}
-      onMouseLeave={(e) => {
-        (e.currentTarget as HTMLElement).style.transform = "translate(0, 0)";
-        (e.currentTarget as HTMLElement).style.boxShadow = "4px 4px 0 rgba(0,0,0,0.2)";
-      }}
-    >
-      ← 返回概覽
-    </button>
-  );
-}
+

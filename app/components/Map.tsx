@@ -2,9 +2,10 @@
 
 import { ArrowLeft, Trash2, UtensilsCrossed } from "lucide-react";
 import { useEffect, useMemo, useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
 import { STALL_CATEGORIES, type StallCategory, type StallId, getStallInfo, getStallsByCategory } from "@/constants/stalls";
-import { StallDetailPanel, BackToOverviewButton, type SpotlightState } from "./MapSpotlight";
+import { StallDetailPanel, type SpotlightState } from "./MapSpotlight";
 
 interface MapProps {
   onBack?: () => void;
@@ -301,6 +302,7 @@ function SvgRectButton({ feature, selected, onActivate }: { feature: RectFeature
 }
 
 export default function Map({ onBack, isModal = false }: MapProps) {
+  const router = useRouter();
   const [modalState, setModalState] = useState<ModalState | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<StallCategory | "all">("all");
   const [spotlightState, setSpotlightState] = useState<SpotlightState | null>(null);
@@ -660,11 +662,32 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       style={!isModal ? { background: "var(--bg)" } : undefined}
     >
       <div className={isModal ? "w-full max-w-6xl bg-white bauhaus-frame" : "w-full"}>
-        {onBack && (
-          <div className={isModal ? "border-b p-4" : "mx-auto max-w-6xl px-4 pt-4"}>
+        {!isModal && (
+          <div className="mx-auto max-w-6xl px-4 pt-4 pb-2">
+            <button
+              type="button"
+              onClick={() => router.push('/')}
+              style={{
+                background: "none",
+                border: "none",
+                color: "#1040C0",
+                fontSize: "14px",
+                fontWeight: 600,
+                cursor: "pointer",
+                padding: 0,
+                textDecoration: "underline",
+                fontFamily: "Outfit, sans-serif",
+              }}
+            >
+              ← 返回首頁
+            </button>
+          </div>
+        )}
+        {onBack && isModal && (
+          <div className="border-b p-4">
             <button type="button" onClick={onBack} className="flex items-center gap-2 clay-button clay-button-blue !py-2 !px-3 !rounded-none">
               <ArrowLeft className="h-4 w-4" />
-              {isModal ? "關閉地圖" : "返回"}
+              關閉地圖
             </button>
           </div>
         )}
@@ -822,23 +845,15 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         </div>
       </div>
 
-      {/* 聚光燈模式 UI */}
+      {/* 聚光燈詳情面板 */}
       {spotlightState && (
-        <>
-          <BackToOverviewButton
-            onClick={() => {
-              setSpotlightState(null);
-              setSelectedCategory("all");
-            }}
-          />
-          <StallDetailPanel
-            spotlight={spotlightState}
-            onClose={() => {
-              setSpotlightState(null);
-              setSelectedCategory("all");
-            }}
-          />
-        </>
+        <StallDetailPanel
+          spotlight={spotlightState}
+          onClose={() => {
+            setSpotlightState(null);
+            setSelectedCategory("all");
+          }}
+        />
       )}
 
       {modalState && (
