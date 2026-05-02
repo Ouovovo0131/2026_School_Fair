@@ -3,7 +3,7 @@
 import { ArrowLeft, Trash2, UtensilsCrossed } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
-import { STALL_CATEGORIES, type StallCategory, generateStallInfo } from "@/constants/stalls";
+import { STALL_CATEGORIES, type StallCategory, type StallId, getStallInfo, getStallsByCategory } from "@/constants/stalls";
 
 interface MapProps {
   onBack?: () => void;
@@ -301,7 +301,7 @@ function SvgRectButton({ feature, selected, onActivate }: { feature: RectFeature
 
 export default function Map({ onBack, isModal = false }: MapProps) {
   const [modalState, setModalState] = useState<ModalState | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<StallCategory>("snack");
+  const [selectedCategory, setSelectedCategory] = useState<StallCategory | "all">("all");
 
   const stallFeatures = useMemo<RectFeature[]>(
     () => [
@@ -343,6 +343,8 @@ export default function Map({ onBack, isModal = false }: MapProps) {
     ],
     []
   );
+
+  const orderedStalls = useMemo(() => getStallsByCategory(selectedCategory), [selectedCategory]);
 
   const buildingFeatures = useMemo<RectFeature[]>(
     () => [
@@ -602,7 +604,12 @@ export default function Map({ onBack, isModal = false }: MapProps) {
   const selectedId = modalState?.id;
 
   const onStallClick = (feature: RectFeature) => {
-    setModalState({ id: feature.id, title: feature.label === "班" ? "班級服務台" : `攤位 ${feature.label}`, message: `[攤位名稱]販售：[販售內容]` });
+    const stall = getStallInfo(feature.id as StallId);
+    setModalState({
+      id: feature.id,
+      title: stall.displayName,
+      message: stall.content,
+    });
   };
 
   const onBuildingClick = (feature: RectFeature) => {
@@ -725,6 +732,17 @@ export default function Map({ onBack, isModal = false }: MapProps) {
             <div className="mt-6 sm:mt-8">
               {/* 分類標籤頁 */}
               <div className="mb-4 flex flex-wrap gap-2">
+                <button
+                  onClick={() => setSelectedCategory("all")}
+                  className={`py-2 px-3 sm:py-2.5 sm:px-4 text-xs sm:text-sm font-bold rounded-none transition-all ${
+                    selectedCategory === "all"
+                      ? "clay-button clay-button-red"
+                      : "border-2 border-slate-400 bg-white text-slate-700 hover:border-slate-600"
+                  }`}
+                  style={selectedCategory === "all" ? undefined : { borderColor: "var(--border)" }}
+                >
+                  全部
+                </button>
                 {Object.entries(STALL_CATEGORIES).map(([key, label]: [string, string]) => (
                   <button
                     key={key}
@@ -734,11 +752,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                         ? "clay-button clay-button-red"
                         : "border-2 border-slate-400 bg-white text-slate-700 hover:border-slate-600"
                     }`}
-                    style={
-                      selectedCategory === key
-                        ? undefined
-                        : { borderColor: "var(--border)" }
-                    }
+                    style={selectedCategory === key ? undefined : { borderColor: "var(--border)" }}
                   >
                     {label}
                   </button>
@@ -747,34 +761,31 @@ export default function Map({ onBack, isModal = false }: MapProps) {
 
               {/* 攤位卡片網格 */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                {stallFeatures.map((stall: RectFeature) => {
-                  const stallInfo = generateStallInfo(selectedCategory, stall.id);
-                  return (
-                    <div
-                      key={stall.id}
-                      className="p-3 sm:p-4 rounded-none transition-all hover:shadow-lg cursor-pointer"
-                      style={{
-                        border: "var(--border-width-md) solid var(--primary-blue)",
-                        backgroundColor: "#f8fafb",
-                        boxShadow: "4px 4px 0 rgba(0,0,0,0.1)",
-                      }}
-                      onClick={() =>
-                        setModalState({
-                          id: stall.id,
-                          title: stallInfo.name,
-                          message: stallInfo.content,
-                        })
-                      }
-                    >
-                      <h4 className="text-xs sm:text-sm font-bold text-slate-900 mb-1 line-clamp-2">
-                        {stall.label}. {stallInfo.name}
-                      </h4>
-                      <p className="text-xs sm:text-sm text-slate-600 line-clamp-2">
-                        {stallInfo.content}
-                      </p>
-                    </div>
-                  );
-                })}
+                {orderedStalls.map((stall) => (
+                  <div
+                    key={stall.id}
+                    className="p-3 sm:p-4 rounded-none transition-all hover:shadow-lg cursor-pointer"
+                    style={{
+                      border: "var(--border-width-md) solid var(--primary-blue)",
+                      backgroundColor: "#f8fafb",
+                      boxShadow: "4px 4px 0 rgba(0,0,0,0.1)",
+                    }}
+                    onClick={() =>
+                      setModalState({
+                        id: stall.id,
+                        title: stall.displayName,
+                        message: stall.content,
+                      })
+                    }
+                  >
+                    <h4 className="text-xs sm:text-sm font-bold text-slate-900 mb-1 line-clamp-2">
+                      {stall.displayName}
+                    </h4>
+                    <p className="text-xs sm:text-sm text-slate-600 line-clamp-2">
+                      {stall.content}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

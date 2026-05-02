@@ -1,21 +1,59 @@
-/**
- * 攤位分類、名稱和內容定義
- * 用於在地圖下方隨機生成攤位總覽
+﻿/**
+ * 攤位分類、排序與對照資料
+ * 提供類似 Python dict 的查詢方式
  */
 
 export const STALL_CATEGORIES = {
-  snack: "🍗 小吃",
-  beverage: "🥤 飲料",
-  game: "🎮 遊戲",
-  craft: "🎨 手作",
-  food: "🍜 美食",
-  class: "📚 班級",
-};
+  vip: "貴賓",
+  snack: "小吃",
+  beverage: "飲料",
+  game: "遊戲",
+  craft: "手作",
+  food: "美食",
+  class: "班級",
+} as const;
 
 export type StallCategory = keyof typeof STALL_CATEGORIES;
 
+export const STALL_ORDER = [
+  "貴A",
+  "貴B",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
+  "11",
+  "12",
+  "13",
+  "14",
+  "15",
+  "16",
+  "17",
+  "18",
+  "19",
+  "20",
+  "21",
+  "班",
+] as const;
+
+export type StallId = (typeof STALL_ORDER)[number];
+
+export interface StallInfo {
+  id: StallId;
+  displayName: string;
+  category: StallCategory;
+  content: string;
+}
+
 // 攤位隨機名稱
 const STALL_NAMES = {
+  vip: ["貴賓攤位 A", "貴賓攤位 B"],
   snack: [
     "香脆鹹酥雞",
     "日式炸物屋",
@@ -88,10 +126,14 @@ const STALL_NAMES = {
     "班級點心坊",
     "年度紀念品",
   ],
-};
+} as const;
 
 // 攤位隨機內容
 const STALL_CONTENTS = {
+  vip: [
+    "迎賓點心、精緻小蛋糕、限量試吃",
+    "精品咖啡、花茶、手作餅乾",
+  ],
   snack: [
     "香脆鹹酥雞、地瓜球、起司薯條",
     "日式炸蝦、炸章魚燒、炸豆皮",
@@ -145,7 +187,7 @@ const STALL_CONTENTS = {
     "火鍋湯底、各式丸類、新鮮蔬菜",
     "蛋炒飯、蝦仁炒飯、咖哩炒飯",
     "肉羹湯、魚羹湯、豬腳湯",
-    "古早味滷肉飯、 豆乾飯",
+    "古早味滷肉飯、豆乾飯",
     "咖哩雞飯、咖哩豬肉飯",
     "涼麵、麻醬涼麵、辣油涼麵",
     "湯麵、牛肉湯麵、蛤蠣湯麵",
@@ -164,35 +206,72 @@ const STALL_CONTENTS = {
     "班級募款商品、愛心便當",
     "班級紀念品、限量珍藏",
   ],
+} as const;
+
+export const STALL_DIRECTORY: Record<StallId, StallInfo> = {
+  貴A: { id: "貴A", displayName: "貴賓攤位 A", category: "vip", content: "迎賓點心、精緻小蛋糕、限量試吃" },
+  貴B: { id: "貴B", displayName: "貴賓攤位 B", category: "vip", content: "精品咖啡、花茶、手作餅乾" },
+  1: { id: "1", displayName: "1 號攤位", category: "snack", content: "鹹酥雞、地瓜球、脆薯" },
+  2: { id: "2", displayName: "2 號攤位", category: "beverage", content: "奶茶、冬瓜茶、檸檬紅茶" },
+  3: { id: "3", displayName: "3 號攤位", category: "game", content: "投球挑戰、射氣球、獎品抽抽樂" },
+  4: { id: "4", displayName: "4 號攤位", category: "craft", content: "串珠手環、黏土小物、彩繪鑰匙圈" },
+  5: { id: "5", displayName: "5 號攤位", category: "food", content: "雞排、炒麵、熱狗堡" },
+  6: { id: "6", displayName: "6 號攤位", category: "snack", content: "炸雞翅、薯條、起司球" },
+  7: { id: "7", displayName: "7 號攤位", category: "beverage", content: "氣泡飲、果汁、冰沙" },
+  8: { id: "8", displayName: "8 號攤位", category: "game", content: "套圈圈、夾娃娃體驗、闖關遊戲" },
+  9: { id: "9", displayName: "9 號攤位", category: "craft", content: "香氛蠟燭、手工皂、創意貼紙" },
+  10: { id: "10", displayName: "10 號攤位", category: "food", content: "炒飯、咖喱飯、湯麵" },
+  11: { id: "11", displayName: "11 號攤位", category: "snack", content: "章魚燒、雞蛋糕、地瓜條" },
+  12: { id: "12", displayName: "12 號攤位", category: "beverage", content: "紅茶、奶綠、鮮奶茶" },
+  13: { id: "13", displayName: "13 號攤位", category: "game", content: "桌遊挑戰、骰子遊戲、幸運轉盤" },
+  14: { id: "14", displayName: "14 號攤位", category: "craft", content: "木作小卡、吊飾、彩繪杯墊" },
+  15: { id: "15", displayName: "15 號攤位", category: "food", content: "滷肉飯、涼麵、關東煮" },
+  16: { id: "16", displayName: "16 號攤位", category: "snack", content: "炸物拼盤、甜不辣、薯球" },
+  17: { id: "17", displayName: "17 號攤位", category: "beverage", content: "檸檬水、奶昔、特調飲品" },
+  18: { id: "18", displayName: "18 號攤位", category: "game", content: "投籃機、飛鏢、幸運摸彩" },
+  19: { id: "19", displayName: "19 號攤位", category: "craft", content: "編織手環、明信片、壓花書籤" },
+  20: { id: "20", displayName: "20 號攤位", category: "food", content: "漢堡、飯糰、熱壓吐司" },
+  21: { id: "21", displayName: "21 號攤位", category: "class", content: "班級限定商品、紀念品、特色販售" },
+  班: { id: "班", displayName: "花蓮女中", category: "class", content: "學校主題商品、紀念小物、宣傳品" },
 };
 
-// 隨機生成函數
-const getRandomItem = <T,>(array: T[]): T => array[Math.floor(Math.random() * array.length)];
+export function getStallInfo(stallId: StallId): StallInfo {
+  return STALL_DIRECTORY[stallId];
+}
 
-/**
- * 根據分類隨機生成攤位資訊
- * @param category 攤位分類
- * @param stallId 攤位編號（用於種子生成相同的內容）
- */
+export function getOrderedStalls(): StallInfo[] {
+  return STALL_ORDER.map((stallId) => STALL_DIRECTORY[stallId]);
+}
+
+export function getStallsByCategory(category: StallCategory | "all"): StallInfo[] {
+  const stalls = getOrderedStalls();
+  if (category === "all") return stalls;
+  return stalls.filter((stall) => stall.category === category);
+}
+
+// 相容舊 API：保留名稱，但實際改為固定字典查詢
 export function generateStallInfo(
   category: StallCategory,
   stallId: string
 ) {
-  // 使用 stallId 作為種子讓同個攤位每次生成相同內容
+  const stall = STALL_DIRECTORY[stallId as StallId];
+  if (stall) {
+    return {
+      name: stall.displayName,
+      content: stall.content,
+      category: stall.category,
+    };
+  }
+
+  const names = STALL_NAMES[category];
+  const contents = STALL_CONTENTS[category];
   const seed = stallId
     .split("")
     .reduce((acc, char) => acc + char.charCodeAt(0), 0);
 
-  const names = STALL_NAMES[category];
-  const contents = STALL_CONTENTS[category];
-
-  // 簡單的確定性隨機選擇（基於 seed）
-  const nameIndex = seed % names.length;
-  const contentIndex = (seed * 7) % contents.length; // 用不同的乘數確保多樣性
-
   return {
-    name: names[nameIndex],
-    content: contents[contentIndex],
+    name: names[seed % names.length],
+    content: contents[(seed * 7) % contents.length],
     category,
   };
 }
@@ -213,13 +292,29 @@ export function filterStallsByCategory(
   stallIds: string[],
   category: StallCategory
 ): Array<{ id: string; name: string; content: string; category: StallCategory }> {
-  return stallIds.map((id) => {
-    const info = generateStallInfo(category, id);
-    return {
-      id,
-      name: info.name,
-      content: info.content,
-      category,
-    };
-  });
+  return stallIds
+    .map((id) => {
+      const info = STALL_DIRECTORY[id as StallId];
+      if (info && info.category === category) {
+        return {
+          id,
+          name: info.displayName,
+          content: info.content,
+          category: info.category,
+        };
+      }
+
+      if (!info) {
+        const fallback = generateStallInfo(category, id);
+        return {
+          id,
+          name: fallback.name,
+          content: fallback.content,
+          category: fallback.category,
+        };
+      }
+
+      return null;
+    })
+    .filter((stall): stall is { id: string; name: string; content: string; category: StallCategory } => stall !== null);
 }
