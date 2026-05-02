@@ -614,7 +614,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
     // 進入聚光燈模式
     setSpotlightState({
       stallId: feature.id as StallId,
-      stallName: stall.displayName,
+      stallName: `${stall.displayName}(${stall.id})`,
       stallContent: stall.content,
       stallCategory: stall.category,
       position: { x: feature.x, y: feature.y, w: feature.w, h: feature.h },
