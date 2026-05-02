@@ -4,7 +4,7 @@ import { ArrowLeft, Trash2, UtensilsCrossed } from "lucide-react";
 import { useEffect, useMemo, useState, useRef } from "react";
 import { createPortal } from "react-dom";
 import { STALL_CATEGORIES, type StallCategory, type StallId, getStallInfo, getStallsByCategory } from "@/constants/stalls";
-import { SpotlightOverlay, StallDetailPanel, BackToOverviewButton, type SpotlightState } from "./MapSpotlight";
+import { StallDetailPanel, BackToOverviewButton, type SpotlightState } from "./MapSpotlight";
 
 interface MapProps {
   onBack?: () => void;
@@ -304,7 +304,6 @@ export default function Map({ onBack, isModal = false }: MapProps) {
   const [modalState, setModalState] = useState<ModalState | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<StallCategory | "all">("all");
   const [spotlightState, setSpotlightState] = useState<SpotlightState | null>(null);
-  const svgRef = useRef<SVGSVGElement | null>(null);
   const svgContainerRef = useRef<HTMLDivElement | null>(null);
 
   const stallFeatures = useMemo<RectFeature[]>(
@@ -675,7 +674,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
 
           <div className="bg-white p-2 sm:p-4" style={{ border: "4px solid #111111", borderRadius: "1rem", boxShadow: "6px 6px 0 #111111" }}>
             <div className="relative mx-auto w-full max-w-[1100px]" ref={svgContainerRef} style={{ position: "relative" }}>
-              <svg ref={svgRef} viewBox="180 0 950 760" role="img" aria-label="園遊會互動地圖" className="h-auto w-full" style={{ background: COLORS.mapBg, borderRadius: 12, touchAction: "manipulation" }}>
+              <svg viewBox="180 0 950 760" role="img" aria-label="園遊會互動地圖" className="h-auto w-full" style={{ background: COLORS.mapBg, borderRadius: 12, touchAction: "manipulation" }}>
                 <rect x={180} y={0} width={950} height={760} fill={COLORS.mapBg} />
 
                 {otherFeatures.filter((feature) => feature.type === "zone").map((feature) => (
@@ -755,16 +754,6 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                 </text>
                 <path d="M1068 720 L1052 748 L1068 740 L1084 748 Z" fill="none" stroke={COLORS.text} strokeWidth={2.2} />
                 <line x1={1068} y1={742} x2={1068} y2={767} stroke={COLORS.text} strokeWidth={2.2} />
-
-                {/* 聚光燈層 - 在模式激活時顯示 */}
-                {spotlightState && svgRef.current && (
-                  <SpotlightOverlay
-                    spotlight={spotlightState}
-                    svgWidth={svgRef.current.clientWidth}
-                    svgHeight={svgRef.current.clientHeight}
-                    viewBoxOffset={180}
-                  />
-                )}
               </svg>
             </div>
 
