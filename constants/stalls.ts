@@ -52,7 +52,7 @@ export type StallId = (typeof STALL_ORDER)[number];
 export interface StallInfo {
   id: StallId;
   displayName: string;
-  category: StallCategory;
+  category: StallCategory | StallCategory[];
   content: string;
 }
 
@@ -216,9 +216,9 @@ const STALL_CONTENTS = {
 export const STALL_DIRECTORY: Record<StallId, StallInfo> = {
   貴A: { id: "貴A", displayName: "貴賓攤位 A", category: "vip", content: "迎賓點心、精緻小蛋糕、限量試吃" },
   貴B: { id: "貴B", displayName: "貴賓攤位 B", category: "vip", content: "精品咖啡、花茶、手作餅乾" },
-  1: { id: "1", displayName: "1 號攤位", category: "snack", content: "鹹酥雞、地瓜球、脆薯" },
-  2: { id: "2", displayName: "2 號攤位", category: "beverage", content: "奶茶、冬瓜茶、檸檬紅茶" },
-  3: { id: "3", displayName: "3 號攤位", category: "game", content: "投球挑戰、射氣球、獎品抽抽樂" },
+  1: { id: "1", displayName: "1 號攤位", category: ["snack", "beverage"], content: "鹹酥雞、地瓜球、脆薯 & 奶茶、冬瓜茶、檸檬紅茶" },
+  2: { id: "2", displayName: "2 號攤位", category: ["beverage", "game"], content: "奶茶、冬瓜茶、檸檬紅茶 & 投球挑戰、射氣球、獎品抽抽樂" },
+  3: { id: "3", displayName: "3 號攤位", category: ["game", "snack"], content: "投球挑戰、射氣球、獎品抽抽樂 & 鹹酥雞、地瓜球、脆薯" },
   4: { id: "4", displayName: "4 號攤位", category: "craft", content: "串珠手環、黏土小物、彩繪鑰匙圈" },
   5: { id: "5", displayName: "5 號攤位", category: "food", content: "雞排、炒麵、熱狗堡" },
   6: { id: "6", displayName: "6 號攤位", category: "snack", content: "炸雞翅、薯條、起司球" },
@@ -254,7 +254,12 @@ export function getOrderedStalls(): StallInfo[] {
 export function getStallsByCategory(category: StallCategory | "all"): StallInfo[] {
   const stalls = getOrderedStalls();
   if (category === "all") return stalls;
-  return stalls.filter((stall) => stall.category === category);
+  return stalls.filter((stall) => {
+    if (Array.isArray(stall.category)) {
+      return stall.category.includes(category);
+    }
+    return stall.category === category;
+  });
 }
 
 // 相容舊 API：保留名稱，但實際改為固定字典查詢
@@ -264,10 +269,11 @@ export function generateStallInfo(
 ) {
   const stall = STALL_DIRECTORY[stallId as StallId];
   if (stall) {
+    const primaryCategory = Array.isArray(stall.category) ? stall.category[0] : stall.category;
     return {
       name: stall.displayName,
       content: stall.content,
-      category: stall.category,
+      category: primaryCategory,
     };
   }
 
@@ -303,13 +309,20 @@ export function filterStallsByCategory(
   return stallIds
     .map((id) => {
       const info = STALL_DIRECTORY[id as StallId];
-      if (info && info.category === category) {
-        return {
-          id,
-          name: info.displayName,
-          content: info.content,
-          category: info.category,
-        };
+      if (info) {
+        const hasCategory = Array.isArray(info.category)
+          ? info.category.includes(category)
+          : info.category === category;
+
+        if (hasCategory) {
+          const primaryCategory = Array.isArray(info.category) ? info.category[0] : info.category;
+          return {
+            id,
+            name: info.displayName,
+            content: info.content,
+            category: primaryCategory,
+          };
+        }
       }
 
       if (!info) {
