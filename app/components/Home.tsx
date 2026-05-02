@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
 import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 import { doc, getDoc, setDoc, updateDoc, collection, getDocs, deleteDoc } from "firebase/firestore";
-import { LogOut, Settings, Lock, ChevronRight, CalendarDays, Clock3, ArrowLeft } from "lucide-react";
+import { LogOut, Lock, ChevronRight, CalendarDays, Clock3, ArrowLeft } from "lucide-react";
 import { THEME_NAMES } from "./tasks";
 import { QUESTS } from "../../constants/quests";
 import MapComponent from "./Map";
@@ -63,8 +63,6 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
   const [loading, setLoading] = useState(true);
   const [showIntro, setShowIntro] = useState(false);
   const [isStudent, setIsStudent] = useState(false);
-  const [showAdminMode, setShowAdminMode] = useState(false);
-  const [adminPassword, setAdminPassword] = useState("");
   const [showNicknameModal, setShowNicknameModal] = useState(false);
   const [nickname, setNickname] = useState("");
   const [showPrivacyModal, setShowPrivacyModal] = useState(false);
@@ -153,22 +151,6 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
     } catch { alert("❌ 保存失敗，請重試"); }
   };
 
-  const handleClearAllData = async () => {
-    const correctPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || "ADMIN2025";
-    if (adminPassword !== correctPassword) { alert("❌ 密碼錯誤"); return; }
-    if (!window.confirm("⚠️ 確定要清除所有用戶的遊戲進度？此操作無法復原！")) return;
-    try {
-      const snapshot = await getDocs(collection(db, "users"));
-      for (const d of snapshot.docs) await deleteDoc(doc(db, "users", d.id));
-      localStorage.removeItem("unlockedTasks");
-      localStorage.removeItem("adminAccessGranted");
-      persistUnlockedTasks([]);
-      alert("✅ 所有用戶數據已清除");
-      setAdminPassword(""); setShowAdminMode(false);
-      window.location.reload();
-    } catch { alert("❌ 清除失敗，請重試"); }
-  };
-
   if (loading) return (
     <div className="min-h-screen flex items-center justify-center" style={{background: 'var(--bg)'}}>
       <span className="text-base font-semibold" style={{color: 'var(--primary)'}}>載入中…</span>
@@ -211,7 +193,6 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
     if (typeof window !== "undefined") {
       window.localStorage.setItem("adminAccessGranted", "1");
     }
-    setShowAdminMode(false);
     router.push("/admin/redeem");
   };
   const isMapMode = userMode === 'map' || userMode === 'game-map';
@@ -242,16 +223,15 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                 <span className="hidden sm:inline">地圖</span>
               </button>
             )}
+            {user && user.email === "cheiling0131@gmail.com" && (
+              <button onClick={openAdminRedeemPage}
+                className="clay-button clay-button-yellow flex items-center gap-0.5 !py-1.5 sm:!py-2 !px-2 sm:!px-3 !text-xs sm:!text-sm !rounded-none">
+                🏆 <span className="hidden sm:inline">兌換</span>
+              </button>
+            )}
             {!user && (
               <button onClick={handleLogin} className="clay-button !py-1.5 sm:!py-2 !px-2 sm:!px-3 !text-xs sm:!text-sm !rounded-none">
                 🔐 <span className="hidden sm:inline">登入</span>
-              </button>
-            )}
-            {user && (
-              <button onClick={() => setShowAdminMode(!showAdminMode)}
-                className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-full transition-all hover:bg-white/10"
-                style={{color: 'var(--bg-100)', background: 'transparent'}}>
-                <Settings size={18}/>
               </button>
             )}
             {user && (
@@ -621,36 +601,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
         </div>
       )}
 
-      {/* ── 管理員模態 ── */}
-      {showAdminMode && (
-        <div className="fixed inset-0 modal-overlay flex items-end sm:items-center justify-center z-50 p-0 sm:p-3 md:p-4">
-          <div className="modal-content w-full sm:max-w-sm p-4 sm:p-6 rounded-t-2xl sm:rounded-none clay-shadow-lg" style={{borderColor: 'var(--warning-300)'}}>
-            <div className="flex justify-between items-center mb-3 sm:mb-4">
-              <h3 className="text-base sm:text-lg font-bold" style={{color: 'var(--warning-700)'}}>⚙️ 管理員面板</h3>
-              <button onClick={() => { setShowAdminMode(false); setAdminPassword(""); }}
-                className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full font-bold text-lg" style={{color: 'var(--warning-500)'}}>✕</button>
-            </div>
-            <div className="premium-card clay-shadow-sm p-2.5 sm:p-3 mb-3 sm:mb-4 border-l-3 sm:border-l-4" style={{borderLeftColor: 'var(--warning-500)'}}>
-              <p className="text-xs sm:text-sm font-semibold" style={{color: 'var(--warning-700)'}}>⚠️ 將清除<strong>所有用戶</strong>遊戲進度</p>
-            </div>
-            <input type="password" placeholder="管理員密碼" value={adminPassword}
-              onChange={e => setAdminPassword(e.target.value)} className="w-full clay-input mb-3 sm:mb-4 text-black font-bold border-2" style={{borderColor: 'var(--warning-200)'}}/>
-            <button
-              type="button"
-              onClick={openAdminRedeemPage}
-              className="w-full clay-button clay-button-yellow rounded-none mb-2 !text-xs sm:!text-sm"
-            >
-              兌換管理
-            </button>
-            <div className="flex gap-2">
-              <button onClick={() => { setShowAdminMode(false); setAdminPassword(""); }}
-                className="flex-1 py-2 sm:py-3 rounded-none font-bold text-xs sm:text-sm border" style={{borderColor: 'var(--border)', color: 'var(--text-secondary)', background: 'var(--surface)'}}>取消</button>
-              <button onClick={handleClearAllData}
-                className="flex-1 py-2 sm:py-3 rounded-none font-bold text-xs sm:text-sm text-white" style={{background: 'var(--primary-red)'}}>清除</button>
-            </div>
-          </div>
-        </div>
-      )}
+
     </div>
   );
 }
