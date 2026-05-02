@@ -146,7 +146,7 @@ export default function AdminRedeemPage() {
     if (typeof window !== "undefined") {
       window.localStorage.removeItem(ADMIN_ACCESS_KEY);
     }
-    router.push("/");
+    router.replace("/");
   };
 
   const loadPlayer = async () => {
@@ -318,7 +318,7 @@ export default function AdminRedeemPage() {
           </p>
           <button
             type="button"
-            onClick={() => router.push("/")}
+            onClick={() => router.replace("/")}
             className="clay-button clay-button-blue rounded-none"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
@@ -344,7 +344,7 @@ export default function AdminRedeemPage() {
             <div className="flex flex-wrap gap-2">
               <button
                 type="button"
-                onClick={() => router.push("/")}
+                onClick={() => router.replace("/")}
                 className="clay-button clay-button-blue rounded-none"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />

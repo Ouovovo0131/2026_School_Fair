@@ -672,20 +672,11 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   return;
                 }
 
-                router.push('/');
+                router.replace('/');
               }}
-              style={{
-                background: "none",
-                border: "none",
-                color: "#1040C0",
-                fontSize: "14px",
-                fontWeight: 600,
-                cursor: "pointer",
-                padding: 0,
-                textDecoration: "underline",
-                fontFamily: "Outfit, sans-serif",
-              }}
+              className="clay-button clay-button-blue rounded-none"
             >
+              <ArrowLeft className="mr-2 h-4 w-4" />
               ← 返回首頁
             </button>
           </div>
