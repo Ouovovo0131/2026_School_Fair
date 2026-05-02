@@ -39,6 +39,11 @@ export const STALL_ORDER = [
   "19",
   "20",
   "21",
+  "flower-girl-left-1",
+  "flower-girl-left-2",
+  "flower-girl-1",
+  "flower-girl-2",
+  "flower-girl-3",
   "班",
 ] as const;
 
@@ -231,8 +236,11 @@ export const STALL_DIRECTORY: Record<StallId, StallInfo> = {
   18: { id: "18", displayName: "18 號攤位", category: "game", content: "投籃機、飛鏢、幸運摸彩" },
   19: { id: "19", displayName: "19 號攤位", category: "craft", content: "編織手環、明信片、壓花書籤" },
   20: { id: "20", displayName: "20 號攤位", category: "food", content: "漢堡、飯糰、熱壓吐司" },
-  21: { id: "21", displayName: "21 號攤位", category: "class", content: "班級限定商品、紀念品、特色販售" },
-  班: { id: "班", displayName: "花蓮女中", category: "class", content: "學校主題商品、紀念小物、宣傳品" },
+  21: { id: "21", displayName: "21 號攤位", category: "class", content: "班級限定商品、紀念品、特色販售" },  "flower-girl-left-1": { id: "flower-girl-left-1", displayName: "花蓮女中左 1", category: "class", content: "女中特色商品、服裝展示、宣傳品" },
+  "flower-girl-left-2": { id: "flower-girl-left-2", displayName: "花蓮女中左 2", category: "class", content: "女中紀念品、手工藝品、限量周邊" },
+  "flower-girl-1": { id: "flower-girl-1", displayName: "花蓮女中 1", category: "class", content: "女中點心、手作美食、特色小食" },
+  "flower-girl-2": { id: "flower-girl-2", displayName: "花蓮女中 2", category: "class", content: "女中飲品、冰品、涼飲展售" },
+  "flower-girl-3": { id: "flower-girl-3", displayName: "花蓮女中 3", category: "class", content: "女中遊戲區、互動活動、獎品抽獎" },  班: { id: "班", displayName: "花蓮高中班聯會", category: "class", content: "學校主題商品、紀念小物、宣傳品" },
 };
 
 export function getStallInfo(stallId: StallId): StallInfo {
