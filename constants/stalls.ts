@@ -76,7 +76,7 @@ export const STALL_DIRECTORY: Record<StallId, StallInfo> = {
   16:  { id: "16",  displayName: "無塑啃TA雞", category: ["snack", "beverage", "game"], content: "印尼炒泡麵、熱狗 & 飲料 & 抽抽樂" },
   17:  { id: "17",  displayName: "福成大奶罐", category: ["snack", "beverage", "game", "other"], content: "玉里麵 & 紅茶、奶茶 & 空手接白刃、拉霸機(人力) & 免洗竹製餐具" },
   18:  { id: "18",  displayName: "「包」在我身上", category: ["snack", "beverage", "game"], content: "香腸 & 檸檬茶、紅茶 & 包你發老虎機" },
-  19:  { id: "19",  displayName: "樹速塑澍pernovaova", category: ["snack", "beverage", "other"], content: "巴斯克蛋糕、炒泡麵 & 飲料 & 男僕、吉祥物" },
+  19:  { id: "19",  displayName: "樹速塑澍pernova", category: ["snack", "beverage", "other"], content: "巴斯克蛋糕、炒泡麵 & 飲料 & 男僕、吉祥物" },
 20:  { id: "20",  displayName: "仁心遠揚 來呷煙腸", category: ["snack", "beverage", "game"], content: "大腸包小腸、糯米腸、香腸、小黃瓜 & 紅茶、奶茶、可樂 & 猜拳、套圈圈、推桿、乒乓球投杯" },
   21:  { id: "21",  displayName: "貳零塑在必行", category: ["snack", "beverage", "other"], content: "炸物 & 冰飲 & 贖罪卷" },
   "flower-girl-left-1": { id: "flower-girl-left-1", displayName: "花蓮女中 1", category: "student", content: "女中特色商品、服裝展示、宣傳品" },

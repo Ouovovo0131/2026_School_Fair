@@ -666,7 +666,14 @@ export default function Map({ onBack, isModal = false }: MapProps) {
           <div className="mx-auto max-w-6xl px-4 pt-4 pb-2">
             <button
               type="button"
-              onClick={() => router.push('/')}
+              onClick={() => {
+                if (onBack) {
+                  onBack();
+                  return;
+                }
+
+                router.push('/');
+              }}
               style={{
                 background: "none",
                 border: "none",
