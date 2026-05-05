@@ -204,7 +204,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
         <div className="fixed inset-0 z-[90] flex items-center justify-center bg-[rgba(252,242,204,0.92)] backdrop-blur-sm animate-[intro-overlay_1.6s_ease]">
           <div className="premium-card flex flex-col items-center gap-3 px-6 py-5 text-center animate-[intro-pop_1.6s_ease]">
             <div className="text-5xl">
-              <img src="/party-ornament.png" alt="帳篷" className="h-12 w-12 object-contain" style={{filter: 'invert(1) brightness(2)', WebkitFilter: 'invert(1) brightness(2)'}} />
+              <img src="/party-ornament.png" alt="帳篷" className="h-16 w-16 sm:h-20 sm:w-20 object-contain" style={{filter: 'invert(1) brightness(2)', WebkitFilter: 'invert(1) brightness(2)'}} />
             </div>
             <div>
               <p className="text-xs font-black tracking-[0.3em]" style={{ color: 'var(--primary)' }}>2026</p>
@@ -218,7 +218,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
       <header className="sticky-header">
         <div className="flex items-center justify-between px-3 sm:px-4 md:px-6 h-14 sm:h-16 max-w-6xl mx-auto gap-2">
           <h1 className="text-sm sm:text-base md:text-lg lg:text-xl font-black truncate tracking-tight" style={{color: 'var(--bg-100)', maxWidth: '60%'}}>
-            <img src="/party-ornament.png" alt="帳篷" className="inline-block h-4 w-4 sm:h-5 sm:w-5 object-contain mr-2" style={{filter: 'invert(1) brightness(2)', WebkitFilter: 'invert(1) brightness(2)'}} />
+            <img src="/party-ornament.png" alt="帳篷" className="inline-block h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 lg:h-8 lg:w-8 object-contain mr-2" style={{filter: 'invert(1) brightness(2)', WebkitFilter: 'invert(1) brightness(2)'}} />
             拾光地圖
           </h1>
           <div className="flex items-center gap-1 sm:gap-2 shrink-0">
@@ -238,7 +238,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
             )}
             {!user && (
               <button onClick={handleLogin} className="clay-button !py-1.5 sm:!py-2 !px-2 sm:!px-3 !text-xs sm:!text-sm !rounded-none">
-                🔐 <span className="hidden sm:inline">登入</span>
+                🔒 <span className="hidden sm:inline">登入</span>
               </button>
             )}
             {user && (
@@ -368,7 +368,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                   onClick={handleLogin}
                   className="flex items-center gap-1 sm:gap-2 clay-button !py-1.5 sm:!py-2 !px-2 sm:!px-3 !text-xs sm:!text-sm !rounded-none"
                 >
-                  🔐 <span className="hidden sm:inline">登入</span>
+                  🔒 <span className="hidden sm:inline">登入</span>
                 </button>
               )}
             </div>
@@ -412,7 +412,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                   onClick={handleLogin}
                   className="flex items-center gap-1 sm:gap-2 clay-button !py-1.5 sm:!py-2 !px-2 sm:!px-3 !text-xs sm:!text-sm !rounded-none"
                 >
-                  🔐 <span className="hidden sm:inline">登入</span>
+                  🔒 <span className="hidden sm:inline">登入</span>
                 </button>
               )}
             </div>
@@ -525,7 +525,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                   if (!quest) return null;
 
                   if (isCompleted) return (
-                    <ComicCard key={questId} className="quest-card-shell quest-card-completed" highlighted={questId === 4}>
+                    <ComicCard key={questId} className="quest-card-shell quest-card-completed">
                       <NumberBadge value={questId} />
                       <img src="/complete.png" alt="完成" className="h-6 w-6 sm:h-8 sm:w-8 inline-block" style={{animation: 'bounce-pop 0.6s ease'}} />
                       <span className="text-[10px] sm:text-[11px] font-bold" style={{color: 'var(--primary-700)'}}>
@@ -536,7 +536,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
 
                   return (
                     <a key={questId} href={`/scan/${quest.slug}`} className="quest-card-link">
-                      <ComicCard className="quest-card-shell" highlighted={questId === 4}>
+                      <ComicCard className="quest-card-shell">
                         <NumberBadge value={questId} />
                         <p className="text-base sm:text-lg font-black text-[var(--primary-700)] leading-none">
                           GO

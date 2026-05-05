@@ -221,7 +221,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                     onClick={handleLogin}
                     className="btn-cta-large w-full"
                   >
-                    🔐 使用 Google 登入
+                      🔒 使用 Google 登入
                   </button>
                   <button
                     onClick={() => setUserMode('map')}
@@ -395,7 +395,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                   if (!quest) return null;
 
                   if (isCompleted) return (
-                    <ComicCard key={questId} className="quest-card-shell quest-card-completed" highlighted={questId === 4}>
+                    <ComicCard key={questId} className="quest-card-shell quest-card-completed">
                       <NumberBadge value={questId} />
                       <img src="/complete.png" alt="已完成" className="h-8 w-8 inline-block" style={{animation: 'bounce-pop 0.6s ease'}} />
                       <span className="text-[11px] font-bold" style={{color: 'var(--primary-700)'}}>
@@ -406,7 +406,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
 
                   return (
                     <a key={questId} href={`/scan/${quest.slug}`} className="quest-card-link">
-                      <ComicCard className="quest-card-shell" highlighted={questId === 4}>
+                      <ComicCard className="quest-card-shell">
                         <NumberBadge value={questId} />
                         <p className="text-lg font-black text-[var(--primary-700)] leading-none">
                           GO
