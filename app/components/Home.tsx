@@ -204,7 +204,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
         <div className="fixed inset-0 z-[90] flex items-center justify-center bg-[rgba(252,242,204,0.92)] backdrop-blur-sm animate-[intro-overlay_1.6s_ease]">
           <div className="premium-card flex flex-col items-center gap-3 px-6 py-5 text-center animate-[intro-pop_1.6s_ease]">
             <div className="text-5xl">
-              <img src="/party-ornament.png" alt="帳篷" className="h-12 w-12 object-contain" />
+              <img src="/party-ornament.png" alt="帳篷" className="h-12 w-12 object-contain" style={{filter: 'invert(1) brightness(2)', WebkitFilter: 'invert(1) brightness(2)'}} />
             </div>
             <div>
               <p className="text-xs font-black tracking-[0.3em]" style={{ color: 'var(--primary)' }}>2026</p>
@@ -218,7 +218,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
       <header className="sticky-header">
         <div className="flex items-center justify-between px-3 sm:px-4 md:px-6 h-14 sm:h-16 max-w-6xl mx-auto gap-2">
           <h1 className="text-sm sm:text-base md:text-lg lg:text-xl font-black truncate tracking-tight" style={{color: 'var(--bg-100)', maxWidth: '60%'}}>
-            <img src="/party-ornament.png" alt="帳篷" className="inline-block h-4 w-4 sm:h-5 sm:w-5 object-contain mr-2" />
+            <img src="/party-ornament.png" alt="帳篷" className="inline-block h-4 w-4 sm:h-5 sm:w-5 object-contain mr-2" style={{filter: 'invert(1) brightness(2)', WebkitFilter: 'invert(1) brightness(2)'}} />
             拾光地圖
           </h1>
           <div className="flex items-center gap-1 sm:gap-2 shrink-0">
