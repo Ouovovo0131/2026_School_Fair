@@ -397,7 +397,7 @@ export default function Home({ unlockedTasks = [] }: HomeProps) {
                   if (isCompleted) return (
                     <ComicCard key={questId} className="quest-card-shell quest-card-completed" highlighted={questId === 4}>
                       <NumberBadge value={questId} />
-                      <span className="text-2xl" style={{animation: 'bounce-pop 0.6s ease'}}>✓</span>
+                      <img src="/complete.png" alt="已完成" className="h-8 w-8 inline-block" style={{animation: 'bounce-pop 0.6s ease'}} />
                       <span className="text-[11px] font-bold" style={{color: 'var(--primary-700)'}}>
                         已完成
                       </span>

@@ -260,9 +260,9 @@ export default function AdminRedeemPage() {
         {
           id: `local-${Date.now()}`,
           adminName: trimmedAdminName,
-          adminEmail: user.email,
+          adminEmail: user.email || '',
           playerEmail: normalizedPlayerEmail,
-          playerName,
+          playerName: playerName || normalizedPlayerEmail,
           rewardLevel: reward.level,
           rewardLabel: reward.label,
           alreadyRedeemed,
