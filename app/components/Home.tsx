@@ -227,7 +227,8 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
             {user && isAdminEmail(user.email) && (
               <button onClick={openAdminRedeemPage}
                 className="clay-button clay-button-yellow flex items-center gap-0.5 !py-1.5 sm:!py-2 !px-2 sm:!px-3 !text-xs sm:!text-sm !rounded-none">
-                🏆 <span className="hidden sm:inline">兌換</span>
+                <img src="/change.png" alt="兌換" aria-hidden="true" className="h-3.5 sm:h-4 w-3.5 sm:w-4 object-contain" />
+                <span className="hidden sm:inline">兌換</span>
               </button>
             )}
             {!user && (
@@ -312,8 +313,8 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
               {[
                 { icon: '/game.png', label: '20 關任務', desc: '挑戰完成', isImage: true },
-                { icon: '🏆', label: '分級獎品', desc: '等你領取' },
-                { icon: '📸', label: '相機上傳', desc: '留下回憶' }
+                { icon: '/medal.png', label: '分級獎品', desc: '等你領取', isImage: true },
+                { icon: '/camera.png', label: '相機上傳', desc: '留下回憶', isImage: true }
               ].map((item, idx) => (
                   <div
                     key={idx}
@@ -322,7 +323,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                   >
                   <div className="text-2xl sm:text-3xl mb-1 flex justify-center">
                     {item.isImage ? (
-                      <GamepadIcon className="h-6 w-6 sm:h-8 sm:w-8" />
+                      <img src={item.icon} alt={item.label} aria-hidden className="h-6 w-6 sm:h-8 sm:w-8 object-contain" />
                     ) : (
                       item.icon
                     )}
@@ -474,7 +475,10 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                 style={{background: completed.length >= BIG_REWARD_THRESHOLD && !redeemedRewards.includes(BIG_REWARD_THRESHOLD)
                   ? 'var(--primary-red)' : '#ffffff', color: completed.length >= BIG_REWARD_THRESHOLD && !redeemedRewards.includes(BIG_REWARD_THRESHOLD) ? '#ffffff' : 'inherit'}}>
                 <div className="flex items-center justify-between">
-                  <span className="text-xs sm:text-sm font-bold" style={{color: 'var(--text)'}}>🏆 大獎</span>
+                  <span className="text-xs sm:text-sm font-bold" style={{color: 'var(--text)'}}>
+                    <img src="/medal.png" alt="大獎" aria-hidden className="inline-block h-3.5 w-3.5 sm:h-4 sm:w-4 object-contain mr-1" />
+                    大獎
+                  </span>
                   <span className="text-xs font-bold px-1.5 sm:px-2 py-0.5 rounded-full"
                     style={{background: 'var(--secondary)', color: 'white', whiteSpace: 'nowrap', fontSize: '0.65rem'}}>
                     {completed.length}/{BIG_REWARD_THRESHOLD}
