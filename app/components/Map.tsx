@@ -260,7 +260,20 @@ function FeatureText({ feature }: { feature: RectFeature }) {
   );
 }
 
-function SvgRectButton({ feature, selected, onActivate }: { feature: RectFeature; selected: boolean; onActivate: () => void }) {
+function SvgRectButton({
+  feature,
+  selected,
+  highlighted = false,
+  onActivate,
+}: {
+  feature: RectFeature;
+  selected: boolean;
+  highlighted?: boolean;
+  onActivate: () => void;
+}) {
+  const stroke = highlighted ? "#D02020" : COLORS.stroke;
+  const strokeWidth = highlighted ? 4.6 : selected ? 3 : 1.2;
+
   return (
     <a
       id={feature.domId}
@@ -288,8 +301,8 @@ function SvgRectButton({ feature, selected, onActivate }: { feature: RectFeature
           height={feature.h}
           rx={feature.rounded ?? (feature.type === "stall" ? 10 : 8)}
           fill={feature.fill}
-          stroke={COLORS.stroke}
-          strokeWidth={selected ? 3 : 1.2}
+          stroke={stroke}
+          strokeWidth={strokeWidth}
         />
       )}
       {feature.iconSrc ? (
@@ -755,7 +768,13 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                 </text>
 
                 {stallFeatures.map((feature) => (
-                  <SvgRectButton key={feature.id} feature={feature} selected={selectedId === feature.id} onActivate={() => onStallClick(feature)} />
+                  <SvgRectButton
+                    key={feature.id}
+                    feature={feature}
+                    selected={selectedId === feature.id}
+                    highlighted={spotlightState?.stallId === feature.id}
+                    onActivate={() => onStallClick(feature)}
+                  />
                 ))}
 
                 <foreignObject x={832} y={566} width={44} height={44}>
