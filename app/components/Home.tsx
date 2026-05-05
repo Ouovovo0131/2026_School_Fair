@@ -200,10 +200,12 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
 
   return (
     <div className="min-h-screen" style={{background: 'var(--bg)'}}>
-      {showIntro && (
+            {showIntro && (
         <div className="fixed inset-0 z-[90] flex items-center justify-center bg-[rgba(252,242,204,0.92)] backdrop-blur-sm animate-[intro-overlay_1.6s_ease]">
           <div className="premium-card flex flex-col items-center gap-3 px-6 py-5 text-center animate-[intro-pop_1.6s_ease]">
-            <div className="text-5xl">🎪</div>
+            <div className="text-5xl">
+              <img src="/party-ornament.png" alt="帳篷" className="h-12 w-12 object-contain" />
+            </div>
             <div>
               <p className="text-xs font-black tracking-[0.3em]" style={{ color: 'var(--primary)' }}>2026</p>
               <h2 className="text-2xl font-black" style={{ color: 'var(--text)' }}>拾光地圖:重返1936</h2>
@@ -215,7 +217,10 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
       {/* ── 導航列 ── */}
       <header className="sticky-header">
         <div className="flex items-center justify-between px-3 sm:px-4 md:px-6 h-14 sm:h-16 max-w-6xl mx-auto gap-2">
-          <h1 className="text-sm sm:text-base md:text-lg lg:text-xl font-black truncate tracking-tight" style={{color: 'var(--bg-100)', maxWidth: '60%'}}>🎪 拾光地圖</h1>
+          <h1 className="text-sm sm:text-base md:text-lg lg:text-xl font-black truncate tracking-tight" style={{color: 'var(--bg-100)', maxWidth: '60%'}}>
+            <img src="/party-ornament.png" alt="帳篷" className="inline-block h-4 w-4 sm:h-5 sm:w-5 object-contain mr-2" />
+            拾光地圖
+          </h1>
           <div className="flex items-center gap-1 sm:gap-2 shrink-0">
             {(userMode === 'game' || !user) && (
               <button onClick={() => setUserMode(user ? 'game-map' : 'map')}
@@ -456,7 +461,10 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                 style={{background: completed.length >= SMALL_REWARD_THRESHOLD && !redeemedRewards.includes(SMALL_REWARD_THRESHOLD)
                   ? 'var(--primary-yellow)' : '#ffffff'}}>
                 <div className="flex items-center justify-between">
-                  <span className="text-xs sm:text-sm font-bold" style={{color: 'var(--text)'}}>🎁 小獎</span>
+                  <span className="text-xs sm:text-sm font-bold" style={{color: 'var(--text)'}}>
+                    <img src="/gift-box.png" alt="小獎" aria-hidden className="inline-block h-3.5 w-3.5 sm:h-4 sm:w-4 object-contain mr-1" />
+                    小獎
+                  </span>
                   <span className="text-xs font-bold px-1.5 sm:px-2 py-0.5 rounded-full"
                     style={{background: 'var(--primary)', color: 'white', whiteSpace: 'nowrap', fontSize: '0.65rem'}}>
                     {completed.length}/{SMALL_REWARD_THRESHOLD}
