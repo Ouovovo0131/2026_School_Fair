@@ -159,7 +159,8 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
 
   const pct = Math.round((completed.length / TOTAL_QUESTS) * 100);
   const goHome = () => setUserMode('home');
-  const ADMIN_EMAIL = "cheiling0131@gmail.com";
+  const ADMIN_EMAILS = ["cheiling0131@gmail.com", "s310354@hlhs.hlc.edu.tw"];
+  const isAdminEmail = (email?: string | null) => ADMIN_EMAILS.includes((email || "").toLowerCase());
 
   const goGameHub = async () => {
     // if not logged in, trigger popup login first
@@ -168,7 +169,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
         const result = await signInWithPopup(auth, new GoogleAuthProvider());
         const email = (result.user?.email || "").toLowerCase();
         // 允許任何已登入的使用者進入遊戲；管理員仍自動解鎖所有關卡
-        if (email.toLowerCase() === ADMIN_EMAIL) {
+        if (isAdminEmail(email)) {
           const all = Array.from({ length: TOTAL_QUESTS }, (_, i) => i + 1);
           persistUnlockedTasks(all);
         }
@@ -182,7 +183,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
 
     // 已登入使用者可以直接進入遊戲；管理員自動解鎖所有關卡
     const currentEmail = (user?.email || '').toLowerCase();
-    if (currentEmail === ADMIN_EMAIL) {
+    if (isAdminEmail(currentEmail)) {
       const all = Array.from({ length: TOTAL_QUESTS }, (_, i) => i + 1);
       persistUnlockedTasks(all);
     }
@@ -223,7 +224,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                 <span className="hidden sm:inline">地圖</span>
               </button>
             )}
-            {user && user.email === "cheiling0131@gmail.com" && (
+            {user && isAdminEmail(user.email) && (
               <button onClick={openAdminRedeemPage}
                 className="clay-button clay-button-yellow flex items-center gap-0.5 !py-1.5 sm:!py-2 !px-2 sm:!px-3 !text-xs sm:!text-sm !rounded-none">
                 🏆 <span className="hidden sm:inline">兌換</span>
