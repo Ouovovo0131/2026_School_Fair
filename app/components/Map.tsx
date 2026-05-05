@@ -868,7 +868,6 @@ export default function Map({ onBack, isModal = false }: MapProps) {
           spotlight={spotlightState}
           onClose={() => {
             setSpotlightState(null);
-            setSelectedCategory("all");
           }}
         />
       )}
