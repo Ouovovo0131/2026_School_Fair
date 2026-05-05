@@ -5,18 +5,17 @@ interface TimelineItem {
   time: string;
   title: string;
   description?: string;
-  icon: string;
 }
 
 const TIMELINE_EVENTS: TimelineItem[] = [
-  { id: 1, time: '09:00', title: '活動開始', description: '校園各處開始營運', icon: '🎪' },
-  { id: 2, time: '10:00', title: '校長致詞', description: '大禮堂進行開幕式', icon: '🎤' },
-  { id: 3, time: '11:00', title: '特色表演', description: '舞蹈隊、樂隊精彩演出', icon: '🎭' },
-  { id: 4, time: '12:00', title: '攤位高峰期', description: '美食、手作、遊戲攤位大開放', icon: '🍔' },
-  { id: 5, time: '14:00', title: '摸彩抽獎', description: '大獎、小獎輪流抽取', icon: '🎁' },
-  { id: 6, time: '16:00', title: '大隊接力', description: '班級競賽，精彩刺激', icon: '🏃' },
-  { id: 7, time: '17:00', title: '晚會演出', description: '學生表演及頒獎典禮', icon: '✨' },
-  { id: 8, time: '18:30', title: '活動結束', description: '感謝大家參與', icon: '👋' },
+  { id: 1, time: '09:00', title: '活動開始', description: '校園各處開始營運' },
+  { id: 2, time: '10:00', title: '校長致詞', description: '大禮堂進行開幕式' },
+  { id: 3, time: '11:00', title: '特色表演', description: '舞蹈隊、樂隊精彩演出' },
+  { id: 4, time: '12:00', title: '攤位高峰期', description: '美食、手作、遊戲攤位大開放' },
+  { id: 5, time: '14:00', title: '摸彩抽獎', description: '大獎、小獎輪流抽取' },
+  { id: 6, time: '16:00', title: '大隊接力', description: '班級競賽，精彩刺激' },
+  { id: 7, time: '17:00', title: '晚會演出', description: '學生表演及頒獎典禮' },
+  { id: 8, time: '18:30', title: '活動結束', description: '感謝大家參與' },
 ];
 
 export default function Timeline() {
@@ -38,10 +37,11 @@ export default function Timeline() {
           {TIMELINE_EVENTS.map((event) => (
             <div key={event.id} className="relative pl-8 sm:pl-10">
               <div
-                className="absolute left-0 top-3 w-6 h-6 rounded-full flex items-center justify-center text-xs"
-                style={{ background: 'var(--primary-soft)', border: '1px solid var(--primary)' }}
+                className="absolute left-0 top-3 w-6 h-6 rounded-full border"
+                style={{ background: 'var(--primary-soft)', borderColor: 'var(--primary)' }}
+                aria-hidden="true"
               >
-                {event.icon}
+                <span className="sr-only">{event.title}</span>
               </div>
 
               <article className="rounded-xl p-3 sm:p-4" style={{ background: 'var(--surface-soft)', border: '1px solid var(--border)' }}>

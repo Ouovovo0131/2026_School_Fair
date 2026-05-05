@@ -7,7 +7,6 @@ interface TimelineItem {
   title: string;
   description?: string;
   details?: string[];
-  icon: string;
 }
 
 const TIMELINE_EVENTS: TimelineItem[] = [
@@ -17,7 +16,6 @@ const TIMELINE_EVENTS: TimelineItem[] = [
     location: '綜合大樓四樓',
     title: '校慶慶祝大會',
     description: '全體師生共同參與的開幕典禮，揭開校慶活動序幕。',
-    icon: '🎉',
   },
   {
     id: 2,
@@ -25,7 +23,6 @@ const TIMELINE_EVENTS: TimelineItem[] = [
     location: '圖資大樓一樓右側',
     title: '靜態成果展',
     description: '展示各班與社團的作品、海報與學習成果。',
-    icon: '🖼️',
   },
   {
     id: 3,
@@ -40,7 +37,6 @@ const TIMELINE_EVENTS: TimelineItem[] = [
       '歌唱與樂器演出：透過獨唱、合唱或樂器獨奏展現個人舞台魅力。',
       '社團聯合演出：不同社團合作串聯，打造節目高潮。',
     ],
-    icon: '🎭',
   },
   {
     id: 4,
@@ -48,7 +44,6 @@ const TIMELINE_EVENTS: TimelineItem[] = [
     location: '體育場',
     title: '高二高三傳承杯',
     description: '學長姐與學弟妹的競技交流，延續班級與年級之間的精神傳承。',
-    icon: '🏆',
   },
 ];
 
@@ -71,10 +66,11 @@ export default function Timeline() {
           {TIMELINE_EVENTS.map((event) => (
             <div key={event.id} className="relative pl-8 sm:pl-10">
               <div
-                className="absolute left-0 top-3 w-6 h-6 rounded-full flex items-center justify-center text-xs"
-                style={{ background: 'var(--primary-soft)', border: '1px solid var(--primary)' }}
+                className="absolute left-0 top-3 w-6 h-6 rounded-full border"
+                style={{ background: 'var(--primary-soft)', borderColor: 'var(--primary)' }}
+                aria-hidden="true"
               >
-                {event.icon}
+                <span className="sr-only">{event.title}</span>
               </div>
 
               <article className="rounded-xl p-3 sm:p-4" style={{ background: 'var(--surface-soft)', border: '1px solid var(--border)' }}>
