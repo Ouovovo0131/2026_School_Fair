@@ -38,11 +38,11 @@ export const STALL_ORDER = [
   "19",
   "20",
   "21",
-  "flower-girl-left-1",
-  "flower-girl-left-2",
-  "flower-girl-1",
-  "flower-girl-2",
-  "flower-girl-3",
+  "女1",
+  "女2",
+  "女3",
+  "女4",
+  "女5",
   "班",
 ] as const;
 
@@ -79,11 +79,11 @@ export const STALL_DIRECTORY: Record<StallId, StallInfo> = {
   19:  { id: "19",  displayName: "樹速塑澍pernova", category: ["snack", "beverage", "other"], content: "巴斯克蛋糕、炒泡麵 & 飲料 & 男僕、吉祥物" },
 20:  { id: "20",  displayName: "仁心遠揚 來呷煙腸", category: ["snack", "beverage", "game"], content: "大腸包小腸、糯米腸、香腸、小黃瓜 & 紅茶、奶茶、可樂 & 猜拳、套圈圈、推桿、乒乓球投杯" },
   21:  { id: "21",  displayName: "貳零塑在必行", category: ["snack", "beverage", "other"], content: "炸物 & 冰飲 & 贖罪卷" },
-  "flower-girl-left-1": { id: "flower-girl-left-1", displayName: "花蓮女中 1", category: "student", content: "女中特色商品、服裝展示、宣傳品" },
-  "flower-girl-left-2": { id: "flower-girl-left-2", displayName: "花蓮女中 2", category: "student", content: "女中紀念品、手工藝品、限量周邊" },
-  "flower-girl-1": { id: "flower-girl-1", displayName: "花蓮女中 3", category: "student", content: "女中點心、手作美食、特色小食" },
-  "flower-girl-2": { id: "flower-girl-2", displayName: "花蓮女中 4", category: "student", content: "女中飲品、冰品、涼飲展售" },
-  "flower-girl-3": { id: "flower-girl-3", displayName: "花蓮女中 5", category: "student", content: "女中遊戲區、互動活動、獎品抽獎" },
+  "女1": { id: "女1", displayName: "花蓮女中 1", category: "student", content: "女中特色商品、服裝展示、宣傳品" },
+  "女2": { id: "女2", displayName: "花蓮女中 2", category: "student", content: "女中紀念品、手工藝品、限量周邊" },
+  "女3": { id: "女3", displayName: "花蓮女中 3", category: "student", content: "女中點心、手作美食、特色小食" },
+  "女4": { id: "女4", displayName: "花蓮女中 4", category: "student", content: "女中飲品、冰品、涼飲展售" },
+  "女5": { id: "女5", displayName: "花蓮女中 5", category: "student", content: "女中遊戲區、互動活動、獎品抽獎" },
   班: { id: "班", displayName: "花蓮高中班聯會", category: "student", content: "學校主題商品、紀念小物、宣傳品" },
 };
 
