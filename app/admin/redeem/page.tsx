@@ -10,7 +10,7 @@ import { ArrowLeft, CheckCircle2, Clock3, LogOut, Search, ShieldCheck, ShieldAle
 const ADMIN_ACCESS_KEY = "adminAccessGranted";
 const REDEMPTION_COLLECTION = "redemptionRecords";
 const TEMP_CODE_COLLECTION = "redeemTempCodes";
-const DEFAULT_RESET_EMAIL = "cheiling0131@gmail.com";
+const DEFAULT_RESET_EMAIL = "";
 
 const REWARDS = [
   { level: 10, label: "小獎品", theme: "yellow" as const },
@@ -835,7 +835,7 @@ export default function AdminRedeemPage() {
               <p className="text-sm font-medium text-[var(--text-secondary)] leading-relaxed">會清除該帳號的兌換紀錄、臨時代碼與遊戲進度。這是不可復原操作。</p>
 
               <div className="mt-4 space-y-3">
-                <label className="block"><span className="mb-2 block bauhaus-label text-sm font-black uppercase tracking-[0.12em]" style={{ color: 'var(--text)' }}>玩家 Gmail</span><input value={resetEmail} onChange={(event) => setResetEmail(event.target.value)} className="clay-input rounded-none" placeholder="cheiling0131@gmail.com" /></label>
+                <label className="block"><span className="mb-2 block bauhaus-label text-sm font-black uppercase tracking-[0.12em]" style={{ color: 'var(--text)' }}>玩家 Gmail</span><input value={resetEmail} onChange={(event) => setResetEmail(event.target.value)} className="clay-input rounded-none" placeholder="player@gmail.com" /></label>
 
                 <label className="block"><span className="mb-2 block bauhaus-label text-sm font-black uppercase tracking-[0.12em]" style={{ color: 'var(--text)' }}>設定完成關卡 (1-20，可用逗號/範圍)</span><input value={completedInput} onChange={(e) => setCompletedInput(e.target.value)} placeholder="例如：1-5,7,9 或 1 2 3" className="clay-input rounded-none" /></label>
 
