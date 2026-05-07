@@ -706,7 +706,12 @@ export default function AdminRedeemPage() {
         </header>
 
         <section className="grid gap-6 xl:grid-cols-[1fr_1.1fr]">
-          <div className="space-y-6">
+          <div>
+            <div className="mb-3">
+              <p className="text-xs font-black uppercase" style={{ color: 'var(--primary)' }}>兌換部分</p>
+              <h2 className="text-2xl font-black">兌換 / 查詢</h2>
+            </div>
+            <div className="space-y-6">
             <div className="bauhaus-frame bg-white p-5 sm:p-6">
               <div className="mb-4 flex items-center gap-3">
                 <div className="flex h-12 w-12 items-center justify-center border-4 border-black bg-[#F0C020] text-black">
@@ -850,7 +855,12 @@ export default function AdminRedeemPage() {
             </div>
           </div>
 
-          <div className="space-y-6">
+          <div>
+            <div className="mb-3">
+              <p className="text-xs font-black uppercase" style={{ color: 'var(--primary)' }}>玩家部分</p>
+              <h2 className="text-2xl font-black">產生代碼 / 帳號管理</h2>
+            </div>
+            <div className="space-y-6">
             <div className="bauhaus-frame bg-white p-5 sm:p-6">
               <div className="mb-4 flex items-center gap-3">
                 <div className="flex h-12 w-12 items-center justify-center border-4 border-black bg-[#D02020] text-white">
