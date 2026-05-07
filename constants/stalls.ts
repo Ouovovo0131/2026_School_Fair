@@ -88,6 +88,24 @@ export const STALL_DIRECTORY: Record<StallId, StallInfo> = {
   班: { id: "班", displayName: "花蓮高中班聯會", category: "student", content: "學校主題商品、紀念小物、宣傳品" },
 };
 
+// 與地圖顯示一致的分類順序（顯示用）
+export const STALL_CATEGORY_ORDER: StallCategory[] = [
+  "vip",
+  "snack",
+  "beverage",
+  "game",
+  "bracelet",
+  "student",
+  "other",
+];
+
+/**
+ * 取得 UI 用的分類選項（會按照地圖顯示順序回傳）
+ */
+export function getCategoryOptions(): Array<{ key: StallCategory; label: string }> {
+  return STALL_CATEGORY_ORDER.map((key) => ({ key, label: STALL_CATEGORIES[key] }));
+}
+
 export function getStallInfo(stallId: StallId): StallInfo {
   return STALL_DIRECTORY[stallId];
 }
@@ -132,7 +150,7 @@ export function generateStallInfo(
  * 獲取所有攤位分類
  */
 export function getAllCategories(): StallCategory[] {
-  return Object.keys(STALL_CATEGORIES) as StallCategory[];
+  return STALL_CATEGORY_ORDER;
 }
 
 /**
