@@ -82,7 +82,7 @@ export const STALL_DIRECTORY: Record<StallId, StallInfo> = {
   21:  { id: "21",  displayName: "貳零塑在必行", category: ["snack", "beverage", "other"], content: "炸物 & 冰飲 & 贖罪卷" },
   "女1": { id: "女1", displayName: "花女沒塑社", category: ["snack", "beverage"], content: "炒泡麵 & 冰品" },
   "女2": { id: "女2", displayName: "花女帆船社", category: ["bracelet", "game"], content: "蠟繩編織手環、猴拳結吊飾DIY & 繩結挑戰賽" },
-  "女3": { id: "女3", displayName: "花女學生會", category: "student", content: "餅乾、小吃 & 冰飲 & 一日制服體驗 & 拍立得服務(消費達一定金額)" },
+  "女3": { id: "女3", displayName: "花女學生會", category: ["snack", "beverage", "student", "other"], content: "餅乾、小吃 & 冰飲 & 拍立得服務(消費達一定金額) & 一日制服體驗 " },
   "女4": { id: "女4", displayName: "仁不住一直吃", category: "snack", content: "餅乾" },
   "女5": { id: "女5", displayName: "幸福崴孟餅乾", category: "snack", content: "手做餅乾" },
   班: { id: "班", displayName: "花蓮高中班聯會", category: "student", content: "學校主題商品、紀念小物、宣傳品" },
