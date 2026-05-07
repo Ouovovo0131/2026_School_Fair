@@ -7,9 +7,7 @@ export const QUESTS = [
     title: "三年級花圃的記憶",
     type: "photo",
     description: "前往三年級花圃(位置1)，找到最適合的角度。",
-    question: "", // 拍照題不需要問題
-    answer: "",
-    referenceImage: "/tasks/tasks-1-1.png"
+    referenceImage: "/tasks/tasks-1.png"
   },
   {
     id: 2,
@@ -24,7 +22,7 @@ export const QUESTS = [
     slug: "m7j6c",
     title: "揮灑汗水的聖地",
     type: "photo",
-    description: "前往體育場/球場，模仿學長當年的熱血動作！",
+    description: "前往體育場/球場，模仿學長當年的動作！",
     referenceImage: "/tasks/tasks-3.png"
   },
   {
@@ -32,7 +30,7 @@ export const QUESTS = [
     slug: "q5h9d",
     title: "教室內的時光機 I",
     type: "photo",
-    description: "在教室內找到一個角落，拍出懷舊感 (需上傳 IG 限動截圖)。",
+    description: "在教室內找到一個角落，拍出懷舊感。",
     referenceImage: "/tasks/tasks-4.png"
   },
   {
@@ -57,7 +55,7 @@ export const QUESTS = [
     title: "合作社的秘密",
     type: "photo",
     description: "前往合作社後方，這裡藏著什麼回憶？",
-    referenceImage: "/tasks/tasks-7-1.png"
+    referenceImage: "/tasks/tasks-7.png"
   },
   {
     id: 8,
