@@ -43,7 +43,7 @@ const TIMELINE_EVENTS: TimelineItem[] = [
     time: '14:00 - 18:00',
     location: '體育場',
     title: '高二高三傳承盃',
-    description: '學長姐與學弟妹的競技交流，延續班級與年級之間的精神傳承。',
+    description: '學長與學弟的競技交流，延續班級與年級之間的精神傳承。',
   },
 ];
 

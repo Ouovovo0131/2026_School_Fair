@@ -260,7 +260,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
 
       await setDoc(doc(db, TEMP_CODE_COLLECTION, code), session, { merge: true });
       setRewardCodeSessions((prev) => ({ ...prev, [rewardLevel]: session }));
-      alert(`${rewardLabel} 兌換碼已產生：${code}（1 分鐘內有效）`);
+      // 已在畫面上顯示代碼，不使用原生 alert
     } catch (codeError) {
       console.error(codeError);
       alert("產生兌換碼失敗，請稍後再試");

@@ -132,6 +132,9 @@ export default function AdminRedeemPage() {
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState("");
   const [error, setError] = useState("");
+  // reset panel specific feedback
+  const [resetNotice, setResetNotice] = useState("");
+  const [resetError, setResetError] = useState("");
   const [now, setNow] = useState(() => Date.now());
 
   const normalizedPlayerEmail = playerEmail.trim().toLowerCase();
@@ -259,7 +262,8 @@ export default function AdminRedeemPage() {
 
     const targetEmail = resetEmail.trim().toLowerCase();
     if (!targetEmail) {
-      setError("請輸入要重製的玩家 Gmail");
+      setResetError("請輸入要重製的玩家 Gmail");
+      setTimeout(() => setResetError(""), 10000);
       return;
     }
 
@@ -267,14 +271,15 @@ export default function AdminRedeemPage() {
     if (!confirmed) return;
 
     setBusy(true);
-    setError("");
-    setNotice("");
+    setResetError("");
+    setResetNotice("");
 
     try {
       const userRef = doc(db, "users", targetEmail);
       const userSnapshot = await getDoc(userRef);
       if (!userSnapshot.exists()) {
-        setError("找不到這個玩家帳號");
+        setResetError("找不到這個玩家帳號");
+        setTimeout(() => setResetError(""), 10000);
         return;
       }
 
@@ -320,10 +325,12 @@ export default function AdminRedeemPage() {
       }
 
       setPlayerRecords([]);
-      setNotice(`已重製 ${targetEmail} 的兌換紀錄與遊戲進度`);
+      setResetNotice(`已重製 ${targetEmail} 的兌換紀錄與遊戲進度`);
+      setTimeout(() => setResetNotice(""), 10000);
     } catch (resetError) {
       console.error(resetError);
-      setError("重製失敗，請稍後再試");
+      setResetError("重製失敗，請稍後再試");
+      setTimeout(() => setResetError(""), 10000);
     } finally {
       setBusy(false);
     }
@@ -358,16 +365,16 @@ export default function AdminRedeemPage() {
   const applyCompletedInput = async () => {
     if (!requireAccess()) return;
     const target = resetEmail.trim().toLowerCase();
-    if (!target) { setError('請輸入玩家 Gmail'); return; }
+    if (!target) { setResetError('請輸入玩家 Gmail'); setTimeout(() => setResetError(''), 10000); return; }
 
     const parsed = parseCompletedInput(completedInput);
-    if (parsed.length === 0) { setError('請輸入有效的關卡編號 (1-20)，格式如: 1-5,7,9'); return; }
+    if (parsed.length === 0) { setResetError('請輸入有效的關卡編號 (1-20)，格式如: 1-5,7,9'); setTimeout(() => setResetError(''), 10000); return; }
 
-    setBusy(true); setError(''); setNotice('');
+    setBusy(true); setResetError(''); setResetNotice('');
     try {
       const userRef = doc(db, 'users', target);
       const userSnapshot = await getDoc(userRef);
-      if (!userSnapshot.exists()) { setError('找不到這個玩家帳號'); return; }
+      if (!userSnapshot.exists()) { setResetError('找不到這個玩家帳號'); setTimeout(() => setResetError(''), 10000); return; }
 
       await setDoc(userRef, { completedQuests: parsed }, { merge: true });
 
@@ -375,10 +382,12 @@ export default function AdminRedeemPage() {
         setPlayerProfile({ ...playerProfile, completedQuests: parsed });
       }
 
-      setNotice(`已將 ${target} 的完成關卡設定為: ${parsed.join(',')}`);
+      setResetNotice(`已將 ${target} 的完成關卡設定為: ${parsed.join(',')}`);
+      setTimeout(() => setResetNotice(""), 10000);
     } catch (e) {
       console.error(e);
-      setError('設定失敗，請稍後再試');
+      setResetError('設定失敗，請稍後再試');
+      setTimeout(() => setResetError(''), 10000);
     } finally {
       setBusy(false);
     }
@@ -834,6 +843,16 @@ export default function AdminRedeemPage() {
 
                 <button type="button" onClick={resetPlayerProgress} disabled={busy} className="clay-button clay-button-blue rounded-none w-full py-3 disabled:cursor-not-allowed disabled:opacity-50"><ShieldAlert className="mr-2 h-5 w-5" />{busy ? '處理中…' : '重製此帳號'}</button>
               </div>
+              {(resetNotice || resetError) && (
+                <div className="mt-4 space-y-2">
+                  {resetNotice && (
+                    <div className="bauhaus-frame border-black bg-[#F0C020] px-4 py-3 font-black text-black">{resetNotice}</div>
+                  )}
+                  {resetError && (
+                    <div className="bauhaus-frame border-black bg-[#D02020] px-4 py-3 font-black text-white">{resetError}</div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </section>
