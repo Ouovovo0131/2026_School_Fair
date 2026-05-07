@@ -124,6 +124,7 @@ export default function AdminRedeemPage() {
   const [selectedReward, setSelectedReward] = useState<number>(10);
   const [tempCodeInput, setTempCodeInput] = useState("");
   const [resetEmail, setResetEmail] = useState(DEFAULT_RESET_EMAIL);
+  const [completedInput, setCompletedInput] = useState("");
   const [activeSession, setActiveSession] = useState<TempRedeemCode | null>(null);
   const [playerProfile, setPlayerProfile] = useState<PlayerProfile | null>(null);
   const [playerRecords, setPlayerRecords] = useState<RedemptionRecord[]>([]);
@@ -297,7 +298,7 @@ export default function AdminRedeemPage() {
       await setDoc(userRef, {
         email: targetEmail,
         name: userData.name || null,
-        nickname: userData.nickname || null,
+        nickname: "",
         photoURL: userData.photoURL || null,
         completedQuests: [],
         redeemedRewards: [],
@@ -323,6 +324,61 @@ export default function AdminRedeemPage() {
     } catch (resetError) {
       console.error(resetError);
       setError("重製失敗，請稍後再試");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  function parseCompletedInput(input: string): number[] {
+    const cleaned = input.replace(/\s+/g, '').replace(/，/g, ',');
+    if (!cleaned) return [];
+
+    const parts = cleaned.split(',');
+    const result = new Set<number>();
+
+    for (const part of parts) {
+      if (!part) continue;
+      if (part.includes('-')) {
+        const [aRaw, bRaw] = part.split('-');
+        const a = parseInt(aRaw, 10);
+        const b = parseInt(bRaw, 10);
+        if (Number.isNaN(a) || Number.isNaN(b)) continue;
+        const from = Math.max(1, Math.min(a, b));
+        const to = Math.min(20, Math.max(a, b));
+        for (let i = from; i <= to; i++) result.add(i);
+      } else {
+        const n = parseInt(part, 10);
+        if (!Number.isNaN(n) && n >= 1 && n <= 20) result.add(n);
+      }
+    }
+
+    return Array.from(result).sort((x, y) => x - y);
+  }
+
+  const applyCompletedInput = async () => {
+    if (!requireAccess()) return;
+    const target = resetEmail.trim().toLowerCase();
+    if (!target) { setError('請輸入玩家 Gmail'); return; }
+
+    const parsed = parseCompletedInput(completedInput);
+    if (parsed.length === 0) { setError('請輸入有效的關卡編號 (1-20)，格式如: 1-5,7,9'); return; }
+
+    setBusy(true); setError(''); setNotice('');
+    try {
+      const userRef = doc(db, 'users', target);
+      const userSnapshot = await getDoc(userRef);
+      if (!userSnapshot.exists()) { setError('找不到這個玩家帳號'); return; }
+
+      await setDoc(userRef, { completedQuests: parsed }, { merge: true });
+
+      if (playerProfile?.email === target) {
+        setPlayerProfile({ ...playerProfile, completedQuests: parsed });
+      }
+
+      setNotice(`已將 ${target} 的完成關卡設定為: ${parsed.join(',')}`);
+    } catch (e) {
+      console.error(e);
+      setError('設定失敗，請稍後再試');
     } finally {
       setBusy(false);
     }
@@ -964,6 +1020,28 @@ export default function AdminRedeemPage() {
                     placeholder="cheiling0131@gmail.com"
                   />
                 </label>
+
+                <label className="block">
+                  <span className="mb-2 block bauhaus-label text-sm font-black uppercase tracking-[0.12em]" style={{ color: 'var(--text)' }}>設定完成關卡 (1-20，可用逗號/範圍)</span>
+                  <input
+                    value={completedInput}
+                    onChange={(e) => setCompletedInput(e.target.value)}
+                    placeholder="例如：1-5,7,9 或 1 2 3"
+                    className="clay-input rounded-none"
+                  />
+                </label>
+
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={applyCompletedInput}
+                    disabled={busy}
+                    className="clay-button clay-button-yellow rounded-none flex-1 py-3 disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    套用完成關卡
+                  </button>
+                  
+                </div>
 
                 <button
                   type="button"
