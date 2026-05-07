@@ -4,12 +4,13 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
 import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
-import { addDoc, arrayUnion, collection, doc, getDoc, getDocs, onSnapshot, orderBy, query, setDoc, updateDoc, writeBatch } from "firebase/firestore";
+import { addDoc, arrayUnion, collection, doc, getDoc, getDocs, onSnapshot, orderBy, query, setDoc, updateDoc, where, writeBatch } from "firebase/firestore";
 import { ArrowLeft, CheckCircle2, Clock3, LogOut, Search, ShieldCheck, ShieldAlert } from "lucide-react";
 
 const ADMIN_ACCESS_KEY = "adminAccessGranted";
 const REDEMPTION_COLLECTION = "redemptionRecords";
 const TEMP_CODE_COLLECTION = "redeemTempCodes";
+const DEFAULT_RESET_EMAIL = "cheiling0131@gmail.com";
 
 const REWARDS = [
   { level: 10, label: "小獎品", theme: "yellow" as const },
@@ -122,6 +123,7 @@ export default function AdminRedeemPage() {
   const [playerEmail, setPlayerEmail] = useState("");
   const [selectedReward, setSelectedReward] = useState<number>(10);
   const [tempCodeInput, setTempCodeInput] = useState("");
+  const [resetEmail, setResetEmail] = useState(DEFAULT_RESET_EMAIL);
   const [activeSession, setActiveSession] = useState<TempRedeemCode | null>(null);
   const [playerProfile, setPlayerProfile] = useState<PlayerProfile | null>(null);
   const [playerRecords, setPlayerRecords] = useState<RedemptionRecord[]>([]);
@@ -249,6 +251,81 @@ export default function AdminRedeemPage() {
 
   const persistTempSession = async (session: TempRedeemCode) => {
     await setDoc(doc(db, TEMP_CODE_COLLECTION, session.code), session, { merge: true });
+  };
+
+  const resetPlayerProgress = async () => {
+    if (!requireAccess()) return;
+
+    const targetEmail = resetEmail.trim().toLowerCase();
+    if (!targetEmail) {
+      setError("請輸入要重製的玩家 Gmail");
+      return;
+    }
+
+    const confirmed = window.confirm(`確定要清除 ${targetEmail} 的兌換紀錄並重製遊戲進度嗎？此操作無法復原。`);
+    if (!confirmed) return;
+
+    setBusy(true);
+    setError("");
+    setNotice("");
+
+    try {
+      const userRef = doc(db, "users", targetEmail);
+      const userSnapshot = await getDoc(userRef);
+      if (!userSnapshot.exists()) {
+        setError("找不到這個玩家帳號");
+        return;
+      }
+
+      const recordsQuery = query(collection(db, REDEMPTION_COLLECTION), where("playerEmail", "==", targetEmail));
+      const tempCodesQuery = query(collection(db, TEMP_CODE_COLLECTION), where("playerEmail", "==", targetEmail));
+      const [recordSnapshot, tempSnapshot] = await Promise.all([getDocs(recordsQuery), getDocs(tempCodesQuery)]);
+
+      const recordBatch = writeBatch(db);
+      recordSnapshot.docs.forEach((entry) => recordBatch.delete(entry.ref));
+      if (recordSnapshot.docs.length > 0) {
+        await recordBatch.commit();
+      }
+
+      const tempBatch = writeBatch(db);
+      tempSnapshot.docs.forEach((entry) => tempBatch.delete(entry.ref));
+      if (tempSnapshot.docs.length > 0) {
+        await tempBatch.commit();
+      }
+
+      const userData = userSnapshot.data();
+      await setDoc(userRef, {
+        email: targetEmail,
+        name: userData.name || null,
+        nickname: userData.nickname || null,
+        photoURL: userData.photoURL || null,
+        completedQuests: [],
+        redeemedRewards: [],
+        resetAtMs: Date.now(),
+      }, { merge: true });
+
+      if (playerProfile?.email === targetEmail) {
+        setPlayerProfile({
+          email: targetEmail,
+          name: userData.name || null,
+          nickname: userData.nickname || null,
+          redeemedRewards: [],
+          completedQuests: [],
+        });
+      }
+
+      if (activeSession?.playerEmail === targetEmail) {
+        setActiveSession(null);
+      }
+
+      setPlayerRecords([]);
+      setNotice(`已重製 ${targetEmail} 的兌換紀錄與遊戲進度`);
+    } catch (resetError) {
+      console.error(resetError);
+      setError("重製失敗，請稍後再試");
+    } finally {
+      setBusy(false);
+    }
   };
 
   const createUniqueCode = async () => {
@@ -854,6 +931,44 @@ export default function AdminRedeemPage() {
                   ))}
                 </div>
               )}
+            </div>
+
+            <div className="bauhaus-frame bg-white p-5 sm:p-6">
+              <div className="mb-4 flex items-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center border-4 border-black bg-[#D02020] text-white">
+                  <ShieldAlert className="h-6 w-6" />
+                </div>
+                <div>
+                  <p className="bauhaus-label" style={{ color: 'var(--primary)' }}>Account Reset</p>
+                  <h2 className="text-2xl font-black tracking-tighter uppercase">重製指定帳號</h2>
+                </div>
+              </div>
+
+              <p className="text-sm font-medium text-[var(--text-secondary)] leading-relaxed">
+                會清除該帳號的兌換紀錄、臨時代碼與遊戲進度。這是不可復原操作。
+              </p>
+
+              <div className="mt-4 space-y-3">
+                <label className="block">
+                  <span className="mb-2 block bauhaus-label text-sm font-black uppercase tracking-[0.12em]" style={{ color: 'var(--text)' }}>玩家 Gmail</span>
+                  <input
+                    value={resetEmail}
+                    onChange={(event) => setResetEmail(event.target.value)}
+                    className="clay-input rounded-none"
+                    placeholder="cheiling0131@gmail.com"
+                  />
+                </label>
+
+                <button
+                  type="button"
+                  onClick={resetPlayerProgress}
+                  disabled={busy}
+                  className="clay-button clay-button-blue rounded-none w-full py-3 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  <ShieldAlert className="mr-2 h-5 w-5" />
+                  {busy ? '處理中…' : '重製此帳號'}
+                </button>
+              </div>
             </div>
           </div>
         </section>
