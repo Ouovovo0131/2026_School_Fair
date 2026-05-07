@@ -706,12 +706,13 @@ export default function AdminRedeemPage() {
         </header>
 
         <section className="grid gap-6 xl:grid-cols-[1fr_1.1fr]">
-          <div>
-            <div className="mb-3">
+          {/* Left column: Redeem / Lookup */}
+          <div className="space-y-6">
+            <div>
               <p className="text-xs font-black uppercase" style={{ color: 'var(--primary)' }}>兌換部分</p>
               <h2 className="text-2xl font-black">兌換 / 查詢</h2>
             </div>
-            <div className="space-y-6">
+
             <div className="bauhaus-frame bg-white p-5 sm:p-6">
               <div className="mb-4 flex items-center gap-3">
                 <div className="flex h-12 w-12 items-center justify-center border-4 border-black bg-[#F0C020] text-black">
@@ -726,12 +727,7 @@ export default function AdminRedeemPage() {
               <div className="space-y-3">
                 <label className="block">
                   <span className="mb-2 block bauhaus-label text-sm font-black uppercase tracking-[0.12em]" style={{ color: 'var(--text)' }}>玩家 Gmail</span>
-                  <input
-                    value={playerEmail}
-                    onChange={(event) => setPlayerEmail(event.target.value)}
-                    placeholder="player@gmail.com"
-                    className="clay-input rounded-none"
-                  />
+                  <input value={playerEmail} onChange={(event) => setPlayerEmail(event.target.value)} placeholder="player@gmail.com" className="clay-input rounded-none" />
                 </label>
 
                 <label className="block">
@@ -740,17 +736,7 @@ export default function AdminRedeemPage() {
                     {REWARDS.map((reward) => {
                       const active = selectedReward === reward.level;
                       return (
-                        <button
-                          key={reward.level}
-                          type="button"
-                          onClick={() => setSelectedReward(reward.level)}
-                          className="bauhaus-frame px-4 py-4 text-center font-black uppercase transition-transform hover:-translate-y-1 active:translate-y-0 min-h-[60px] flex flex-col items-center justify-center"
-                          style={{
-                            background: active ? (reward.theme === 'yellow' ? 'var(--primary-yellow)' : 'var(--primary-red)') : '#ffffff',
-                            color: active && reward.theme === 'red' ? '#ffffff' : '#121212',
-                            borderWidth: '4px'
-                          }}
-                        >
+                        <button key={reward.level} type="button" onClick={() => setSelectedReward(reward.level)} className="bauhaus-frame px-4 py-4 text-center font-black uppercase transition-transform hover:-translate-y-1 active:translate-y-0 min-h-[60px] flex flex-col items-center justify-center" style={{ background: active ? (reward.theme === 'yellow' ? 'var(--primary-yellow)' : 'var(--primary-red)') : '#ffffff', color: active && reward.theme === 'red' ? '#ffffff' : '#121212', borderWidth: '4px' }}>
                           <span className="text-xs sm:text-sm">{reward.label}</span>
                           <span className="text-2xl sm:text-3xl font-black">{reward.level}</span>
                         </button>
@@ -759,13 +745,8 @@ export default function AdminRedeemPage() {
                   </div>
                 </label>
 
-                <button
-                  type="button"
-                  onClick={generateTempCode}
-                  className="clay-button clay-button-yellow rounded-none w-full py-3"
-                >
-                  <Search className="mr-2 h-5 w-5" />
-                  產生臨時代碼
+                <button type="button" onClick={generateTempCode} className="clay-button clay-button-yellow rounded-none w-full py-3">
+                  <Search className="mr-2 h-5 w-5" /> 產生臨時代碼
                 </button>
               </div>
 
@@ -791,33 +772,18 @@ export default function AdminRedeemPage() {
                     <p className="text-xs font-black uppercase tracking-[0.12em]" style={{ color: 'var(--primary)' }}>玩家資訊</p>
                     <p className="mt-2 text-base sm:text-lg font-black break-all">{playerProfile.nickname || playerProfile.name || playerProfile.email}</p>
                     <p className="text-xs sm:text-sm font-medium text-[var(--text-secondary)] break-all mt-1">{playerProfile.email}</p>
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      {playerRewardStatus.map((reward) => (
-                        <span
-                          key={reward.level}
-                          className="inline-flex items-center rounded-none border-2 border-black px-3 py-2 text-xs font-black"
-                          style={{
-                            background: reward.redeemed ? (reward.theme === 'yellow' ? 'var(--primary-yellow)' : 'var(--primary-red)') : '#ffffff',
-                            color: reward.redeemed && reward.theme === 'red' ? '#ffffff' : '#121212',
-                          }}
-                        >
-                          {reward.level} 關 {reward.redeemed ? '已兌換' : '未兌換'}
-                        </span>
-                      ))}
-                    </div>
+                    <div className="mt-3 flex flex-wrap gap-2">{playerRewardStatus.map((reward) => (
+                      <span key={reward.level} className="inline-flex items-center rounded-none border-2 border-black px-3 py-2 text-xs font-black" style={{ background: reward.redeemed ? (reward.theme === 'yellow' ? 'var(--primary-yellow)' : 'var(--primary-red)') : '#ffffff', color: reward.redeemed && reward.theme === 'red' ? '#ffffff' : '#121212' }}>{reward.level} 關 {reward.redeemed ? '已兌換' : '未兌換'}</span>
+                    ))}</div>
                   </div>
 
                   <div className="bauhaus-frame bg-white p-4">
                     <p className="text-xs font-black uppercase tracking-[0.12em]" style={{ color: 'var(--primary)' }}>代碼狀態</p>
                     <div className="mt-2 flex flex-wrap items-center gap-2">
                       <RewardBadge level={activeSession?.rewardLevel || selectedReward} theme={(activeSession?.rewardLevel || selectedReward) === 20 ? 'red' : 'yellow'} />
-                      <span className="inline-flex items-center rounded-none border-2 border-black px-3 py-1 text-xs font-black uppercase" style={{ background: sessionExpired ? 'var(--primary-red)' : 'var(--primary-blue)', color: '#ffffff' }}>
-                        {sessionExpired ? '不可使用' : '可使用'}
-                      </span>
+                      <span className="inline-flex items-center rounded-none border-2 border-black px-3 py-1 text-xs font-black uppercase" style={{ background: sessionExpired ? 'var(--primary-red)' : 'var(--primary-blue)', color: '#ffffff' }}>{sessionExpired ? '不可使用' : '可使用'}</span>
                     </div>
-                    <p className="mt-2 text-sm font-medium text-[var(--text-secondary)]">
-                      {activeSession ? `到期時間：${formatTime(activeSession.expiresAtMs)}` : '尚未載入代碼'}
-                    </p>
+                    <p className="mt-2 text-sm font-medium text-[var(--text-secondary)]">{activeSession ? `到期時間：${formatTime(activeSession.expiresAtMs)}` : '尚未載入代碼'}</p>
                   </div>
 
                   <div>
@@ -833,12 +799,7 @@ export default function AdminRedeemPage() {
                                 <p className="text-sm font-black">{record.rewardLabel}</p>
                                 <p className="text-xs font-medium text-[var(--text-secondary)] break-all">代碼：{record.tempCode || 'N/A'}</p>
                               </div>
-                              <span
-                                className="inline-flex items-center rounded-none border-2 border-black px-2 py-1 text-[11px] font-black"
-                                style={{ background: record.alreadyRedeemed ? 'var(--primary-red)' : 'var(--primary-yellow)', color: record.alreadyRedeemed ? '#ffffff' : '#121212' }}
-                              >
-                                {record.alreadyRedeemed ? '已兌換過' : '已兌換'}
-                              </span>
+                              <span className="inline-flex items-center rounded-none border-2 border-black px-2 py-1 text-[11px] font-black" style={{ background: record.alreadyRedeemed ? 'var(--primary-red)' : 'var(--primary-yellow)', color: record.alreadyRedeemed ? '#ffffff' : '#121212' }}>{record.alreadyRedeemed ? '已兌換過' : '已兌換'}</span>
                             </div>
                             <p className="mt-2 text-xs font-medium text-[var(--text-secondary)]">{formatTime(record.createdAtMs)}</p>
                           </div>
@@ -848,19 +809,18 @@ export default function AdminRedeemPage() {
                   </div>
                 </div>
               ) : (
-                <div className="bauhaus-frame bg-white p-4 text-sm font-medium text-[var(--text-secondary)]">
-                  輸入並查詢臨時代碼後，這裡會顯示玩家的 Gmail、完成關卡與兌換狀態。
-                </div>
+                <div className="bauhaus-frame bg-white p-4 text-sm font-medium text-[var(--text-secondary)]">輸入並查詢臨時代碼後，這裡會顯示玩家的 Gmail、完成關卡與兌換狀態。</div>
               )}
             </div>
           </div>
 
-          <div>
-            <div className="mb-3">
+          {/* Right column: Player management */}
+          <div className="space-y-6">
+            <div>
               <p className="text-xs font-black uppercase" style={{ color: 'var(--primary)' }}>玩家部分</p>
               <h2 className="text-2xl font-black">產生代碼 / 帳號管理</h2>
             </div>
-            <div className="space-y-6">
+
             <div className="bauhaus-frame bg-white p-5 sm:p-6">
               <div className="mb-4 flex items-center gap-3">
                 <div className="flex h-12 w-12 items-center justify-center border-4 border-black bg-[#D02020] text-white">
@@ -875,193 +835,49 @@ export default function AdminRedeemPage() {
               <div className="space-y-3">
                 <label className="block">
                   <span className="mb-2 block bauhaus-label text-sm font-black uppercase tracking-[0.12em]" style={{ color: 'var(--text)' }}>管理員名稱</span>
-                  <input
-                    value={adminName}
-                    onChange={(event) => setAdminName(event.target.value)}
-                    placeholder="例如：總召、工作人員 A"
-                    className="clay-input rounded-none"
-                  />
+                  <input value={adminName} onChange={(event) => setAdminName(event.target.value)} placeholder="例如：總召、工作人員 A" className="clay-input rounded-none" />
                 </label>
 
                 <label className="block">
                   <span className="mb-2 block bauhaus-label text-sm font-black uppercase tracking-[0.12em]" style={{ color: 'var(--text)' }}>8 碼小寫英數臨時代碼</span>
-                  <input
-                    value={tempCodeInput}
-                    onChange={(event) => setTempCodeInput(event.target.value.toLowerCase().replace(/[^a-z0-9]/g, ""))}
-                    placeholder="a1b2c3d4"
-                    maxLength={8}
-                    inputMode="text"
-                    autoCapitalize="none"
-                    className="clay-input rounded-none tracking-[0.25em] font-black text-center text-lg"
-                  />
+                  <input value={tempCodeInput} onChange={(event) => setTempCodeInput(event.target.value.toLowerCase().replace(/[^a-z0-9]/g, ""))} placeholder="a1b2c3d4" maxLength={8} inputMode="text" autoCapitalize="none" className="clay-input rounded-none tracking-[0.25em] font-black text-center text-lg" />
                 </label>
 
                 <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                  <button
-                    type="button"
-                    onClick={lookupTempCode}
-                    className="clay-button clay-button-yellow rounded-none flex-1 sm:flex-none py-3"
-                  >
-                    <Search className="mr-2 h-5 w-5" />
-                    查詢代碼
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleRedeem}
-                    disabled={busy}
-                    className="clay-button clay-button-blue rounded-none flex-1 sm:flex-none py-3 disabled:cursor-not-allowed disabled:opacity-50"
-                  >
-                    <ShieldCheck className="mr-2 h-5 w-5" />
-                    {busy ? '處理中…' : '執行兌換'}
-                  </button>
+                  <button type="button" onClick={lookupTempCode} className="clay-button clay-button-yellow rounded-none flex-1 sm:flex-none py-3"><Search className="mr-2 h-5 w-5" /> 查詢代碼</button>
+                  <button type="button" onClick={handleRedeem} disabled={busy} className="clay-button clay-button-blue rounded-none flex-1 sm:flex-none py-3 disabled:cursor-not-allowed disabled:opacity-50"><ShieldCheck className="mr-2 h-5 w-5" />{busy ? '處理中…' : '執行兌換'}</button>
                 </div>
 
-                <div className="flex items-center gap-2 rounded-none border-4 border-black bg-white px-4 py-3 font-black text-sm">
-                  <Clock3 className="h-5 w-5 shrink-0" />
-                  <span className="break-all">{user?.displayName || user?.email || '未登入'}</span>
-                </div>
+                <div className="flex items-center gap-2 rounded-none border-4 border-black bg-white px-4 py-3 font-black text-sm"><Clock3 className="h-5 w-5 shrink-0" /> <span className="break-all">{user?.displayName || user?.email || '未登入'}</span></div>
               </div>
 
               {(notice || error) && (
-                <div className="mt-4 space-y-2">
-                  {notice && (
-                    <div className="bauhaus-frame border-black bg-[#F0C020] px-4 py-3 font-black text-black">
-                      {notice}
-                    </div>
-                  )}
-                  {error && (
-                    <div className="bauhaus-frame border-black bg-[#D02020] px-4 py-3 font-black text-white">
-                      {error}
-                    </div>
-                  )}
-                </div>
+                <div className="mt-4 space-y-2">{notice && (<div className="bauhaus-frame border-black bg-[#F0C020] px-4 py-3 font-black text-black">{notice}</div>)}{error && (<div className="bauhaus-frame border-black bg-[#D02020] px-4 py-3 font-black text-white">{error}</div>)}</div>
               )}
             </div>
 
             <div className="bauhaus-frame bg-white p-5 sm:p-6">
               <div className="mb-4 flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center border-4 border-black bg-[#1040C0] text-white">
-                  <ShieldCheck className="h-6 w-6" />
-                </div>
-                <div>
-                  <p className="bauhaus-label" style={{ color: 'var(--primary)' }}>Shared Log</p>
-                  <h2 className="text-2xl font-black tracking-tighter uppercase">所有管理員的兌換紀錄</h2>
-                  <p className="text-xs font-medium text-[var(--text-secondary)] mt-1">紀錄會包含臨時代碼、玩家與兌換時間，方便後續追查</p>
-                </div>
+                <div className="flex h-12 w-12 items-center justify-center border-4 border-black bg-[#1040C0] text-white"><ShieldCheck className="h-6 w-6" /></div>
+                <div><p className="bauhaus-label" style={{ color: 'var(--primary)' }}>Shared Log</p><h2 className="text-2xl font-black tracking-tighter uppercase">所有管理員的兌換紀錄</h2><p className="text-xs font-medium text-[var(--text-secondary)] mt-1">紀錄會包含臨時代碼、玩家與兌換時間，方便後續追查</p></div>
               </div>
 
-              {records.length === 0 ? (
-                <div className="bauhaus-frame bg-[#F0F0F0] p-6 text-center">
-                  <p className="text-sm font-black uppercase tracking-[0.12em]">還沒有任何兌換紀錄</p>
-                  <p className="text-xs font-medium text-[var(--text-secondary)] mt-2">當管理員進行兌換時，紀錄會出現在此</p>
-                </div>
-              ) : (
-                <div className="space-y-3 max-h-[420px] overflow-y-auto pr-2">
-                  {records.map((record) => (
-                    <div key={record.id} className="bauhaus-frame bg-white p-4 sm:p-5">
-                      <div className="space-y-3">
-                        <div className="flex flex-wrap items-center justify-between gap-2">
-                          <span
-                            className="inline-flex items-center rounded-none border-3 border-black px-3 py-2 text-sm font-black uppercase tracking-[0.12em]"
-                            style={{
-                              background: record.rewardLevel === 20 ? 'var(--primary-red)' : 'var(--primary-yellow)',
-                              color: record.rewardLevel === 20 ? '#ffffff' : '#121212'
-                            }}
-                          >
-                            {record.rewardLabel}
-                          </span>
-                          <span
-                            className="inline-flex items-center rounded-none border-2 border-black px-2 py-1 text-xs font-black uppercase tracking-[0.12em]"
-                            style={{
-                              background: record.alreadyRedeemed ? 'var(--primary-red)' : 'var(--primary-blue)',
-                              color: '#ffffff'
-                            }}
-                          >
-                            {record.alreadyRedeemed ? '重複兌換' : '新兌換'}
-                          </span>
-                        </div>
-
-                        <div className="border-t-2 border-black pt-3 space-y-1">
-                          <p className="text-xs font-black uppercase tracking-[0.12em] text-[var(--primary)]">玩家</p>
-                          <p className="text-sm font-black break-all">{record.playerName}</p>
-                          <p className="text-xs font-medium text-[var(--text-secondary)] break-all">{record.playerEmail}</p>
-                        </div>
-
-                        <div className="border-t-2 border-black pt-3 space-y-1">
-                          <p className="text-xs font-black uppercase tracking-[0.12em] text-[var(--primary)]">管理員</p>
-                          <p className="text-sm font-black">{record.adminName}</p>
-                          <p className="text-xs font-medium text-[var(--text-secondary)] break-all">{record.adminEmail}</p>
-                        </div>
-
-                        <div className="border-t-2 border-black pt-3 space-y-1">
-                          <p className="text-xs font-black uppercase tracking-[0.12em] text-[var(--primary)]">臨時代碼</p>
-                          <p className="text-sm font-black tracking-[0.2em]">{record.tempCode || 'N/A'}</p>
-                          <p className="text-xs font-medium text-[var(--text-secondary)] break-all">{formatTime(record.createdAtMs)}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
+              {records.length === 0 ? (<div className="bauhaus-frame bg-[#F0F0F0] p-6 text-center"><p className="text-sm font-black uppercase tracking-[0.12em]">還沒有任何兌換紀錄</p><p className="text-xs font-medium text-[var(--text-secondary)] mt-2">當管理員進行兌換時，紀錄會出現在此</p></div>) : (<div className="space-y-3 max-h-[420px] overflow-y-auto pr-2">{records.map((record) => (<div key={record.id} className="bauhaus-frame bg-white p-4 sm:p-5"><div className="space-y-3"><div className="flex flex-wrap items-center justify-between gap-2"><span className="inline-flex items-center rounded-none border-3 border-black px-3 py-2 text-sm font-black uppercase tracking-[0.12em]" style={{ background: record.rewardLevel === 20 ? 'var(--primary-red)' : 'var(--primary-yellow)', color: record.rewardLevel === 20 ? '#ffffff' : '#121212' }}>{record.rewardLabel}</span><span className="inline-flex items-center rounded-none border-2 border-black px-2 py-1 text-xs font-black uppercase tracking-[0.12em]" style={{ background: record.alreadyRedeemed ? 'var(--primary-red)' : 'var(--primary-blue)', color: '#ffffff' }}>{record.alreadyRedeemed ? '重複兌換' : '新兌換'}</span></div><div className="border-t-2 border-black pt-3 space-y-1"><p className="text-xs font-black uppercase tracking-[0.12em] text-[var(--primary)]">玩家</p><p className="text-sm font-black break-all">{record.playerName}</p><p className="text-xs font-medium text-[var(--text-secondary)] break-all">{record.playerEmail}</p></div><div className="border-t-2 border-black pt-3 space-y-1"><p className="text-xs font-black uppercase tracking-[0.12em] text-[var(--primary)]">管理員</p><p className="text-sm font-black">{record.adminName}</p><p className="text-xs font-medium text-[var(--text-secondary)] break-all">{record.adminEmail}</p></div><div className="border-t-2 border-black pt-3 space-y-1"><p className="text-xs font-black uppercase tracking-[0.12em] text-[var(--primary)]">臨時代碼</p><p className="text-sm font-black tracking-[0.2em]">{record.tempCode || 'N/A'}</p><p className="text-xs font-medium text-[var(--text-secondary)] break-all">{formatTime(record.createdAtMs)}</p></div></div></div>))}</div>)}
             </div>
 
             <div className="bauhaus-frame bg-white p-5 sm:p-6">
-              <div className="mb-4 flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center border-4 border-black bg-[#D02020] text-white">
-                  <ShieldAlert className="h-6 w-6" />
-                </div>
-                <div>
-                  <p className="bauhaus-label" style={{ color: 'var(--primary)' }}>Account Reset</p>
-                  <h2 className="text-2xl font-black tracking-tighter uppercase">重製指定帳號</h2>
-                </div>
-              </div>
+              <div className="mb-4 flex items-center gap-3"><div className="flex h-12 w-12 items-center justify-center border-4 border-black bg-[#D02020] text-white"><ShieldAlert className="h-6 w-6" /></div><div><p className="bauhaus-label" style={{ color: 'var(--primary)' }}>Account Reset</p><h2 className="text-2xl font-black tracking-tighter uppercase">重製指定帳號</h2></div></div>
 
-              <p className="text-sm font-medium text-[var(--text-secondary)] leading-relaxed">
-                會清除該帳號的兌換紀錄、臨時代碼與遊戲進度。這是不可復原操作。
-              </p>
+              <p className="text-sm font-medium text-[var(--text-secondary)] leading-relaxed">會清除該帳號的兌換紀錄、臨時代碼與遊戲進度。這是不可復原操作。</p>
 
               <div className="mt-4 space-y-3">
-                <label className="block">
-                  <span className="mb-2 block bauhaus-label text-sm font-black uppercase tracking-[0.12em]" style={{ color: 'var(--text)' }}>玩家 Gmail</span>
-                  <input
-                    value={resetEmail}
-                    onChange={(event) => setResetEmail(event.target.value)}
-                    className="clay-input rounded-none"
-                    placeholder="cheiling0131@gmail.com"
-                  />
-                </label>
+                <label className="block"><span className="mb-2 block bauhaus-label text-sm font-black uppercase tracking-[0.12em]" style={{ color: 'var(--text)' }}>玩家 Gmail</span><input value={resetEmail} onChange={(event) => setResetEmail(event.target.value)} className="clay-input rounded-none" placeholder="cheiling0131@gmail.com" /></label>
 
-                <label className="block">
-                  <span className="mb-2 block bauhaus-label text-sm font-black uppercase tracking-[0.12em]" style={{ color: 'var(--text)' }}>設定完成關卡 (1-20，可用逗號/範圍)</span>
-                  <input
-                    value={completedInput}
-                    onChange={(e) => setCompletedInput(e.target.value)}
-                    placeholder="例如：1-5,7,9 或 1 2 3"
-                    className="clay-input rounded-none"
-                  />
-                </label>
+                <label className="block"><span className="mb-2 block bauhaus-label text-sm font-black uppercase tracking-[0.12em]" style={{ color: 'var(--text)' }}>設定完成關卡 (1-20，可用逗號/範圍)</span><input value={completedInput} onChange={(e) => setCompletedInput(e.target.value)} placeholder="例如：1-5,7,9 或 1 2 3" className="clay-input rounded-none" /></label>
 
-                <div className="flex gap-2">
-                  <button
-                    type="button"
-                    onClick={applyCompletedInput}
-                    disabled={busy}
-                    className="clay-button clay-button-yellow rounded-none flex-1 py-3 disabled:cursor-not-allowed disabled:opacity-50"
-                  >
-                    套用完成關卡
-                  </button>
-                  
-                </div>
+                <div className="flex gap-2"><button type="button" onClick={applyCompletedInput} disabled={busy} className="clay-button clay-button-yellow rounded-none flex-1 py-3 disabled:cursor-not-allowed disabled:opacity-50">套用完成關卡</button></div>
 
-                <button
-                  type="button"
-                  onClick={resetPlayerProgress}
-                  disabled={busy}
-                  className="clay-button clay-button-blue rounded-none w-full py-3 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                  <ShieldAlert className="mr-2 h-5 w-5" />
-                  {busy ? '處理中…' : '重製此帳號'}
-                </button>
+                <button type="button" onClick={resetPlayerProgress} disabled={busy} className="clay-button clay-button-blue rounded-none w-full py-3 disabled:cursor-not-allowed disabled:opacity-50"><ShieldAlert className="mr-2 h-5 w-5" />{busy ? '處理中…' : '重製此帳號'}</button>
               </div>
             </div>
           </div>
