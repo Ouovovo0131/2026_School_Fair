@@ -1,5 +1,5 @@
 "use client";
-import { use, useEffect, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { auth, db, storage } from "@/lib/firebase";
 import { doc, updateDoc, arrayUnion, getDoc } from "firebase/firestore";
@@ -27,6 +27,9 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
   const [uploading, setUploading] = useState(false);
   const [status, setStatus] = useState("idle");
   const [completedCount, setCompletedCount] = useState(0);
+  const [selectedPhotoFile, setSelectedPhotoFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState("");
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     if (questId) {
@@ -52,6 +55,14 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
     return () => unsubscribe();
   }, [router]);
 
+  useEffect(() => {
+    return () => {
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [previewUrl]);
+
   if (!quest) return (
     <div
       className="min-h-screen flex items-center justify-center p-10 text-center"
@@ -74,9 +85,32 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
     await completeQuest();
   };
 
-  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePhotoSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl);
+    }
+
+    setSelectedPhotoFile(file);
+    setPreviewUrl(URL.createObjectURL(file));
+  };
+
+  const clearPhotoSelection = () => {
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl);
+    }
+    setPreviewUrl("");
+    setSelectedPhotoFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const handlePhotoUpload = async () => {
+    const file = selectedPhotoFile;
+    if (!file || !user?.email) return;
 
     setUploading(true);
     try {
@@ -89,6 +123,7 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
       const compressedFile = await imageCompression(file, options);
       const storageRef = ref(storage, `uploads/${user.email}/${questId}.jpg`);
       await uploadBytes(storageRef, compressedFile);
+      clearPhotoSelection();
       await completeQuest();
 
     } catch (error) {
@@ -269,7 +304,7 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
                   ) : (
                     <>
                       <Camera className="w-6 h-6" />
-                      <span>📱 開啟相機 / 上傳</span>
+                      <span>開啟相機 / 上傳</span>
                     </>
                   )}
                 </div>
@@ -278,10 +313,46 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
                   accept="image/*" 
                   capture="environment"
                   className="hidden" 
-                  onChange={handlePhotoUpload} 
+                  ref={fileInputRef}
+                  onChange={handlePhotoSelect}
                   disabled={uploading} 
                 />
               </label>
+
+              {previewUrl && (
+                <div className="premium-card clay-shadow-sm p-4 space-y-3">
+                  <p className="text-xs font-bold" style={{color: 'var(--primary)'}}>照片預覽</p>
+                  <div className="bauhaus-frame overflow-hidden bg-white">
+                    <img src={previewUrl} alt="預覽照片" className="w-full h-auto object-cover" />
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="clay-button clay-button-yellow rounded-none"
+                      disabled={uploading}
+                    >
+                      更換照片
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handlePhotoUpload}
+                      className="clay-button clay-button-blue rounded-none"
+                      disabled={uploading}
+                    >
+                      {uploading ? '上傳中…' : '確定上傳'}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={clearPhotoSelection}
+                      className="clay-button rounded-none"
+                      disabled={uploading}
+                    >
+                      取消
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>

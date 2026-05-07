@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
 import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
-import { doc, getDoc, setDoc, updateDoc, collection, getDocs, deleteDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc, collection, getDocs, query, where, writeBatch } from "firebase/firestore";
 import { LogOut, Lock, ChevronRight, CalendarDays, Clock3, ArrowLeft } from "lucide-react";
 import { THEME_NAMES } from "./tasks";
 import { QUESTS } from "../../constants/quests";
@@ -16,6 +16,19 @@ import NumberBadge from "@/app/components/ui/NumberBadge";
 const TOTAL_QUESTS = 20;
 const SMALL_REWARD_THRESHOLD = 10;
 const BIG_REWARD_THRESHOLD = 20;
+const TEMP_CODE_COLLECTION = "redeemTempCodes";
+const TEMP_CODE_EXPIRE_MS = 60_000;
+
+type TempRedeemCode = {
+  code: string;
+  playerEmail: string;
+  playerName?: string | null;
+  rewardLevel: number;
+  rewardLabel: string;
+  createdAtMs: number;
+  expiresAtMs: number;
+  status: "active" | "used" | "expired";
+};
 
 interface HomeProps {
   unlockedTasks?: number[];
@@ -67,6 +80,12 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
   const [nickname, setNickname] = useState("");
   const [showPrivacyModal, setShowPrivacyModal] = useState(false);
   const [privacyAgreed, setPrivacyAgreed] = useState(false);
+  const [rewardCodeSessions, setRewardCodeSessions] = useState<Record<number, TempRedeemCode | null>>({
+    [SMALL_REWARD_THRESHOLD]: null,
+    [BIG_REWARD_THRESHOLD]: null,
+  });
+  const [rewardCodeLoading, setRewardCodeLoading] = useState<number | null>(null);
+  const [now, setNow] = useState(() => Date.now());
 
   const [userMode, setUserMode] = useState<ViewMode>(() => {
     if (typeof window !== 'undefined') {
@@ -81,6 +100,11 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
       localStorage.setItem('userMode', userMode);
     }
   }, [userMode]);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setNow(Date.now()), 1000);
+    return () => window.clearInterval(timer);
+  }, []);
 
   // unlocked tasks state (writable) - initialize from localStorage or prop
   const [unlockedTasks, setUnlockedTasks] = useState<number[]>(() => {
@@ -159,8 +183,91 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
 
   const pct = Math.round((completed.length / TOTAL_QUESTS) * 100);
   const goHome = () => setUserMode('home');
-  const ADMIN_EMAILS = ["cheiling0131@gmail.com", "s310354@hlhs.hlc.edu.tw"];
+  const ADMIN_EMAILS = ["cheiling0131@gmail.com", "s310354@hlhs.hlc.edu.tw", "ofstud2@hlhs.hlc.edu.tw"];
   const isAdminEmail = (email?: string | null) => ADMIN_EMAILS.includes((email || "").toLowerCase());
+
+  const createUniqueTempCode = async () => {
+    const alphabet = "abcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (let attempt = 0; attempt < 25; attempt += 1) {
+      let candidate = "";
+      for (let i = 0; i < 8; i += 1) {
+        candidate += alphabet[Math.floor(Math.random() * alphabet.length)];
+      }
+
+      const snapshot = await getDoc(doc(db, TEMP_CODE_COLLECTION, candidate));
+      if (!snapshot.exists()) return candidate;
+    }
+
+    return null;
+  };
+
+  const generateRewardCode = async (rewardLevel: number, rewardLabel: string) => {
+    if (!user?.email) {
+      alert("請先登入後再產生兌換碼");
+      return;
+    }
+
+    if (completed.length < rewardLevel) {
+      alert(`尚未達成 ${rewardLevel} 關，無法產生兌換碼`);
+      return;
+    }
+
+    if (redeemedRewards.includes(rewardLevel)) {
+      alert("此獎勵已兌換，不需再次產生代碼");
+      return;
+    }
+
+    setRewardCodeLoading(rewardLevel);
+    try {
+      const playerEmail = user.email.toLowerCase();
+      const issuedAtMs = Date.now();
+      const expiresAtMs = issuedAtMs + TEMP_CODE_EXPIRE_MS;
+
+      const existingQuery = query(collection(db, TEMP_CODE_COLLECTION), where("playerEmail", "==", playerEmail));
+      const existingSnapshot = await getDocs(existingQuery);
+      const batch = writeBatch(db);
+      let needCommit = false;
+
+      existingSnapshot.docs.forEach((entry) => {
+        const data = entry.data() as TempRedeemCode;
+        if (data.rewardLevel === rewardLevel && data.status === "active" && data.expiresAtMs > issuedAtMs) {
+          batch.update(entry.ref, { status: "expired" });
+          needCommit = true;
+        }
+      });
+
+      if (needCommit) {
+        await batch.commit();
+      }
+
+      const code = await createUniqueTempCode();
+      if (!code) {
+        alert("目前代碼產生繁忙，請稍後再試");
+        return;
+      }
+
+      const session: TempRedeemCode = {
+        code,
+        playerEmail,
+        playerName: nickname || user.displayName || playerEmail,
+        rewardLevel,
+        rewardLabel,
+        createdAtMs: issuedAtMs,
+        expiresAtMs,
+        status: "active",
+      };
+
+      await setDoc(doc(db, TEMP_CODE_COLLECTION, code), session, { merge: true });
+      setRewardCodeSessions((prev) => ({ ...prev, [rewardLevel]: session }));
+      alert(`${rewardLabel} 兌換碼已產生：${code}（1 分鐘內有效）`);
+    } catch (codeError) {
+      console.error(codeError);
+      alert("產生兌換碼失敗，請稍後再試");
+    } finally {
+      setRewardCodeLoading(null);
+    }
+  };
 
   const goGameHub = async () => {
     // if not logged in, trigger popup login first
@@ -454,6 +561,15 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
               <p className="text-xs text-right mt-1 font-semibold" style={{color: 'var(--primary)'}}>{pct}%</p>
             </div>
 
+            <div className="premium-card clay-shadow-sm p-3 sm:p-4" style={{background: '#ffffff'}}>
+              <p className="text-xs font-black uppercase tracking-[0.12em]" style={{color: 'var(--primary)'}}>獎勵說明</p>
+              <div className="mt-2 space-y-1.5 text-xs sm:text-sm font-semibold" style={{color: 'var(--text)'}}>
+                <p>前 30 名完成 20 關：可得 2 枚代幣（總值約 100 元）。</p>
+                <p>30 名後完成 20 關：可得精美禮品。</p>
+                <p>完成 10 關：可得小禮品。</p>
+              </div>
+            </div>
+
             {/* 獎品區 — 橫排兩張卡 */}
             <div className="grid grid-cols-2 gap-2 sm:gap-3">
               {/* 小獎品 */}
@@ -476,6 +592,25 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                     {redeemedRewards.includes(SMALL_REWARD_THRESHOLD) ? '已兌換' : '待兌換'}
                   </span>
                 </div>
+                {user && completed.length >= SMALL_REWARD_THRESHOLD && !redeemedRewards.includes(SMALL_REWARD_THRESHOLD) && (
+                  <button
+                    type="button"
+                    onClick={() => generateRewardCode(SMALL_REWARD_THRESHOLD, "小獎品")}
+                    disabled={rewardCodeLoading === SMALL_REWARD_THRESHOLD}
+                    className="clay-button clay-button-blue !text-[11px] sm:!text-xs !py-1.5 !px-2 rounded-none disabled:opacity-60"
+                  >
+                    {rewardCodeLoading === SMALL_REWARD_THRESHOLD ? '產生中…' : '產生小獎兌換碼'}
+                  </button>
+                )}
+                {rewardCodeSessions[SMALL_REWARD_THRESHOLD] && (
+                  <div className="bauhaus-frame p-2" style={{background: '#ffffff'}}>
+                    <p className="text-[10px] font-black" style={{color: 'var(--primary)'}}>兌換碼</p>
+                    <p className="text-sm font-black tracking-[0.14em] break-all" style={{color: 'var(--text)'}}>{rewardCodeSessions[SMALL_REWARD_THRESHOLD]?.code}</p>
+                    <p className="text-[10px] font-semibold" style={{color: 'var(--text-muted)'}}>
+                      {rewardCodeSessions[SMALL_REWARD_THRESHOLD]!.expiresAtMs > now ? `剩餘 ${Math.max(0, Math.ceil((rewardCodeSessions[SMALL_REWARD_THRESHOLD]!.expiresAtMs - now) / 1000))} 秒` : '已過期，請重新產生'}
+                    </p>
+                  </div>
+                )}
               </div>
 
               {/* 大獎品 */}
@@ -498,6 +633,25 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                     {redeemedRewards.includes(BIG_REWARD_THRESHOLD) ? '已兌換' : '待兌換'}
                   </span>
                 </div>
+                {user && completed.length >= BIG_REWARD_THRESHOLD && !redeemedRewards.includes(BIG_REWARD_THRESHOLD) && (
+                  <button
+                    type="button"
+                    onClick={() => generateRewardCode(BIG_REWARD_THRESHOLD, "大獎品")}
+                    disabled={rewardCodeLoading === BIG_REWARD_THRESHOLD}
+                    className="clay-button clay-button-blue !text-[11px] sm:!text-xs !py-1.5 !px-2 rounded-none disabled:opacity-60"
+                  >
+                    {rewardCodeLoading === BIG_REWARD_THRESHOLD ? '產生中…' : '產生大獎兌換碼'}
+                  </button>
+                )}
+                {rewardCodeSessions[BIG_REWARD_THRESHOLD] && (
+                  <div className="bauhaus-frame p-2" style={{background: '#ffffff'}}>
+                    <p className="text-[10px] font-black" style={{color: 'var(--primary)'}}>兌換碼</p>
+                    <p className="text-sm font-black tracking-[0.14em] break-all" style={{color: 'var(--text)'}}>{rewardCodeSessions[BIG_REWARD_THRESHOLD]?.code}</p>
+                    <p className="text-[10px] font-semibold" style={{color: 'var(--text-muted)'}}>
+                      {rewardCodeSessions[BIG_REWARD_THRESHOLD]!.expiresAtMs > now ? `剩餘 ${Math.max(0, Math.ceil((rewardCodeSessions[BIG_REWARD_THRESHOLD]!.expiresAtMs - now) / 1000))} 秒` : '已過期，請重新產生'}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
 

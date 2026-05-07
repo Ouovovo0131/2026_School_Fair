@@ -8,6 +8,7 @@ export const STALL_CATEGORIES = {
   snack: "小吃",
   beverage: "飲料",
   game: "遊戲",
+  bracelet: "編織手環",
   student: "學生組織",
   other: "其他",
 } as const;
@@ -79,11 +80,11 @@ export const STALL_DIRECTORY: Record<StallId, StallInfo> = {
   19:  { id: "19",  displayName: "樹速塑澍pernova", category: ["snack", "beverage", "other"], content: "巴斯克蛋糕、炒泡麵 & 飲料 & 男僕、吉祥物" },
 20:  { id: "20",  displayName: "仁心遠揚 來呷煙腸", category: ["snack", "beverage", "game"], content: "大腸包小腸、糯米腸、香腸、小黃瓜 & 紅茶、奶茶、可樂 & 猜拳、套圈圈、推桿、乒乓球投杯" },
   21:  { id: "21",  displayName: "貳零塑在必行", category: ["snack", "beverage", "other"], content: "炸物 & 冰飲 & 贖罪卷" },
-  "女1": { id: "女1", displayName: "花蓮女中 1", category: "student", content: "女中特色商品、服裝展示、宣傳品" },
-  "女2": { id: "女2", displayName: "花蓮女中 2", category: "student", content: "女中紀念品、手工藝品、限量周邊" },
-  "女3": { id: "女3", displayName: "花蓮女中 3", category: "student", content: "女中點心、手作美食、特色小食" },
-  "女4": { id: "女4", displayName: "花蓮女中 4", category: "student", content: "女中飲品、冰品、涼飲展售" },
-  "女5": { id: "女5", displayName: "花蓮女中 5", category: "student", content: "女中遊戲區、互動活動、獎品抽獎" },
+  "女1": { id: "女1", displayName: "花女沒塑社", category: ["snack", "beverage"], content: "炒泡麵 & 冰品" },
+  "女2": { id: "女2", displayName: "花女帆船社", category: ["bracelet", "game"], content: "蠟繩編織手環、猴拳結吊飾DIY & 繩結挑戰賽" },
+  "女3": { id: "女3", displayName: "花女學生會", category: "student", content: "餅乾、小吃 & 冰飲 & 一日制服體驗 & 拍立得服務(消費達一定金額)" },
+  "女4": { id: "女4", displayName: "仁不住一直吃", category: "snack", content: "餅乾" },
+  "女5": { id: "女5", displayName: "幸福崴孟餅乾", category: "snack", content: "手做餅乾" },
   班: { id: "班", displayName: "花蓮高中班聯會", category: "student", content: "學校主題商品、紀念小物、宣傳品" },
 };
 

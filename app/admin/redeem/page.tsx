@@ -134,7 +134,7 @@ export default function AdminRedeemPage() {
   const [now, setNow] = useState(() => Date.now());
 
   const normalizedPlayerEmail = playerEmail.trim().toLowerCase();
-  const normalizedTempCode = tempCodeInput.trim();
+  const normalizedTempCode = tempCodeInput.trim().toLowerCase();
   const selectedPlayerEmail = playerProfile?.email || activeSession?.playerEmail || "";
   const sessionRemainingMs = activeSession ? Math.max(0, activeSession.expiresAtMs - now) : 0;
   const sessionExpired = activeSession ? (activeSession.status !== "active" || sessionRemainingMs <= 0) : false;
@@ -214,7 +214,7 @@ export default function AdminRedeemPage() {
   const handleLogin = async () => {
     try {
       await signInWithPopup(auth, new GoogleAuthProvider());
-      setNotice("已登入，請先產生或輸入 6 位數臨時代碼後進行兌換");
+      setNotice("已登入，請先產生或輸入 8 碼小寫英數臨時代碼後進行兌換");
     } catch (loginError) {
       console.error(loginError);
       setError("登入失敗，請重試");
@@ -329,8 +329,13 @@ export default function AdminRedeemPage() {
   };
 
   const createUniqueCode = async () => {
+    const alphabet = "abcdefghijklmnopqrstuvwxyz0123456789";
+
     for (let attempt = 0; attempt < 25; attempt += 1) {
-      const candidate = String(Math.floor(Math.random() * 1_000_000)).padStart(6, "0");
+      let candidate = "";
+      for (let i = 0; i < 8; i += 1) {
+        candidate += alphabet[Math.floor(Math.random() * alphabet.length)];
+      }
       const snapshot = await getDoc(doc(db, TEMP_CODE_COLLECTION, candidate));
       if (!snapshot.exists()) return candidate;
     }
@@ -409,8 +414,8 @@ export default function AdminRedeemPage() {
     setError("");
     setNotice("");
 
-    if (!/^\d{6}$/.test(normalizedTempCode)) {
-      setError("請輸入 6 位數臨時代碼");
+    if (!/^[a-z0-9]{8}$/.test(normalizedTempCode)) {
+      setError("請輸入 8 碼小寫英數臨時代碼");
       return;
     }
 
@@ -458,8 +463,8 @@ export default function AdminRedeemPage() {
       return;
     }
 
-    if (!/^\d{6}$/.test(normalizedTempCode)) {
-      setError("請輸入 6 位數臨時代碼");
+    if (!/^[a-z0-9]{8}$/.test(normalizedTempCode)) {
+      setError("請輸入 8 碼小寫英數臨時代碼");
       return;
     }
 
@@ -620,7 +625,7 @@ export default function AdminRedeemPage() {
               <p className="bauhaus-label" style={{ color: 'var(--primary)' }}>Reward Administration</p>
               <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tighter uppercase">兌換管理中心</h1>
               <p className="mt-2 max-w-3xl text-sm sm:text-base font-medium text-[var(--text-secondary)]">
-                先輸入玩家 Gmail 產生 6 位數臨時代碼，再把代碼交給玩家或直接用代碼查詢；代碼只在 1 分鐘內有效。
+                先輸入玩家 Gmail 產生 8 碼小寫英數臨時代碼，再把代碼交給玩家或直接用代碼查詢；代碼只在 1 分鐘內有效。
               </p>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -813,13 +818,14 @@ export default function AdminRedeemPage() {
                 </label>
 
                 <label className="block">
-                  <span className="mb-2 block bauhaus-label text-sm font-black uppercase tracking-[0.12em]" style={{ color: 'var(--text)' }}>6 位數臨時代碼</span>
+                  <span className="mb-2 block bauhaus-label text-sm font-black uppercase tracking-[0.12em]" style={{ color: 'var(--text)' }}>8 碼小寫英數臨時代碼</span>
                   <input
                     value={tempCodeInput}
-                    onChange={(event) => setTempCodeInput(event.target.value)}
-                    placeholder="123456"
-                    maxLength={6}
-                    inputMode="numeric"
+                    onChange={(event) => setTempCodeInput(event.target.value.toLowerCase().replace(/[^a-z0-9]/g, ""))}
+                    placeholder="a1b2c3d4"
+                    maxLength={8}
+                    inputMode="text"
+                    autoCapitalize="none"
                     className="clay-input rounded-none tracking-[0.25em] font-black text-center text-lg"
                   />
                 </label>

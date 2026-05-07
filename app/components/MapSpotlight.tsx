@@ -26,9 +26,7 @@ const getCategoryColor = (category: StallCategory | StallCategory[]): string => 
     snack: "#F97316",
     beverage: "#0EA5E9",
     game: BAUHAUS_COLORS.yellow,
-    craft: "#A78BFA",
-    food: "#EC4899",
-    class: BAUHAUS_COLORS.blue,
+    bracelet: "#A78BFA",
     student: BAUHAUS_COLORS.black,
     other: BAUHAUS_COLORS.red,
   };
