@@ -153,7 +153,7 @@ export const QUESTS = [
     title: "警衛室的秘密",
     type: "quiz",
     description: "地點：警衛室",
-    question: "目前的校門警衛室是哪一年改建的？(企劃書待補，暫定題) (A)2000年 (B)2010年 (C)2020年",
+    question: "目前的校門警衛室是哪一年改建的？ (A)2000年 (B)2010年 (C)2020年",
     answer: "A"
   },
   {
