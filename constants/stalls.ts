@@ -1,9 +1,4 @@
-﻿/**
- * 攤位分類、排序與對照資料
- * 提供類似 Python dict 的查詢方式
- */
-
-export const STALL_CATEGORIES = {
+﻿export const STALL_CATEGORIES = {
   vip: "貴賓",
   snack: "小吃",
   beverage: "飲料",
