@@ -345,7 +345,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
             )}
             {!user && (
               <button onClick={handleLogin} className="clay-button !py-1.5 sm:!py-2 !px-2 sm:!px-3 !text-xs sm:!text-sm !rounded-none">
-                🔒 <span className="hidden sm:inline">登入</span>
+                <PadlockPngIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> <span className="hidden sm:inline">登入</span>
               </button>
             )}
             {user && (
@@ -475,7 +475,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                   onClick={handleLogin}
                   className="flex items-center gap-1 sm:gap-2 clay-button !py-1.5 sm:!py-2 !px-2 sm:!px-3 !text-xs sm:!text-sm !rounded-none"
                 >
-                  🔒 <span className="hidden sm:inline">登入</span>
+                  <PadlockPngIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> <span className="hidden sm:inline">登入</span>
                 </button>
               )}
             </div>
@@ -519,7 +519,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                   onClick={handleLogin}
                   className="flex items-center gap-1 sm:gap-2 clay-button !py-1.5 sm:!py-2 !px-2 sm:!px-3 !text-xs sm:!text-sm !rounded-none"
                 >
-                  🔒 <span className="hidden sm:inline">登入</span>
+                  <PadlockPngIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> <span className="hidden sm:inline">登入</span>
                 </button>
               )}
             </div>
@@ -725,7 +725,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
             <div className="flex gap-2">
               <button onClick={() => setShowNicknameModal(false)}
                 className="flex-1 py-2.5 sm:py-3 rounded-none font-bold text-xs sm:text-sm border" style={{borderColor: 'var(--border)', color: 'var(--text-secondary)', background: 'var(--surface)'}}>稍後</button>
-              <button onClick={handleSaveNickname} className="flex-1 clay-button !text-xs sm:!text-sm">✅ 確認</button>
+              <button onClick={handleSaveNickname} className="flex-1 clay-button !text-xs sm:!text-sm inline-flex items-center justify-center gap-1.5"><CheckPngIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />確認</button>
             </div>
           </div>
         </div>
@@ -761,7 +761,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                 disabled={!privacyAgreed}
                 className={`flex-1 !text-xs sm:!text-sm ${privacyAgreed ? 'clay-button' : 'py-2 sm:py-3 rounded-none font-bold cursor-not-allowed'}`}
                 style={!privacyAgreed ? {background: 'var(--bg-200)', color: 'var(--text-muted)'} : undefined}>
-                ✅ 同意
+                <span className="inline-flex items-center justify-center gap-1.5"><CheckPngIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />同意</span>
               </button>
             </div>
           </div>
@@ -770,5 +770,45 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
 
 
     </div>
+  );
+}
+
+function PadlockPngIcon({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`inline-block ${className}`}
+      style={{
+        backgroundColor: "currentColor",
+        WebkitMaskImage: "url('/padlock.png')",
+        WebkitMaskRepeat: "no-repeat",
+        WebkitMaskPosition: "center",
+        WebkitMaskSize: "contain",
+        maskImage: "url('/padlock.png')",
+        maskRepeat: "no-repeat",
+        maskPosition: "center",
+        maskSize: "contain",
+      }}
+    />
+  );
+}
+
+function CheckPngIcon({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`inline-block ${className}`}
+      style={{
+        backgroundColor: "currentColor",
+        WebkitMaskImage: "url('/check.png')",
+        WebkitMaskRepeat: "no-repeat",
+        WebkitMaskPosition: "center",
+        WebkitMaskSize: "contain",
+        maskImage: "url('/check.png')",
+        maskRepeat: "no-repeat",
+        maskPosition: "center",
+        maskSize: "contain",
+      }}
+    />
   );
 }
