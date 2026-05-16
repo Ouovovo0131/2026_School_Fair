@@ -657,6 +657,18 @@ export default function Map({ onBack, isModal = false }: MapProps) {
   };
 
   const onBuildingClick = (feature: RectFeature) => {
+    // 若為圖資大樓，使用聚光燈詳情面板，並套用 B 成果展樣式
+    if (feature.id === "library-building") {
+      setSpotlightState({
+        stallId: feature.id,
+        stallName: feature.label,
+        stallContent: `B 成果展\n社團活動 / 服務學習 / 多元課程\n\n1. 兒童權利公約 CRC\n2. 性別平等教育\n3. 門諾醫院\n4. 紅十字會少年服務社\n5. 國際教育交流社\n6. 繪本創作展`,
+        stallCategory: "other",
+        position: { x: feature.x, y: feature.y, w: feature.w, h: feature.h },
+      });
+      return;
+    }
+
     const buildingName = feature.id === "stage" ? "表演舞台" : feature.label;
     setModalState({ id: feature.id, title: buildingName, message: `[建築名稱] 廁所資訊：[廁所位置描述]` });
   };

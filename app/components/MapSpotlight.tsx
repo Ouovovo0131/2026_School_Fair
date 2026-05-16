@@ -1,10 +1,10 @@
 "use client";
 
 import { X } from "lucide-react";
-import { STALL_CATEGORIES, type StallCategory, type StallId } from "@/constants/stalls";
+import { STALL_CATEGORIES, type StallCategory } from "@/constants/stalls";
 
 export interface SpotlightState {
-  stallId: StallId;
+  stallId: string;
   stallName: string;
   stallContent: string;
   stallCategory: StallCategory | StallCategory[];
@@ -258,20 +258,43 @@ export function StallDetailPanel({
           }}
         />
 
-        {/* 內容描述 */}
-        <p
-          style={{
-            margin: 0,
-            fontSize: "clamp(14px, 4vw, 16px)",
-            lineHeight: 1.7,
-            color: "#334155",
-            whiteSpace: "pre-wrap",
-            wordBreak: "break-word",
-            fontFamily: "system-ui, -apple-system, sans-serif",
-          }}
-        >
-          {spotlight.stallContent}
-        </p>
+        {/* 內容描述（支援特殊建築樣式） */}
+        {spotlight.stallId === "library-building" ? (
+          (() => {
+            const lines = (spotlight.stallContent || "").split("\n").map((l) => l.trim()).filter(Boolean);
+            const main = lines[0] ?? spotlight.stallName;
+            const sub = lines[1] ?? "";
+            const items = lines.slice(2);
+
+            return (
+              <div style={{ color: "#111827" }}>
+                <h3 style={{ margin: 0, fontSize: "clamp(24px, 4.5vw, 36px)", fontWeight: 900 }}>{main}</h3>
+                {sub && <p style={{ marginTop: "0.5rem", marginBottom: "0.75rem", fontWeight: 700, color: "#0f172a" }}>{sub}</p>}
+                {items.length > 0 && (
+                  <ol style={{ margin: 0, paddingLeft: "1.25rem", color: "#334155", lineHeight: 1.8 }}>
+                    {items.map((it, idx) => (
+                      <li key={idx} style={{ marginBottom: "0.35rem", fontWeight: 600 }}>{it}</li>
+                    ))}
+                  </ol>
+                )}
+              </div>
+            );
+          })()
+        ) : (
+          <p
+            style={{
+              margin: 0,
+              fontSize: "clamp(14px, 4vw, 16px)",
+              lineHeight: 1.7,
+              color: "#334155",
+              whiteSpace: "pre-wrap",
+              wordBreak: "break-word",
+              fontFamily: "system-ui, -apple-system, sans-serif",
+            }}
+          >
+            {spotlight.stallContent}
+          </p>
+        )}
 
         {/* 底部安全區域 */}
         <div style={{ height: "1rem" }} />

@@ -3,13 +3,14 @@ import { use, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { auth, db, storage } from "@/lib/firebase";
 import { doc, updateDoc, arrayUnion, getDoc } from "firebase/firestore";
-import { ref, uploadBytes } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { onAuthStateChanged } from "firebase/auth";
 import { QUESTS } from "@/constants/quests";
 import imageCompression from "browser-image-compression";
 import { ArrowLeft, Camera } from "lucide-react";
 
 interface LocalUser {
+  uid?: string | null;
   email?: string | null;
   displayName?: string | null;
 }
@@ -121,16 +122,26 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
       };
 
       const compressedFile = await imageCompression(file, options);
-      const storageRef = ref(storage, `uploads/${user.email}/${questId}.jpg`);
-      await uploadBytes(storageRef, compressedFile);
+      const ownerId = (auth.currentUser?.uid ?? (user as LocalUser).uid ?? user.email) as string;
+      const safeOwnerId = ownerId.replace(/[\\/#?]/g, "_");
+      const storageRef = ref(storage, `uploads/${safeOwnerId}/${questId}.jpg`);
+
+      const metadata = { contentType: (compressedFile as Blob).type || "image/jpeg" };
+      const uploadResult = await uploadBytes(storageRef, compressedFile as Blob, metadata);
+      const downloadUrl = await getDownloadURL(uploadResult.ref);
+      console.debug("Photo uploaded to:", downloadUrl);
+
       clearPhotoSelection();
       await completeQuest();
 
     } catch (error) {
-      console.error(error);
-      alert("上傳失敗，請重試");
+      console.error("Photo upload error:", error);
+      const message = (error && (error as any).message) ? (error as any).message : String(error);
+      alert("上傳失敗，請重試。錯誤資訊: " + message);
     }
-    setUploading(false);
+    finally {
+      setUploading(false);
+    }
   };
 
   const completeQuest = async () => {
