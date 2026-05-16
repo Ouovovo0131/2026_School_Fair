@@ -181,16 +181,16 @@ function Modal({
             <div style={{ fontSize: "clamp(11px, 1.6vw, 14px)", fontWeight: 700 }}>(表演團體進出)</div>
           </div>
 
-          <div style={{ position: "absolute", left: "120px", top: "354px", fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 400, color: "#4b5563" }}>B</div>
+          <div style={{ position: "absolute", left: "120px", top: "368px", fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 400, color: "#4b5563" }}>B</div>
           <div style={{ position: "absolute", left: "16px", right: "16px", top: "52%", borderTop: "2px solid #111111" }} />
-          <div style={{ position: "absolute", right: "24px", top: "352px", textAlign: "center", fontSize: "clamp(18px, 2.6vw, 32px)", fontWeight: 700, color: "#111111" }}>南門</div>
+          <div style={{ position: "absolute", right: "24px", top: "356px", textAlign: "center", fontSize: "clamp(18px, 2.6vw, 32px)", fontWeight: 700, color: "#111111" }}>南門</div>
 
-          <div style={{ position: "absolute", left: "24px", top: "74%", display: "flex", flexDirection: "column", gap: "18px", color: "#111111" }}>
+          <div style={{ position: "absolute", left: "24px", top: "70%", display: "flex", flexDirection: "column", gap: "18px", color: "#111111" }}>
             <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>6</div>
             <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>5</div>
+            <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>4</div>
           </div>
           <div style={{ position: "absolute", left: "122px", bottom: "20px", display: "flex", gap: "28px", color: "#111111" }}>
-            <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>4</div>
             <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>3</div>
             <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>2</div>
             <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>1</div>
