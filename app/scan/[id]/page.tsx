@@ -30,6 +30,7 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
   const [completedCount, setCompletedCount] = useState(0);
   const [selectedPhotoFile, setSelectedPhotoFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState("");
+  const [quotaExceeded, setQuotaExceeded] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -136,8 +137,17 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
 
     } catch (error) {
       console.error("Photo upload error:", error);
-      const message = (error && (error as any).message) ? (error as any).message : String(error);
-      alert("上傳失敗，請重試。錯誤資訊: " + message);
+      const errObj = error as any;
+      const message = errObj?.message || String(error);
+
+      // 如果是 quota exceeded，轉成專門狀態並顯示建議
+      const code = errObj?.code || "";
+      if (String(code).includes("quota-exceeded") || String(message).includes("quota-exceeded")) {
+        setQuotaExceeded(true);
+        alert("上傳失敗：伺服器儲存空間已滿（quota exceeded）。請通知管理員清理或升級 Firebase 儲存方案。\n詳細請查看 Firebase Console 的 Storage 使用量。");
+      } else {
+        alert("上傳失敗，請重試。錯誤資訊: " + message);
+      }
     }
     finally {
       setUploading(false);
@@ -319,16 +329,22 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
                     </>
                   )}
                 </div>
-                <input 
-                  type="file" 
-                  accept="image/*" 
-                  capture="environment"
-                  className="hidden" 
-                  ref={fileInputRef}
-                  onChange={handlePhotoSelect}
-                  disabled={uploading} 
-                />
+                  <input 
+                    type="file" 
+                    accept="image/*" 
+                    capture="environment"
+                    className="hidden" 
+                    ref={fileInputRef}
+                    onChange={handlePhotoSelect}
+                    disabled={uploading || quotaExceeded} 
+                  />
               </label>
+
+                {quotaExceeded && (
+                  <div className="mt-3 p-3 border-2 border-red-600 bg-red-50 text-red-800 text-sm rounded-none">
+                    此功能暫停：活動儲存空間已達上限，請通知管理員至 Firebase Console 清理檔案或升級方案（Storage quota exceeded）。
+                  </div>
+                )}
 
               {previewUrl && (
                 <div className="premium-card clay-shadow-sm p-4 space-y-3">
@@ -347,9 +363,9 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
                     </button>
                     <button
                       type="button"
-                      onClick={handlePhotoUpload}
+                       onClick={handlePhotoUpload}
                       className="clay-button clay-button-blue rounded-none"
-                      disabled={uploading}
+                        disabled={uploading || quotaExceeded}
                     >
                       {uploading ? '上傳中…' : '確定上傳'}
                     </button>
