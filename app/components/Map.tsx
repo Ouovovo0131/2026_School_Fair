@@ -175,15 +175,15 @@ function Modal({
             圖資大樓
           </div>
 
-          <div style={{ position: "absolute", left: "120px", top: "26px", fontSize: "clamp(36px, 5vw, 60px)", fontWeight: 400, color: "#6b7280" }}>A</div>
+          <div style={{ position: "absolute", left: "120px", top: "28px", fontSize: "clamp(36px, 5vw, 60px)", fontWeight: 400, color: "#6b7280" }}>A</div>
           <div style={{ position: "absolute", right: "24px", top: "18px", textAlign: "center", color: "#6b7280" }}>
             <div style={{ fontSize: "clamp(18px, 2.6vw, 28px)", fontWeight: 700 }}>北門</div>
             <div style={{ fontSize: "clamp(11px, 1.6vw, 14px)", fontWeight: 700 }}>(表演團體進出)</div>
           </div>
 
-          <div style={{ position: "absolute", left: "112px", top: "160px", fontSize: "clamp(36px, 5vw, 60px)", fontWeight: 400, color: "#4b5563" }}>B</div>
+          <div style={{ position: "absolute", left: "120px", top: "354px", fontSize: "clamp(36px, 5vw, 60px)", fontWeight: 400, color: "#4b5563" }}>B</div>
           <div style={{ position: "absolute", left: "16px", right: "16px", top: "52%", borderTop: "2px solid #111111" }} />
-          <div style={{ position: "absolute", left: "130px", top: "49.5%", fontSize: "clamp(18px, 2.6vw, 32px)", fontWeight: 700, color: "#111111" }}>南門</div>
+          <div style={{ position: "absolute", right: "24px", top: "352px", textAlign: "center", fontSize: "clamp(18px, 2.6vw, 32px)", fontWeight: 700, color: "#111111" }}>南門</div>
 
           <div style={{ position: "absolute", left: "24px", top: "74%", display: "flex", flexDirection: "column", gap: "18px", color: "#111111" }}>
             <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>6</div>
@@ -198,14 +198,14 @@ function Modal({
         </div>
 
         <div style={{ position: "relative", padding: "42px 34px 28px 34px", background: "#ffffff" }}>
-          <div style={{ fontSize: "clamp(32px, 4vw, 58px)", fontWeight: 700, color: "#6b7280", lineHeight: 1 }}>A表演團體休息區</div>
+          <div style={{ fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 700, color: "#6b7280", lineHeight: 1 }}>A表演團體休息區</div>
 
           <div style={{ marginTop: "92px" }}>
-            <div style={{ fontSize: "clamp(42px, 6vw, 72px)", fontWeight: 700, color: "#111111", lineHeight: 1 }}>B 成果展</div>
-            <div style={{ marginTop: "12px", fontSize: "clamp(20px, 2.8vw, 34px)", fontWeight: 700, color: "#111111" }}>社團活動 / 服務學習 / 多元課程</div>
+            <div style={{ fontSize: "clamp(36px, 4.8vw, 64px)", fontWeight: 700, color: "#111111", lineHeight: 1 }}>B 成果展</div>
+            <div style={{ marginTop: "10px", fontSize: "clamp(18px, 2.4vw, 30px)", fontWeight: 700, color: "#111111" }}>社團活動 / 服務學習 / 多元課程</div>
           </div>
 
-          <div style={{ marginTop: "70px", fontSize: "clamp(18px, 2.4vw, 30px)", lineHeight: 1.55, color: "#111111", fontWeight: 700 }}>
+          <div style={{ marginTop: "64px", fontSize: "clamp(16px, 2.2vw, 26px)", lineHeight: 1.55, color: "#111111", fontWeight: 700 }}>
             <div>1. 兒童權利公約 CRC</div>
             <div>2. 性別平等教育</div>
             <div>3. 門諾醫院</div>
