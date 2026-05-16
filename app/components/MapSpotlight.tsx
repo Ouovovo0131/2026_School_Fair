@@ -37,9 +37,11 @@ const getCategoryBadgeStyle = (category: StallCategory | StallCategory[]) => {
   const cat = Array.isArray(category) ? category[0] : category;
 
   if (cat === "student") {
-            minHeight: "420px",
+    return {
+      backgroundColor: BAUHAUS_COLORS.black,
       borderColor: BAUHAUS_COLORS.yellow,
       color: BAUHAUS_COLORS.yellow,
+    };
     };
   }
 
