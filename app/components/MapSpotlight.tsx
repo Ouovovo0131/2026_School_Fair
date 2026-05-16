@@ -37,8 +37,7 @@ const getCategoryBadgeStyle = (category: StallCategory | StallCategory[]) => {
   const cat = Array.isArray(category) ? category[0] : category;
 
   if (cat === "student") {
-    return {
-      backgroundColor: BAUHAUS_COLORS.black,
+            minHeight: "420px",
       borderColor: BAUHAUS_COLORS.yellow,
       color: BAUHAUS_COLORS.yellow,
     };
@@ -85,7 +84,7 @@ export function SpotlightOverlay({
   spotlight: SpotlightState;
   svgWidth: number;
   svgHeight: number;
-  viewBoxOffset: number;
+            maxHeight: "70vh",
 }) {
   const SPOTLIGHT_RADIUS = 70;
   const spotX = spotlight.position.x + spotlight.position.w / 2;
