@@ -58,6 +58,20 @@ const getCategoryLabel = (category: StallCategory | StallCategory[]): string => 
   return STALL_CATEGORIES[cat];
 };
 
+const parseLibraryStallItems = (content: string) => {
+  return content
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => /^\d+\./.test(line))
+    .map((line) => {
+      const match = line.match(/^(\d+)\.\s*(.+)$/);
+      return {
+        number: match?.[1] ?? "",
+        name: match?.[2] ?? line,
+      };
+    });
+};
+
 /**
  * SVG聚光燈overlay - Bauhaus風格
  * 圓形聚光燈 + 硬邊框 + 暗化背景
@@ -148,6 +162,96 @@ export function StallDetailPanel({
 }) {
   const categoryBadgeStyle = getCategoryBadgeStyle(spotlight.stallCategory);
   const categoryLabel = getCategoryLabel(spotlight.stallCategory);
+  const isLibraryBuilding = spotlight.stallId === "library-building";
+  const libraryItems = parseLibraryStallItems(spotlight.stallContent);
+
+  const mapCellStyle = (active?: boolean) => ({
+    position: "absolute" as const,
+    border: "2px solid #111111",
+    background: active ? "#F0C020" : "#FFFFFF",
+    boxShadow: "2px 2px 0 rgba(0,0,0,0.18)",
+    color: "#111111",
+    fontWeight: 900,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    lineHeight: 1,
+  });
+
+  const LibraryMiniMap = () => (
+    <div
+      style={{
+        border: "4px solid #111111",
+        borderRadius: 0,
+        height: "100%",
+        minHeight: 0,
+        background: "#fafafa",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      <div style={{ position: "absolute", inset: "10px", border: "2px solid #111111", background: "#fcfcfc" }} />
+
+      <div style={{ position: "absolute", top: "12px", left: "16px", right: "16px", display: "flex", justifyContent: "space-between", alignItems: "baseline", zIndex: 2 }}>
+        <div style={{ fontSize: "clamp(22px, 3.3vw, 36px)", fontWeight: 900, color: "#111111", lineHeight: 1 }}>圖資</div>
+        <div style={{ fontSize: "clamp(18px, 2.8vw, 30px)", fontWeight: 900, color: "#111111", lineHeight: 1 }}>大樓</div>
+      </div>
+
+      <div style={{ position: "absolute", left: "16px", top: "54px", right: "16px", bottom: "16px" }}>
+        <div style={{ position: "absolute", left: "10px", right: "10px", top: "14%", height: "28%", border: "2px solid #111111", background: "#FFFFFF" }}>
+          <div style={{ position: "absolute", left: "14px", top: "10px", fontSize: "clamp(12px, 1.8vw, 18px)", fontWeight: 900, color: "#111827" }}>室內</div>
+          <div style={{ position: "absolute", left: "14px", top: "36px", fontSize: "clamp(20px, 3.2vw, 30px)", fontWeight: 900, color: "#111827" }}>表演團體休息區</div>
+          <div style={{ position: "absolute", left: "14px", bottom: "10px", fontSize: "clamp(11px, 1.6vw, 14px)", fontWeight: 700, color: "#4b5563" }}>室內提供表演團體休息與整理空間</div>
+        </div>
+
+        <div style={{ position: "absolute", left: 0, right: 0, top: "48%", borderTop: "2px solid #111111" }} />
+        <div style={{ position: "absolute", left: "12px", top: "49%", fontSize: "clamp(12px, 1.8vw, 16px)", fontWeight: 900, color: "#111111" }}>南門</div>
+        <div style={{ position: "absolute", left: "12px", top: "52%", fontSize: "clamp(12px, 1.8vw, 16px)", fontWeight: 900, color: "#111111" }}>室外小涼亭</div>
+
+        <div style={{ position: "absolute", left: "12px", right: "12px", top: "56%", bottom: "12px", border: "2px solid #111111", background: "#fcfcfc" }}>
+          <div style={{ position: "absolute", left: "12px", top: "10px", fontWeight: 900, fontSize: "clamp(12px, 1.8vw, 18px)", color: "#111827" }}>L 型攤位區</div>
+
+          <div style={{ position: "absolute", left: "12px", right: "12px", top: "36px", bottom: "12px" }}>
+            <div style={{ ...mapCellStyle(true), left: "4%", top: "8%", width: "15%", height: "22%" }}>1</div>
+            <div style={{ ...mapCellStyle(), left: "22%", top: "8%", width: "15%", height: "22%" }}>2</div>
+            <div style={{ ...mapCellStyle(), left: "40%", top: "8%", width: "15%", height: "22%" }}>3</div>
+            <div style={{ ...mapCellStyle(), left: "4%", top: "34%", width: "15%", height: "22%" }}>4</div>
+            <div style={{ ...mapCellStyle(), left: "4%", top: "60%", width: "15%", height: "22%" }}>5</div>
+            <div style={{ ...mapCellStyle(), left: "22%", top: "60%", width: "15%", height: "22%" }}>6</div>
+            <div style={{ position: "absolute", right: "7%", bottom: "8%", fontSize: "clamp(11px, 1.7vw, 14px)", fontWeight: 900, color: "#6b7280" }}>L 型排列</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const LibraryDetails = () => (
+    <div style={{ display: "grid", gridTemplateColumns: "minmax(320px, 1.15fr) minmax(250px, 0.85fr)", gap: "1rem", height: "100%", minHeight: 0 }}>
+      <LibraryMiniMap />
+
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem", minHeight: 0 }}>
+        <div style={{ border: "4px solid #111111", background: "#FFFFFF", padding: "0.9rem 1rem", boxShadow: "4px 4px 0 rgba(0,0,0,0.14)" }}>
+          <div style={{ fontSize: "clamp(26px, 4vw, 44px)", fontWeight: 900, lineHeight: 1, color: "#111111" }}>圖資大樓</div>
+          <div style={{ marginTop: "0.45rem", fontSize: "clamp(14px, 2vw, 18px)", fontWeight: 800, color: "#4b5563" }}>室內：表演團體休息區</div>
+          <div style={{ marginTop: "0.2rem", fontSize: "clamp(14px, 2vw, 18px)", fontWeight: 800, color: "#4b5563" }}>室外：L 型小涼亭攤位區</div>
+        </div>
+
+        <div style={{ border: "4px solid #111111", background: "#FFFFFF", padding: "0.9rem 1rem", boxShadow: "4px 4px 0 rgba(0,0,0,0.14)", flex: 1, minHeight: 0, overflowY: "auto" }}>
+          <div style={{ fontSize: "clamp(18px, 2.8vw, 24px)", fontWeight: 900, marginBottom: "0.65rem", color: "#111111" }}>攤位簡介</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.55rem" }}>
+            {libraryItems.map((item, index) => (
+              <div key={item.number} style={{ paddingBottom: index === libraryItems.length - 1 ? 0 : "0.55rem", borderBottom: index === libraryItems.length - 1 ? "none" : "1px dashed #9ca3af" }}>
+                <div style={{ display: "flex", gap: "0.4rem", alignItems: "baseline", flexWrap: "wrap" }}>
+                  <span style={{ fontSize: "clamp(15px, 2.3vw, 19px)", fontWeight: 900, color: "#111111" }}>{item.number}.</span>
+                  <span style={{ fontSize: "clamp(15px, 2.3vw, 19px)", fontWeight: 900, color: "#111111" }}>{item.name}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div
@@ -259,27 +363,8 @@ export function StallDetailPanel({
         />
 
         {/* 內容描述（支援特殊建築樣式） */}
-        {spotlight.stallId === "library-building" ? (
-          (() => {
-            const lines = (spotlight.stallContent || "").split("\n").map((l) => l.trim()).filter(Boolean);
-            const main = lines[0] ?? spotlight.stallName;
-            const sub = lines[1] ?? "";
-            const items = lines.slice(2);
-
-            return (
-              <div style={{ color: "#111827" }}>
-                <h3 style={{ margin: 0, fontSize: "clamp(24px, 4.5vw, 36px)", fontWeight: 900 }}>{main}</h3>
-                {sub && <p style={{ marginTop: "0.5rem", marginBottom: "0.75rem", fontWeight: 700, color: "#0f172a" }}>{sub}</p>}
-                {items.length > 0 && (
-                  <ol style={{ margin: 0, paddingLeft: "1.25rem", color: "#334155", lineHeight: 1.8 }}>
-                    {items.map((it, idx) => (
-                      <li key={idx} style={{ marginBottom: "0.35rem", fontWeight: 600 }}>{it}</li>
-                    ))}
-                  </ol>
-                )}
-              </div>
-            );
-          })()
+        {isLibraryBuilding ? (
+          <LibraryDetails />
         ) : (
           <p
             style={{
