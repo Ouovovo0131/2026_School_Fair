@@ -226,17 +226,29 @@ export function StallDetailPanel({
   );
 
   const LibraryDetails = () => (
-    <div style={{ display: "grid", gridTemplateColumns: "minmax(320px, 1.15fr) minmax(250px, 0.85fr)", gap: "1rem", height: "100%", minHeight: 0 }}>
-      <LibraryMiniMap />
-
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem", minHeight: 0 }}>
-        <div style={{ border: "4px solid #111111", background: "#FFFFFF", padding: "0.9rem 1rem", boxShadow: "4px 4px 0 rgba(0,0,0,0.14)" }}>
-          <div style={{ fontSize: "clamp(26px, 4vw, 44px)", fontWeight: 900, lineHeight: 1, color: "#111111" }}>圖資大樓</div>
-          <div style={{ marginTop: "0.45rem", fontSize: "clamp(14px, 2vw, 18px)", fontWeight: 800, color: "#4b5563" }}>室內：表演團體休息區</div>
-          <div style={{ marginTop: "0.2rem", fontSize: "clamp(14px, 2vw, 18px)", fontWeight: 800, color: "#4b5563" }}>室外：L 型小涼亭攤位區</div>
+    <div
+      style={{
+        height: "100%",
+        minHeight: 0,
+        border: "4px solid #111111",
+        background: "#FFFFFF",
+        boxShadow: "4px 4px 0 rgba(0,0,0,0.14)",
+        overflow: "hidden",
+        position: "relative",
+      }}
+    >
+      <div style={{ position: "absolute", inset: 0, display: "grid", gridTemplateColumns: "minmax(300px, 1.05fr) minmax(240px, 0.95fr)" }}>
+        <div style={{ padding: "0.9rem", minHeight: 0 }}>
+          <LibraryMiniMap />
         </div>
 
-        <div style={{ border: "4px solid #111111", background: "#FFFFFF", padding: "0.9rem 1rem", boxShadow: "4px 4px 0 rgba(0,0,0,0.14)", flex: 1, minHeight: 0, overflowY: "auto" }}>
+        <div style={{ borderLeft: "4px solid #111111", padding: "0.95rem 1rem", minHeight: 0, overflowY: "auto", background: "#fcfcfc" }}>
+          <div style={{ fontSize: "clamp(28px, 4vw, 46px)", fontWeight: 900, lineHeight: 1, color: "#111111" }}>圖資大樓</div>
+          <div style={{ marginTop: "0.45rem", fontSize: "clamp(14px, 2vw, 18px)", fontWeight: 800, color: "#4b5563" }}>室內：表演團體休息區</div>
+          <div style={{ marginTop: "0.2rem", fontSize: "clamp(14px, 2vw, 18px)", fontWeight: 800, color: "#4b5563" }}>室外：L 型小涼亭攤位區</div>
+
+          <div style={{ height: "2px", background: "#111111", margin: "0.9rem 0" }} />
+
           <div style={{ fontSize: "clamp(18px, 2.8vw, 24px)", fontWeight: 900, marginBottom: "0.65rem", color: "#111111" }}>攤位簡介</div>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.55rem" }}>
             {libraryItems.map((item, index) => (
@@ -333,24 +345,26 @@ export function StallDetailPanel({
         </div>
 
         {/* 分類徽章 */}
-        <div
-          style={{
-            display: "inline-block",
-            backgroundColor: categoryBadgeStyle.backgroundColor,
-            color: categoryBadgeStyle.color,
-            padding: "0.5rem 1rem",
-            fontSize: "12px",
-            fontWeight: 700,
-            border: `2px solid ${categoryBadgeStyle.borderColor}`,
-            borderRadius: 0,
-            marginBottom: "1.25rem",
-            fontFamily: "Outfit, sans-serif",
-            letterSpacing: "0.05em",
-            boxShadow: `3px 3px 0 ${categoryBadgeStyle.borderColor}`,
-          }}
-        >
-          {categoryLabel}
-        </div>
+        {!isLibraryBuilding && (
+          <div
+            style={{
+              display: "inline-block",
+              backgroundColor: categoryBadgeStyle.backgroundColor,
+              color: categoryBadgeStyle.color,
+              padding: "0.5rem 1rem",
+              fontSize: "12px",
+              fontWeight: 700,
+              border: `2px solid ${categoryBadgeStyle.borderColor}`,
+              borderRadius: 0,
+              marginBottom: "1.25rem",
+              fontFamily: "Outfit, sans-serif",
+              letterSpacing: "0.05em",
+              boxShadow: `3px 3px 0 ${categoryBadgeStyle.borderColor}`,
+            }}
+          >
+            {categoryLabel}
+          </div>
+        )}
 
         {/* 分割線 */}
         <div
