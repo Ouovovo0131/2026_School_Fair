@@ -36,6 +36,8 @@ interface ModalState {
   id: string;
 }
 
+const LIBRARY_STALL_IDS = ["1", "2", "3", "4", "5", "6"] as const;
+
 const COLORS = {
   mapBg: "#f2f2f2",
   grass: "#c9ddcb",
@@ -125,6 +127,137 @@ function Modal({
   const needsScroll = desiredHeight > maxAllowedHeight;
   if (needsScroll) desiredHeight = maxAllowedHeight;
 
+  const isLibraryBuilding = id === "library-building";
+
+  const libraryStalls = LIBRARY_STALL_IDS.map((stallId) => {
+    const info = getStallInfo(stallId as StallId);
+    return {
+      id: stallId,
+      name: info.displayName,
+      content: info.content,
+    };
+  });
+
+  const mapCellStyle = (active?: boolean) => ({
+    position: "absolute" as const,
+    border: "2px solid #111111",
+    background: active ? "#f0c020" : "#ffffff",
+    boxShadow: "2px 2px 0 rgba(0,0,0,0.18)",
+    fontWeight: 800,
+    color: "#111111",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: "clamp(11px, 2vw, 14px)",
+    lineHeight: 1,
+  });
+
+  const LibraryBuildingPanel = () => (
+    <div style={{ display: "grid", gridTemplateColumns: "minmax(280px, 1.1fr) minmax(260px, 0.9fr)", gap: "1rem", height: "100%" }}>
+      <div
+        style={{
+          border: "4px solid #111111",
+          background: "#fafafa",
+          position: "relative",
+          minHeight: 0,
+          overflow: "hidden",
+        }}
+      >
+        <div style={{ position: "absolute", inset: "12px", border: "2px solid #111111", background: "#f8f8f8" }} />
+
+        <div style={{ position: "absolute", top: "14px", left: "16px", right: "16px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", zIndex: 1 }}>
+          <div style={{ fontSize: "clamp(28px, 6vw, 54px)", fontWeight: 900, lineHeight: 1, color: "#111111" }}>圖資</div>
+          <div style={{ fontSize: "clamp(18px, 4vw, 30px)", fontWeight: 900, lineHeight: 1, color: "#111111" }}>大樓</div>
+        </div>
+
+        <div style={{ position: "absolute", top: "62px", left: "18px", right: "18px", bottom: "18px" }}>
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              border: "2px solid #111111",
+              background: "linear-gradient(180deg, #ffffff 0%, #fcfcfc 100%)",
+            }}
+          >
+            <div style={{ position: "absolute", left: "14px", top: "14px", fontSize: "clamp(14px, 2vw, 20px)", fontWeight: 800, color: "#6b7280" }}>室內</div>
+            <div style={{ position: "absolute", left: 0, right: 0, top: "46%", borderTop: "2px solid #111111" }} />
+            <div style={{ position: "absolute", left: "14px", top: "50%", fontSize: "clamp(14px, 2vw, 20px)", fontWeight: 800, color: "#6b7280" }}>室外小涼亭</div>
+
+            <div
+              style={{
+                position: "absolute",
+                left: "14px",
+                right: "14px",
+                top: "12%",
+                height: "28%",
+                border: "3px solid #111111",
+                background: "#ffffff",
+                boxShadow: "3px 3px 0 rgba(0,0,0,0.1)",
+              }}
+            >
+              <div style={{ position: "absolute", top: "10px", left: "12px", fontWeight: 900, fontSize: "clamp(16px, 2.5vw, 24px)", color: "#111827" }}>A 表演團體休息區</div>
+              <div style={{ position: "absolute", bottom: "10px", left: "12px", right: "12px", fontSize: "clamp(11px, 1.8vw, 14px)", fontWeight: 700, color: "#374151" }}>
+                室內提供表演團體休息與整理空間
+              </div>
+            </div>
+
+            <div
+              style={{
+                position: "absolute",
+                left: "22px",
+                right: "22px",
+                top: "58%",
+                bottom: "14px",
+                border: "3px solid #111111",
+                background: "#fdfdfd",
+                boxShadow: "3px 3px 0 rgba(0,0,0,0.1)",
+              }}
+            >
+              <div style={{ position: "absolute", top: "8px", left: "10px", fontWeight: 900, fontSize: "clamp(16px, 2.4vw, 22px)", color: "#111827" }}>L 型攤位區</div>
+
+              <div style={{ position: "absolute", left: "10px", right: "10px", top: "36px", bottom: "10px" }}>
+                <div style={{ ...mapCellStyle(true), left: "6%", top: "8%", width: "17%", height: "22%" }}>1</div>
+                <div style={{ ...mapCellStyle(), left: "24%", top: "8%", width: "17%", height: "22%" }}>2</div>
+                <div style={{ ...mapCellStyle(), left: "42%", top: "8%", width: "17%", height: "22%" }}>3</div>
+                <div style={{ ...mapCellStyle(), left: "6%", top: "33%", width: "17%", height: "22%" }}>4</div>
+                <div style={{ ...mapCellStyle(), left: "6%", top: "58%", width: "17%", height: "22%" }}>5</div>
+                <div style={{ ...mapCellStyle(), left: "24%", top: "58%", width: "17%", height: "22%" }}>6</div>
+                <div style={{ position: "absolute", right: "8%", bottom: "8%", fontSize: "clamp(12px, 1.7vw, 14px)", fontWeight: 800, color: "#6b7280" }}>L 型排列</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem", minHeight: 0 }}>
+        <div style={{ border: "4px solid #111111", background: "#ffffff", padding: "0.9rem 1rem", boxShadow: "4px 4px 0 rgba(0,0,0,0.14)" }}>
+          <div style={{ fontSize: "clamp(28px, 6vw, 42px)", fontWeight: 900, lineHeight: 1, color: "#111111" }}>圖資大樓</div>
+          <div style={{ marginTop: "0.45rem", fontSize: "clamp(14px, 2.2vw, 18px)", fontWeight: 800, color: "#4b5563" }}>
+            室內：表演團體休息區
+          </div>
+          <div style={{ marginTop: "0.2rem", fontSize: "clamp(14px, 2.2vw, 18px)", fontWeight: 800, color: "#4b5563" }}>
+            室外：L 型小涼亭攤位區
+          </div>
+        </div>
+
+        <div style={{ border: "4px solid #111111", background: "#ffffff", padding: "0.9rem 1rem", boxShadow: "4px 4px 0 rgba(0,0,0,0.14)", flex: 1 }}>
+          <div style={{ fontSize: "clamp(18px, 3vw, 24px)", fontWeight: 900, marginBottom: "0.6rem", color: "#111111" }}>攤位簡介</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.55rem" }}>
+            {libraryStalls.map((stall, index) => (
+              <div key={stall.id} style={{ paddingBottom: index === libraryStalls.length - 1 ? 0 : "0.55rem", borderBottom: index === libraryStalls.length - 1 ? "none" : "1px dashed #9ca3af" }}>
+                <div style={{ display: "flex", gap: "0.45rem", alignItems: "baseline", flexWrap: "wrap" }}>
+                  <span style={{ fontSize: "clamp(16px, 2.5vw, 20px)", fontWeight: 900, color: "#111111" }}>{stall.id}.</span>
+                  <span style={{ fontSize: "clamp(16px, 2.5vw, 20px)", fontWeight: 900, color: "#111111" }}>{stall.name}</span>
+                </div>
+                <div style={{ marginTop: "0.2rem", fontSize: "clamp(13px, 2vw, 16px)", lineHeight: 1.55, color: "#374151" }}>{stall.content}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   return createPortal(
     <div
       className="z-[80] flex items-center justify-center bg-black/50 p-4 sm:p-6"
@@ -168,19 +301,23 @@ function Modal({
           </h3>
         </div>
 
-        <div style={{ marginTop: "0.75rem" }}>
-          <p
-            style={{
-              fontSize: "clamp(13px, 3.6vw, 16px)",
-              lineHeight: 1.6,
-              color: "#334155",
-              margin: 0,
-              whiteSpace: "pre-wrap",
-              wordBreak: "break-word",
-            }}
-          >
-            {initialMessage}
-          </p>
+        <div style={{ marginTop: "0.75rem", height: "calc(100% - 3.2rem)" }}>
+          {isLibraryBuilding ? (
+            <LibraryBuildingPanel />
+          ) : (
+            <p
+              style={{
+                fontSize: "clamp(13px, 3.6vw, 16px)",
+                lineHeight: 1.6,
+                color: "#334155",
+                margin: 0,
+                whiteSpace: "pre-wrap",
+                wordBreak: "break-word",
+              }}
+            >
+              {initialMessage}
+            </p>
+          )}
         </div>
       </div>
     </div>,
