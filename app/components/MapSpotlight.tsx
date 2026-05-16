@@ -42,7 +42,6 @@ const getCategoryBadgeStyle = (category: StallCategory | StallCategory[]) => {
       borderColor: BAUHAUS_COLORS.yellow,
       color: BAUHAUS_COLORS.yellow,
     };
-    };
   }
 
   const backgroundColor = getCategoryColor(category);
