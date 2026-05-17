@@ -85,28 +85,13 @@ function Modal({
 
   useEffect(() => {
     const updateViewport = () => {
-      const visualViewport = (window as any).visualViewport;
-      if (visualViewport) {
-        setViewport({
-          top: visualViewport.offsetTop || 0,
-          left: visualViewport.offsetLeft || 0,
-          width: visualViewport.width || window.innerWidth,
-          height: visualViewport.height || window.innerHeight,
-        });
-        return;
-      }
-
       setViewport({ top: 0, left: 0, width: window.innerWidth, height: window.innerHeight });
     };
 
     updateViewport();
-
-    const visualViewport = (window as any).visualViewport;
-    visualViewport?.addEventListener("resize", updateViewport);
     window.addEventListener("resize", updateViewport);
 
     return () => {
-      visualViewport?.removeEventListener("resize", updateViewport);
       window.removeEventListener("resize", updateViewport);
     };
   }, []);
@@ -181,7 +166,7 @@ function Modal({
             .mobile-stalls-wrap{ margin-top:6px; }
             .mobile-stalls-grid{ display:grid; grid-template-columns:56px 1fr; gap:10px; align-items:end; }
             .mobile-stalls-row{ display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:8px; align-items:end; }
-            .mobile-stall-box{ width:100%; height:30px; border:2px solid #111111; display:flex; align-items:center; justify-content:center; font-weight:900; background:#ffffff; }
+            .mobile-stall-box{ width:100%; height:30px; display:flex; align-items:center; justify-content:center; font-weight:900; background:transparent; }
             .intro-container{ overflow:visible; padding:14px 12px 22px 12px !important; }
           }
         `}</style>
@@ -224,16 +209,17 @@ function Modal({
                 </div>
               </div>
 
-              <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "center", gap: "10px", paddingLeft: "2px" }}>
-                <div style={{ fontSize: "clamp(17px, 4.4vw, 22px)", fontWeight: 800, color: "#4b5563", lineHeight: 1 }}>B 區</div>
-              </div>
+              <div style={{ height: "16px" }} />
 
               <div className="mobile-divider" style={{ position: "relative", height: "18px" }}>
                   <div style={{ position: "absolute", left: 0, right: 0, top: "50%", borderTop: "1px solid #111111" }} />
                   <div style={{ position: "absolute", left: "68%", top: "50%", transform: "translate(-50%, -50%)", padding: "0 8px", fontSize: "13px", fontWeight: 800, background: "#ffffff" }}>南門</div>
               </div>
 
-                <div className="mobile-stalls-wrap" style={{ border: "2px solid #111111", padding: "8px", background: "#ffffff" }}>
+                <div className="mobile-stalls-wrap" style={{ border: "none", padding: "2px 0 0", background: "transparent" }}>
+                  <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "center", marginBottom: "8px" }}>
+                    <div style={{ fontSize: "clamp(17px, 4.4vw, 22px)", fontWeight: 800, color: "#4b5563", lineHeight: 1 }}>B 區</div>
+                  </div>
                   <div className="mobile-stalls-grid">
                     <div style={{ display: "flex", flexDirection: "column", gap: "8px", minWidth: "56px" }}>
                       <div className="mobile-stall-box">6</div>
