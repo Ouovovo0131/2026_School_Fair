@@ -183,15 +183,23 @@ function Modal({
             圖資大樓
           </div>
 
-          <div style={{ position: "absolute", left: "120px", top: "28px", fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 400, color: "#6b7280" }}>A</div>
+          <div className="label-A" style={{ position: "absolute", left: "120px", top: "28px", fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 400, color: "#6b7280" }}>A</div>
           <div style={{ position: "absolute", right: "24px", top: "18px", textAlign: "center", color: "#6b7280" }}>
             <div style={{ fontSize: "clamp(18px, 2.6vw, 28px)", fontWeight: 700 }}>北門</div>
             <div style={{ fontSize: "clamp(11px, 1.6vw, 14px)", fontWeight: 700 }}>(表演團體進出)</div>
           </div>
 
-          <div style={{ position: "absolute", left: "120px", top: "384px", fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 400, color: "#4b5563" }}>B</div>
+          <div className="label-B" style={{ position: "absolute", left: "120px", top: "384px", fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 400, color: "#4b5563" }}>B</div>
           <div style={{ position: "absolute", left: "16px", right: "16px", top: "52%", borderTop: "2px solid #111111" }} />
-          <div style={{ position: "absolute", right: "24px", top: "384px", textAlign: "center", fontSize: "clamp(18px, 2.6vw, 32px)", fontWeight: 700, color: "#111111" }}>南門</div>
+          <div className="label-southgate" style={{ position: "absolute", right: "24px", top: "384px", textAlign: "center", fontSize: "clamp(18px, 2.6vw, 32px)", fontWeight: 700, color: "#111111" }}>南門</div>
+          <style>{`
+            @media (max-width:700px){
+              .label-A{ left:6%; top:3.5% }
+              .label-B{ left:18%; top:50% }
+              .label-southgate{ right:6%; top:50% }
+              .library-modal-grid{ grid-template-columns: 1fr }
+            }
+          `}</style>
 
           <div style={{ position: "absolute", left: "24px", top: "67%", display: "flex", flexDirection: "column", gap: "18px", color: "#111111" }}>
             <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>6</div>

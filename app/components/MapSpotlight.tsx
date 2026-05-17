@@ -214,12 +214,12 @@ export function StallDetailPanel({
           <div style={{ position: "absolute", left: "12px", top: "10px", fontWeight: 900, fontSize: "clamp(12px, 1.8vw, 18px)", color: "#111827" }}>L 型攤位區</div>
 
           <div style={{ position: "absolute", left: "12px", right: "12px", top: "36px", bottom: "12px" }}>
-            <div style={{ ...mapCellStyle(true), left: "4%", top: "8%", width: "15%", height: "22%" }}>1</div>
-            <div style={{ ...mapCellStyle(), left: "22%", top: "8%", width: "15%", height: "22%" }}>2</div>
-            <div style={{ ...mapCellStyle(), left: "40%", top: "8%", width: "15%", height: "22%" }}>3</div>
-            <div style={{ ...mapCellStyle(), left: "4%", top: "34%", width: "15%", height: "22%" }}>4</div>
-            <div style={{ ...mapCellStyle(), left: "4%", top: "60%", width: "15%", height: "22%" }}>5</div>
-            <div style={{ ...mapCellStyle(), left: "22%", top: "60%", width: "15%", height: "22%" }}>6</div>
+            <div className="map-cell" style={{ ...mapCellStyle(true), left: "4%", top: "8%", width: "15%", height: "22%" }}>1</div>
+            <div className="map-cell" style={{ ...mapCellStyle(), left: "22%", top: "8%", width: "15%", height: "22%" }}>2</div>
+            <div className="map-cell" style={{ ...mapCellStyle(), left: "40%", top: "8%", width: "15%", height: "22%" }}>3</div>
+            <div className="map-cell" style={{ ...mapCellStyle(), left: "4%", top: "34%", width: "15%", height: "22%" }}>4</div>
+            <div className="map-cell" style={{ ...mapCellStyle(), left: "4%", top: "60%", width: "15%", height: "22%" }}>5</div>
+            <div className="map-cell" style={{ ...mapCellStyle(), left: "22%", top: "60%", width: "15%", height: "22%" }}>6</div>
             <div style={{ position: "absolute", right: "7%", bottom: "8%", fontSize: "clamp(11px, 1.7vw, 14px)", fontWeight: 900, color: "#6b7280" }}>L 型排列</div>
           </div>
         </div>
@@ -280,7 +280,7 @@ export function StallDetailPanel({
   );
 
   return (
-    <div
+    <div className="stall-detail-panel"
       style={{
         position: "fixed",
         bottom: 0,
@@ -306,11 +306,20 @@ export function StallDetailPanel({
             opacity: 1;
           }
         }
+        .stall-detail-panel .header-mobile { display: flex; gap: .5rem }
+        @media (max-width: 640px){
+          .stall-detail-panel{ max-height: 95vh !important; padding-bottom: 0.6rem }
+          .stall-detail-panel .header-mobile{ flex-direction: column; align-items: stretch }
+          .stall-detail-panel button{ width:48px;height:48px }
+          .library-mini-map .map-cell{ font-size: clamp(16px, 4.5vw, 22px) !important }
+          .library-details-grid .left{ order: 2 }
+          .library-details-grid .right{ order: 1; border-left: none }
+        }
       `}</style>
 
       <div style={{ padding: "1.5rem 1rem" }}>
         {/* 頭部：關閉按鈕 + 分類徽章 */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1rem" }}>
+        <div className="header-mobile" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1rem" }}>
           <div style={{ flex: 1, paddingRight: "1rem" }}>
             <h2
               style={{
