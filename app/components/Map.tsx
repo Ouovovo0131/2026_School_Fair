@@ -145,7 +145,6 @@ function Modal({
           boxShadow: "4px 4px 0 #111111",
           minHeight: 0,
           height: "100%",
-          overflowY: "auto",
           overflowX: "hidden",
           paddingBottom: "0.6rem",
         }}
@@ -165,9 +164,9 @@ function Modal({
             .mobile-divider{ margin-top:8px; margin-bottom:14px; }
             .mobile-stalls-wrap{ margin-top:6px; }
             .mobile-stalls-grid{ display:grid; grid-template-columns:56px 1fr; gap:10px; align-items:end; }
-            .mobile-stalls-row{ display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:8px; align-items:end; }
+            .mobile-stalls-row{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:8px; align-items:end; }
             .mobile-stall-box{ width:100%; height:30px; display:flex; align-items:center; justify-content:center; font-weight:900; background:transparent; }
-            .intro-container{ overflow:visible; padding:14px 12px 22px 12px !important; }
+            .intro-container{ padding:14px 12px 22px 12px !important; overflow:visible !important; }
           }
         `}</style>
 
@@ -224,10 +223,10 @@ function Modal({
                     <div style={{ display: "flex", flexDirection: "column", gap: "8px", minWidth: "56px" }}>
                       <div className="mobile-stall-box">6</div>
                       <div className="mobile-stall-box">5</div>
+                      <div className="mobile-stall-box">4</div>
                     </div>
 
                     <div className="mobile-stalls-row">
-                      <div className="mobile-stall-box">4</div>
                       <div className="mobile-stall-box">3</div>
                       <div className="mobile-stall-box">2</div>
                       <div className="mobile-stall-box">1</div>
@@ -237,7 +236,7 @@ function Modal({
             </div>
           </div>
 
-          <div className="intro-container" style={{ flex: 1, overflowY: "auto", padding: "18px 12px 14px 12px", boxSizing: "border-box" }}>
+          <div className="intro-container" style={{ flex: 1, padding: "18px 12px 14px 12px", boxSizing: "border-box" }}>
             <h3 style={{ margin: 0, fontSize: "20px", fontWeight: 900, color: "#111111" }}>圖資大樓介紹</h3>
             <p style={{ marginTop: "8px", marginBottom: "6px" }}><strong>A 區：</strong>表演團體休息區，北門進出。</p>
             <p style={{ marginTop: 0, marginBottom: "12px" }}><strong>B 區：</strong>成果展（社團活動 / 服務學習 / 多元課程）。</p>
