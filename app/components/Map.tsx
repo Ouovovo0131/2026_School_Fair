@@ -103,12 +103,10 @@ function Modal({
 
     const visualViewport = (window as any).visualViewport;
     visualViewport?.addEventListener("resize", updateViewport);
-    visualViewport?.addEventListener("scroll", updateViewport);
     window.addEventListener("resize", updateViewport);
 
     return () => {
       visualViewport?.removeEventListener("resize", updateViewport);
-      visualViewport?.removeEventListener("scroll", updateViewport);
       window.removeEventListener("resize", updateViewport);
     };
   }, []);
@@ -181,6 +179,9 @@ function Modal({
             .mobile-a-row{ display:grid; grid-template-columns:1fr auto; gap:12px; align-items:start; }
             .mobile-divider{ margin-top:8px; margin-bottom:14px; }
             .mobile-stalls-wrap{ margin-top:6px; }
+            .mobile-stalls-grid{ display:grid; grid-template-columns:56px 1fr; gap:10px; align-items:end; }
+            .mobile-stalls-row{ display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:8px; align-items:end; }
+            .mobile-stall-box{ width:100%; height:30px; border:2px solid #111111; display:flex; align-items:center; justify-content:center; font-weight:900; background:#ffffff; }
             .intro-container{ overflow:visible; padding:14px 12px 22px 12px !important; }
           }
         `}</style>
@@ -227,24 +228,23 @@ function Modal({
                 <div style={{ fontSize: "clamp(17px, 4.4vw, 22px)", fontWeight: 800, color: "#4b5563", lineHeight: 1 }}>B 區</div>
               </div>
 
-              <div className="mobile-divider" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}>
-                  <div style={{ height: "1px", background: "#111111", flex: 1 }} />
-                  <div style={{ padding: "0 8px", fontSize: "13px", fontWeight: 800 }}>南門</div>
-                  <div style={{ height: "1px", background: "#111111", flex: 1 }} />
+              <div className="mobile-divider" style={{ position: "relative", height: "18px" }}>
+                  <div style={{ position: "absolute", left: 0, right: 0, top: "50%", borderTop: "1px solid #111111" }} />
+                  <div style={{ position: "absolute", left: "68%", top: "50%", transform: "translate(-50%, -50%)", padding: "0 8px", fontSize: "13px", fontWeight: 800, background: "#ffffff" }}>南門</div>
               </div>
 
                 <div className="mobile-stalls-wrap" style={{ border: "2px solid #111111", padding: "8px", background: "#ffffff" }}>
-                  <div style={{ display: "flex", gap: "10px" }}>
+                  <div className="mobile-stalls-grid">
                     <div style={{ display: "flex", flexDirection: "column", gap: "8px", minWidth: "56px" }}>
-                      <div style={{ width: "48px", height: "30px", border: "2px solid #111111", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900 }}>6</div>
-                      <div style={{ width: "48px", height: "30px", border: "2px solid #111111", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900 }}>5</div>
+                      <div className="mobile-stall-box">6</div>
+                      <div className="mobile-stall-box">5</div>
                     </div>
 
-                    <div style={{ flex: 1, display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "8px" }}>
-                      <div style={{ width: "48px", height: "30px", border: "2px solid #111111", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900 }}>4</div>
-                      <div style={{ width: "48px", height: "30px", border: "2px solid #111111", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900 }}>3</div>
-                      <div style={{ width: "48px", height: "30px", border: "2px solid #111111", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900 }}>2</div>
-                      <div style={{ width: "48px", height: "30px", border: "2px solid #111111", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900 }}>1</div>
+                    <div className="mobile-stalls-row">
+                      <div className="mobile-stall-box">4</div>
+                      <div className="mobile-stall-box">3</div>
+                      <div className="mobile-stall-box">2</div>
+                      <div className="mobile-stall-box">1</div>
                     </div>
                   </div>
                 </div>
@@ -257,14 +257,18 @@ function Modal({
             <p style={{ marginTop: 0, marginBottom: "12px" }}><strong>B 區：</strong>成果展（社團活動 / 服務學習 / 多元課程）。</p>
 
             <h3 style={{ margin: "6px 0 8px 0", fontSize: "18px", fontWeight: 900 }}>攤位 1 - 6</h3>
-            <ol style={{ paddingLeft: "1.15rem", margin: 0, color: "#111111", fontWeight: 700, lineHeight: 1.6 }}>
-              <li>兒童權利公約 CRC</li>
-              <li>性別平等教育</li>
-              <li>門諾醫院</li>
-              <li>紅十字會少年服務社</li>
-              <li>國際教育交流社</li>
-              <li>繪本創作展</li>
-            </ol>
+            <ul style={{ listStyle: "none", paddingLeft: 0, margin: 0, color: "#111111", fontWeight: 700, lineHeight: 1.6 }}>
+              {[
+                "兒童權利公約 CRC",
+                "性別平等教育",
+                "門諾醫院",
+                "紅十字會少年服務社",
+                "國際教育交流社",
+                "繪本創作展",
+              ].map((name, index) => (
+                <li key={name}>{index + 1}. {name}</li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
