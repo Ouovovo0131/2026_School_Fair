@@ -175,6 +175,15 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
       
       const userDoc = await getDoc(userRef);
       const completedQuests = userDoc.data()?.completedQuests || [];
+      const completed20AtMs = userDoc.data()?.completed20AtMs;
+
+      // First time a player reaches 20 quests, persist a completion timestamp for ranking.
+      if (completedQuests.length >= 20 && !completed20AtMs) {
+        await updateDoc(userRef, {
+          completed20AtMs: Date.now(),
+        });
+      }
+
       setCompletedCount(completedQuests.length);
       
       setStatus("success");

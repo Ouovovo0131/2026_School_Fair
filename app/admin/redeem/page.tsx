@@ -25,6 +25,16 @@ type PlayerProfile = {
   nickname?: string | null;
   redeemedRewards?: number[];
   completedQuests?: number[];
+  completed20AtMs?: number | null;
+};
+
+type TopFinisher = {
+  rank: number;
+  email: string;
+  displayName: string;
+  completedCount: number;
+  completed20AtMs: number | null;
+  redeemedBigReward: boolean;
 };
 
 type RedemptionRecord = {
@@ -127,6 +137,7 @@ export default function AdminRedeemPage() {
   const [completedInput, setCompletedInput] = useState("");
   const [activeSession, setActiveSession] = useState<TempRedeemCode | null>(null);
   const [playerProfile, setPlayerProfile] = useState<PlayerProfile | null>(null);
+  const [allPlayers, setAllPlayers] = useState<PlayerProfile[]>([]);
   const [playerRecords, setPlayerRecords] = useState<RedemptionRecord[]>([]);
   const [records, setRecords] = useState<RedemptionRecord[]>([]);
   const [busy, setBusy] = useState(false);
@@ -178,6 +189,33 @@ export default function AdminRedeemPage() {
   }, [accessGranted]);
 
   useEffect(() => {
+    if (!accessGranted) return;
+
+    const unsubscribe = onSnapshot(collection(db, "users"), (snapshot) => {
+      const users = snapshot.docs.map((document) => {
+        const data = document.data() as Partial<PlayerProfile> & { completed20AtMs?: unknown };
+        const email = String(data.email || document.id || "").trim().toLowerCase();
+        const completedQuests = Array.isArray(data.completedQuests) ? data.completedQuests.filter((item): item is number => typeof item === "number") : [];
+        const redeemedRewards = Array.isArray(data.redeemedRewards) ? data.redeemedRewards.filter((item): item is number => typeof item === "number") : [];
+        const completed20AtMs = typeof data.completed20AtMs === "number" ? data.completed20AtMs : null;
+
+        return {
+          email,
+          name: data.name || null,
+          nickname: data.nickname || null,
+          completedQuests,
+          redeemedRewards,
+          completed20AtMs,
+        } satisfies PlayerProfile;
+      }).filter((user) => Boolean(user.email));
+
+      setAllPlayers(users);
+    });
+
+    return () => unsubscribe();
+  }, [accessGranted]);
+
+  useEffect(() => {
     if (!selectedPlayerEmail) {
       setPlayerRecords([]);
       return;
@@ -200,6 +238,53 @@ export default function AdminRedeemPage() {
       redeemed: redeemed.includes(reward.level),
     }));
   }, [playerProfile]);
+
+  const top30Finishers = useMemo(() => {
+    const bigRewardRedeemedAt = new Map<string, number>();
+
+    records.forEach((record) => {
+      if (record.rewardLevel !== 20) return;
+      const key = record.playerEmail.trim().toLowerCase();
+      if (!key) return;
+
+      const previous = bigRewardRedeemedAt.get(key);
+      if (!previous || record.createdAtMs < previous) {
+        bigRewardRedeemedAt.set(key, record.createdAtMs);
+      }
+    });
+
+    const ranked = allPlayers
+      .filter((player) => (player.completedQuests?.length || 0) >= 20)
+      .map((player) => {
+        const email = player.email;
+        const fallbackFromRedeem = bigRewardRedeemedAt.get(email) || null;
+        const completed20AtMs = player.completed20AtMs || fallbackFromRedeem;
+
+        return {
+          email,
+          displayName: player.nickname || player.name || email,
+          completedCount: player.completedQuests?.length || 0,
+          completed20AtMs,
+          redeemedBigReward: (player.redeemedRewards || []).includes(20),
+        };
+      })
+      .sort((left, right) => {
+        if (left.completed20AtMs && right.completed20AtMs) {
+          return left.completed20AtMs - right.completed20AtMs;
+        }
+        if (left.completed20AtMs && !right.completed20AtMs) return -1;
+        if (!left.completed20AtMs && right.completed20AtMs) return 1;
+        if (right.completedCount !== left.completedCount) return right.completedCount - left.completedCount;
+        return left.email.localeCompare(right.email);
+      })
+      .slice(0, 30)
+      .map((item, index) => ({
+        rank: index + 1,
+        ...item,
+      } satisfies TopFinisher));
+
+    return ranked;
+  }, [allPlayers, records]);
 
   const requireAccess = () => {
     if (!accessGranted) {
@@ -244,6 +329,7 @@ export default function AdminRedeemPage() {
       nickname: data.nickname || null,
       redeemedRewards: data.redeemedRewards || [],
       completedQuests: data.completedQuests || [],
+      completed20AtMs: data.completed20AtMs || null,
     } satisfies PlayerProfile;
   };
 
@@ -307,6 +393,7 @@ export default function AdminRedeemPage() {
         photoURL: userData.photoURL || null,
         completedQuests: [],
         redeemedRewards: [],
+        completed20AtMs: null,
         resetAtMs: Date.now(),
       }, { merge: true });
 
@@ -317,6 +404,7 @@ export default function AdminRedeemPage() {
           nickname: userData.nickname || null,
           redeemedRewards: [],
           completedQuests: [],
+          completed20AtMs: null,
         });
       }
 
@@ -376,10 +464,17 @@ export default function AdminRedeemPage() {
       const userSnapshot = await getDoc(userRef);
       if (!userSnapshot.exists()) { setResetError('找不到這個玩家帳號'); setTimeout(() => setResetError(''), 10000); return; }
 
-      await setDoc(userRef, { completedQuests: parsed }, { merge: true });
+      const existing = userSnapshot.data();
+      const previousCompleted20AtMs = typeof existing?.completed20AtMs === "number" ? existing.completed20AtMs : null;
+      const nextCompleted20AtMs = parsed.includes(20) ? (previousCompleted20AtMs || Date.now()) : null;
+
+      await setDoc(userRef, {
+        completedQuests: parsed,
+        completed20AtMs: nextCompleted20AtMs,
+      }, { merge: true });
 
       if (playerProfile?.email === target) {
-        setPlayerProfile({ ...playerProfile, completedQuests: parsed });
+        setPlayerProfile({ ...playerProfile, completedQuests: parsed, completed20AtMs: nextCompleted20AtMs });
       }
 
       setResetNotice(`已將 ${target} 的完成關卡設定為: ${parsed.join(',')}`);
@@ -609,6 +704,7 @@ export default function AdminRedeemPage() {
         nickname: refreshedData?.nickname || null,
         redeemedRewards: refreshedData?.redeemedRewards || [],
         completedQuests: refreshedData?.completedQuests || [],
+        completed20AtMs: refreshedData?.completed20AtMs || null,
       });
       setPlayerRecords((prev) => [
         {
@@ -808,6 +904,48 @@ export default function AdminRedeemPage() {
             <div>
               <p className="text-xs font-black uppercase" style={{ color: 'var(--primary)' }}>玩家操作</p>
               <h2 className="text-2xl font-black">產生臨時代碼 / 帳號管理</h2>
+            </div>
+
+            <div className="bauhaus-frame bg-white p-5 sm:p-6">
+              <div className="mb-4 flex items-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center border-4 border-black bg-[#1040C0] text-white">
+                  <CheckCircle2 className="h-6 w-6" />
+                </div>
+                <div>
+                  <p className="bauhaus-label" style={{ color: 'var(--primary)' }}>Top 30 Finishers</p>
+                  <h2 className="text-2xl font-black tracking-tighter uppercase">完成 20 關前 30 名</h2>
+                  <p className="text-xs font-medium text-[var(--text-secondary)] mt-1">依完成第 20 關時間排序；若舊資料沒有時間戳，會排在後面</p>
+                </div>
+              </div>
+
+              {top30Finishers.length === 0 ? (
+                <div className="bauhaus-frame bg-[#F0F0F0] p-4 text-sm font-medium text-[var(--text-secondary)]">
+                  目前尚無完成 20 關的玩家。
+                </div>
+              ) : (
+                <div className="space-y-2 max-h-[360px] overflow-y-auto pr-2">
+                  {top30Finishers.map((item) => (
+                    <div key={item.email} className="bauhaus-frame bg-white p-3">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <p className="text-sm font-black break-all">#{item.rank} {item.displayName}</p>
+                          <p className="text-xs font-medium text-[var(--text-secondary)] break-all mt-1">{item.email}</p>
+                        </div>
+                        <span
+                          className="inline-flex items-center rounded-none border-2 border-black px-2 py-1 text-xs font-black uppercase"
+                          style={{ background: item.redeemedBigReward ? 'var(--primary-red)' : 'var(--primary-yellow)', color: item.redeemedBigReward ? '#ffffff' : '#121212' }}
+                        >
+                          {item.redeemedBigReward ? '20關已兌換' : '20關未兌換'}
+                        </span>
+                      </div>
+                      <div className="mt-2 grid gap-1 text-xs font-medium text-[var(--text-secondary)] sm:grid-cols-2">
+                        <p>完成關卡：{item.completedCount}</p>
+                        <p>達成時間：{item.completed20AtMs ? formatTime(item.completed20AtMs) : '未記錄'}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* 產生臨時代碼 */}
