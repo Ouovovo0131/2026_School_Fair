@@ -67,7 +67,7 @@ export const STALL_DIRECTORY: Record<StallId, StallInfo> = {
   11:  { id: "11",  displayName: "熊男幫你烤", category: ["snack", "beverage"], content: "玉米、甜不辣、香腸、雞肉串、豆乾、貓舌餅 & 汽水、冬瓜茶、紅茶" },
   12:  { id: "12",  displayName: "減塑分裂", category: ["beverage", "game"], content: "冰淇淋、冰飲 & 拉霸機(人力)" },
   13:  { id: "13",  displayName: "六妻仙人", category: ["snack", "beverage", "other"], content: "手搓愛玉、炒麵麵包 & 紅茶 & 解壓玩具" },
-  14:  { id: "14",  displayName: "50藍", category: "snack", content: "待定" },
+  14:  { id: "14",  displayName: "50藍", category: ["snack", "beverage", "game"], content: "瑪德蓮小蛋糕 & 咖啡 & 一番賞" },
   15:  { id: "15",  displayName: "會員制度拜巧克力Q餅", category: "snack", content: "杜拜巧克力" },
   16:  { id: "16",  displayName: "無塑啃TA雞", category: ["snack", "beverage", "game"], content: "印尼炒泡麵、熱狗 & 飲料 & 抽抽樂" },
   17:  { id: "17",  displayName: "塑欲淨而瘋不止", category: ["snack", "beverage", "game", "other"], content: "玉里麵 & 紅茶、奶茶 & 空手接白刃、拉霸機(人力) & 免洗竹製餐具" },
