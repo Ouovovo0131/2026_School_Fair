@@ -155,26 +155,33 @@ function Modal({
   const LibraryBuildingModal = () => {
     return (
       <div
+        className="library-modal-shell"
         style={{
           border: "4px solid #111111",
           background: "#ffffff",
           boxShadow: "4px 4px 0 #111111",
-          minHeight: "640px",
-          overflow: "hidden",
+          minHeight: 0,
+          height: "100%",
+          overflowY: "auto",
+          overflowX: "hidden",
+          paddingBottom: "0.6rem",
         }}
       >
         <style>{`
-          .library-modal-grid{ display:grid; grid-template-columns:minmax(320px, 0.92fr) minmax(360px, 1.08fr); gap:12px; min-height:640px; }
+          .library-modal-grid{ display:grid; grid-template-columns:minmax(320px, 0.92fr) minmax(360px, 1.08fr); gap:12px; min-height:0; }
           .library-map-wrap{ position:relative; overflow:hidden; background:#ffffff; border-right:4px solid #111111; }
           .desktop-map-card{ display:block; }
           .mobile-map-card{ display:none; }
-          .mobile-info-title{ display:none; }
+          .intro-container{ min-height:0; overflow-y:auto; }
           @media (max-width: 700px){
-            .library-modal-grid{ grid-template-columns:1fr; min-height:auto; }
-            .library-map-wrap{ border-right:none; border-bottom:4px solid #111111; height:270px; }
+            .library-modal-grid{ grid-template-columns:1fr; min-height:auto; gap:16px; }
+            .library-map-wrap{ border-right:none; border-bottom:4px solid #111111; height:auto; min-height:0; padding-bottom:10px; }
             .desktop-map-card{ display:none !important; }
-            .mobile-map-card{ display:block !important; }
-            .mobile-info-title{ display:block !important; }
+            .mobile-map-card{ display:flex !important; flex-direction:column; gap:12px; padding:12px 12px 0; }
+            .mobile-a-row{ display:grid; grid-template-columns:1fr auto; gap:12px; align-items:start; }
+            .mobile-divider{ margin-top:8px; margin-bottom:14px; }
+            .mobile-stalls-wrap{ margin-top:6px; }
+            .intro-container{ overflow:visible; padding:14px 12px 22px 12px !important; }
           }
         `}</style>
 
@@ -204,36 +211,29 @@ function Modal({
               </div>
             </div>
 
-            <div className="mobile-map-card" style={{ position: "relative", width: "100%", height: "100%", padding: "8px 10px 10px" }}>
-              <div style={{ position: "absolute", left: "8px", top: "14px", writingMode: "vertical-rl", textOrientation: "upright", fontSize: "clamp(16px, 4vw, 22px)", fontWeight: 800, color: "#6b7280" }}>圖資大樓</div>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "6px" }}>
-                <div style={{ fontSize: "clamp(20px, 5.4vw, 26px)", fontWeight: 900, color: "#111111", lineHeight: 1 }}>圖資大樓</div>
-                <div style={{ fontSize: "clamp(11px, 3vw, 14px)", fontWeight: 800, color: "#6b7280" }}>地圖概覽</div>
+            <div className="mobile-map-card" style={{ width: "100%", boxSizing: "border-box" }}>
+              <div className="mobile-a-row">
+                <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                  <div style={{ fontSize: "clamp(18px, 4.8vw, 24px)", fontWeight: 900, color: "#6b7280", lineHeight: 1 }}>A 區</div>
+                  <div style={{ fontSize: "clamp(13px, 3.3vw, 15px)", color: "#334155", lineHeight: 1.45 }}>表演團體休息區</div>
+                </div>
+                <div style={{ textAlign: "right", color: "#6b7280" }}>
+                  <div style={{ fontSize: "clamp(14px, 3.2vw, 18px)", fontWeight: 800 }}>北門</div>
+                  <div style={{ fontSize: "clamp(10px, 2.6vw, 12px)", fontWeight: 700 }}>(表演團體進出)</div>
+                </div>
               </div>
 
-              <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-                    <div style={{ fontSize: "clamp(20px, 5vw, 28px)", fontWeight: 900, color: "#6b7280" }}>A</div>
-                    <div style={{ fontSize: "clamp(13px, 3.2vw, 15px)", color: "#334155" }}>表演團體休息區</div>
-                  </div>
-                  <div style={{ textAlign: "right", color: "#6b7280" }}>
-                    <div style={{ fontSize: "clamp(14px, 3.2vw, 18px)", fontWeight: 800 }}>北門</div>
-                    <div style={{ fontSize: "clamp(10px, 2.6vw, 12px)", fontWeight: 700 }}>(表演團體進出)</div>
-                  </div>
-                </div>
+              <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "center", gap: "10px", paddingLeft: "2px" }}>
+                <div style={{ fontSize: "clamp(17px, 4.4vw, 22px)", fontWeight: 800, color: "#4b5563", lineHeight: 1 }}>B 區</div>
+              </div>
 
-                <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "center", gap: "10px", paddingLeft: "6px" }}>
-                  <div style={{ fontSize: "clamp(18px, 4.6vw, 22px)", fontWeight: 700, color: "#4b5563" }}>B</div>
-                </div>
-
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", marginTop: "0px" }}>
+              <div className="mobile-divider" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}>
                   <div style={{ height: "1px", background: "#111111", flex: 1 }} />
                   <div style={{ padding: "0 8px", fontSize: "13px", fontWeight: 800 }}>南門</div>
                   <div style={{ height: "1px", background: "#111111", flex: 1 }} />
-                </div>
+              </div>
 
-                <div style={{ border: "2px solid #111111", padding: "8px", background: "#ffffff" }}>
+                <div className="mobile-stalls-wrap" style={{ border: "2px solid #111111", padding: "8px", background: "#ffffff" }}>
                   <div style={{ display: "flex", gap: "10px" }}>
                     <div style={{ display: "flex", flexDirection: "column", gap: "8px", minWidth: "56px" }}>
                       <div style={{ width: "48px", height: "30px", border: "2px solid #111111", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900 }}>6</div>
@@ -248,11 +248,10 @@ function Modal({
                     </div>
                   </div>
                 </div>
-              </div>
             </div>
           </div>
 
-          <div className="intro-container" style={{ flex: 1, overflowY: "auto", padding: "12px 12px 8px 12px", boxSizing: "border-box" }}>
+          <div className="intro-container" style={{ flex: 1, overflowY: "auto", padding: "18px 12px 14px 12px", boxSizing: "border-box" }}>
             <h3 style={{ margin: 0, fontSize: "20px", fontWeight: 900, color: "#111111" }}>圖資大樓介紹</h3>
             <p style={{ marginTop: "8px", marginBottom: "6px" }}><strong>A 區：</strong>表演團體休息區，北門進出。</p>
             <p style={{ marginTop: 0, marginBottom: "12px" }}><strong>B 區：</strong>成果展（社團活動 / 服務學習 / 多元課程）。</p>
@@ -318,7 +317,7 @@ function Modal({
           </h3>
         </div>
 
-        <div style={{ marginTop: "0.75rem" }}>
+        <div style={{ marginTop: "0.75rem", flex: 1, minHeight: 0, overflow: "hidden", paddingBottom: "0.25rem" }}>
           {isLibraryBuilding ? (
             <LibraryBuildingModal />
           ) : (
