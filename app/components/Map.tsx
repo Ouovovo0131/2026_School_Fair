@@ -205,6 +205,7 @@ function Modal({
             </div>
 
             <div className="mobile-map-card" style={{ position: "relative", width: "100%", height: "100%", padding: "8px 10px 10px" }}>
+              <div style={{ position: "absolute", left: "8px", top: "14px", writingMode: "vertical-rl", textOrientation: "upright", fontSize: "clamp(16px, 4vw, 22px)", fontWeight: 800, color: "#6b7280" }}>圖資大樓</div>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "6px" }}>
                 <div style={{ fontSize: "clamp(20px, 5.4vw, 26px)", fontWeight: 900, color: "#111111", lineHeight: 1 }}>圖資大樓</div>
                 <div style={{ fontSize: "clamp(11px, 3vw, 14px)", fontWeight: 800, color: "#6b7280" }}>地圖概覽</div>
@@ -222,8 +223,8 @@ function Modal({
                   </div>
                 </div>
 
-                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "10px" }}>
-                  <div style={{ fontSize: "clamp(20px, 5vw, 26px)", fontWeight: 700, color: "#4b5563" }}>B</div>
+                <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "center", gap: "10px", paddingLeft: "6px" }}>
+                  <div style={{ fontSize: "clamp(18px, 4.6vw, 22px)", fontWeight: 700, color: "#4b5563" }}>B</div>
                 </div>
 
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", marginTop: "0px" }}>
@@ -251,49 +252,20 @@ function Modal({
             </div>
           </div>
 
-          <div style={{ position: "relative", padding: "42px 34px 28px 34px", background: "#ffffff" }}>
-            <div className="mobile-info-title" style={{ fontSize: "clamp(20px, 5vw, 28px)", fontWeight: 900, color: "#111111", lineHeight: 1 }}>圖資大樓介紹</div>
+          <div className="intro-container" style={{ flex: 1, overflowY: "auto", padding: "12px 12px 8px 12px", boxSizing: "border-box" }}>
+            <h3 style={{ margin: 0, fontSize: "20px", fontWeight: 900, color: "#111111" }}>圖資大樓介紹</h3>
+            <p style={{ marginTop: "8px", marginBottom: "6px" }}><strong>A 區：</strong>表演團體休息區，北門進出。</p>
+            <p style={{ marginTop: 0, marginBottom: "12px" }}><strong>B 區：</strong>成果展（社團活動 / 服務學習 / 多元課程）。</p>
 
-            <div className="desktop-map-card" style={{ fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 700, color: "#6b7280", lineHeight: 1 }}>A表演團體休息區</div>
-            <div className="desktop-map-card" style={{ marginTop: "92px" }}>
-              <div style={{ fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 700, color: "#111111", lineHeight: 1 }}>B 成果展</div>
-              <div style={{ marginTop: "10px", fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 700, color: "#111111" }}>社團活動 / 服務學習 / 多元課程</div>
-            </div>
-            <div className="desktop-map-card" style={{ marginTop: "64px", fontSize: "clamp(16px, 2.2vw, 26px)", lineHeight: 1.55, color: "#111111", fontWeight: 700 }}>
-              <div>1. 兒童權利公約 CRC</div>
-              <div>2. 性別平等教育</div>
-              <div>3. 門諾醫院</div>
-              <div>4. 紅十字會少年服務社</div>
-              <div>5. 國際教育交流社</div>
-              <div>6. 繪本創作展</div>
-            </div>
-
-            <div className="mobile-info-card" style={{ marginTop: "12px" }}>
-              <div style={{ display: "flex", flexDirection: "column", gap: "10px", color: "#334155", fontSize: "15px", lineHeight: 1.6 }}>
-                <div>
-                  <div style={{ fontWeight: 900, color: "#111111", marginBottom: "6px" }}>圖資大樓介紹</div>
-                  <div style={{ fontWeight: 900, color: "#6b7280" }}>A 區</div>
-                  <div style={{ marginTop: "4px" }}>表演團體休息區，北門進出。</div>
-                </div>
-
-                <div>
-                  <div style={{ fontWeight: 900, color: "#6b7280" }}>B 區</div>
-                  <div style={{ marginTop: "4px" }}>成果展（社團活動 / 服務學習 / 多元課程）。</div>
-                </div>
-
-                <div>
-                  <div style={{ fontWeight: 900, color: "#6b7280", marginBottom: "6px" }}>攤位 1 - 6</div>
-                  <ul style={{ paddingLeft: "1rem", margin: 0, display: "flex", flexDirection: "column", gap: "6px", color: "#111111", fontWeight: 700 }}>
-                    <li>兒童權利公約 CRC</li>
-                    <li>性別平等教育</li>
-                    <li>門諾醫院</li>
-                    <li>紅十字會少年服務社</li>
-                    <li>國際教育交流社</li>
-                    <li>繪本創作展</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+            <h3 style={{ margin: "6px 0 8px 0", fontSize: "18px", fontWeight: 900 }}>攤位 1 - 6</h3>
+            <ol style={{ paddingLeft: "1.15rem", margin: 0, color: "#111111", fontWeight: 700, lineHeight: 1.6 }}>
+              <li>兒童權利公約 CRC</li>
+              <li>性別平等教育</li>
+              <li>門諾醫院</li>
+              <li>紅十字會少年服務社</li>
+              <li>國際教育交流社</li>
+              <li>繪本創作展</li>
+            </ol>
           </div>
         </div>
       </div>
@@ -323,7 +295,10 @@ function Modal({
           height: desiredHeight,
           maxWidth: MAX_WIDTH,
           boxSizing: "border-box",
-          overflowY: needsScroll ? "auto" : "visible",
+          overflow: "hidden",
+          display: "flex",
+          flexDirection: "column",
+          maxHeight: "85vh",
           padding: "0.9rem",
           position: "relative",
         }}
