@@ -189,9 +189,9 @@ function Modal({
                 <div style={{ fontSize: "clamp(18px, 2.6vw, 28px)", fontWeight: 700 }}>北門</div>
                 <div style={{ fontSize: "clamp(11px, 1.6vw, 14px)", fontWeight: 700 }}>(表演團體進出)</div>
               </div>
-              <div className="label-B" style={{ position: "absolute", left: "120px", top: "384px", fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 400, color: "#4b5563" }}>B</div>
+              <div className="label-B" style={{ position: "absolute", left: "120px", top: "404px", fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 400, color: "#4b5563" }}>B</div>
               <div style={{ position: "absolute", left: "16px", right: "16px", top: "52%", borderTop: "2px solid #111111" }} />
-              <div className="label-southgate" style={{ position: "absolute", right: "24px", top: "384px", textAlign: "center", fontSize: "clamp(18px, 2.6vw, 32px)", fontWeight: 700, color: "#111111" }}>南門</div>
+              <div className="label-southgate" style={{ position: "absolute", right: "24px", top: "404px", textAlign: "center", fontSize: "clamp(18px, 2.6vw, 32px)", fontWeight: 700, color: "#111111" }}>南門</div>
               <div style={{ position: "absolute", left: "24px", top: "67%", display: "flex", flexDirection: "column", gap: "18px", color: "#111111" }}>
                 <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>6</div>
                 <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>5</div>
@@ -222,14 +222,14 @@ function Modal({
                 <div style={{ position: "absolute", right: "10px", top: "58%", fontSize: "clamp(15px, 4vw, 20px)", fontWeight: 800, color: "#111111" }}>南門</div>
 
                 {[
-                  { id: "6", left: "10px", top: "86px" },
-                  { id: "5", left: "10px", top: "126px" },
-                  { id: "4", left: "10px", top: "166px" },
-                  { id: "3", left: "74px", top: "166px" },
-                  { id: "2", left: "138px", top: "166px" },
-                  { id: "1", left: "202px", top: "166px" },
+                  { id: "6", left: "12px", top: "88px" },
+                  { id: "5", left: "12px", top: "128px" },
+                  { id: "4", left: "12px", top: "168px" },
+                  { id: "3", left: "70px", top: "168px" },
+                  { id: "2", left: "128px", top: "168px" },
+                  { id: "1", left: "186px", top: "168px" },
                 ].map((cell) => (
-                  <div key={cell.id} style={{ position: "absolute", left: cell.left, top: cell.top, width: "54px", height: "34px", border: "2px solid #111111", background: "#ffffff", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: "clamp(18px, 5vw, 22px)", color: "#111111" }}>
+                  <div key={cell.id} style={{ position: "absolute", left: cell.left, top: cell.top, width: "48px", height: "30px", border: "2px solid #111111", background: "#ffffff", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: "clamp(16px, 4.4vw, 20px)", color: "#111111" }}>
                     {cell.id}
                   </div>
                 ))}
@@ -255,10 +255,10 @@ function Modal({
             </div>
 
             <div className="mobile-info-card" style={{ marginTop: "12px" }}>
-              <div style={{ fontSize: "15px", lineHeight: 1.65, color: "#334155" }}>
-                <div style={{ marginBottom: "0.7rem" }}><span style={{ fontWeight: 900, color: "#6b7280" }}>A 區</span>：表演團體休息區，北門進出。</div>
-                <div style={{ marginBottom: "0.7rem" }}><span style={{ fontWeight: 900, color: "#6b7280" }}>B 區</span>：成果展、社團活動、服務學習與多元課程。</div>
-                <div><span style={{ fontWeight: 900, color: "#6b7280" }}>代號 1 - 6</span>：{libraryStalls.map((item) => `${item.id} ${item.name}`).join("、 ")}</div>
+              <div style={{ fontSize: "15px", lineHeight: 1.7, color: "#334155" }}>
+                <div style={{ marginBottom: "0.65rem" }}><span style={{ fontWeight: 900, color: "#6b7280" }}>A 區</span>：表演團體休息區，北門進出。</div>
+                <div style={{ marginBottom: "0.65rem" }}><span style={{ fontWeight: 900, color: "#6b7280" }}>B 區</span>：成果展、社團活動、服務學習與多元課程。</div>
+                <div><span style={{ fontWeight: 900, color: "#6b7280" }}>1 - 6</span>：{libraryStalls.map((item) => `${item.id} ${item.name}`).join("、 ")}</div>
               </div>
             </div>
           </div>
