@@ -152,134 +152,94 @@ function Modal({
     lineHeight: 1,
   });
 
-  const LibraryBuildingModal = () => {
-    const isMobileLayout = vw < 700;
-
-    return (
-      <div
-        style={{
-          border: "4px solid #111111",
-          background: "#ffffff",
-          boxShadow: "4px 4px 0 #111111",
-          minHeight: "640px",
-          overflow: "hidden",
-        }}
-      >
+  const LibraryBuildingModal = () => (
+    <div
+      style={{
+        border: "4px solid #111111",
+        background: "#ffffff",
+        boxShadow: "4px 4px 0 #111111",
+        minHeight: "640px",
+        overflow: "hidden",
+      }}
+    >
+      <div className="library-modal-grid" style={{ display: "grid", gridTemplateColumns: "minmax(320px, 0.92fr) minmax(360px, 1.08fr)", minHeight: "640px" }}>
         <style>{`
-          .library-modal-grid{ display:grid; grid-template-columns:minmax(320px, 0.92fr) minmax(360px, 1.08fr); gap:12px; min-height:640px; }
-          .library-map-wrap{ position:relative; overflow:hidden; background:#ffffff; border-right:4px solid #111111; }
-          .desktop-map-card{ display:block; }
-          .mobile-map-card{ display:none; }
-          .mobile-info-card{ display:none; }
-          .mobile-info-title{ display:none; }
+          .library-modal-grid{ gap: 12px }
+          .library-map-wrap{ position:relative }
           @media (max-width: 700px){
-            .library-modal-grid{ grid-template-columns:1fr; min-height:auto; }
-            .library-map-wrap{ border-right:none; border-bottom:4px solid #111111; height:320px; }
-            .desktop-map-card{ display:none !important; }
-            .mobile-map-card{ display:block !important; }
-            .mobile-info-title{ display:block !important; }
-            .mobile-info-card{ display:grid !important; gap:10px; }
+            .library-modal-grid{ grid-template-columns: 1fr; }
+            .library-modal-grid > div:first-child{ order: 1 }
+            .library-modal-grid > div:last-child{ order: 2 }
+            .library-map-wrap{ height: 320px; overflow: auto; -webkit-overflow-scrolling: touch; }
+            .library-map-wrap .map-inner{ transform-origin: top left; transform: scale(0.92); }
+            .library-modal-grid .right{ padding: 0.75rem 0.9rem }
+            .library-modal-grid .right .content{ padding: 0 }
           }
         `}</style>
+        <div className="library-map-wrap"
+          style={{
+            position: "relative",
+            borderRight: "4px solid #111111",
+            background: "#ffffff",
+            overflow: "hidden",
+          }}
+        >
+          <div className="map-inner" style={{ position: 'relative' }}>
+          <div style={{ position: "absolute", left: "16px", top: "16px", bottom: "16px", writingMode: "vertical-rl", textOrientation: "upright", fontSize: "clamp(28px, 4vw, 56px)", fontWeight: 700, color: "#707070", letterSpacing: "0.08em" }}>
+            圖資大樓
+          </div>
+        </div>
 
-        <div className="library-modal-grid">
-          <div className="library-map-wrap">
-            <div className="desktop-map-card" style={{ position: "relative", width: "100%", height: "100%", minHeight: "640px" }}>
-              <div style={{ position: "absolute", left: "16px", top: "16px", bottom: "16px", writingMode: "vertical-rl", textOrientation: "upright", fontSize: "clamp(28px, 4vw, 56px)", fontWeight: 700, color: "#707070", letterSpacing: "0.08em" }}>
-                圖資大樓
-              </div>
-              <div className="label-A" style={{ position: "absolute", left: "120px", top: "28px", fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 400, color: "#6b7280" }}>A</div>
-              <div style={{ position: "absolute", right: "24px", top: "18px", textAlign: "center", color: "#6b7280" }}>
-                <div style={{ fontSize: "clamp(18px, 2.6vw, 28px)", fontWeight: 700 }}>北門</div>
-                <div style={{ fontSize: "clamp(11px, 1.6vw, 14px)", fontWeight: 700 }}>(表演團體進出)</div>
-              </div>
-              <div className="label-B" style={{ position: "absolute", left: "120px", top: "384px", fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 400, color: "#4b5563" }}>B</div>
-              <div style={{ position: "absolute", left: "16px", right: "16px", top: "52%", borderTop: "2px solid #111111" }} />
-              <div className="label-southgate" style={{ position: "absolute", right: "24px", top: "384px", textAlign: "center", fontSize: "clamp(18px, 2.6vw, 32px)", fontWeight: 700, color: "#111111" }}>南門</div>
-              <div style={{ position: "absolute", left: "24px", top: "67%", display: "flex", flexDirection: "column", gap: "18px", color: "#111111" }}>
-                <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>6</div>
-                <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>5</div>
-                <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>4</div>
-              </div>
-              <div style={{ position: "absolute", left: "122px", bottom: "20px", display: "flex", gap: "28px", color: "#111111" }}>
-                <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>3</div>
-                <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>2</div>
-                <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>1</div>
-              </div>
-            </div>
-
-            <div className="mobile-map-card" style={{ position: "relative", width: "100%", height: "100%", padding: "12px" }}>
-              <div style={{ position: "absolute", inset: "12px", border: "4px solid #111111", background: "#fff" }} />
-              <div style={{ position: "absolute", top: "18px", left: "22px", right: "22px", display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                <div style={{ fontSize: "clamp(22px, 6vw, 30px)", fontWeight: 900, color: "#111111", lineHeight: 1 }}>圖資大樓</div>
-                <div style={{ fontSize: "clamp(12px, 3.2vw, 16px)", fontWeight: 800, color: "#6b7280" }}>地圖概覽</div>
-              </div>
-              <div style={{ position: "absolute", left: "24px", top: "64px", right: "24px", bottom: "24px" }}>
-                <div style={{ position: "absolute", left: 0, right: 0, top: "18px", bottom: 0, border: "2px solid #111111", background: "#fafafa" }} />
-                <div style={{ position: "absolute", left: "14px", top: "20px", writingMode: "vertical-rl", textOrientation: "upright", fontSize: "clamp(18px, 4.5vw, 26px)", fontWeight: 800, color: "#6b7280" }}>圖資大樓</div>
-                <div style={{ position: "absolute", left: "30%", top: "28px", fontSize: "clamp(24px, 6vw, 34px)", fontWeight: 400, color: "#6b7280" }}>A</div>
-                <div style={{ position: "absolute", right: "8px", top: "18px", textAlign: "right", color: "#6b7280" }}>
-                  <div style={{ fontSize: "clamp(16px, 4.4vw, 22px)", fontWeight: 800 }}>北門</div>
-                  <div style={{ fontSize: "clamp(10px, 2.9vw, 13px)", fontWeight: 700 }}>(表演團體進出)</div>
-                </div>
-                <div style={{ position: "absolute", left: 0, right: 0, top: "56%", borderTop: "2px solid #111111" }} />
-                <div style={{ position: "absolute", left: "33%", top: "59%", fontSize: "clamp(24px, 6vw, 34px)", fontWeight: 400, color: "#4b5563" }}>B</div>
-                <div style={{ position: "absolute", right: "8px", top: "59%", fontSize: "clamp(16px, 4.4vw, 22px)", fontWeight: 800, color: "#111111" }}>南門</div>
-                <div style={{ position: "absolute", left: "10px", bottom: "16px", display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: "8px", width: "72%" }}>
-                  {["6", "5", "4", "3", "2", "1"].map((item, index) => (
-                    <div key={item} style={{ minHeight: "34px", display: "flex", alignItems: "center", justifyContent: "center", border: "2px solid #111111", background: index === 0 ? "#f0c020" : "#ffffff", fontWeight: 900, fontSize: "clamp(18px, 5vw, 24px)", color: "#111111" }}>
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+          <div className="label-A" style={{ position: "absolute", left: "120px", top: "28px", fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 400, color: "#6b7280" }}>A</div>
+          <div style={{ position: "absolute", right: "24px", top: "18px", textAlign: "center", color: "#6b7280" }}>
+            <div style={{ fontSize: "clamp(18px, 2.6vw, 28px)", fontWeight: 700 }}>北門</div>
+            <div style={{ fontSize: "clamp(11px, 1.6vw, 14px)", fontWeight: 700 }}>(表演團體進出)</div>
           </div>
 
-          <div style={{ position: "relative", padding: "42px 34px 28px 34px", background: "#ffffff" }}>
-            <div className="mobile-info-title" style={{ fontSize: "clamp(20px, 5vw, 28px)", fontWeight: 900, color: "#111111", lineHeight: 1 }}>圖資大樓介紹</div>
+          <div className="label-B" style={{ position: "absolute", left: "120px", top: "384px", fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 400, color: "#4b5563" }}>B</div>
+          <div style={{ position: "absolute", left: "16px", right: "16px", top: "52%", borderTop: "2px solid #111111" }} />
+          <div className="label-southgate" style={{ position: "absolute", right: "24px", top: "384px", textAlign: "center", fontSize: "clamp(18px, 2.6vw, 32px)", fontWeight: 700, color: "#111111" }}>南門</div>
+          <style>{`
+            @media (max-width:700px){
+              .label-A{ left:6%; top:3.5% }
+              .label-B{ left:18%; top:50% }
+              .label-southgate{ right:6%; top:50% }
+              .library-modal-grid{ grid-template-columns: 1fr }
+            }
+          `}</style>
 
-            <div className="desktop-map-card" style={{ fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 700, color: "#6b7280", lineHeight: 1 }}>A表演團體休息區</div>
-            <div className="desktop-map-card" style={{ marginTop: "92px" }}>
-              <div style={{ fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 700, color: "#111111", lineHeight: 1 }}>B 成果展</div>
-              <div style={{ marginTop: "10px", fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 700, color: "#111111" }}>社團活動 / 服務學習 / 多元課程</div>
-            </div>
-            <div className="desktop-map-card" style={{ marginTop: "64px", fontSize: "clamp(16px, 2.2vw, 26px)", lineHeight: 1.55, color: "#111111", fontWeight: 700 }}>
-              <div>1. 兒童權利公約 CRC</div>
-              <div>2. 性別平等教育</div>
-              <div>3. 門諾醫院</div>
-              <div>4. 紅十字會少年服務社</div>
-              <div>5. 國際教育交流社</div>
-              <div>6. 繪本創作展</div>
-            </div>
+          <div style={{ position: "absolute", left: "24px", top: "67%", display: "flex", flexDirection: "column", gap: "18px", color: "#111111" }}>
+            <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>6</div>
+            <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>5</div>
+            <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>4</div>
+          </div>
+          <div style={{ position: "absolute", left: "122px", bottom: "20px", display: "flex", gap: "28px", color: "#111111" }}>
+            <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>3</div>
+            <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>2</div>
+            <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>1</div>
+          </div>
+        </div>
 
-            <div className="mobile-info-card" style={{ marginTop: "12px" }}>
-              <div style={{ border: "2px solid #111111", padding: "10px 12px", background: "#fafafa" }}>
-                <div style={{ fontSize: "16px", fontWeight: 900, color: "#6b7280" }}>A 區</div>
-                <div style={{ marginTop: 4, fontSize: "18px", fontWeight: 900, color: "#111111" }}>表演團體休息區</div>
-                <div style={{ marginTop: 4, fontSize: "14px", lineHeight: 1.5, color: "#334155" }}>北門，表演團體進出。</div>
-              </div>
-              <div style={{ border: "2px solid #111111", padding: "10px 12px", background: "#fff" }}>
-                <div style={{ fontSize: "16px", fontWeight: 900, color: "#6b7280" }}>B 區</div>
-                <div style={{ marginTop: 4, fontSize: "18px", fontWeight: 900, color: "#111111", lineHeight: 1.45 }}>成果展 / 社團活動 / 服務學習 / 多元課程</div>
-              </div>
-              <div style={{ border: "2px solid #111111", padding: "10px 12px", background: "#fafafa" }}>
-                <div style={{ fontSize: "16px", fontWeight: 900, color: "#6b7280" }}>代號 1 - 6</div>
-                <div style={{ marginTop: 6, display: "grid", gap: "8px" }}>
-                  {libraryStalls.map((item) => (
-                    <div key={item.id} style={{ display: "flex", gap: "8px", alignItems: "flex-start" }}>
-                      <div style={{ minWidth: "34px", fontWeight: 900, color: "#111111" }}>{item.id}.</div>
-                      <div style={{ fontWeight: 800, color: "#111111", lineHeight: 1.45 }}>{item.name}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+        <div style={{ position: "relative", padding: "42px 34px 28px 34px", background: "#ffffff" }}>
+          <div style={{ fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 700, color: "#6b7280", lineHeight: 1 }}>A表演團體休息區</div>
+
+          <div style={{ marginTop: "92px" }}>
+            <div style={{ fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 700, color: "#111111", lineHeight: 1 }}>B 成果展</div>
+            <div style={{ marginTop: "10px", fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 700, color: "#111111" }}>社團活動 / 服務學習 / 多元課程</div>
+          </div>
+
+          <div style={{ marginTop: "64px", fontSize: "clamp(16px, 2.2vw, 26px)", lineHeight: 1.55, color: "#111111", fontWeight: 700 }}>
+            <div>1. 兒童權利公約 CRC</div>
+            <div>2. 性別平等教育</div>
+            <div>3. 門諾醫院</div>
+            <div>4. 紅十字會少年服務社</div>
+            <div>5. 國際教育交流社</div>
+            <div>6. 繪本創作展</div>
           </div>
         </div>
       </div>
-    );
-  };
+    </div>
+  );
 
   return createPortal(
     <div

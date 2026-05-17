@@ -1,6 +1,7 @@
 "use client";
 
 import { X } from "lucide-react";
+import type { ReactElement } from "react";
 import { STALL_CATEGORIES, type StallCategory } from "@/constants/stalls";
 
 export interface SpotlightState {
@@ -159,7 +160,7 @@ export function StallDetailPanel({
 }: {
   spotlight: SpotlightState;
   onClose: () => void;
-}) {
+}): ReactElement {
   const categoryBadgeStyle = getCategoryBadgeStyle(spotlight.stallCategory);
   const categoryLabel = getCategoryLabel(spotlight.stallCategory);
   const isLibraryBuilding = spotlight.stallId === "library-building";

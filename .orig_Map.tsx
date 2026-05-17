@@ -115,9 +115,7 @@ function Modal({
 
   if (typeof document === "undefined") return null;
 
-  // 固定長寬比計算（寬 / 高），以 viewport 寬度為基準
-  const ASPECT_RATIO = 0.65; // 寬/高
-  const MIN_WIDTH = 300;
+  // ?箏??瑕祝瘥?蝞?撖?/ 擃?嚗誑 viewport 撖砍漲?箏皞?  const ASPECT_RATIO = 0.65; // 撖?擃?  const MIN_WIDTH = 300;
   const MAX_WIDTH = 1100;
   const vw = viewport.width || window.innerWidth || 360;
   const vh = viewport.height || window.innerHeight || 800;
@@ -152,134 +150,94 @@ function Modal({
     lineHeight: 1,
   });
 
-  const LibraryBuildingModal = () => {
-    const isMobileLayout = vw < 700;
-
-    return (
-      <div
-        style={{
-          border: "4px solid #111111",
-          background: "#ffffff",
-          boxShadow: "4px 4px 0 #111111",
-          minHeight: "640px",
-          overflow: "hidden",
-        }}
-      >
+  const LibraryBuildingModal = () => (
+    <div
+      style={{
+        border: "4px solid #111111",
+        background: "#ffffff",
+        boxShadow: "4px 4px 0 #111111",
+        minHeight: "640px",
+        overflow: "hidden",
+      }}
+    >
+      <div className="library-modal-grid" style={{ display: "grid", gridTemplateColumns: "minmax(320px, 0.92fr) minmax(360px, 1.08fr)", minHeight: "640px" }}>
         <style>{`
-          .library-modal-grid{ display:grid; grid-template-columns:minmax(320px, 0.92fr) minmax(360px, 1.08fr); gap:12px; min-height:640px; }
-          .library-map-wrap{ position:relative; overflow:hidden; background:#ffffff; border-right:4px solid #111111; }
-          .desktop-map-card{ display:block; }
-          .mobile-map-card{ display:none; }
-          .mobile-info-card{ display:none; }
-          .mobile-info-title{ display:none; }
+          .library-modal-grid{ gap: 12px }
+          .library-map-wrap{ position:relative }
           @media (max-width: 700px){
-            .library-modal-grid{ grid-template-columns:1fr; min-height:auto; }
-            .library-map-wrap{ border-right:none; border-bottom:4px solid #111111; height:320px; }
-            .desktop-map-card{ display:none !important; }
-            .mobile-map-card{ display:block !important; }
-            .mobile-info-title{ display:block !important; }
-            .mobile-info-card{ display:grid !important; gap:10px; }
+            .library-modal-grid{ grid-template-columns: 1fr; }
+            .library-modal-grid > div:first-child{ order: 1 }
+            .library-modal-grid > div:last-child{ order: 2 }
+            .library-map-wrap{ height: 320px; overflow: auto; -webkit-overflow-scrolling: touch; }
+            .library-map-wrap .map-inner{ transform-origin: top left; transform: scale(0.92); }
+            .library-modal-grid .right{ padding: 0.75rem 0.9rem }
+            .library-modal-grid .right .content{ padding: 0 }
           }
         `}</style>
+        <div className="library-map-wrap"
+          style={{
+            position: "relative",
+            borderRight: "4px solid #111111",
+            background: "#ffffff",
+            overflow: "hidden",
+          }}
+        >
+          <div className="map-inner" style={{ position: 'relative' }}>
+          <div style={{ position: "absolute", left: "16px", top: "16px", bottom: "16px", writingMode: "vertical-rl", textOrientation: "upright", fontSize: "clamp(28px, 4vw, 56px)", fontWeight: 700, color: "#707070", letterSpacing: "0.08em" }}>
+            ??憭扳?
+          </div>
+        </div>
 
-        <div className="library-modal-grid">
-          <div className="library-map-wrap">
-            <div className="desktop-map-card" style={{ position: "relative", width: "100%", height: "100%", minHeight: "640px" }}>
-              <div style={{ position: "absolute", left: "16px", top: "16px", bottom: "16px", writingMode: "vertical-rl", textOrientation: "upright", fontSize: "clamp(28px, 4vw, 56px)", fontWeight: 700, color: "#707070", letterSpacing: "0.08em" }}>
-                圖資大樓
-              </div>
-              <div className="label-A" style={{ position: "absolute", left: "120px", top: "28px", fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 400, color: "#6b7280" }}>A</div>
-              <div style={{ position: "absolute", right: "24px", top: "18px", textAlign: "center", color: "#6b7280" }}>
-                <div style={{ fontSize: "clamp(18px, 2.6vw, 28px)", fontWeight: 700 }}>北門</div>
-                <div style={{ fontSize: "clamp(11px, 1.6vw, 14px)", fontWeight: 700 }}>(表演團體進出)</div>
-              </div>
-              <div className="label-B" style={{ position: "absolute", left: "120px", top: "384px", fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 400, color: "#4b5563" }}>B</div>
-              <div style={{ position: "absolute", left: "16px", right: "16px", top: "52%", borderTop: "2px solid #111111" }} />
-              <div className="label-southgate" style={{ position: "absolute", right: "24px", top: "384px", textAlign: "center", fontSize: "clamp(18px, 2.6vw, 32px)", fontWeight: 700, color: "#111111" }}>南門</div>
-              <div style={{ position: "absolute", left: "24px", top: "67%", display: "flex", flexDirection: "column", gap: "18px", color: "#111111" }}>
-                <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>6</div>
-                <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>5</div>
-                <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>4</div>
-              </div>
-              <div style={{ position: "absolute", left: "122px", bottom: "20px", display: "flex", gap: "28px", color: "#111111" }}>
-                <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>3</div>
-                <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>2</div>
-                <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>1</div>
-              </div>
-            </div>
-
-            <div className="mobile-map-card" style={{ position: "relative", width: "100%", height: "100%", padding: "12px" }}>
-              <div style={{ position: "absolute", inset: "12px", border: "4px solid #111111", background: "#fff" }} />
-              <div style={{ position: "absolute", top: "18px", left: "22px", right: "22px", display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                <div style={{ fontSize: "clamp(22px, 6vw, 30px)", fontWeight: 900, color: "#111111", lineHeight: 1 }}>圖資大樓</div>
-                <div style={{ fontSize: "clamp(12px, 3.2vw, 16px)", fontWeight: 800, color: "#6b7280" }}>地圖概覽</div>
-              </div>
-              <div style={{ position: "absolute", left: "24px", top: "64px", right: "24px", bottom: "24px" }}>
-                <div style={{ position: "absolute", left: 0, right: 0, top: "18px", bottom: 0, border: "2px solid #111111", background: "#fafafa" }} />
-                <div style={{ position: "absolute", left: "14px", top: "20px", writingMode: "vertical-rl", textOrientation: "upright", fontSize: "clamp(18px, 4.5vw, 26px)", fontWeight: 800, color: "#6b7280" }}>圖資大樓</div>
-                <div style={{ position: "absolute", left: "30%", top: "28px", fontSize: "clamp(24px, 6vw, 34px)", fontWeight: 400, color: "#6b7280" }}>A</div>
-                <div style={{ position: "absolute", right: "8px", top: "18px", textAlign: "right", color: "#6b7280" }}>
-                  <div style={{ fontSize: "clamp(16px, 4.4vw, 22px)", fontWeight: 800 }}>北門</div>
-                  <div style={{ fontSize: "clamp(10px, 2.9vw, 13px)", fontWeight: 700 }}>(表演團體進出)</div>
-                </div>
-                <div style={{ position: "absolute", left: 0, right: 0, top: "56%", borderTop: "2px solid #111111" }} />
-                <div style={{ position: "absolute", left: "33%", top: "59%", fontSize: "clamp(24px, 6vw, 34px)", fontWeight: 400, color: "#4b5563" }}>B</div>
-                <div style={{ position: "absolute", right: "8px", top: "59%", fontSize: "clamp(16px, 4.4vw, 22px)", fontWeight: 800, color: "#111111" }}>南門</div>
-                <div style={{ position: "absolute", left: "10px", bottom: "16px", display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: "8px", width: "72%" }}>
-                  {["6", "5", "4", "3", "2", "1"].map((item, index) => (
-                    <div key={item} style={{ minHeight: "34px", display: "flex", alignItems: "center", justifyContent: "center", border: "2px solid #111111", background: index === 0 ? "#f0c020" : "#ffffff", fontWeight: 900, fontSize: "clamp(18px, 5vw, 24px)", color: "#111111" }}>
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+          <div className="label-A" style={{ position: "absolute", left: "120px", top: "28px", fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 400, color: "#6b7280" }}>A</div>
+          <div style={{ position: "absolute", right: "24px", top: "18px", textAlign: "center", color: "#6b7280" }}>
+            <div style={{ fontSize: "clamp(18px, 2.6vw, 28px)", fontWeight: 700 }}>??</div>
+            <div style={{ fontSize: "clamp(11px, 1.6vw, 14px)", fontWeight: 700 }}>(銵冽????脣)</div>
           </div>
 
-          <div style={{ position: "relative", padding: "42px 34px 28px 34px", background: "#ffffff" }}>
-            <div className="mobile-info-title" style={{ fontSize: "clamp(20px, 5vw, 28px)", fontWeight: 900, color: "#111111", lineHeight: 1 }}>圖資大樓介紹</div>
+          <div className="label-B" style={{ position: "absolute", left: "120px", top: "384px", fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 400, color: "#4b5563" }}>B</div>
+          <div style={{ position: "absolute", left: "16px", right: "16px", top: "52%", borderTop: "2px solid #111111" }} />
+          <div className="label-southgate" style={{ position: "absolute", right: "24px", top: "384px", textAlign: "center", fontSize: "clamp(18px, 2.6vw, 32px)", fontWeight: 700, color: "#111111" }}>??</div>
+          <style>{`
+            @media (max-width:700px){
+              .label-A{ left:6%; top:3.5% }
+              .label-B{ left:18%; top:50% }
+              .label-southgate{ right:6%; top:50% }
+              .library-modal-grid{ grid-template-columns: 1fr }
+            }
+          `}</style>
 
-            <div className="desktop-map-card" style={{ fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 700, color: "#6b7280", lineHeight: 1 }}>A表演團體休息區</div>
-            <div className="desktop-map-card" style={{ marginTop: "92px" }}>
-              <div style={{ fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 700, color: "#111111", lineHeight: 1 }}>B 成果展</div>
-              <div style={{ marginTop: "10px", fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 700, color: "#111111" }}>社團活動 / 服務學習 / 多元課程</div>
-            </div>
-            <div className="desktop-map-card" style={{ marginTop: "64px", fontSize: "clamp(16px, 2.2vw, 26px)", lineHeight: 1.55, color: "#111111", fontWeight: 700 }}>
-              <div>1. 兒童權利公約 CRC</div>
-              <div>2. 性別平等教育</div>
-              <div>3. 門諾醫院</div>
-              <div>4. 紅十字會少年服務社</div>
-              <div>5. 國際教育交流社</div>
-              <div>6. 繪本創作展</div>
-            </div>
+          <div style={{ position: "absolute", left: "24px", top: "67%", display: "flex", flexDirection: "column", gap: "18px", color: "#111111" }}>
+            <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>6</div>
+            <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>5</div>
+            <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>4</div>
+          </div>
+          <div style={{ position: "absolute", left: "122px", bottom: "20px", display: "flex", gap: "28px", color: "#111111" }}>
+            <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>3</div>
+            <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>2</div>
+            <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>1</div>
+          </div>
+        </div>
 
-            <div className="mobile-info-card" style={{ marginTop: "12px" }}>
-              <div style={{ border: "2px solid #111111", padding: "10px 12px", background: "#fafafa" }}>
-                <div style={{ fontSize: "16px", fontWeight: 900, color: "#6b7280" }}>A 區</div>
-                <div style={{ marginTop: 4, fontSize: "18px", fontWeight: 900, color: "#111111" }}>表演團體休息區</div>
-                <div style={{ marginTop: 4, fontSize: "14px", lineHeight: 1.5, color: "#334155" }}>北門，表演團體進出。</div>
-              </div>
-              <div style={{ border: "2px solid #111111", padding: "10px 12px", background: "#fff" }}>
-                <div style={{ fontSize: "16px", fontWeight: 900, color: "#6b7280" }}>B 區</div>
-                <div style={{ marginTop: 4, fontSize: "18px", fontWeight: 900, color: "#111111", lineHeight: 1.45 }}>成果展 / 社團活動 / 服務學習 / 多元課程</div>
-              </div>
-              <div style={{ border: "2px solid #111111", padding: "10px 12px", background: "#fafafa" }}>
-                <div style={{ fontSize: "16px", fontWeight: 900, color: "#6b7280" }}>代號 1 - 6</div>
-                <div style={{ marginTop: 6, display: "grid", gap: "8px" }}>
-                  {libraryStalls.map((item) => (
-                    <div key={item.id} style={{ display: "flex", gap: "8px", alignItems: "flex-start" }}>
-                      <div style={{ minWidth: "34px", fontWeight: 900, color: "#111111" }}>{item.id}.</div>
-                      <div style={{ fontWeight: 800, color: "#111111", lineHeight: 1.45 }}>{item.name}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+        <div style={{ position: "relative", padding: "42px 34px 28px 34px", background: "#ffffff" }}>
+          <div style={{ fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 700, color: "#6b7280", lineHeight: 1 }}>A銵冽???隡?</div>
+
+          <div style={{ marginTop: "92px" }}>
+            <div style={{ fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 700, color: "#111111", lineHeight: 1 }}>B ??撅?/div>
+            <div style={{ marginTop: "10px", fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 700, color: "#111111" }}>蝷曉?瘣餃? / ??摮貊? / 憭?隤脩?</div>
+          </div>
+
+          <div style={{ marginTop: "64px", fontSize: "clamp(16px, 2.2vw, 26px)", lineHeight: 1.55, color: "#111111", fontWeight: 700 }}>
+            <div>1. ?咱甈?祉? CRC</div>
+            <div>2. ?批撟喟??</div>
+            <div>3. ?隢暸??/div>
+            <div>4. 蝝?摮?撠僑??蝷?/div>
+            <div>5. ???鈭斗?蝷?/div>
+            <div>6. 蝜芣?萎?撅?/div>
           </div>
         </div>
       </div>
-    );
-  };
+    </div>
+  );
 
   return createPortal(
     <div
@@ -362,7 +320,7 @@ function FeatureText({ feature }: { feature: RectFeature }) {
           fontWeight={700}
           style={{ pointerEvents: "none", userSelect: "none" }}
         >
-          表演
+          銵冽?
         </text>
         <text
           x={feature.x + feature.w / 2}
@@ -373,7 +331,7 @@ function FeatureText({ feature }: { feature: RectFeature }) {
           fontWeight={700}
           style={{ pointerEvents: "none", userSelect: "none" }}
         >
-          舞台
+          ?
         </text>
       </>
     );
@@ -508,16 +466,16 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       { id: "3", domId: "stall_3", label: "3", type: "stall", x: 924, y: 210, w: 40, h: 40, fill: COLORS.stallBlue },
       { id: "2", domId: "stall_2", label: "2", type: "stall", x: 924, y: 254, w: 40, h: 40, fill: COLORS.stallBlue },
       { id: "1", domId: "stall_1", label: "1", type: "stall", x: 924, y: 338, w: 40, h: 40, fill: COLORS.stallPink },
-      { id: "班", domId: "stall_class", label: "班", type: "stall", x: 924, y: 382, w: 40, h: 40, fill: COLORS.stallPink },
+      { id: "??, domId: "stall_class", label: "??, type: "stall", x: 924, y: 382, w: 40, h: 40, fill: COLORS.stallPink },
 
-      { id: "女1", domId: "stall_girl_1", label: "女", type: "stall", x: 388, y: 278, w: 40, h: 40, fill: COLORS.stallBlue },
-      { id: "女2", domId: "stall_girl_2", label: "女", type: "stall", x: 388, y: 322, w: 40, h: 40, fill: COLORS.stallBlue },
-      { id: "女3", domId: "stall_girl_3", label: "女", type: "stall", x: 432, y: 378, w: 40, h: 40, fill: COLORS.stallPink },
-      { id: "女4", domId: "stall_girl_4", label: "女", type: "stall", x: 472, y: 378, w: 40, h: 40, fill: COLORS.stallPink },
-      { id: "女5", domId: "stall_girl_5", label: "女", type: "stall", x: 512, y: 378, w: 40, h: 40, fill: COLORS.stallPink },
+      { id: "憟?", domId: "stall_girl_1", label: "憟?, type: "stall", x: 388, y: 278, w: 40, h: 40, fill: COLORS.stallBlue },
+      { id: "憟?", domId: "stall_girl_2", label: "憟?, type: "stall", x: 388, y: 322, w: 40, h: 40, fill: COLORS.stallBlue },
+      { id: "憟?", domId: "stall_girl_3", label: "憟?, type: "stall", x: 432, y: 378, w: 40, h: 40, fill: COLORS.stallPink },
+      { id: "憟?", domId: "stall_girl_4", label: "憟?, type: "stall", x: 472, y: 378, w: 40, h: 40, fill: COLORS.stallPink },
+      { id: "憟?", domId: "stall_girl_5", label: "憟?, type: "stall", x: 512, y: 378, w: 40, h: 40, fill: COLORS.stallPink },
 
-      { id: "貴A", domId: "stall_vip_1", label: "貴", type: "stall", x: 612, y: 322, w: 40, h: 40, fill: "#ffffff" },
-      { id: "貴B", domId: "stall_vip_2", label: "貴", type: "stall", x: 700, y: 322, w: 40, h: 40, fill: "#ffffff" },
+      { id: "鞎媚", domId: "stall_vip_1", label: "鞎?, type: "stall", x: 612, y: 322, w: 40, h: 40, fill: "#ffffff" },
+      { id: "鞎婿", domId: "stall_vip_2", label: "鞎?, type: "stall", x: 700, y: 322, w: 40, h: 40, fill: "#ffffff" },
     ],
     []
   );
@@ -529,7 +487,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       {
         id: "student-affairs",
         domId: "building_student_affairs",
-        label: "學務處",
+        label: "摮詨???,
         type: "building",
         x: 388,
         y: 18,
@@ -540,7 +498,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       {
         id: "academic-affairs",
         domId: "building_academic_affairs",
-        label: "教務處",
+        label: "????,
         type: "building",
         x: 742,
         y: 18,
@@ -551,7 +509,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       {
         id: "xinyi",
         domId: "building_xinyi",
-        label: "信義樓",
+        label: "靽∠儔璅?,
         type: "building",
         x: 214,
         y: 20,
@@ -563,7 +521,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       {
         id: "complex",
         domId: "building_complex",
-        label: "綜合大樓",
+        label: "蝬?憭扳?",
         type: "building",
         x: 1012,
         y: 84,
@@ -575,7 +533,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       {
         id: "old-library",
         domId: "building_old_library",
-        label: "舊圖書館",
+        label: "???賊尹",
         type: "building",
         x: 275,
         y: 550,
@@ -586,7 +544,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       {
         id: "library-building",
         domId: "building_library_building",
-        label: "圖資大樓",
+        label: "??憭扳?",
         type: "building",
         x: 520,
         y: 550,
@@ -597,7 +555,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       {
         id: "office",
         domId: "building_office",
-        label: "傳達室",
+        label: "?喲?摰?,
         type: "building",
         x: 1012,
         y: 552,
@@ -609,7 +567,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       {
         id: "gate",
         domId: "building_gate",
-        label: "大門",
+        label: "憭折?",
         type: "building",
         x: 886,
         y: 670,
@@ -620,7 +578,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       {
         id: "stage",
         domId: "building_stage",
-        label: "表演舞台",
+        label: "銵冽??",
         type: "building",
         x: 606,
         y: 420,
@@ -663,7 +621,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       {
         id: "audio-room",
         domId: "facility_audio_room",
-        label: "音",
+        label: "??,
         type: "facility",
         x: 745,
         y: 514,
@@ -680,7 +638,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       {
         id: "xinyi-top-woman",
         domId: "toilet_xinyi_top_woman",
-        label: "女",
+        label: "憟?,
         type: "facility",
         x: 216,
         y: 22,
@@ -694,7 +652,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       {
         id: "xinyi-top-man",
         domId: "toilet_xinyi_top_man",
-        label: "男",
+        label: "??,
         type: "facility",
         x: 244,
         y: 22,
@@ -708,7 +666,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       {
         id: "xinyi-bottom-man",
         domId: "toilet_xinyi_bottom_man",
-        label: "男",
+        label: "??,
         type: "facility",
         x: 216,
         y: 523,
@@ -722,7 +680,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       {
         id: "student-affairs-left-woman",
         domId: "toilet_student_affairs_left_woman",
-        label: "女",
+        label: "憟?,
         type: "facility",
         x: 390,
         y: 20,
@@ -736,7 +694,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       {
         id: "student-affairs-left-man",
         domId: "toilet_student_affairs_left_man",
-        label: "男",
+        label: "??,
         type: "facility",
         x: 390,
         y: 41,
@@ -750,7 +708,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       {
         id: "academic-affairs-right-woman",
         domId: "toilet_academic_affairs_right_woman",
-        label: "女",
+        label: "憟?,
         type: "facility",
         x: 960,
         y: 20,
@@ -764,7 +722,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       {
         id: "academic-affairs-right-man",
         domId: "toilet_academic_affairs_right_man",
-        label: "男",
+        label: "??,
         type: "facility",
         x: 960,
         y: 41,
@@ -784,8 +742,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
   const onStallClick = (feature: RectFeature) => {
     const stall = getStallInfo(feature.id as StallId);
     
-    // 進入聚光燈模式
-    setSpotlightState({
+    // ?脣???芋撘?    setSpotlightState({
       stallId: feature.id as StallId,
       stallName: `${stall.displayName}(${stall.id})`,
       stallContent: stall.content,
@@ -793,8 +750,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       position: { x: feature.x, y: feature.y, w: feature.w, h: feature.h },
     });
 
-    // 聚焦到SVG該位置
-    setTimeout(() => {
+    // ??訕VG閰脖?蝵?    setTimeout(() => {
       if (svgContainerRef.current) {
         const svgRect = svgContainerRef.current.getBoundingClientRect();
         const viewBoxWidth = 950;
@@ -802,12 +758,12 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         const scaleX = svgRect.width / viewBoxWidth;
         const scaleY = svgRect.height / viewBoxHeight;
 
-        const targetX = (feature.x + feature.w / 2 - 180) * scaleX; // 180是viewBox offset
+        const targetX = (feature.x + feature.w / 2 - 180) * scaleX; // 180?眠iewBox offset
         const targetY = (feature.y + feature.h / 2) * scaleY;
 
         svgContainerRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
         
-        // 窗口滾動
+        // 蝒皛曉?
         window.scrollTo({
           top: window.scrollY + svgRect.top + targetY - window.innerHeight * 0.35,
           behavior: "smooth",
@@ -817,25 +773,25 @@ export default function Map({ onBack, isModal = false }: MapProps) {
   };
 
   const onBuildingClick = (feature: RectFeature) => {
-    // 圖資大樓改成與其他主樓一致的中央大框彈窗
+    // ??憭扳??寞??隞蜓璅??渡?銝剖亢憭扳?敶?
     if (feature.id === "library-building") {
       setModalState({
         id: feature.id,
         title: feature.label,
-        message: "室內：表演團體休息區\n室外：L 型小涼亭攤位區",
+        message: "摰文嚗”瞍?擃??臬?\n摰文?嚗 ??瘨潔滬?支??",
       });
       return;
     }
 
-    const buildingName = feature.id === "stage" ? "表演舞台" : feature.label;
-    setModalState({ id: feature.id, title: buildingName, message: `[建築名稱] 廁所資訊：[廁所位置描述]` });
+    const buildingName = feature.id === "stage" ? "銵冽??" : feature.label;
+    setModalState({ id: feature.id, title: buildingName, message: `[撱箇??迂] 撱?鞈?嚗撱?雿蔭?膩]` });
   };
 
   const onFacilityClick = (feature: RectFeature) => {
     setModalState({
       id: feature.id,
-      title: feature.id === "audio-room" ? "音控室" : feature.label === "女" ? "女廁" : feature.label === "男" ? "男廁" : "場域資訊",
-      message: "此區域資訊可於後續功能中設定。",
+      title: feature.id === "audio-room" ? "?單摰? : feature.label === "憟? ? "憟喳?" : feature.label === "?? ? "?瑕?" : "?游?鞈?",
+      message: "甇文???閮?澆?蝥??賭葉閮剖???,
     });
   };
 
@@ -860,7 +816,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
               className="clay-button clay-button-blue rounded-none"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
-              返回首頁
+              餈?擐?
             </button>
           </div>
         )}
@@ -868,7 +824,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
           <div className="border-b p-4">
             <button type="button" onClick={onBack} className="flex items-center gap-2 clay-button clay-button-blue !py-2 !px-3 !rounded-none">
               <ArrowLeft className="h-4 w-4" />
-              關閉地圖
+              ???啣?
             </button>
           </div>
         )}
@@ -878,7 +834,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
 
           <div className="bg-white p-2 sm:p-4" style={{ border: "4px solid #111111", borderRadius: "1rem", boxShadow: "6px 6px 0 #111111" }}>
             <div className="relative mx-auto w-full max-w-[1100px]" ref={svgContainerRef} style={{ position: "relative" }}>
-              <svg viewBox="180 0 950 760" role="img" aria-label="園遊會互動地圖" className="h-auto w-full" style={{ background: COLORS.mapBg, borderRadius: 12, touchAction: "manipulation" }}>
+              <svg viewBox="180 0 950 760" role="img" aria-label="??????? className="h-auto w-full" style={{ background: COLORS.mapBg, borderRadius: 12, touchAction: "manipulation" }}>
                 <rect x={180} y={0} width={950} height={760} fill={COLORS.mapBg} />
 
                 {otherFeatures.filter((feature) => feature.type === "zone").map((feature) => (
@@ -898,8 +854,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   1F
                 </text>
                 <text x={228} y={548} fontSize={16} fill="#b8b8b8">
-                  ♂
-                </text>
+                  ??                </text>
 
                 {buildingFeatures.map((feature) => (
                   <SvgRectButton key={feature.id} feature={feature} selected={selectedId === feature.id} onActivate={() => onBuildingClick(feature)} />
@@ -948,13 +903,13 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                 ))}
 
                 <foreignObject x={832} y={566} width={44} height={44}>
-                  <button id="facility_utensils" type="button" className="flex h-11 w-11 items-center justify-center rounded-lg border border-slate-400 bg-white" onClick={() => setModalState({ id: "utensils", title: "餐具回收區", message: "此區域資訊可於後續功能中設定。" })}>
+                  <button id="facility_utensils" type="button" className="flex h-11 w-11 items-center justify-center rounded-lg border border-slate-400 bg-white" onClick={() => setModalState({ id: "utensils", title: "擗??", message: "甇文???閮?澆?蝥??賭葉閮剖??? })}>
                     <UtensilsCrossed className="h-5 w-5 text-slate-700" strokeWidth={1.8} />
                   </button>
                 </foreignObject>
 
                 <foreignObject x={832} y={614} width={44} height={44}>
-                  <button id="facility_trash" type="button" className="flex h-11 w-11 items-center justify-center rounded-lg border border-slate-400 bg-white" onClick={() => setModalState({ id: "trash", title: "垃圾桶", message: "此區域資訊可於後續功能中設定。" })}>
+                  <button id="facility_trash" type="button" className="flex h-11 w-11 items-center justify-center rounded-lg border border-slate-400 bg-white" onClick={() => setModalState({ id: "trash", title: "?獢?, message: "甇文???閮?澆?蝥??賭葉閮剖??? })}>
                     <Trash2 className="h-5 w-5 text-slate-700" strokeWidth={1.8} />
                   </button>
                 </foreignObject>
@@ -967,9 +922,9 @@ export default function Map({ onBack, isModal = false }: MapProps) {
               </svg>
             </div>
 
-            {/* ── 攤位總覽 ── */}
+            {/* ?? ?支?蝮質汗 ?? */}
             <div className="mt-6 sm:mt-8">
-              {/* 分類標籤頁 */}
+              {/* ??璅惜??*/}
               <div className="mb-4 flex flex-wrap gap-2">
                 <button
                   onClick={() => setSelectedCategory("all")}
@@ -980,7 +935,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   }`}
                   style={selectedCategory === "all" ? undefined : { borderColor: "var(--border)" }}
                 >
-                  全部
+                  ?券
                 </button>
                 {Object.entries(STALL_CATEGORIES).map(([key, label]: [string, string]) => (
                   <button
@@ -998,7 +953,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                 ))}
               </div>
 
-              {/* 攤位卡片網格 */}
+              {/* ?支??∠?蝬脫 */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                 {orderedStalls.map((stall) => {
                   const stallFeature = stallFeatures.find((f) => f.id === stall.id);
@@ -1032,7 +987,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
         </div>
       </div>
 
-      {/* 聚光燈詳情面板 */}
+      {/* ???底???*/}
       {spotlightState && (
         <StallDetailPanel
           spotlight={spotlightState}
