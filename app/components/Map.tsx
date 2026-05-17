@@ -204,35 +204,49 @@ function Modal({
               </div>
             </div>
 
-            <div className="mobile-map-card" style={{ position: "relative", width: "100%", height: "100%", padding: "10px 12px 12px" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "8px" }}>
-                <div style={{ fontSize: "clamp(20px, 5.8vw, 28px)", fontWeight: 900, color: "#111111", lineHeight: 1 }}>圖資大樓</div>
+            <div className="mobile-map-card" style={{ position: "relative", width: "100%", height: "100%", padding: "8px 10px 10px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "6px" }}>
+                <div style={{ fontSize: "clamp(20px, 5.4vw, 26px)", fontWeight: 900, color: "#111111", lineHeight: 1 }}>圖資大樓</div>
                 <div style={{ fontSize: "clamp(11px, 3vw, 14px)", fontWeight: 800, color: "#6b7280" }}>地圖概覽</div>
               </div>
 
-              <div style={{ position: "relative", height: "210px", border: "2px solid #111111", background: "#ffffff", overflow: "hidden" }}>
-                <div style={{ position: "absolute", left: "10px", top: "8px", bottom: "8px", writingMode: "vertical-rl", textOrientation: "upright", fontSize: "clamp(17px, 4.3vw, 24px)", fontWeight: 800, color: "#6b7280" }}>圖資大樓</div>
-                <div style={{ position: "absolute", left: "34%", top: "18px", fontSize: "clamp(22px, 6vw, 30px)", fontWeight: 400, color: "#6b7280" }}>A</div>
-                <div style={{ position: "absolute", right: "10px", top: "12px", textAlign: "right", color: "#6b7280" }}>
-                  <div style={{ fontSize: "clamp(15px, 4vw, 20px)", fontWeight: 800 }}>北門</div>
-                  <div style={{ fontSize: "clamp(10px, 2.8vw, 12px)", fontWeight: 700 }}>(表演團體進出)</div>
-                </div>
-                <div style={{ position: "absolute", left: "8px", right: "8px", top: "54%", borderTop: "2px solid #111111" }} />
-                <div style={{ position: "absolute", left: "34%", top: "58%", fontSize: "clamp(22px, 6vw, 30px)", fontWeight: 400, color: "#4b5563" }}>B</div>
-                <div style={{ position: "absolute", right: "10px", top: "58%", fontSize: "clamp(15px, 4vw, 20px)", fontWeight: 800, color: "#111111" }}>南門</div>
-
-                {[
-                  { id: "6", left: "12px", top: "88px" },
-                  { id: "5", left: "12px", top: "128px" },
-                  { id: "4", left: "12px", top: "168px" },
-                  { id: "3", left: "70px", top: "168px" },
-                  { id: "2", left: "128px", top: "168px" },
-                  { id: "1", left: "186px", top: "168px" },
-                ].map((cell) => (
-                  <div key={cell.id} style={{ position: "absolute", left: cell.left, top: cell.top, width: "48px", height: "30px", border: "2px solid #111111", background: "#ffffff", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: "clamp(16px, 4.4vw, 20px)", color: "#111111" }}>
-                    {cell.id}
+              <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                    <div style={{ fontSize: "clamp(20px, 5vw, 28px)", fontWeight: 900, color: "#6b7280" }}>A</div>
+                    <div style={{ fontSize: "clamp(13px, 3.2vw, 15px)", color: "#334155" }}>表演團體休息區</div>
                   </div>
-                ))}
+                  <div style={{ textAlign: "right", color: "#6b7280" }}>
+                    <div style={{ fontSize: "clamp(14px, 3.2vw, 18px)", fontWeight: 800 }}>北門</div>
+                    <div style={{ fontSize: "clamp(10px, 2.6vw, 12px)", fontWeight: 700 }}>(表演團體進出)</div>
+                  </div>
+                </div>
+
+                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "10px" }}>
+                  <div style={{ fontSize: "clamp(20px, 5vw, 26px)", fontWeight: 700, color: "#4b5563" }}>B</div>
+                </div>
+
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", marginTop: "0px" }}>
+                  <div style={{ height: "1px", background: "#111111", flex: 1 }} />
+                  <div style={{ padding: "0 8px", fontSize: "13px", fontWeight: 800 }}>南門</div>
+                  <div style={{ height: "1px", background: "#111111", flex: 1 }} />
+                </div>
+
+                <div style={{ border: "2px solid #111111", padding: "8px", background: "#ffffff" }}>
+                  <div style={{ display: "flex", gap: "10px" }}>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "8px", minWidth: "56px" }}>
+                      <div style={{ width: "48px", height: "30px", border: "2px solid #111111", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900 }}>6</div>
+                      <div style={{ width: "48px", height: "30px", border: "2px solid #111111", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900 }}>5</div>
+                    </div>
+
+                    <div style={{ flex: 1, display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "8px" }}>
+                      <div style={{ width: "48px", height: "30px", border: "2px solid #111111", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900 }}>4</div>
+                      <div style={{ width: "48px", height: "30px", border: "2px solid #111111", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900 }}>3</div>
+                      <div style={{ width: "48px", height: "30px", border: "2px solid #111111", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900 }}>2</div>
+                      <div style={{ width: "48px", height: "30px", border: "2px solid #111111", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900 }}>1</div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -255,10 +269,29 @@ function Modal({
             </div>
 
             <div className="mobile-info-card" style={{ marginTop: "12px" }}>
-              <div style={{ fontSize: "15px", lineHeight: 1.7, color: "#334155" }}>
-                <div style={{ marginBottom: "0.65rem" }}><span style={{ fontWeight: 900, color: "#6b7280" }}>A 區</span>：表演團體休息區，北門進出。</div>
-                <div style={{ marginBottom: "0.65rem" }}><span style={{ fontWeight: 900, color: "#6b7280" }}>B 區</span>：成果展、社團活動、服務學習與多元課程。</div>
-                <div><span style={{ fontWeight: 900, color: "#6b7280" }}>1 - 6</span>：{libraryStalls.map((item) => `${item.id} ${item.name}`).join("、 ")}</div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "10px", color: "#334155", fontSize: "15px", lineHeight: 1.6 }}>
+                <div>
+                  <div style={{ fontWeight: 900, color: "#111111", marginBottom: "6px" }}>圖資大樓介紹</div>
+                  <div style={{ fontWeight: 900, color: "#6b7280" }}>A 區</div>
+                  <div style={{ marginTop: "4px" }}>表演團體休息區，北門進出。</div>
+                </div>
+
+                <div>
+                  <div style={{ fontWeight: 900, color: "#6b7280" }}>B 區</div>
+                  <div style={{ marginTop: "4px" }}>成果展（社團活動 / 服務學習 / 多元課程）。</div>
+                </div>
+
+                <div>
+                  <div style={{ fontWeight: 900, color: "#6b7280", marginBottom: "6px" }}>攤位 1 - 6</div>
+                  <ul style={{ paddingLeft: "1rem", margin: 0, display: "flex", flexDirection: "column", gap: "6px", color: "#111111", fontWeight: 700 }}>
+                    <li>兒童權利公約 CRC</li>
+                    <li>性別平等教育</li>
+                    <li>門諾醫院</li>
+                    <li>紅十字會少年服務社</li>
+                    <li>國際教育交流社</li>
+                    <li>繪本創作展</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -279,7 +312,7 @@ function Modal({
         height: viewport.height ? viewport.height : "100vh",
       }}
     >
-      <div
+          <div
         onClick={(e) => e.stopPropagation()}
         style={{
           border: "4px solid #111111",
@@ -291,7 +324,7 @@ function Modal({
           maxWidth: MAX_WIDTH,
           boxSizing: "border-box",
           overflowY: needsScroll ? "auto" : "visible",
-          padding: "1.25rem",
+          padding: "0.9rem",
           position: "relative",
         }}
       >
