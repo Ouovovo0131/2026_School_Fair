@@ -31,6 +31,7 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
   const [previewUrl, setPreviewUrl] = useState("");
   const [quotaExceeded, setQuotaExceeded] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const cameraInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     if (questId) {
@@ -106,6 +107,21 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
     setSelectedPhotoFile(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
+    }
+    if (cameraInputRef.current) {
+      cameraInputRef.current.value = "";
+    }
+  };
+
+  const openCameraPicker = () => {
+    if (!uploading && !quotaExceeded) {
+      cameraInputRef.current?.click();
+    }
+  };
+
+  const openGalleryPicker = () => {
+    if (!uploading && !quotaExceeded) {
+      fileInputRef.current?.click();
     }
   };
 
@@ -333,31 +349,55 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
                 </div>
               )}
 
-              <label className={`block w-full text-center font-bold py-6 rounded-none transition-all cursor-pointer clay-button ${ 
-                uploading 
-                  ? 'clay-button opacity-60' 
-                  : 'clay-button-yellow'
-              }`}>
-                <div className="flex flex-col items-center justify-center gap-2 text-lg">
-                  {uploading ? (
-                    <span>🔄 壓縮上傳中...</span>
-                  ) : (
-                    <>
-                      <Camera className="w-6 h-6" />
-                      <span>開啟相機 / 上傳</span>
-                    </>
-                  )}
-                </div>
-                  <input 
-                    type="file" 
-                    accept="image/*" 
-                    capture="environment"
-                    className="hidden" 
-                    ref={fileInputRef}
-                    onChange={handlePhotoSelect}
-                    disabled={uploading || quotaExceeded} 
-                  />
-              </label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={openCameraPicker}
+                  className={`block w-full text-center font-bold py-6 rounded-none transition-all clay-button ${uploading ? 'clay-button opacity-60' : 'clay-button-yellow'}`}
+                  disabled={uploading || quotaExceeded}
+                >
+                  <div className="flex flex-col items-center justify-center gap-2 text-lg">
+                    {uploading ? (
+                      <span>🔄 壓縮上傳中...</span>
+                    ) : (
+                      <>
+                        <Camera className="w-6 h-6" />
+                        <span>開啟相機</span>
+                      </>
+                    )}
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={openGalleryPicker}
+                  className={`block w-full text-center font-bold py-6 rounded-none transition-all clay-button ${uploading ? 'clay-button opacity-60' : 'clay-button-blue'}`}
+                  disabled={uploading || quotaExceeded}
+                >
+                  <div className="flex flex-col items-center justify-center gap-2 text-lg">
+                    <span>🖼️</span>
+                    <span>相簿 / 上傳</span>
+                  </div>
+                </button>
+              </div>
+
+              <input 
+                type="file" 
+                accept="image/*" 
+                capture="environment"
+                className="hidden" 
+                ref={cameraInputRef}
+                onChange={handlePhotoSelect}
+                disabled={uploading || quotaExceeded} 
+              />
+              <input 
+                type="file" 
+                accept="image/*" 
+                className="hidden" 
+                ref={fileInputRef}
+                onChange={handlePhotoSelect}
+                disabled={uploading || quotaExceeded} 
+              />
 
                 {quotaExceeded && (
                   <div className="mt-3 p-3 border-2 border-red-600 bg-red-50 text-red-800 text-sm rounded-none">
@@ -374,7 +414,7 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                     <button
                       type="button"
-                      onClick={() => fileInputRef.current?.click()}
+                      onClick={openGalleryPicker}
                       className="clay-button clay-button-yellow rounded-none"
                       disabled={uploading}
                     >

@@ -9,6 +9,7 @@ export interface SpotlightState {
   stallName: string;
   stallContent: string;
   stallCategory: StallCategory | StallCategory[];
+  stallClassLabel?: string;
   position: { x: number; y: number; w: number; h: number };
 }
 
@@ -54,9 +55,9 @@ const getCategoryBadgeStyle = (category: StallCategory | StallCategory[]) => {
   };
 };
 
-const getCategoryLabel = (category: StallCategory | StallCategory[]): string => {
-  const cat = Array.isArray(category) ? category[0] : category;
-  return STALL_CATEGORIES[cat];
+const getCategoryLabels = (category: StallCategory | StallCategory[]): string[] => {
+  const categories = Array.isArray(category) ? category : [category];
+  return categories.map((cat) => STALL_CATEGORIES[cat]);
 };
 
 const parseLibraryStallItems = (content: string) => {
@@ -161,8 +162,9 @@ export function StallDetailPanel({
   spotlight: SpotlightState;
   onClose: () => void;
 }): ReactElement {
-  const categoryBadgeStyle = getCategoryBadgeStyle(spotlight.stallCategory);
-  const categoryLabel = getCategoryLabel(spotlight.stallCategory);
+  const categoryEntries = Array.isArray(spotlight.stallCategory) ? spotlight.stallCategory : [spotlight.stallCategory];
+  const categoryLabels = getCategoryLabels(spotlight.stallCategory);
+  const classLabel = spotlight.stallClassLabel?.trim() || "";
   const isLibraryBuilding = spotlight.stallId === "library-building";
   const libraryItems = parseLibraryStallItems(spotlight.stallContent);
 
@@ -341,10 +343,9 @@ export function StallDetailPanel({
             opacity: 1;
           }
         }
-        .stall-detail-panel .header-mobile { display: flex; gap: .5rem }
+        .stall-detail-panel .header-mobile { display: flex; gap: .75rem; align-items: flex-start }
         @media (max-width: 640px){
           .stall-detail-panel{ max-height: 95vh !important; padding-bottom: 0.6rem }
-          .stall-detail-panel .header-mobile{ flex-direction: column; align-items: stretch }
           .stall-detail-panel button{ width:48px;height:48px }
           .library-mini-map .map-cell{ font-size: clamp(16px, 4.5vw, 22px) !important }
           .library-details-grid .left{ order: 2 }
@@ -354,8 +355,8 @@ export function StallDetailPanel({
 
       <div style={{ padding: "1.5rem 1rem" }}>
         {/* 頭部：關閉按鈕 + 分類徽章 */}
-        <div className="header-mobile" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1rem" }}>
-          <div style={{ flex: 1, paddingRight: "1rem" }}>
+        <div className="header-mobile" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "0.75rem", marginBottom: "1rem" }}>
+          <div style={{ flex: 1, minWidth: 0, paddingRight: "1rem" }}>
             <h2
               style={{
                 margin: 0,
@@ -369,6 +370,11 @@ export function StallDetailPanel({
             >
               {spotlight.stallName}
             </h2>
+            {!isLibraryBuilding && classLabel && (
+              <div style={{ marginTop: "0.45rem", display: "inline-flex", alignItems: "center", gap: "0.35rem", padding: "0.3rem 0.6rem", border: "2px solid #111111", background: "#ffffff", fontSize: "12px", fontWeight: 800, color: "#111111", boxShadow: "3px 3px 0 rgba(0,0,0,0.18)" }}>
+                班級 {classLabel}
+              </div>
+            )}
           </div>
 
           <button
@@ -404,23 +410,32 @@ export function StallDetailPanel({
 
         {/* 分類徽章 */}
         {!isLibraryBuilding && (
-          <div
-            style={{
-              display: "inline-block",
-              backgroundColor: categoryBadgeStyle.backgroundColor,
-              color: categoryBadgeStyle.color,
-              padding: "0.5rem 1rem",
-              fontSize: "12px",
-              fontWeight: 700,
-              border: `2px solid ${categoryBadgeStyle.borderColor}`,
-              borderRadius: 0,
-              marginBottom: "1.25rem",
-              fontFamily: "Outfit, sans-serif",
-              letterSpacing: "0.05em",
-              boxShadow: `3px 3px 0 ${categoryBadgeStyle.borderColor}`,
-            }}
-          >
-            {categoryLabel}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "1.25rem" }}>
+            {categoryLabels.map((label, index) => {
+              const category = categoryEntries[index];
+              const badgeStyle = getCategoryBadgeStyle(category);
+
+              return (
+                <span
+                  key={`${label}-${index}`}
+                  style={{
+                    display: "inline-block",
+                    backgroundColor: badgeStyle.backgroundColor,
+                    color: badgeStyle.color,
+                    padding: "0.5rem 1rem",
+                    fontSize: "12px",
+                    fontWeight: 700,
+                    border: `2px solid ${badgeStyle.borderColor}`,
+                    borderRadius: 0,
+                    fontFamily: "Outfit, sans-serif",
+                    letterSpacing: "0.05em",
+                    boxShadow: `3px 3px 0 ${badgeStyle.borderColor}`,
+                  }}
+                >
+                  {label}
+                </span>
+              );
+            })}
           </div>
         )}
 

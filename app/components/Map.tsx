@@ -4,7 +4,7 @@ import { ArrowLeft, Trash2, UtensilsCrossed } from "lucide-react";
 import { useEffect, useMemo, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
-import { STALL_CATEGORIES, type StallCategory, type StallId, getStallInfo, getStallsByCategory } from "@/constants/stalls";
+import { STALL_CATEGORIES, type StallCategory, type StallId, getStallInfo, getStallClassLabel, getStallsByCategory } from "@/constants/stalls";
 import { StallDetailPanel, type SpotlightState } from "./MapSpotlight";
 
 interface MapProps {
@@ -773,6 +773,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       stallName: `${stall.displayName}(${stall.id})`,
       stallContent: stall.content,
       stallCategory: stall.category,
+      stallClassLabel: getStallClassLabel(stall),
       position: { x: feature.x, y: feature.y, w: feature.w, h: feature.h },
     });
 
@@ -888,6 +889,8 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   <SvgRectButton key={feature.id} feature={feature} selected={selectedId === feature.id} onActivate={() => onBuildingClick(feature)} />
                 ))}
 
+                <text x={914} y={182} textAnchor="start" fontSize={16} fontWeight={800} fill="#4b5563" style={{ pointerEvents: "none", userSelect: "none" }}>hospital</text>
+
                 {otherFeatures.filter((feature) => feature.type === "facility").map((feature) => (
                   <SvgRectButton key={feature.id} feature={feature} selected={selectedId === feature.id} onActivate={() => onFacilityClick(feature)} />
                 ))}
@@ -985,6 +988,9 @@ export default function Map({ onBack, isModal = false }: MapProps) {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                 {orderedStalls.map((stall) => {
                   const stallFeature = stallFeatures.find((f) => f.id === stall.id);
+                  const stallCategories = Array.isArray(stall.category) ? stall.category : [stall.category];
+                  const stallClassLabel = getStallClassLabel(stall);
+
                   return (
                     <div
                       key={stall.id}
@@ -1000,9 +1006,30 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                         }
                       }}
                     >
-                      <h4 className="text-xs sm:text-sm font-bold text-slate-900 mb-1 line-clamp-2">
-                        {stall.displayName}
-                      </h4>
+                      <div className="flex items-start justify-between gap-2">
+                        <h4 className="text-xs sm:text-sm font-bold text-slate-900 mb-1 line-clamp-2">
+                          {stall.displayName}
+                        </h4>
+                        {stallClassLabel && (
+                          <span className="inline-flex shrink-0 items-center rounded-none border-2 border-black bg-white px-2 py-0.5 text-[10px] font-black uppercase tracking-[0.1em] text-slate-800">
+                            {stallClassLabel}
+                          </span>
+                        )}
+                      </div>
+                      <div className="mb-2 flex flex-wrap gap-1">
+                        {stallCategories.map((category) => (
+                          <span
+                            key={`${stall.id}-${category}`}
+                            className="inline-flex items-center rounded-none border-2 border-black px-2 py-0.5 text-[10px] font-black uppercase tracking-[0.08em]"
+                            style={{
+                              background: category === "vip" ? "var(--primary-red)" : category === "student" ? "#111111" : category === "bracelet" ? "#A78BFA" : category === "beverage" ? "#0EA5E9" : category === "game" ? "var(--primary-yellow)" : category === "other" ? "#ffffff" : "#ffffff",
+                              color: category === "game" ? "#111111" : category === "student" ? "#F0C020" : category === "other" ? "#111111" : "#ffffff",
+                            }}
+                          >
+                            {STALL_CATEGORIES[category]}
+                          </span>
+                        ))}
+                      </div>
                       <p className="text-xs sm:text-sm text-slate-600 line-clamp-2">
                         {stall.content}
                       </p>
