@@ -180,7 +180,8 @@ export function StallDetailPanel({
   });
 
   const LibraryMiniMap = () => (
-    <div className="library-mini-map"
+    <div
+      className="library-mini-map"
       style={{
         border: "4px solid #111111",
         borderRadius: 0,
@@ -193,45 +194,45 @@ export function StallDetailPanel({
     >
       <style>{`
         .library-mini-map{ position:relative }
-        .library-mini-map .map-area{ position: absolute; left: 0; right: 0 }
+        .library-mini-map .mini-map-inner{ position:absolute; inset:0 }
         @media (max-width:640px){
           .library-mini-map{ height: 280px }
-          .library-mini-map .map-area{ transform: scale(0.95); transform-origin: top left }
+          .library-mini-map .mini-map-inner{ transform: scale(0.95); transform-origin: top left }
         }
       `}</style>
 
       <div style={{ position: "absolute", inset: "10px", border: "2px solid #111111", background: "#fcfcfc" }} />
 
-      <div className="map-area">
+      <div className="mini-map-inner">
         <div style={{ position: "absolute", top: "12px", left: "16px", right: "16px", display: "flex", justifyContent: "space-between", alignItems: "baseline", zIndex: 2 }}>
           <div style={{ fontSize: "clamp(22px, 3.3vw, 36px)", fontWeight: 900, color: "#111111", lineHeight: 1 }}>圖資</div>
           <div style={{ fontSize: "clamp(18px, 2.8vw, 30px)", fontWeight: 900, color: "#111111", lineHeight: 1 }}>大樓</div>
         </div>
 
         <div style={{ position: "absolute", left: "16px", top: "54px", right: "16px", bottom: "16px" }}>
-        <div style={{ position: "absolute", left: "10px", right: "10px", top: "14%", height: "28%", border: "2px solid #111111", background: "#FFFFFF" }}>
-          <div style={{ position: "absolute", left: "14px", top: "10px", fontSize: "clamp(12px, 1.8vw, 18px)", fontWeight: 900, color: "#111827" }}>室內</div>
-          <div style={{ position: "absolute", left: "14px", top: "36px", fontSize: "clamp(20px, 3.2vw, 30px)", fontWeight: 900, color: "#111827" }}>表演團體休息區</div>
-          <div style={{ position: "absolute", left: "14px", bottom: "10px", fontSize: "clamp(11px, 1.6vw, 14px)", fontWeight: 700, color: "#4b5563" }}>室內提供表演團體休息與整理空間</div>
-        </div>
+          <div style={{ position: "absolute", left: "10px", right: "10px", top: "14%", height: "28%", border: "2px solid #111111", background: "#FFFFFF" }}>
+            <div style={{ position: "absolute", left: "14px", top: "10px", fontSize: "clamp(12px, 1.8vw, 18px)", fontWeight: 900, color: "#111827" }}>室內</div>
+            <div style={{ position: "absolute", left: "14px", top: "36px", fontSize: "clamp(20px, 3.2vw, 30px)", fontWeight: 900, color: "#111827" }}>表演團體休息區</div>
+            <div style={{ position: "absolute", left: "14px", bottom: "10px", fontSize: "clamp(11px, 1.6vw, 14px)", fontWeight: 700, color: "#4b5563" }}>室內提供表演團體休息與整理空間</div>
+          </div>
 
-        <div style={{ position: "absolute", left: 0, right: 0, top: "48%", borderTop: "2px solid #111111" }} />
-        <div style={{ position: "absolute", left: "12px", top: "49%", fontSize: "clamp(12px, 1.8vw, 16px)", fontWeight: 900, color: "#111111" }}>南門</div>
-        {/* 與主地圖 B 字母垂直對齊（使用相同 top 百分比） */}
-        <div style={{ position: "absolute", right: "12px", top: "49%", fontSize: "clamp(20px, 3.2vw, 30px)", fontWeight: 700, color: "#6b7280" }}>B</div>
-        <div style={{ position: "absolute", left: "12px", top: "52%", fontSize: "clamp(12px, 1.8vw, 16px)", fontWeight: 900, color: "#111111" }}>室外小涼亭</div>
+          <div style={{ position: "absolute", left: 0, right: 0, top: "48%", borderTop: "2px solid #111111" }} />
+          <div style={{ position: "absolute", left: "12px", top: "49%", fontSize: "clamp(12px, 1.8vw, 16px)", fontWeight: 900, color: "#111111" }}>南門</div>
+          <div style={{ position: "absolute", right: "12px", top: "49%", fontSize: "clamp(20px, 3.2vw, 30px)", fontWeight: 700, color: "#6b7280" }}>B</div>
+          <div style={{ position: "absolute", left: "12px", top: "52%", fontSize: "clamp(12px, 1.8vw, 16px)", fontWeight: 900, color: "#111111" }}>室外小涼亭</div>
 
-        <div style={{ position: "absolute", left: "12px", right: "12px", top: "56%", bottom: "12px", border: "2px solid #111111", background: "#fcfcfc" }}>
-          <div style={{ position: "absolute", left: "12px", top: "10px", fontWeight: 900, fontSize: "clamp(12px, 1.8vw, 18px)", color: "#111827" }}>L 型攤位區</div>
+          <div style={{ position: "absolute", left: "12px", right: "12px", top: "56%", bottom: "12px", border: "2px solid #111111", background: "#fcfcfc" }}>
+            <div style={{ position: "absolute", left: "12px", top: "10px", fontWeight: 900, fontSize: "clamp(12px, 1.8vw, 18px)", color: "#111827" }}>L 型攤位區</div>
 
-          <div style={{ position: "absolute", left: "12px", right: "12px", top: "36px", bottom: "12px" }}>
-            <div className="map-cell" style={{ ...mapCellStyle(true), left: "4%", top: "8%", width: "15%", height: "22%" }}>1</div>
-            <div className="map-cell" style={{ ...mapCellStyle(), left: "22%", top: "8%", width: "15%", height: "22%" }}>2</div>
-            <div className="map-cell" style={{ ...mapCellStyle(), left: "40%", top: "8%", width: "15%", height: "22%" }}>3</div>
-            <div className="map-cell" style={{ ...mapCellStyle(), left: "4%", top: "34%", width: "15%", height: "22%" }}>4</div>
-            <div className="map-cell" style={{ ...mapCellStyle(), left: "4%", top: "60%", width: "15%", height: "22%" }}>5</div>
-            <div className="map-cell" style={{ ...mapCellStyle(), left: "22%", top: "60%", width: "15%", height: "22%" }}>6</div>
-            <div style={{ position: "absolute", right: "7%", bottom: "8%", fontSize: "clamp(11px, 1.7vw, 14px)", fontWeight: 900, color: "#6b7280" }}>L 型排列</div>
+            <div style={{ position: "absolute", left: "12px", right: "12px", top: "36px", bottom: "12px" }}>
+              <div className="map-cell" style={{ ...mapCellStyle(true), left: "4%", top: "8%", width: "15%", height: "22%" }}>1</div>
+              <div className="map-cell" style={{ ...mapCellStyle(), left: "22%", top: "8%", width: "15%", height: "22%" }}>2</div>
+              <div className="map-cell" style={{ ...mapCellStyle(), left: "40%", top: "8%", width: "15%", height: "22%" }}>3</div>
+              <div className="map-cell" style={{ ...mapCellStyle(), left: "4%", top: "34%", width: "15%", height: "22%" }}>4</div>
+              <div className="map-cell" style={{ ...mapCellStyle(), left: "4%", top: "60%", width: "15%", height: "22%" }}>5</div>
+              <div className="map-cell" style={{ ...mapCellStyle(), left: "22%", top: "60%", width: "15%", height: "22%" }}>6</div>
+              <div style={{ position: "absolute", right: "7%", bottom: "8%", fontSize: "clamp(11px, 1.7vw, 14px)", fontWeight: 900, color: "#6b7280" }}>L 型排列</div>
+            </div>
           </div>
         </div>
       </div>
@@ -254,11 +255,10 @@ export function StallDetailPanel({
         <style>{`
           .library-details-grid{ display:grid; grid-template-columns: minmax(300px, 1.05fr) minmax(240px, 0.95fr); }
           @media (max-width: 640px){
-            .library-details-grid{ grid-template-columns: 1fr; grid-auto-flow: dense; }
-            /* 手機顯示：地圖在上（left），說明在下（right） */
-            .library-details-grid .left{ order: 1; height: 280px; overflow: auto; -webkit-overflow-scrolling: touch }
-            .library-details-grid .right{ order: 2; border-left: none; }
-            .library-details-grid .right .content{ padding: 0.6rem 0.8rem; }
+            .library-details-grid{ grid-template-columns: 1fr; }
+            .library-details-grid .left{ height: 280px; overflow: hidden; }
+            .library-details-grid .right{ border-left: none; border-top: 4px solid #111111; }
+            .library-details-grid .right .content{ padding: 0.8rem 0.9rem; }
           }
         `}</style>
 
@@ -267,24 +267,28 @@ export function StallDetailPanel({
         </div>
 
         <div className="right" style={{ borderLeft: "4px solid #111111", padding: "0.95rem 1rem", minHeight: 0, overflowY: "auto", background: "#fcfcfc" }}>
-          <div className="content">
-          <div style={{ fontSize: "clamp(28px, 4vw, 46px)", fontWeight: 900, lineHeight: 1, color: "#111111" }}>圖資大樓</div>
-            <div style={{ marginTop: "0.45rem", fontSize: "clamp(14px, 2vw, 18px)", fontWeight: 800, color: "#4b5563" }}>室內：表演團體休息區</div>
-            <div style={{ marginTop: "0.2rem", fontSize: "clamp(14px, 2vw, 18px)", fontWeight: 800, color: "#4b5563" }}>室外：L 型小涼亭攤位區</div>
+          <div className="content" style={{ display: "flex", flexDirection: "column", gap: "0.9rem" }}>
+            <div>
+              <div style={{ fontSize: "clamp(28px, 4vw, 46px)", fontWeight: 900, lineHeight: 1, color: "#111111" }}>圖資大樓</div>
+              <div style={{ marginTop: "0.45rem", fontSize: "clamp(14px, 2vw, 18px)", fontWeight: 800, color: "#4b5563" }}>室內：表演團體休息區</div>
+              <div style={{ marginTop: "0.2rem", fontSize: "clamp(14px, 2vw, 18px)", fontWeight: 800, color: "#4b5563" }}>室外：L 型小涼亭攤位區</div>
+            </div>
 
-          <div style={{ height: "2px", background: "#111111", margin: "0.9rem 0" }} />
+            <div style={{ height: "2px", background: "#111111" }} />
 
-          <div style={{ fontSize: "clamp(18px, 2.8vw, 24px)", fontWeight: 900, marginBottom: "0.65rem", color: "#111111" }}>攤位簡介</div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.55rem" }}>
-            {libraryItems.map((item, index) => (
-              <div key={item.number} style={{ paddingBottom: index === libraryItems.length - 1 ? 0 : "0.55rem", borderBottom: index === libraryItems.length - 1 ? "none" : "1px dashed #9ca3af" }}>
-                <div style={{ display: "flex", gap: "0.4rem", alignItems: "baseline", flexWrap: "wrap" }}>
-                  <span style={{ fontSize: "clamp(15px, 2.3vw, 19px)", fontWeight: 900, color: "#111111" }}>{item.number}.</span>
-                  <span style={{ fontSize: "clamp(15px, 2.3vw, 19px)", fontWeight: 900, color: "#111111" }}>{item.name}</span>
-                </div>
+            <div>
+              <div style={{ fontSize: "clamp(18px, 2.8vw, 24px)", fontWeight: 900, marginBottom: "0.65rem", color: "#111111" }}>攤位簡介</div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.55rem" }}>
+                {libraryItems.map((item, index) => (
+                  <div key={item.number} style={{ paddingBottom: index === libraryItems.length - 1 ? 0 : "0.55rem", borderBottom: index === libraryItems.length - 1 ? "none" : "1px dashed #9ca3af" }}>
+                    <div style={{ display: "flex", gap: "0.4rem", alignItems: "baseline", flexWrap: "wrap" }}>
+                      <span style={{ fontSize: "clamp(15px, 2.3vw, 19px)", fontWeight: 900, color: "#111111" }}>{item.number}.</span>
+                      <span style={{ fontSize: "clamp(15px, 2.3vw, 19px)", fontWeight: 900, color: "#111111" }}>{item.name}</span>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
           </div>
         </div>
       </div>

@@ -14,9 +14,18 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-// 初始化 Firebase
-const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+export const isFirebaseConfigured = Boolean(
+  firebaseConfig.apiKey &&
+  firebaseConfig.authDomain &&
+  firebaseConfig.projectId &&
+  firebaseConfig.storageBucket &&
+  firebaseConfig.messagingSenderId &&
+  firebaseConfig.appId
+);
+
+const app = isFirebaseConfigured ? initializeApp(firebaseConfig) : null;
+
+export const auth = (app ? getAuth(app) : null) as any;
 export const googleProvider = new GoogleAuthProvider();
-export const db = getFirestore(app);
-export const storage = getStorage(app);
+export const db = (app ? getFirestore(app) : null) as any;
+export const storage = (app ? getStorage(app) : null) as any;

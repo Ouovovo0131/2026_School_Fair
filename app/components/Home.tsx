@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { auth, db } from "@/lib/firebase";
+import { auth, db, isFirebaseConfigured } from "@/lib/firebase";
 import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 import { doc, getDoc, setDoc, updateDoc, collection, getDocs, query, where, writeBatch } from "firebase/firestore";
 import { LogOut, Lock, ChevronRight, CalendarDays, Clock3, ArrowLeft } from "lucide-react";
@@ -120,6 +120,11 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
   };
 
   useEffect(() => {
+    if (!isFirebaseConfigured || !auth || !db) {
+      setUser(null); setCompleted([]); setRedeemedRewards([]); setNickname(""); setLoading(false);
+      return;
+    }
+
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         // allow any user to sign in, but remember whether they're a student
@@ -159,11 +164,16 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
   }, []);
 
   const handleLogin = async () => {
+    if (!isFirebaseConfigured || !auth) {
+      alert("Firebase 尚未設定，暫時無法登入。");
+      return;
+    }
+
     try { await signInWithPopup(auth, new GoogleAuthProvider()); }
     catch (error) { console.error(error); alert("登入失敗，請檢查網路設定"); }
   };
 
-  const handleLogout = async () => { await signOut(auth); window.location.reload(); };
+  const handleLogout = async () => { if (!auth) return; await signOut(auth); window.location.reload(); };
 
   const handleSaveNickname = async () => {
     if (!nickname.trim()) { alert("請輸入暱稱"); return; }
