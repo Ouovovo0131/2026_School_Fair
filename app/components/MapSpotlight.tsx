@@ -179,7 +179,7 @@ export function StallDetailPanel({
   });
 
   const LibraryMiniMap = () => (
-    <div
+    <div className="library-mini-map"
       style={{
         border: "4px solid #111111",
         borderRadius: 0,
@@ -190,14 +190,24 @@ export function StallDetailPanel({
         overflow: "hidden",
       }}
     >
+      <style>{`
+        .library-mini-map{ position:relative }
+        .library-mini-map .map-area{ position: absolute; left: 0; right: 0 }
+        @media (max-width:640px){
+          .library-mini-map{ height: 280px }
+          .library-mini-map .map-area{ transform: scale(0.95); transform-origin: top left }
+        }
+      `}</style>
+
       <div style={{ position: "absolute", inset: "10px", border: "2px solid #111111", background: "#fcfcfc" }} />
 
-      <div style={{ position: "absolute", top: "12px", left: "16px", right: "16px", display: "flex", justifyContent: "space-between", alignItems: "baseline", zIndex: 2 }}>
-        <div style={{ fontSize: "clamp(22px, 3.3vw, 36px)", fontWeight: 900, color: "#111111", lineHeight: 1 }}>圖資</div>
-        <div style={{ fontSize: "clamp(18px, 2.8vw, 30px)", fontWeight: 900, color: "#111111", lineHeight: 1 }}>大樓</div>
-      </div>
+      <div className="map-area">
+        <div style={{ position: "absolute", top: "12px", left: "16px", right: "16px", display: "flex", justifyContent: "space-between", alignItems: "baseline", zIndex: 2 }}>
+          <div style={{ fontSize: "clamp(22px, 3.3vw, 36px)", fontWeight: 900, color: "#111111", lineHeight: 1 }}>圖資</div>
+          <div style={{ fontSize: "clamp(18px, 2.8vw, 30px)", fontWeight: 900, color: "#111111", lineHeight: 1 }}>大樓</div>
+        </div>
 
-      <div style={{ position: "absolute", left: "16px", top: "54px", right: "16px", bottom: "16px" }}>
+        <div style={{ position: "absolute", left: "16px", top: "54px", right: "16px", bottom: "16px" }}>
         <div style={{ position: "absolute", left: "10px", right: "10px", top: "14%", height: "28%", border: "2px solid #111111", background: "#FFFFFF" }}>
           <div style={{ position: "absolute", left: "14px", top: "10px", fontSize: "clamp(12px, 1.8vw, 18px)", fontWeight: 900, color: "#111827" }}>室內</div>
           <div style={{ position: "absolute", left: "14px", top: "36px", fontSize: "clamp(20px, 3.2vw, 30px)", fontWeight: 900, color: "#111827" }}>表演團體休息區</div>
@@ -244,8 +254,9 @@ export function StallDetailPanel({
           .library-details-grid{ display:grid; grid-template-columns: minmax(300px, 1.05fr) minmax(240px, 0.95fr); }
           @media (max-width: 640px){
             .library-details-grid{ grid-template-columns: 1fr; grid-auto-flow: dense; }
-            .library-details-grid .left{ order: 2 }
-            .library-details-grid .right{ order: 1; border-left: none; }
+            /* 手機顯示：地圖在上（left），說明在下（right） */
+            .library-details-grid .left{ order: 1; height: 280px; overflow: auto; -webkit-overflow-scrolling: touch }
+            .library-details-grid .right{ order: 2; border-left: none; }
             .library-details-grid .right .content{ padding: 0.6rem 0.8rem; }
           }
         `}</style>

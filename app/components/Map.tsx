@@ -165,13 +165,18 @@ function Modal({
       <div className="library-modal-grid" style={{ display: "grid", gridTemplateColumns: "minmax(320px, 0.92fr) minmax(360px, 1.08fr)", minHeight: "640px" }}>
         <style>{`
           .library-modal-grid{ gap: 12px }
+          .library-map-wrap{ position:relative }
           @media (max-width: 700px){
             .library-modal-grid{ grid-template-columns: 1fr; }
-            .library-modal-grid > div:first-child{ order: 2 }
-            .library-modal-grid > div:last-child{ order: 1 }
+            .library-modal-grid > div:first-child{ order: 1 }
+            .library-modal-grid > div:last-child{ order: 2 }
+            .library-map-wrap{ height: 320px; overflow: auto; -webkit-overflow-scrolling: touch; }
+            .library-map-wrap .map-inner{ transform-origin: top left; transform: scale(0.92); }
+            .library-modal-grid .right{ padding: 0.75rem 0.9rem }
+            .library-modal-grid .right .content{ padding: 0 }
           }
         `}</style>
-        <div
+        <div className="library-map-wrap"
           style={{
             position: "relative",
             borderRight: "4px solid #111111",
@@ -179,9 +184,11 @@ function Modal({
             overflow: "hidden",
           }}
         >
+          <div className="map-inner" style={{ position: 'relative' }}>
           <div style={{ position: "absolute", left: "16px", top: "16px", bottom: "16px", writingMode: "vertical-rl", textOrientation: "upright", fontSize: "clamp(28px, 4vw, 56px)", fontWeight: 700, color: "#707070", letterSpacing: "0.08em" }}>
             圖資大樓
           </div>
+        </div>
 
           <div className="label-A" style={{ position: "absolute", left: "120px", top: "28px", fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 400, color: "#6b7280" }}>A</div>
           <div style={{ position: "absolute", right: "24px", top: "18px", textAlign: "center", color: "#6b7280" }}>
