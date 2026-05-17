@@ -166,6 +166,7 @@ function Modal({
             .mobile-stalls-grid{ display:grid; grid-template-columns:56px 1fr; gap:10px; align-items:end; }
             .mobile-stalls-row{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:8px; align-items:end; }
             .mobile-stall-box{ width:100%; height:30px; display:flex; align-items:center; justify-content:center; font-weight:900; background:transparent; }
+            .library-modal-shell{ overflow-y:auto !important; }
             .intro-container{ padding:14px 12px 22px 12px !important; overflow:visible !important; }
           }
         `}</style>
@@ -306,7 +307,7 @@ function Modal({
           </h3>
         </div>
 
-        <div style={{ marginTop: "0.75rem", flex: 1, minHeight: 0, overflow: "hidden", paddingBottom: "0.25rem" }}>
+        <div style={{ marginTop: "0.75rem", flex: 1, minHeight: 0, overflow: "auto", paddingBottom: "0.25rem" }}>
           {isLibraryBuilding ? (
             <LibraryBuildingModal />
           ) : (
