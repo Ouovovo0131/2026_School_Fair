@@ -1,9 +1,8 @@
 "use client";
 import { use, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { auth, db, storage } from "@/lib/firebase";
+import { auth, db } from "@/lib/firebase";
 import { doc, updateDoc, arrayUnion, getDoc } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { onAuthStateChanged } from "firebase/auth";
 import { QUESTS } from "@/constants/quests";
 import imageCompression from "browser-image-compression";
@@ -125,12 +124,23 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
       const compressedFile = await imageCompression(file, options);
       const ownerId = (auth.currentUser?.uid ?? (user as LocalUser).uid ?? user.email) as string;
       const safeOwnerId = ownerId.replace(/[\\/#?]/g, "_");
-      const storageRef = ref(storage, `uploads/${safeOwnerId}/${questId}.jpg`);
 
-      const metadata = { contentType: (compressedFile as Blob).type || "image/jpeg" };
-      const uploadResult = await uploadBytes(storageRef, compressedFile as Blob, metadata);
-      const downloadUrl = await getDownloadURL(uploadResult.ref);
-      console.debug("Photo uploaded to:", downloadUrl);
+      const formData = new FormData();
+      formData.append("file", compressedFile as Blob);
+      formData.append("ownerId", safeOwnerId);
+      formData.append("questId", String(questId));
+
+      const response = await fetch("/api/cloudinary/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result?.error || result?.message || "Cloudinary 上傳失敗");
+      }
+
+      console.debug("Photo uploaded to:", result?.url);
 
       clearPhotoSelection();
       await completeQuest();
@@ -140,11 +150,11 @@ export default function QuestPage({ params }: { params: Promise<{ id: string }> 
       const errObj = error as any;
       const message = errObj?.message || String(error);
 
-      // 如果是 quota exceeded，轉成專門狀態並顯示建議
+      // Cloudinary / network / backend 問題時，保留一個可重試狀態並顯示建議
       const code = errObj?.code || "";
-      if (String(code).includes("quota-exceeded") || String(message).includes("quota-exceeded")) {
+      if (String(code).includes("quota-exceeded") || String(message).toLowerCase().includes("quota") || String(message).toLowerCase().includes("secret") || String(message).toLowerCase().includes("cloudinary")) {
         setQuotaExceeded(true);
-        alert("上傳失敗：伺服器儲存空間已滿（quota exceeded）。請通知管理員清理或升級 Firebase 儲存方案。\n詳細請查看 Firebase Console 的 Storage 使用量。");
+        alert("上傳失敗：Cloudinary 後端設定可能有誤、API secret 未設定，或帳號已達配額。請檢查伺服器環境變數與 Cloudinary Console。");
       } else {
         alert("上傳失敗，請重試。錯誤資訊: " + message);
       }
