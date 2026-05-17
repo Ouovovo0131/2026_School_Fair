@@ -153,8 +153,6 @@ function Modal({
   });
 
   const LibraryBuildingModal = () => {
-    const isMobileLayout = vw < 700;
-
     return (
       <div
         style={{
@@ -170,15 +168,13 @@ function Modal({
           .library-map-wrap{ position:relative; overflow:hidden; background:#ffffff; border-right:4px solid #111111; }
           .desktop-map-card{ display:block; }
           .mobile-map-card{ display:none; }
-          .mobile-info-card{ display:none; }
           .mobile-info-title{ display:none; }
           @media (max-width: 700px){
             .library-modal-grid{ grid-template-columns:1fr; min-height:auto; }
-            .library-map-wrap{ border-right:none; border-bottom:4px solid #111111; height:320px; }
+            .library-map-wrap{ border-right:none; border-bottom:4px solid #111111; height:270px; }
             .desktop-map-card{ display:none !important; }
             .mobile-map-card{ display:block !important; }
             .mobile-info-title{ display:block !important; }
-            .mobile-info-card{ display:grid !important; gap:10px; }
           }
         `}</style>
 
@@ -208,30 +204,35 @@ function Modal({
               </div>
             </div>
 
-            <div className="mobile-map-card" style={{ position: "relative", width: "100%", height: "100%", padding: "12px" }}>
-              <div style={{ position: "absolute", inset: "12px", border: "4px solid #111111", background: "#fff" }} />
-              <div style={{ position: "absolute", top: "18px", left: "22px", right: "22px", display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                <div style={{ fontSize: "clamp(22px, 6vw, 30px)", fontWeight: 900, color: "#111111", lineHeight: 1 }}>圖資大樓</div>
-                <div style={{ fontSize: "clamp(12px, 3.2vw, 16px)", fontWeight: 800, color: "#6b7280" }}>地圖概覽</div>
+            <div className="mobile-map-card" style={{ position: "relative", width: "100%", height: "100%", padding: "10px 12px 12px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "8px" }}>
+                <div style={{ fontSize: "clamp(20px, 5.8vw, 28px)", fontWeight: 900, color: "#111111", lineHeight: 1 }}>圖資大樓</div>
+                <div style={{ fontSize: "clamp(11px, 3vw, 14px)", fontWeight: 800, color: "#6b7280" }}>地圖概覽</div>
               </div>
-              <div style={{ position: "absolute", left: "24px", top: "64px", right: "24px", bottom: "24px" }}>
-                <div style={{ position: "absolute", left: 0, right: 0, top: "18px", bottom: 0, border: "2px solid #111111", background: "#fafafa" }} />
-                <div style={{ position: "absolute", left: "14px", top: "20px", writingMode: "vertical-rl", textOrientation: "upright", fontSize: "clamp(18px, 4.5vw, 26px)", fontWeight: 800, color: "#6b7280" }}>圖資大樓</div>
-                <div style={{ position: "absolute", left: "30%", top: "28px", fontSize: "clamp(24px, 6vw, 34px)", fontWeight: 400, color: "#6b7280" }}>A</div>
-                <div style={{ position: "absolute", right: "8px", top: "18px", textAlign: "right", color: "#6b7280" }}>
-                  <div style={{ fontSize: "clamp(16px, 4.4vw, 22px)", fontWeight: 800 }}>北門</div>
-                  <div style={{ fontSize: "clamp(10px, 2.9vw, 13px)", fontWeight: 700 }}>(表演團體進出)</div>
+
+              <div style={{ position: "relative", height: "210px", border: "2px solid #111111", background: "#ffffff", overflow: "hidden" }}>
+                <div style={{ position: "absolute", left: "10px", top: "8px", bottom: "8px", writingMode: "vertical-rl", textOrientation: "upright", fontSize: "clamp(17px, 4.3vw, 24px)", fontWeight: 800, color: "#6b7280" }}>圖資大樓</div>
+                <div style={{ position: "absolute", left: "34%", top: "18px", fontSize: "clamp(22px, 6vw, 30px)", fontWeight: 400, color: "#6b7280" }}>A</div>
+                <div style={{ position: "absolute", right: "10px", top: "12px", textAlign: "right", color: "#6b7280" }}>
+                  <div style={{ fontSize: "clamp(15px, 4vw, 20px)", fontWeight: 800 }}>北門</div>
+                  <div style={{ fontSize: "clamp(10px, 2.8vw, 12px)", fontWeight: 700 }}>(表演團體進出)</div>
                 </div>
-                <div style={{ position: "absolute", left: 0, right: 0, top: "56%", borderTop: "2px solid #111111" }} />
-                <div style={{ position: "absolute", left: "33%", top: "59%", fontSize: "clamp(24px, 6vw, 34px)", fontWeight: 400, color: "#4b5563" }}>B</div>
-                <div style={{ position: "absolute", right: "8px", top: "59%", fontSize: "clamp(16px, 4.4vw, 22px)", fontWeight: 800, color: "#111111" }}>南門</div>
-                <div style={{ position: "absolute", left: "10px", bottom: "16px", display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: "8px", width: "72%" }}>
-                  {["6", "5", "4", "3", "2", "1"].map((item, index) => (
-                    <div key={item} style={{ minHeight: "34px", display: "flex", alignItems: "center", justifyContent: "center", border: "2px solid #111111", background: index === 0 ? "#f0c020" : "#ffffff", fontWeight: 900, fontSize: "clamp(18px, 5vw, 24px)", color: "#111111" }}>
-                      {item}
-                    </div>
-                  ))}
-                </div>
+                <div style={{ position: "absolute", left: "8px", right: "8px", top: "54%", borderTop: "2px solid #111111" }} />
+                <div style={{ position: "absolute", left: "34%", top: "58%", fontSize: "clamp(22px, 6vw, 30px)", fontWeight: 400, color: "#4b5563" }}>B</div>
+                <div style={{ position: "absolute", right: "10px", top: "58%", fontSize: "clamp(15px, 4vw, 20px)", fontWeight: 800, color: "#111111" }}>南門</div>
+
+                {[
+                  { id: "6", left: "10px", top: "86px" },
+                  { id: "5", left: "10px", top: "126px" },
+                  { id: "4", left: "10px", top: "166px" },
+                  { id: "3", left: "74px", top: "166px" },
+                  { id: "2", left: "138px", top: "166px" },
+                  { id: "1", left: "202px", top: "166px" },
+                ].map((cell) => (
+                  <div key={cell.id} style={{ position: "absolute", left: cell.left, top: cell.top, width: "54px", height: "34px", border: "2px solid #111111", background: "#ffffff", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: "clamp(18px, 5vw, 22px)", color: "#111111" }}>
+                    {cell.id}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -254,25 +255,10 @@ function Modal({
             </div>
 
             <div className="mobile-info-card" style={{ marginTop: "12px" }}>
-              <div style={{ border: "2px solid #111111", padding: "10px 12px", background: "#fafafa" }}>
-                <div style={{ fontSize: "16px", fontWeight: 900, color: "#6b7280" }}>A 區</div>
-                <div style={{ marginTop: 4, fontSize: "18px", fontWeight: 900, color: "#111111" }}>表演團體休息區</div>
-                <div style={{ marginTop: 4, fontSize: "14px", lineHeight: 1.5, color: "#334155" }}>北門，表演團體進出。</div>
-              </div>
-              <div style={{ border: "2px solid #111111", padding: "10px 12px", background: "#fff" }}>
-                <div style={{ fontSize: "16px", fontWeight: 900, color: "#6b7280" }}>B 區</div>
-                <div style={{ marginTop: 4, fontSize: "18px", fontWeight: 900, color: "#111111", lineHeight: 1.45 }}>成果展 / 社團活動 / 服務學習 / 多元課程</div>
-              </div>
-              <div style={{ border: "2px solid #111111", padding: "10px 12px", background: "#fafafa" }}>
-                <div style={{ fontSize: "16px", fontWeight: 900, color: "#6b7280" }}>代號 1 - 6</div>
-                <div style={{ marginTop: 6, display: "grid", gap: "8px" }}>
-                  {libraryStalls.map((item) => (
-                    <div key={item.id} style={{ display: "flex", gap: "8px", alignItems: "flex-start" }}>
-                      <div style={{ minWidth: "34px", fontWeight: 900, color: "#111111" }}>{item.id}.</div>
-                      <div style={{ fontWeight: 800, color: "#111111", lineHeight: 1.45 }}>{item.name}</div>
-                    </div>
-                  ))}
-                </div>
+              <div style={{ fontSize: "15px", lineHeight: 1.65, color: "#334155" }}>
+                <div style={{ marginBottom: "0.7rem" }}><span style={{ fontWeight: 900, color: "#6b7280" }}>A 區</span>：表演團體休息區，北門進出。</div>
+                <div style={{ marginBottom: "0.7rem" }}><span style={{ fontWeight: 900, color: "#6b7280" }}>B 區</span>：成果展、社團活動、服務學習與多元課程。</div>
+                <div><span style={{ fontWeight: 900, color: "#6b7280" }}>代號 1 - 6</span>：{libraryStalls.map((item) => `${item.id} ${item.name}`).join("、 ")}</div>
               </div>
             </div>
           </div>

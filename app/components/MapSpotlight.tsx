@@ -183,7 +183,7 @@ export function StallDetailPanel({
     <div
       className="library-mini-map"
       style={{
-        border: "4px solid #111111",
+        border: "none",
         borderRadius: 0,
         height: "100%",
         minHeight: 0,
@@ -196,8 +196,9 @@ export function StallDetailPanel({
         .library-mini-map{ position:relative }
         .library-mini-map .mini-map-inner{ position:absolute; inset:0 }
         @media (max-width:640px){
-          .library-mini-map{ height: 280px }
+          .library-mini-map{ height: 260px }
           .library-mini-map .mini-map-inner{ transform: scale(0.95); transform-origin: top left }
+          .library-mini-map .map-cell.active{ background: #ffffff !important; }
         }
       `}</style>
 
@@ -225,7 +226,7 @@ export function StallDetailPanel({
             <div style={{ position: "absolute", left: "12px", top: "10px", fontWeight: 900, fontSize: "clamp(12px, 1.8vw, 18px)", color: "#111827" }}>L 型攤位區</div>
 
             <div style={{ position: "absolute", left: "12px", right: "12px", top: "36px", bottom: "12px" }}>
-              <div className="map-cell" style={{ ...mapCellStyle(true), left: "4%", top: "8%", width: "15%", height: "22%" }}>1</div>
+              <div className="map-cell active" style={{ ...mapCellStyle(true), left: "4%", top: "8%", width: "15%", height: "22%" }}>1</div>
               <div className="map-cell" style={{ ...mapCellStyle(), left: "22%", top: "8%", width: "15%", height: "22%" }}>2</div>
               <div className="map-cell" style={{ ...mapCellStyle(), left: "40%", top: "8%", width: "15%", height: "22%" }}>3</div>
               <div className="map-cell" style={{ ...mapCellStyle(), left: "4%", top: "34%", width: "15%", height: "22%" }}>4</div>
@@ -256,9 +257,11 @@ export function StallDetailPanel({
           .library-details-grid{ display:grid; grid-template-columns: minmax(300px, 1.05fr) minmax(240px, 0.95fr); }
           @media (max-width: 640px){
             .library-details-grid{ grid-template-columns: 1fr; }
-            .library-details-grid .left{ height: 280px; overflow: hidden; }
+            .library-details-grid .left{ height: 250px; overflow: hidden; }
             .library-details-grid .right{ border-left: none; border-top: 4px solid #111111; }
-            .library-details-grid .right .content{ padding: 0.8rem 0.9rem; }
+            .library-details-grid .right .content{ padding: 0.75rem 0.85rem; }
+            .library-details-grid .desktop-only{ display: none !important; }
+            .library-details-grid .mobile-only{ display: block !important; }
           }
         `}</style>
 
@@ -268,15 +271,31 @@ export function StallDetailPanel({
 
         <div className="right" style={{ borderLeft: "4px solid #111111", padding: "0.95rem 1rem", minHeight: 0, overflowY: "auto", background: "#fcfcfc" }}>
           <div className="content" style={{ display: "flex", flexDirection: "column", gap: "0.9rem" }}>
-            <div>
+            <div className="desktop-only">
               <div style={{ fontSize: "clamp(28px, 4vw, 46px)", fontWeight: 900, lineHeight: 1, color: "#111111" }}>圖資大樓</div>
               <div style={{ marginTop: "0.45rem", fontSize: "clamp(14px, 2vw, 18px)", fontWeight: 800, color: "#4b5563" }}>室內：表演團體休息區</div>
               <div style={{ marginTop: "0.2rem", fontSize: "clamp(14px, 2vw, 18px)", fontWeight: 800, color: "#4b5563" }}>室外：L 型小涼亭攤位區</div>
             </div>
 
+            <div className="mobile-only" style={{ display: "none" }}>
+              <div style={{ fontSize: "clamp(20px, 5vw, 28px)", fontWeight: 900, lineHeight: 1, color: "#111111" }}>圖資大樓介紹</div>
+              <div style={{ marginTop: "0.55rem", display: "flex", flexDirection: "column", gap: "0.7rem" }}>
+                <div>
+                  <div style={{ fontSize: "clamp(16px, 4.4vw, 20px)", fontWeight: 900, color: "#6b7280" }}>A 區</div>
+                  <div style={{ marginTop: "0.35rem", fontSize: "clamp(17px, 4.6vw, 22px)", fontWeight: 900, color: "#111111" }}>表演團體休息區</div>
+                  <div style={{ marginTop: "0.2rem", fontSize: "clamp(13px, 3.7vw, 15px)", lineHeight: 1.55, color: "#334155" }}>北門，表演團體進出。</div>
+                </div>
+
+                <div>
+                  <div style={{ fontSize: "clamp(16px, 4.4vw, 20px)", fontWeight: 900, color: "#6b7280" }}>B 區</div>
+                  <div style={{ marginTop: "0.35rem", fontSize: "clamp(17px, 4.6vw, 22px)", fontWeight: 900, color: "#111111" }}>成果展 / 社團活動 / 服務學習 / 多元課程</div>
+                </div>
+              </div>
+            </div>
+
             <div style={{ height: "2px", background: "#111111" }} />
 
-            <div>
+            <div className="desktop-only">
               <div style={{ fontSize: "clamp(18px, 2.8vw, 24px)", fontWeight: 900, marginBottom: "0.65rem", color: "#111111" }}>攤位簡介</div>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.55rem" }}>
                 {libraryItems.map((item, index) => (
