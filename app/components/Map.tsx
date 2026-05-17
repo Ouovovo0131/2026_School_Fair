@@ -162,7 +162,15 @@ function Modal({
         overflow: "hidden",
       }}
     >
-      <div style={{ display: "grid", gridTemplateColumns: "minmax(320px, 0.92fr) minmax(360px, 1.08fr)", minHeight: "640px" }}>
+      <div className="library-modal-grid" style={{ display: "grid", gridTemplateColumns: "minmax(320px, 0.92fr) minmax(360px, 1.08fr)", minHeight: "640px" }}>
+        <style>{`
+          .library-modal-grid{ gap: 12px }
+          @media (max-width: 700px){
+            .library-modal-grid{ grid-template-columns: 1fr; }
+            .library-modal-grid > div:first-child{ order: 2 }
+            .library-modal-grid > div:last-child{ order: 1 }
+          }
+        `}</style>
         <div
           style={{
             position: "relative",
@@ -183,7 +191,7 @@ function Modal({
 
           <div style={{ position: "absolute", left: "120px", top: "384px", fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 400, color: "#4b5563" }}>B</div>
           <div style={{ position: "absolute", left: "16px", right: "16px", top: "52%", borderTop: "2px solid #111111" }} />
-          <div style={{ position: "absolute", right: "24px", top: "378px", textAlign: "center", fontSize: "clamp(18px, 2.6vw, 32px)", fontWeight: 700, color: "#111111" }}>南門</div>
+          <div style={{ position: "absolute", right: "24px", top: "384px", textAlign: "center", fontSize: "clamp(18px, 2.6vw, 32px)", fontWeight: 700, color: "#111111" }}>南門</div>
 
           <div style={{ position: "absolute", left: "24px", top: "67%", display: "flex", flexDirection: "column", gap: "18px", color: "#111111" }}>
             <div style={{ fontSize: "clamp(24px, 3vw, 40px)", fontWeight: 700 }}>6</div>

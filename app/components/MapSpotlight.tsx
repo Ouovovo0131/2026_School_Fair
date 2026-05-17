@@ -206,6 +206,8 @@ export function StallDetailPanel({
 
         <div style={{ position: "absolute", left: 0, right: 0, top: "48%", borderTop: "2px solid #111111" }} />
         <div style={{ position: "absolute", left: "12px", top: "49%", fontSize: "clamp(12px, 1.8vw, 16px)", fontWeight: 900, color: "#111111" }}>南門</div>
+        {/* 與主地圖 B 字母垂直對齊（使用相同 top 百分比） */}
+        <div style={{ position: "absolute", right: "12px", top: "49%", fontSize: "clamp(20px, 3.2vw, 30px)", fontWeight: 700, color: "#6b7280" }}>B</div>
         <div style={{ position: "absolute", left: "12px", top: "52%", fontSize: "clamp(12px, 1.8vw, 16px)", fontWeight: 900, color: "#111111" }}>室外小涼亭</div>
 
         <div style={{ position: "absolute", left: "12px", right: "12px", top: "56%", bottom: "12px", border: "2px solid #111111", background: "#fcfcfc" }}>
@@ -237,15 +239,26 @@ export function StallDetailPanel({
         position: "relative",
       }}
     >
-      <div style={{ position: "absolute", inset: 0, display: "grid", gridTemplateColumns: "minmax(300px, 1.05fr) minmax(240px, 0.95fr)" }}>
-        <div style={{ padding: "0.9rem", minHeight: 0 }}>
+      <div className="library-details-grid" style={{ position: "absolute", inset: 0 }}>
+        <style>{`
+          .library-details-grid{ display:grid; grid-template-columns: minmax(300px, 1.05fr) minmax(240px, 0.95fr); }
+          @media (max-width: 640px){
+            .library-details-grid{ grid-template-columns: 1fr; grid-auto-flow: dense; }
+            .library-details-grid .left{ order: 2 }
+            .library-details-grid .right{ order: 1; border-left: none; }
+            .library-details-grid .right .content{ padding: 0.6rem 0.8rem; }
+          }
+        `}</style>
+
+        <div className="left" style={{ padding: "0.9rem", minHeight: 0 }}>
           <LibraryMiniMap />
         </div>
 
-        <div style={{ borderLeft: "4px solid #111111", padding: "0.95rem 1rem", minHeight: 0, overflowY: "auto", background: "#fcfcfc" }}>
+        <div className="right" style={{ borderLeft: "4px solid #111111", padding: "0.95rem 1rem", minHeight: 0, overflowY: "auto", background: "#fcfcfc" }}>
+          <div className="content">
           <div style={{ fontSize: "clamp(28px, 4vw, 46px)", fontWeight: 900, lineHeight: 1, color: "#111111" }}>圖資大樓</div>
-          <div style={{ marginTop: "0.45rem", fontSize: "clamp(14px, 2vw, 18px)", fontWeight: 800, color: "#4b5563" }}>室內：表演團體休息區</div>
-          <div style={{ marginTop: "0.2rem", fontSize: "clamp(14px, 2vw, 18px)", fontWeight: 800, color: "#4b5563" }}>室外：L 型小涼亭攤位區</div>
+            <div style={{ marginTop: "0.45rem", fontSize: "clamp(14px, 2vw, 18px)", fontWeight: 800, color: "#4b5563" }}>室內：表演團體休息區</div>
+            <div style={{ marginTop: "0.2rem", fontSize: "clamp(14px, 2vw, 18px)", fontWeight: 800, color: "#4b5563" }}>室外：L 型小涼亭攤位區</div>
 
           <div style={{ height: "2px", background: "#111111", margin: "0.9rem 0" }} />
 
@@ -259,6 +272,7 @@ export function StallDetailPanel({
                 </div>
               </div>
             ))}
+          </div>
           </div>
         </div>
       </div>
