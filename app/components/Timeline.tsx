@@ -19,13 +19,20 @@ const TIMELINE_EVENTS: TimelineItem[] = [
   },
   {
     id: 2,
-    time: '10:00 - 13:00',
+    time: '10:00 - 13:30',
     location: '圖資大樓一樓右側',
-    title: '靜態成果展',
-    description: '展示各班與社團的作品、海報與學習成果。',
+    title: '各學科暨社團靜態成果展',
+    description: '展示各學科、社團成果，以及性平、兒權的寶貴作品。',
   },
   {
     id: 3,
+    time: '10:00 - 14:00',
+    location: '忠孝樓及信義樓前廣場',
+    title: '校慶園遊會',
+    description: '各班級、社團設置攤位銷售美食、手工藝品與遊戲，共同打造熱鬧校慶市集。',
+  },
+  {
+    id: 4,
     time: '10:30 - 13:30',
     location: '表演舞台',
     title: '動態表演',
@@ -50,7 +57,7 @@ const TIMELINE_EVENTS: TimelineItem[] = [
     ],
   },
   {
-    id: 4,
+    id: 5,
     time: '14:00 - 18:00',
     location: '體育場',
     title: '高二高三傳承盃',
