@@ -677,12 +677,16 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                   const quest = QUESTS.find(q => q.id === questId);
                   const isCompleted = completed.includes(questId);
                   const isUnlocked = unlockedTasks.includes(questId);
+                  const questName = THEME_NAMES[questId] || `關卡 ${questId}`;
 
                   if (!isUnlocked) return (
                     <ComicCard key={questId} className="quest-card-shell quest-card-locked">
                       <NumberBadge value={questId} />
                       <Lock size={14} style={{color: 'var(--text-muted)'}}/>
                       <span className="text-[10px] sm:text-[11px] font-bold" style={{color: 'var(--text-muted)'}}>鎖</span>
+                      <span className="text-[9px] sm:text-[10px] font-black text-center px-0.5 leading-tight" style={{color: 'var(--text-muted)', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', maxWidth: '90%'}}>
+                        {questName}
+                      </span>
                     </ComicCard>
                   );
 
@@ -695,6 +699,9 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                       <span className="text-[10px] sm:text-[11px] font-bold" style={{color: 'var(--primary-700)'}}>
                         完成
                       </span>
+                      <span className="text-[9px] sm:text-[10px] font-black text-center px-0.5 leading-tight" style={{color: 'var(--primary-700)', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', maxWidth: '90%'}}>
+                        {questName}
+                      </span>
                     </ComicCard>
                   );
 
@@ -706,8 +713,8 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                           GO
                         </p>
                         <span className="text-[9px] sm:text-[10px] font-bold text-center px-0.5 leading-tight"
-                          style={{color: 'var(--text)', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden', maxWidth: '90%'}}>
-                          {THEME_NAMES[questId] || "任"}
+                          style={{color: 'var(--text)', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', maxWidth: '90%'}}>
+                          {questName}
                         </span>
                       </ComicCard>
                     </a>

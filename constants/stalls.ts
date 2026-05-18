@@ -72,7 +72,7 @@ export const STALL_DIRECTORY: Record<StallId, StallInfo> = {
   14:  { id: "14",  className: "210、211", displayName: "50藍", category: ["snack", "beverage", "game"], content: "瑪德蓮小蛋糕 & 咖啡 & 一番賞" },
   15:  { id: "15",  className: "110", displayName: "會員制度拜巧克力Q餅", category: "snack", content: "杜拜巧克力" },
   16:  { id: "16",  className: "207", displayName: "無塑啃TA雞", category: ["snack", "beverage", "game"], content: "印尼炒泡麵、熱狗 & 飲料 & 抽抽樂" },
-  17:  { id: "17",  className: "209", displayName: "塑欲淨而瘋不止", category: ["snack", "beverage", "game", "other"], content: "玉里麵 & 紅茶、奶茶 & 空手接白刃、拉霸機(人力) & 免洗竹製餐具" },
+  17:  { id: "17",  className: "209", displayName: "塑欲淨而瘋不止", category: ["snack", "beverage", "game"], content: "玉里麵 & 紅茶、奶茶 & 空手接白刃、拉霸機(人力)" },
   18:  { id: "18",  className: "201", displayName: "不塑哥們", category: ["snack", "beverage", "game"], content: "香腸 & 檸檬茶、紅茶 & 包你發老虎機" },
   19:  { id: "19",  className: "206", displayName: "樹速塑澍pernova", category: ["snack", "beverage", "other"], content: "巴斯克蛋糕、炒泡麵 & 飲料 & 男僕、吉祥物" },
   20:  { id: "20",  className: "104", displayName: "仁心遠揚，來呷煙腸", category: ["snack", "beverage", "game"], content: "大腸包小腸、糯米腸、香腸、小黃瓜 & 紅茶、奶茶、可樂 & 猜拳、套圈圈、推桿、乒乓球投杯" },
