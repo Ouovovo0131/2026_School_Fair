@@ -889,7 +889,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   <SvgRectButton key={feature.id} feature={feature} selected={selectedId === feature.id} onActivate={() => onBuildingClick(feature)} />
                 ))}
 
-                <foreignObject x={1032} y={220} width={40} height={40}>
+                <foreignObject x={1032} y={126} width={40} height={40}>
                   <img src="/hospital.png" alt="hospital" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                 </foreignObject>
 
