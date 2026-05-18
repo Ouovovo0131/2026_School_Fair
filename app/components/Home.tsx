@@ -106,11 +106,9 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
     return () => window.clearInterval(timer);
   }, []);
 
-  // unlocked tasks state (writable) - initialize from localStorage or prop
+  // unlocked tasks state (writable) - keep in sync with completed quests
   const [unlockedTasks, setUnlockedTasks] = useState<number[]>(() => {
-    if (typeof window === 'undefined') return unlockedTasksProp || [];
-    const saved = window.localStorage.getItem('unlockedTasks');
-    return saved ? JSON.parse(saved) : (unlockedTasksProp || []);
+    return unlockedTasksProp || [];
   });
 
   // helper to persist unlocked tasks
@@ -134,17 +132,19 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           const data = docSnap.data();
-          setCompleted(data.completedQuests || []);
+          const completedQuests = data.completedQuests || [];
+          setCompleted(completedQuests);
+          setUnlockedTasks(completedQuests);
           setRedeemedRewards(data.redeemedRewards || []);
           setNickname(data.nickname || "");
           if (!data.nickname || data.nickname.trim() === "") setShowNicknameModal(true);
         } else {
           await setDoc(docRef, { email: currentUser.email, name: currentUser.displayName, nickname: "", completedQuests: [], redeemedRewards: [] });
-          setCompleted([]); setRedeemedRewards([]); setNickname("");
+          setCompleted([]); setUnlockedTasks([]); setRedeemedRewards([]); setNickname("");
           setShowNicknameModal(true);
         }
       } else {
-        setUser(null); setCompleted([]); setRedeemedRewards([]); setNickname("");
+        setUser(null); setCompleted([]); setUnlockedTasks([]); setRedeemedRewards([]); setNickname("");
       }
       setLoading(false);
     });
