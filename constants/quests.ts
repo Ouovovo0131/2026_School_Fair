@@ -107,7 +107,7 @@ export const QUESTS = [
     slug: "i5j8m",
     title: "詩人的守望",
     type: "quiz",
-    description: "地點：圖資大樓",
+    description: "地點：圖資大樓門口",
     question: "花中校園環境中，哪一景象常出現在校友詩人作品中，象徵對外界的嚮往與守望？ (A)白燈塔 (B)雷峰塔 (C)億載金城 (D)紅毛城",
     answer: "A"
   },
@@ -134,7 +134,7 @@ export const QUESTS = [
     slug: "p2q5p",
     title: "花中校訓",
     type: "quiz",
-    description: "地點：三樓圖資大樓",
+    description: "地點：圖資大樓門口",
     question: "花蓮高中的校訓是哪一句話？ (A)禮義廉恥 (B)誠樸勤毅 (C)以天下為己任，惟詩書敦其仁 (D)自強不息",
     answer: "C"
   },
