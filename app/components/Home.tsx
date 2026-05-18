@@ -574,9 +574,8 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
             <div className="premium-card clay-shadow-sm p-3 sm:p-4" style={{background: '#ffffff'}}>
               <p className="text-xs font-black uppercase tracking-[0.12em]" style={{color: 'var(--primary)'}}>獎勵說明</p>
               <div className="mt-2 space-y-1.5 text-xs sm:text-sm font-semibold" style={{color: 'var(--text)'}}>
-                <p>前 30 名完成 20 關：可得 2 枚代幣（總值約 100 元）。</p>
-                <p>30 名後完成 20 關：可得精美禮品。</p>
-                <p>完成 10 關：可得小禮品。</p>
+                <p>完成 10 關：校園特色建築資料夾 1 個。</p>
+                <p>完成 20 關：校園特色建築資料夾 + 校慶兔子扇 + 紀念明信片。</p>
               </div>
             </div>
 
@@ -588,8 +587,8 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                   ? 'var(--primary-yellow)' : '#ffffff'}}>
                 <div className="flex items-center justify-between">
                   <span className="text-xs sm:text-sm font-bold" style={{color: 'var(--text)'}}>
-                    <img src="/gift-box.png" alt="小獎" aria-hidden className="inline-block h-3.5 w-3.5 sm:h-4 sm:w-4 object-contain mr-1" />
-                    小獎
+                    <img src="/gift-box.png" alt="10關獎" aria-hidden className="inline-block h-3.5 w-3.5 sm:h-4 sm:w-4 object-contain mr-1" />
+                    10 關獎
                   </span>
                   <span className="text-xs font-bold px-1.5 sm:px-2 py-0.5 rounded-full"
                     style={{background: 'var(--primary)', color: 'white', whiteSpace: 'nowrap', fontSize: '0.65rem'}}>
@@ -605,11 +604,11 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                 {user && completed.length >= SMALL_REWARD_THRESHOLD && !redeemedRewards.includes(SMALL_REWARD_THRESHOLD) && (
                   <button
                     type="button"
-                    onClick={() => generateRewardCode(SMALL_REWARD_THRESHOLD, "小獎品")}
+                    onClick={() => generateRewardCode(SMALL_REWARD_THRESHOLD, "校園特色建築資料夾")}
                     disabled={rewardCodeLoading === SMALL_REWARD_THRESHOLD}
                     className="clay-button clay-button-blue !text-[11px] sm:!text-xs !py-1.5 !px-2 rounded-none disabled:opacity-60"
                   >
-                    {rewardCodeLoading === SMALL_REWARD_THRESHOLD ? '產生中…' : '產生小獎兌換碼'}
+                    {rewardCodeLoading === SMALL_REWARD_THRESHOLD ? '產生中…' : '產生 10 關獎兌換碼'}
                   </button>
                 )}
                 {rewardCodeSessions[SMALL_REWARD_THRESHOLD] && (
@@ -629,8 +628,8 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                   ? 'var(--primary-red)' : '#ffffff', color: completed.length >= BIG_REWARD_THRESHOLD && !redeemedRewards.includes(BIG_REWARD_THRESHOLD) ? '#ffffff' : 'inherit'}}>
                 <div className="flex items-center justify-between">
                   <span className="text-xs sm:text-sm font-bold" style={{color: 'var(--text)'}}>
-                    <img src="/medal.png" alt="大獎" aria-hidden className="inline-block h-3.5 w-3.5 sm:h-4 sm:w-4 object-contain mr-1" />
-                    大獎
+                    <img src="/medal.png" alt="20關獎" aria-hidden className="inline-block h-3.5 w-3.5 sm:h-4 sm:w-4 object-contain mr-1" />
+                    20 關獎
                   </span>
                   <span className="text-xs font-bold px-1.5 sm:px-2 py-0.5 rounded-full"
                     style={{background: 'var(--secondary)', color: 'white', whiteSpace: 'nowrap', fontSize: '0.65rem'}}>
@@ -646,11 +645,11 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
                 {user && completed.length >= BIG_REWARD_THRESHOLD && !redeemedRewards.includes(BIG_REWARD_THRESHOLD) && (
                   <button
                     type="button"
-                    onClick={() => generateRewardCode(BIG_REWARD_THRESHOLD, "大獎品")}
+                    onClick={() => generateRewardCode(BIG_REWARD_THRESHOLD, "校園特色建築資料夾 + 校慶兔子扇 + 紀念明信片")}
                     disabled={rewardCodeLoading === BIG_REWARD_THRESHOLD}
                     className="clay-button clay-button-blue !text-[11px] sm:!text-xs !py-1.5 !px-2 rounded-none disabled:opacity-60"
                   >
-                    {rewardCodeLoading === BIG_REWARD_THRESHOLD ? '產生中…' : '產生大獎兌換碼'}
+                    {rewardCodeLoading === BIG_REWARD_THRESHOLD ? '產生中…' : '產生 20 關獎兌換碼'}
                   </button>
                 )}
                 {rewardCodeSessions[BIG_REWARD_THRESHOLD] && (

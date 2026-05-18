@@ -13,8 +13,8 @@ const TEMP_CODE_COLLECTION = "redeemTempCodes";
 const DEFAULT_RESET_EMAIL = "";
 
 const REWARDS = [
-  { level: 10, label: "小獎品", theme: "yellow" as const },
-  { level: 20, label: "大獎品", theme: "red" as const },
+  { level: 10, label: "校園特色建築資料夾", theme: "yellow" as const },
+  { level: 20, label: "校園特色建築資料夾 + 校慶兔子扇 + 紀念明信片", theme: "red" as const },
 ];
 
 type RewardTheme = "yellow" | "red";
