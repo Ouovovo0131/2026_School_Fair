@@ -82,7 +82,7 @@ export const STALL_DIRECTORY: Record<StallId, StallInfo> = {
   "女3": { id: "女3", displayName: "花女學生會", category: ["snack", "beverage", "student", "other"], content: "餅乾、小吃 & 冰飲 & 拍立得服務(消費達一定金額) & 一日制服體驗 " },
   "女4": { id: "女4", displayName: "仁不住一直吃", category: "snack", content: "餅乾" },
   "女5": { id: "女5", displayName: "幸福崴孟餅乾", category: "snack", content: "手做餅乾" },
-  班: { id: "班", displayName: "服務台", category: "student", content: "學校主題商品、紀念小物、宣傳品" },
+  班: { id: "班", displayName: "服務台", category: "other", content: "" },
 };
 
 // 與地圖顯示一致的分類順序（顯示用）
