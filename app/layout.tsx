@@ -8,8 +8,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Bauhaus 校慶拾光地圖",
-  description: "以 Bauhaus 視覺重構的校園校慶互動遊戲平台",
+  title: "花蓮高中90周年校慶拾光地圖",
+  description: "花蓮高中90周年校慶互動地圖平台，探索校園、完成任務、蒐集回憶",
 };
 
 export default function RootLayout({
