@@ -889,7 +889,9 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                   <SvgRectButton key={feature.id} feature={feature} selected={selectedId === feature.id} onActivate={() => onBuildingClick(feature)} />
                 ))}
 
-                <text x={914} y={182} textAnchor="start" fontSize={16} fontWeight={800} fill="#4b5563" style={{ pointerEvents: "none", userSelect: "none" }}>hospital</text>
+                <foreignObject x={1032} y={220} width={40} height={40}>
+                  <img src="/hospital.png" alt="hospital" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                </foreignObject>
 
                 {otherFeatures.filter((feature) => feature.type === "facility").map((feature) => (
                   <SvgRectButton key={feature.id} feature={feature} selected={selectedId === feature.id} onActivate={() => onFacilityClick(feature)} />
@@ -1022,8 +1024,8 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                             key={`${stall.id}-${category}`}
                             className="inline-flex items-center rounded-none border-2 border-black px-2 py-0.5 text-[10px] font-black uppercase tracking-[0.08em]"
                             style={{
-                              background: category === "vip" ? "var(--primary-red)" : category === "student" ? "#111111" : category === "bracelet" ? "#A78BFA" : category === "beverage" ? "#0EA5E9" : category === "game" ? "var(--primary-yellow)" : category === "other" ? "#ffffff" : "#ffffff",
-                              color: category === "game" ? "#111111" : category === "student" ? "#F0C020" : category === "other" ? "#111111" : "#ffffff",
+                              background: category === "vip" ? "var(--primary-red)" : category === "student" ? "#111111" : category === "bracelet" ? "#A78BFA" : category === "beverage" ? "#0EA5E9" : category === "game" ? "var(--primary-yellow)" : category === "other" ? "#ffffff" : "#F97316",
+                              color: category === "game" ? "#111111" : category === "student" ? "#F0C020" : category === "other" ? "#111111" : category === "snack" ? "#ffffff" : "#ffffff",
                             }}
                           >
                             {STALL_CATEGORIES[category]}
