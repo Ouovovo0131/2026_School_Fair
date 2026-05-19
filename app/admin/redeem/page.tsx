@@ -488,6 +488,46 @@ export default function AdminRedeemPage() {
     }
   };
 
+  const unlockCompletedInput = async () => {
+    if (!requireAccess()) return;
+    const target = resetEmail.trim().toLowerCase();
+    if (!target) { setResetError('請輸入玩家 Gmail'); setTimeout(() => setResetError(''), 10000); return; }
+
+    const parsed = parseCompletedInput(completedInput);
+    if (parsed.length === 0) { setResetError('請輸入有效的關卡編號 (1-20)，格式如: 1-5,7,9'); setTimeout(() => setResetError(''), 10000); return; }
+
+    setBusy(true); setResetError(''); setResetNotice('');
+    try {
+      const userRef = doc(db, 'users', target);
+      const userSnapshot = await getDoc(userRef);
+      if (!userSnapshot.exists()) { setResetError('找不到這個玩家帳號'); setTimeout(() => setResetError(''), 10000); return; }
+
+      const existing = userSnapshot.data();
+      const currentCompleted = Array.isArray(existing?.completedQuests) ? existing.completedQuests.filter((item: unknown): item is number => typeof item === 'number') : [];
+      const mergedCompleted = Array.from(new Set([...currentCompleted, ...parsed])).sort((x, y) => x - y);
+      const previousCompleted20AtMs = typeof existing?.completed20AtMs === 'number' ? existing.completed20AtMs : null;
+      const nextCompleted20AtMs = mergedCompleted.includes(20) ? (previousCompleted20AtMs || Date.now()) : previousCompleted20AtMs;
+
+      await setDoc(userRef, {
+        completedQuests: mergedCompleted,
+        completed20AtMs: nextCompleted20AtMs,
+      }, { merge: true });
+
+      if (playerProfile?.email === target) {
+        setPlayerProfile({ ...playerProfile, completedQuests: mergedCompleted, completed20AtMs: nextCompleted20AtMs });
+      }
+
+      setResetNotice(`已替 ${target} 解鎖關卡: ${parsed.join(',')}，目前總進度: ${mergedCompleted.join(',')}`);
+      setTimeout(() => setResetNotice(''), 10000);
+    } catch (e) {
+      console.error(e);
+      setResetError('解鎖失敗，請稍後再試');
+      setTimeout(() => setResetError(''), 10000);
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const createUniqueCode = async () => {
     const alphabet = "abcdefghijklmnopqrstuvwxyz0123456789";
 
@@ -1034,7 +1074,10 @@ export default function AdminRedeemPage() {
 
                 <label className="block"><span className="mb-2 block bauhaus-label text-sm font-black uppercase tracking-[0.12em]" style={{ color: 'var(--text)' }}>設定完成關卡 (1-20，可用逗號/範圍)</span><input value={completedInput} onChange={(e) => setCompletedInput(e.target.value)} placeholder="例如：1-5,7,9 或 1 2 3" className="clay-input rounded-none" /></label>
 
-                <div className="flex gap-2"><button type="button" onClick={applyCompletedInput} disabled={busy} className="clay-button clay-button-yellow rounded-none flex-1 py-3 disabled:cursor-not-allowed disabled:opacity-50">套用完成關卡</button></div>
+                <div className="grid gap-2 sm:grid-cols-2">
+                  <button type="button" onClick={applyCompletedInput} disabled={busy} className="clay-button clay-button-yellow rounded-none flex-1 py-3 disabled:cursor-not-allowed disabled:opacity-50">套用完成關卡</button>
+                  <button type="button" onClick={unlockCompletedInput} disabled={busy} className="clay-button clay-button-blue rounded-none flex-1 py-3 disabled:cursor-not-allowed disabled:opacity-50">解鎖指定範圍 / 關卡</button>
+                </div>
 
                 <button type="button" onClick={resetPlayerProgress} disabled={busy} className="clay-button clay-button-blue rounded-none w-full py-3 disabled:cursor-not-allowed disabled:opacity-50"><ShieldAlert className="mr-2 h-5 w-5" />{busy ? '處理中…' : '重製此帳號'}</button>
               </div>
