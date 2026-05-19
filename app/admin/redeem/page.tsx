@@ -850,6 +850,16 @@ export default function AdminRedeemPage() {
 
             {/* 輸入代碼 / 兌換 */}
             <div className="bauhaus-frame bg-white p-5 sm:p-6">
+              <div className="mb-4 flex items-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center border-4 border-black bg-[#D02020] text-white">
+                  <Clock3 className="h-6 w-6" />
+                </div>
+                <div>
+                  <p className="bauhaus-label" style={{ color: 'var(--primary)' }}>Temp Code Lookup</p>
+                  <h2 className="text-2xl font-black tracking-tighter uppercase">輸入代碼完成兌換</h2>
+                </div>
+              </div>
+
               <div className="space-y-3">
                 <label className="block">
                   <span className="mb-2 block bauhaus-label text-sm font-black uppercase tracking-[0.12em]" style={{ color: 'var(--text)' }}>管理員名稱</span>
