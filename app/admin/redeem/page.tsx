@@ -127,7 +127,7 @@ function SessionPulse({ session, now }: { session: TempRedeemCode | null; now: n
 export default function AdminRedeemPage() {
   const router = useRouter();
   const [user, setUser] = useState<{ email?: string | null; displayName?: string | null } | null>(null);
-  const [accessGranted, setAccessGranted] = useState(false);
+  const [accessGranted, setAccessGranted] = useState(true);
   const [loading, setLoading] = useState(true);
   const [adminName, setAdminName] = useState("");
   const [playerEmail, setPlayerEmail] = useState("");
@@ -156,8 +156,7 @@ export default function AdminRedeemPage() {
   const sessionExpired = activeSession ? (activeSession.status !== "active" || sessionRemainingMs <= 0) : false;
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    setAccessGranted(window.localStorage.getItem(ADMIN_ACCESS_KEY) === "1");
+    setAccessGranted(true);
   }, []);
 
   useEffect(() => {
@@ -288,10 +287,6 @@ export default function AdminRedeemPage() {
   }, [allPlayers, records]);
 
   const requireAccess = () => {
-    if (!accessGranted) {
-      setError("請先從首頁的管理員面板進入此頁面");
-      return false;
-    }
     return true;
   };
 
@@ -737,7 +732,7 @@ export default function AdminRedeemPage() {
     }
   };
 
-  const accessMissing = !accessGranted;
+  const accessMissing = false;
 
   if (loading) {
     return (
