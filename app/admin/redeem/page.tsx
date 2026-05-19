@@ -811,7 +811,7 @@ export default function AdminRedeemPage() {
           </div>
         </header>
 
-        {/* Tab Navigation */}
+        {/* Tab Navigation - Admin Redemption & Player Operations */}
         <div className="flex gap-2 border-b-4 border-black">
           <button
             type="button"
