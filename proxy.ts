@@ -3,7 +3,7 @@ import { getSiteOrigin } from "@/lib/site";
 
 const LOCAL_HOSTNAMES = new Set(["localhost", "127.0.0.1", "::1"]);
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const siteOrigin = getSiteOrigin();
   const siteHost = new URL(siteOrigin).hostname;
   const currentHost = request.nextUrl.hostname;
