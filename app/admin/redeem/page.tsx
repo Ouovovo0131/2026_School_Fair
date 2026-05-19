@@ -887,7 +887,6 @@ export default function AdminRedeemPage() {
                     </div>
                   )}
 
-                  <div className="flex items-center gap-2 rounded-none border-4 border-black bg-white px-4 py-3 font-black text-sm"><Clock3 className="h-5 w-5 shrink-0" /> <span className="break-all">{user?.displayName || user?.email || '未登入'}</span></div>
               </div>
 
               {(notice || error) && (
