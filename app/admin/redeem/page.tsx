@@ -807,7 +807,7 @@ export default function AdminRedeemPage() {
         </header>
 
         {/* Tab Navigation - Admin Redemption & Player Operations */}
-        <div className="flex gap-2 border-b-4 border-black">
+        <div className="mx-auto flex w-full max-w-5xl gap-2 border-b-4 border-black">
           <button
             type="button"
             onClick={() => setActiveTab("redemption")}
@@ -836,9 +836,9 @@ export default function AdminRedeemPage() {
           </button>
         </div>
 
-        <section className="grid gap-6 xl:grid-cols-[1fr_1.1fr]">
+        <section className="grid gap-6">
           {/* Left column: 輸入代碼 + 玩家狀態 + 兌換紀錄 */}
-          <div className="space-y-6" style={{ display: activeTab === "redemption" ? "flex" : "none", flexDirection: "column" }}>
+          <div className="mx-auto w-full max-w-5xl space-y-6" style={{ display: activeTab === "redemption" ? "flex" : "none", flexDirection: "column" }}>
             <div>
               <p className="text-xs font-black uppercase" style={{ color: 'var(--primary)' }}>兌換部分</p>
               <h2 className="text-2xl font-black">輸入代碼並執行兌換</h2>
@@ -926,7 +926,7 @@ export default function AdminRedeemPage() {
           </div>
 
           {/* Right column: 產生臨時代碼 + 重製帳號 */}
-          <div className="space-y-6" style={{ display: activeTab === "playerOps" ? "flex" : "none", flexDirection: "column" }}>
+          <div className="mx-auto w-full max-w-5xl space-y-6" style={{ display: activeTab === "playerOps" ? "flex" : "none", flexDirection: "column" }}>
             <div>
               <p className="text-xs font-black uppercase" style={{ color: 'var(--primary)' }}>玩家操作</p>
               <h2 className="text-2xl font-black">產生臨時代碼 / 帳號管理</h2>
