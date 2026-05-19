@@ -868,11 +868,22 @@ export default function AdminRedeemPage() {
                 </label>
 
                 <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                  <button type="button" onClick={lookupTempCode} className="clay-button clay-button-yellow rounded-none flex-1 sm:flex-none py-3"><Search className="mr-2 h-5 w-5" /> 查詢代碼</button>
-                  <button type="button" onClick={handleRedeem} disabled={busy} className="clay-button clay-button-blue rounded-none flex-1 sm:flex-none py-3 disabled:cursor-not-allowed disabled:opacity-50"><ShieldCheck className="mr-2 h-5 w-5" />{busy ? '處理中…' : '執行兌換'}</button>
-                </div>
+                    <button type="button" onClick={lookupTempCode} className="clay-button clay-button-yellow rounded-none flex-1 sm:flex-none py-3"><Search className="mr-2 h-5 w-5" /> 查詢代碼</button>
+                    <button type="button" onClick={handleRedeem} disabled={busy} className="clay-button clay-button-blue rounded-none flex-1 sm:flex-none py-3 disabled:cursor-not-allowed disabled:opacity-50"><ShieldCheck className="mr-2 h-5 w-5" />{busy ? '處理中…' : '執行兌換'}</button>
+                  </div>
 
-                <div className="flex items-center gap-2 rounded-none border-4 border-black bg-white px-4 py-3 font-black text-sm"><Clock3 className="h-5 w-5 shrink-0" /> <span className="break-all">{user?.displayName || user?.email || '未登入'}</span></div>
+                  {activeSession && (
+                    <div className="mt-4 bauhaus-frame bg-white p-4">
+                      <div className="space-y-2">
+                        <p className="text-sm font-black">玩家名稱：{playerProfile?.nickname || playerProfile?.name || activeSession.playerName}</p>
+                        <p className="text-sm">帳號：{activeSession.playerEmail}</p>
+                        <p className="text-sm">是否前 30 名完成 20 關：{top30Finishers.some((f) => f.email === activeSession.playerEmail) ? '是' : '否'}</p>
+                        <p className="text-sm">欲兌換獎品：{activeSession.rewardLabel}</p>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="flex items-center gap-2 rounded-none border-4 border-black bg-white px-4 py-3 font-black text-sm"><Clock3 className="h-5 w-5 shrink-0" /> <span className="break-all">{user?.displayName || user?.email || '未登入'}</span></div>
               </div>
 
               {(notice || error) && (
