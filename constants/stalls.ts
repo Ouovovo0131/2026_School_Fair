@@ -54,8 +54,8 @@ export interface StallInfo {
 }
 
 export const STALL_DIRECTORY: Record<StallId, StallInfo> = {
-  貴A:   { id: "貴A", displayName: "貴賓攤位 A", category: "vip", content: "迎賓點心、精緻小蛋糕、限量試吃" },
-  貴B:   { id: "貴B", displayName: "貴賓攤位 B", category: "vip", content: "精品咖啡、花茶、手作餅乾" },
+  貴A:   { id: "貴A", displayName: "貴賓攤位 A", category: "vip", content: "貴賓休息區" },
+  貴B:   { id: "貴B", displayName: "貴賓攤位 B", category: "vip", content: "貴賓休息區" },
   1:   { id: "1",   className: "107", displayName: "仁手一捲", category: ["snack", "beverage"], content: "越南正宗春捲 & 奇亞籽百香果椰果茶" },
   2:   { id: "2",   className: "103", displayName: "103爆炒無塑回", category: ["snack", "beverage", "game"], content: "炒泡麵 & 乾冰汽水(芬達、雪碧) & 抓棍機" },
   3:   { id: "3",   className: "203", displayName: "好火火熱狗~好窩", category: "snack", content: "熱狗堡" },
