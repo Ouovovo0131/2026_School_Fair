@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
-import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { onAuthStateChanged, GoogleAuthProvider, signInWithRedirect, signOut } from "firebase/auth";
 import { addDoc, arrayUnion, collection, doc, getDoc, getDocs, onSnapshot, orderBy, query, setDoc, updateDoc, where, writeBatch } from "firebase/firestore";
 import { ArrowLeft, CheckCircle2, Clock3, LogOut, Search, ShieldCheck, ShieldAlert } from "lucide-react";
 
@@ -303,8 +303,8 @@ export default function AdminRedeemPage() {
 
   const handleLogin = async () => {
     try {
-      await signInWithPopup(auth, new GoogleAuthProvider());
-      setNotice("已登入，請先產生或輸入 8 碼小寫英數臨時代碼後進行兌換");
+      setNotice("正在導向 Google 登入...");
+      await signInWithRedirect(auth, new GoogleAuthProvider());
     } catch (loginError) {
       console.error(loginError);
       setError("登入失敗，請重試");
