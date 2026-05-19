@@ -850,16 +850,6 @@ export default function AdminRedeemPage() {
 
             {/* 輸入代碼 / 兌換 */}
             <div className="bauhaus-frame bg-white p-5 sm:p-6">
-              <div className="mb-4 flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center border-4 border-black bg-[#D02020] text-white">
-                  <Clock3 className="h-6 w-6" />
-                </div>
-                <div>
-                  <p className="bauhaus-label" style={{ color: 'var(--primary)' }}>Temp Code Lookup</p>
-                  <h2 className="text-2xl font-black tracking-tighter uppercase">輸入代碼完成兌換</h2>
-                </div>
-              </div>
-
               <div className="space-y-3">
                 <label className="block">
                   <span className="mb-2 block bauhaus-label text-sm font-black uppercase tracking-[0.12em]" style={{ color: 'var(--text)' }}>管理員名稱</span>
@@ -936,10 +926,10 @@ export default function AdminRedeemPage() {
                     <div className="mt-2 flex flex-wrap items-center gap-2">
                       <RewardBadge level={activeSession?.rewardLevel || selectedReward} theme={(activeSession?.rewardLevel || selectedReward) === 20 ? 'red' : 'yellow'} />
                       <span className="inline-flex items-center rounded-none border-2 border-black px-3 py-1 text-xs font-black uppercase" style={{ background: sessionExpired ? 'var(--primary-red)' : 'var(--primary-blue)', color: '#ffffff' }}>{sessionExpired ? '不可使用' : '可使用'}</span>
+                      <span className="inline-flex items-center rounded-none border-2 border-black px-3 py-1 text-xs font-black uppercase" style={{ background: activeSessionIsTop30 ? 'var(--primary-yellow)' : '#ffffff', color: '#121212' }}>
+                        {activeSessionIsTop30 ? '前30名的玩家' : '非前30名的玩家'}
+                      </span>
                     </div>
-                    <p className="mt-2 text-sm font-black" style={{ color: activeSessionIsTop30 ? 'var(--primary-blue)' : 'var(--primary-red)' }}>
-                      {activeSessionIsTop30 ? '前30名的玩家' : '非前30名的玩家'}
-                    </p>
                     <p className="mt-2 text-sm font-medium text-[var(--text-secondary)]">{activeSession ? `到期時間：${formatTime(activeSession.expiresAtMs)}` : '尚未載入代碼'}</p>
                   </div>
                 </div>
