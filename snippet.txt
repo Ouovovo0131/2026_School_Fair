@@ -1,0 +1,191 @@
+                <div className="flex h-12 w-12 items-center justify-center border-4 border-black bg-[#D02020] text-white">
+                  <Clock3 className="h-6 w-6" />
+                </div>
+                <div>
+                  <p className="bauhaus-label" style={{ color: 'var(--primary)' }}>Temp Code Lookup</p>
+                  <h2 className="text-2xl font-black tracking-tighter uppercase">Ëº∏ÂÖ•‰ª?¢ºÂÆåÊ??åÊ?</h2>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <label className="block">
+                  <span className="mb-2 block bauhaus-label text-sm font-black uppercase tracking-[0.12em]" style={{ color: 'var(--text)' }}>ÁÆ°Á??°Â?Á®?/span>
+                  <input value={adminName} onChange={(event) => setAdminName(event.target.value)} placeholder="‰æãÂ?ÔºöÁ∏Ω?¨„ÄÅÂ∑•‰Ωú‰∫∫??A" className="clay-input rounded-none" />
+                </label>
+
+                <label className="block">
+                  <span className="mb-2 block bauhaus-label text-sm font-black uppercase tracking-[0.12em]" style={{ color: 'var(--text)' }}>8 Á¢ºÂ?ÂØ´Ëã±?∏Ëá®?Ç‰ª£Á¢?/span>
+                  <input value={tempCodeInput} onChange={(event) => setTempCodeInput(event.target.value.toLowerCase().replace(/[^a-z0-9]/g, ""))} placeholder="a1b2c3d4" maxLength={8} inputMode="text" autoCapitalize="none" className="clay-input rounded-none tracking-[0.25em] font-black text-center text-lg" />
+                </label>
+
+                <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                  <button type="button" onClick={lookupTempCode} className="clay-button clay-button-yellow rounded-none flex-1 sm:flex-none py-3"><Search className="mr-2 h-5 w-5" /> ?•Ë©¢‰ª?¢º</button>
+                  <button type="button" onClick={handleRedeem} disabled={busy} className="clay-button clay-button-blue rounded-none flex-1 sm:flex-none py-3 disabled:cursor-not-allowed disabled:opacity-50"><ShieldCheck className="mr-2 h-5 w-5" />{busy ? '?ïÁ?‰∏≠‚Ä? : '?∑Ë??åÊ?'}</button>
+                </div>
+
+                <div className="flex items-center gap-2 rounded-none border-4 border-black bg-white px-4 py-3 font-black text-sm"><Clock3 className="h-5 w-5 shrink-0" /> <span className="break-all">{user?.displayName || user?.email || '?™Áôª??}</span></div>
+              </div>
+
+              {(notice || error) && (
+                <div className="mt-4 space-y-2">{notice && (<div className="bauhaus-frame border-black bg-[#F0C020] px-4 py-3 font-black text-black">{notice}</div>)}{error && (<div className="bauhaus-frame border-black bg-[#D02020] px-4 py-3 font-black text-white">{error}</div>)}</div>
+              )}
+            </div>
+
+            {/* ?©ÂÆ∂?åÊ??Ä??*/}
+            <div className="bauhaus-frame bg-white p-5 sm:p-6">
+              <div className="mb-4 flex items-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center border-4 border-black bg-[#1040C0] text-white">
+                  <CheckCircle2 className="h-6 w-6" />
+                </div>
+                <div>
+                  <p className="bauhaus-label" style={{ color: 'var(--primary)' }}>Reward Status</p>
+                  <h2 className="text-2xl font-black tracking-tighter uppercase">?©ÂÆ∂?åÊ??Ä??/h2>
+                </div>
+              </div>
+
+              {playerProfile ? (
+                <div className="space-y-4">
+                  <div className="bauhaus-frame bg-white p-4">
+                    <p className="text-xs font-black uppercase tracking-[0.12em]" style={{ color: 'var(--primary)' }}>?©ÂÆ∂Ë≥áË?</p>
+                    <p className="mt-2 text-base sm:text-lg font-black break-all">{playerProfile.nickname || playerProfile.name || playerProfile.email}</p>
+                    <p className="text-xs sm:text-sm font-medium text-[var(--text-secondary)] break-all mt-1">{playerProfile.email}</p>
+                    <div className="mt-3 flex flex-wrap gap-2">{playerRewardStatus.map((reward) => (
+                      <span key={reward.level} className="inline-flex items-center rounded-none border-2 border-black px-3 py-2 text-xs font-black" style={{ background: reward.redeemed ? (reward.theme === 'yellow' ? 'var(--primary-yellow)' : 'var(--primary-red)') : '#ffffff', color: reward.redeemed && reward.theme === 'red' ? '#ffffff' : '#121212' }}>{reward.level} ??{reward.redeemed ? 'Â∑≤Â??? : '?™Â???}</span>
+                    ))}</div>
+                  </div>
+
+                  <div className="bauhaus-frame bg-white p-4">
+                    <p className="text-xs font-black uppercase tracking-[0.12em]" style={{ color: 'var(--primary)' }}>‰ª?¢º?Ä??/p>
+                    <div className="mt-2 flex flex-wrap items-center gap-2">
+                      <RewardBadge level={activeSession?.rewardLevel || selectedReward} theme={(activeSession?.rewardLevel || selectedReward) === 20 ? 'red' : 'yellow'} />
+                      <span className="inline-flex items-center rounded-none border-2 border-black px-3 py-1 text-xs font-black uppercase" style={{ background: sessionExpired ? 'var(--primary-red)' : 'var(--primary-blue)', color: '#ffffff' }}>{sessionExpired ? '‰∏çÂèØ‰ΩøÁî®' : '?Ø‰Ωø??}</span>
+                    </div>
+                    <p className="mt-2 text-sm font-medium text-[var(--text-secondary)]">{activeSession ? `?∞Ê??ÇÈ?Ôº?{formatTime(activeSession.expiresAtMs)}` : 'Â∞öÊú™ËºâÂÖ•‰ª?¢º'}</p>
+                  </div>
+                </div>
+              ) : (
+                <div className="bauhaus-frame bg-white p-4 text-sm font-medium text-[var(--text-secondary)]">Ëº∏ÂÖ•‰∏¶Êü•Ë©¢Ëá®?Ç‰ª£Á¢ºÂ?ÔºåÈÄôË£°?ÉÈ°ØÁ§∫Áé©ÂÆ∂Á? Gmail?ÅÂ??êÈ??°Ë??åÊ??Ä?ã„Ä?/div>
+              )}
+            </div>
+
+            {/* ?Ä?âÁÆ°?ÜÂì°?ÑÂ??õÁ???*/}
+            <div className="bauhaus-frame bg-white p-5 sm:p-6">
+              <div className="mb-4 flex items-center gap-3"><div className="flex h-12 w-12 items-center justify-center border-4 border-black bg-[#1040C0] text-white"><ShieldCheck className="h-6 w-6" /></div><div><p className="bauhaus-label" style={{ color: 'var(--primary)' }}>Shared Log</p><h2 className="text-2xl font-black tracking-tighter uppercase">?Ä?âÁÆ°?ÜÂì°?ÑÂ??õÁ???/h2><p className="text-xs font-medium text-[var(--text-secondary)] mt-1">Á¥Ä?ÑÊ??ÖÂê´?®Ê?‰ª?¢º?ÅÁé©ÂÆ∂Ë??åÊ??ÇÈ?ÔºåÊñπ‰æøÂ?Á∫åËøΩ??/p></div></div>
+
+              {records.length === 0 ? (<div className="bauhaus-frame bg-[#F0F0F0] p-6 text-center"><p className="text-sm font-black uppercase tracking-[0.12em]">?ÑÊ??â‰ªª‰ΩïÂ??õÁ???/p><p className="text-xs font-medium text-[var(--text-secondary)] mt-2">?∂ÁÆ°?ÜÂì°?≤Ë??åÊ??ÇÔ?Á¥Ä?ÑÊ??∫Áèæ?®Ê≠§</p></div>) : (<div className="space-y-3 max-h-[420px] overflow-y-auto pr-2">{records.map((record) => (<div key={record.id} className="bauhaus-frame bg-white p-4 sm:p-5"><div className="space-y-3"><div className="flex flex-wrap items-center justify-between gap-2"><span className="inline-flex items-center rounded-none border-3 border-black px-3 py-2 text-sm font-black uppercase tracking-[0.12em]" style={{ background: record.rewardLevel === 20 ? 'var(--primary-red)' : 'var(--primary-yellow)', color: record.rewardLevel === 20 ? '#ffffff' : '#121212' }}>{record.rewardLabel}</span><span className="inline-flex items-center rounded-none border-2 border-black px-2 py-1 text-xs font-black uppercase tracking-[0.12em]" style={{ background: record.alreadyRedeemed ? 'var(--primary-red)' : 'var(--primary-blue)', color: '#ffffff' }}>{record.alreadyRedeemed ? '?çË??åÊ?' : '?∞Â???}</span></div><div className="border-t-2 border-black pt-3 space-y-1"><p className="text-xs font-black uppercase tracking-[0.12em] text-[var(--primary)]">?©ÂÆ∂</p><p className="text-sm font-black break-all">{record.playerName}</p><p className="text-xs font-medium text-[var(--text-secondary)] break-all">{record.playerEmail}</p></div><div className="border-t-2 border-black pt-3 space-y-1"><p className="text-xs font-black uppercase tracking-[0.12em] text-[var(--primary)]">ÁÆ°Á???/p><p className="text-sm font-black">{record.adminName}</p><p className="text-xs font-medium text-[var(--text-secondary)] break-all">{record.adminEmail}</p></div><div className="border-t-2 border-black pt-3 space-y-1"><p className="text-xs font-black uppercase tracking-[0.12em] text-[var(--primary)]">?®Ê?‰ª?¢º</p><p className="text-sm font-black tracking-[0.2em]">{record.tempCode || 'N/A'}</p><p className="text-xs font-medium text-[var(--text-secondary)] break-all">{formatTime(record.createdAtMs)}</p></div></div></div>))}</div>)}
+            </div>
+          )}
+
+          {/* ?©ÂÆ∂?ç‰? Tab */}
+          {activeTab === "playerOps" && (
+            <div className="space-y-6">
+
+            <div className="bauhaus-frame bg-white p-5 sm:p-6">
+              <div className="mb-4 flex items-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center border-4 border-black bg-[#1040C0] text-white">
+                  <CheckCircle2 className="h-6 w-6" />
+                </div>
+                <div>
+                  <p className="bauhaus-label" style={{ color: 'var(--primary)' }}>Top 30 Finishers</p>
+                  <h2 className="text-2xl font-black tracking-tighter uppercase">ÂÆåÊ? 20 ?úÂ? 30 ??/h2>
+                  <p className="text-xs font-medium text-[var(--text-secondary)] mt-1">‰æùÂ??êÁ¨¨ 20 ?úÊ??ìÊ?Â∫èÔ??•Ë?Ë≥áÊ?Ê≤íÊ??ÇÈ??≥Ô??ÉÊ??®Â???/p>
+                </div>
+              </div>
+
+              {top30Finishers.length === 0 ? (
+                <div className="bauhaus-frame bg-[#F0F0F0] p-4 text-sm font-medium text-[var(--text-secondary)]">
+                  ?ÆÂ?Â∞öÁÑ°ÂÆåÊ? 20 ?úÁ??©ÂÆ∂??
+                </div>
+              ) : (
+                <div className="space-y-2 max-h-[360px] overflow-y-auto pr-2">
+                  {top30Finishers.map((item) => (
+                    <div key={item.email} className="bauhaus-frame bg-white p-3">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <p className="text-sm font-black break-all">#{item.rank} {item.displayName}</p>
+                          <p className="text-xs font-medium text-[var(--text-secondary)] break-all mt-1">{item.email}</p>
+                        </div>
+                        <span
+                          className="inline-flex items-center rounded-none border-2 border-black px-2 py-1 text-xs font-black uppercase"
+                          style={{ background: item.redeemedBigReward ? 'var(--primary-red)' : 'var(--primary-yellow)', color: item.redeemedBigReward ? '#ffffff' : '#121212' }}
+                        >
+                          {item.redeemedBigReward ? '20?úÂ∑≤?åÊ?' : '20?úÊú™?åÊ?'}
+                        </span>
+                      </div>
+                      <div className="mt-2 grid gap-1 text-xs font-medium text-[var(--text-secondary)] sm:grid-cols-2">
+                        <p>ÂÆåÊ??úÂç°Ôºö{item.completedCount}</p>
+                        <p>?îÊ??ÇÈ?Ôºö{item.completed20AtMs ? formatTime(item.completed20AtMs) : '?™Ë???}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* ?¢Á??®Ê?‰ª?¢º */}
+            <div className="bauhaus-frame bg-white p-5 sm:p-6">
+              <div className="mb-4 flex items-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center border-4 border-black bg-[#F0C020] text-black"><Search className="h-6 w-6" /></div>
+                <div><p className="bauhaus-label" style={{ color: 'var(--primary)' }}>Temp Code Generator</p><h2 className="text-2xl font-black tracking-tighter uppercase">?¢Á??®Ê?‰ª?¢º</h2></div>
+              </div>
+
+              <div className="space-y-3">
+                <label className="block"><span className="mb-2 block bauhaus-label text-sm font-black uppercase tracking-[0.12em]" style={{ color: 'var(--text)' }}>?©ÂÆ∂ Gmail</span><input value={playerEmail} onChange={(event) => setPlayerEmail(event.target.value)} placeholder="player@gmail.com" className="clay-input rounded-none" /></label>
+
+                <label className="block"><span className="mb-3 block bauhaus-label text-sm font-black uppercase tracking-[0.12em]" style={{ color: 'var(--text)' }}>?∏Ê??éÂ?</span><div className="grid grid-cols-2 gap-3">{REWARDS.map((reward) => { const active = selectedReward === reward.level; return (<button key={reward.level} type="button" onClick={() => setSelectedReward(reward.level)} className="bauhaus-frame px-4 py-4 text-center font-black uppercase transition-transform hover:-translate-y-1 active:translate-y-0 min-h-[60px] flex flex-col items-center justify-center" style={{ background: active ? (reward.theme === 'yellow' ? 'var(--primary-yellow)' : 'var(--primary-red)') : '#ffffff', color: active && reward.theme === 'red' ? '#ffffff' : '#121212', borderWidth: '4px' }}><span className="text-xs sm:text-sm">{reward.label}</span><span className="text-2xl sm:text-3xl font-black">{reward.level}</span></button>); })}</div></label>
+
+                <button type="button" onClick={generateTempCode} className="clay-button clay-button-yellow rounded-none w-full py-3"><Search className="mr-2 h-5 w-5" /> ?¢Á??®Ê?‰ª?¢º</button>
+              </div>
+
+              <div className="mt-4"><SessionPulse session={activeSession} now={now} /></div>
+            </div>
+
+            {/* ?çË£ΩÂ∏≥Ë? */}
+            <div className="bauhaus-frame bg-white p-5 sm:p-6">
+              <div className="mb-4 flex items-center gap-3"><div className="flex h-12 w-12 items-center justify-center border-4 border-black bg-[#D02020] text-white"><ShieldAlert className="h-6 w-6" /></div><div><p className="bauhaus-label" style={{ color: 'var(--primary)' }}>Account Reset</p><h2 className="text-2xl font-black tracking-tighter uppercase">?çË£Ω?áÂ?Â∏≥Ë?</h2></div></div>
+
+              <p className="text-sm font-medium text-[var(--text-secondary)] leading-relaxed">?ÉÊ??§Ë©≤Â∏≥Ë??ÑÂ??õÁ??Ñ„ÄÅËá®?Ç‰ª£Á¢ºË??äÊà≤?≤Â∫¶?ÇÈÄôÊòØ‰∏çÂèØÂæ©Â??ç‰???/p>
+
+              <div className="mt-4 space-y-3">
+                <label className="block"><span className="mb-2 block bauhaus-label text-sm font-black uppercase tracking-[0.12em]" style={{ color: 'var(--text)' }}>?©ÂÆ∂ Gmail</span><input value={resetEmail} onChange={(event) => setResetEmail(event.target.value)} className="clay-input rounded-none" placeholder="player@gmail.com" /></label>
+
+                <label className="block"><span className="mb-2 block bauhaus-label text-sm font-black uppercase tracking-[0.12em]" style={{ color: 'var(--text)' }}>Ë®≠Â?ÂÆåÊ??úÂç° (1-20ÔºåÂèØ?®ÈÄóË?/ÁØÑÂ?)</span><input value={completedInput} onChange={(e) => setCompletedInput(e.target.value)} placeholder="‰æãÂ?Ôº?-5,7,9 ??1 2 3" className="clay-input rounded-none" /></label>
+
+                <div className="flex gap-2"><button type="button" onClick={applyCompletedInput} disabled={busy} className="clay-button clay-button-yellow rounded-none flex-1 py-3 disabled:cursor-not-allowed disabled:opacity-50">Â•óÁî®ÂÆåÊ??úÂç°</button></div>
+
+                <button type="button" onClick={resetPlayerProgress} disabled={busy} className="clay-button clay-button-blue rounded-none w-full py-3 disabled:cursor-not-allowed disabled:opacity-50"><ShieldAlert className="mr-2 h-5 w-5" />{busy ? '?ïÁ?‰∏≠‚Ä? : '?çË£ΩÊ≠§Â∏≥??}</button>
+              </div>
+              {(resetNotice || resetError) && (
+                <div className="mt-4 space-y-2">
+                  {resetNotice && (
+                    <div className="bauhaus-frame border-black bg-[#F0C020] px-4 py-3 font-black text-black">{resetNotice}</div>
+                  )}
+                  {resetError && (
+                    <div className="bauhaus-frame border-black bg-[#D02020] px-4 py-3 font-black text-white">{resetError}</div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+        </section>
+
+        {!user && (
+          <section className="bauhaus-frame bg-[#F0C020] p-5 sm:p-6 text-black">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <div>
+                <p className="bauhaus-label">Login Required</p>
+                <h2 className="text-2xl font-black tracking-tighter uppercase">?àÁôª??Google Â∏≥Ë?</h2>
+                <p className="mt-1 text-sm font-medium">
+                  ?≤Ë??åÊ??çË??àÁôª?•ÁÆ°?ÜÂì°??Google Â∏≥Ë???
+                </p>
+              </div>
+              <button type="button" onClick={handleLogin} className="clay-button clay-button-blue rounded-none">
+                ?ªÂÖ•
+              </button>
+            </div>
+          </section>
+        )}
+      </div>
+    </div>
+  );
+}

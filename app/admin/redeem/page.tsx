@@ -147,6 +147,7 @@ export default function AdminRedeemPage() {
   const [resetNotice, setResetNotice] = useState("");
   const [resetError, setResetError] = useState("");
   const [now, setNow] = useState(() => Date.now());
+  const [activeTab, setActiveTab] = useState<"redemption" | "playerOps">("redemption");
 
   const normalizedPlayerEmail = playerEmail.trim().toLowerCase();
   const normalizedTempCode = tempCodeInput.trim().toLowerCase();
@@ -810,9 +811,39 @@ export default function AdminRedeemPage() {
           </div>
         </header>
 
+        {/* Tab Navigation */}
+        <div className="flex gap-2 border-b-4 border-black">
+          <button
+            type="button"
+            onClick={() => setActiveTab("redemption")}
+            className="bauhaus-frame px-4 sm:px-6 py-3 text-center font-black uppercase transition-all"
+            style={{
+              background: activeTab === "redemption" ? "var(--primary-yellow)" : "#ffffff",
+              color: "#121212",
+              borderWidth: "4px",
+              borderColor: activeTab === "redemption" ? "black" : "transparent",
+            }}
+          >
+            兌換部分
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab("playerOps")}
+            className="bauhaus-frame px-4 sm:px-6 py-3 text-center font-black uppercase transition-all"
+            style={{
+              background: activeTab === "playerOps" ? "var(--primary-blue)" : "#ffffff",
+              color: activeTab === "playerOps" ? "#ffffff" : "#121212",
+              borderWidth: "4px",
+              borderColor: activeTab === "playerOps" ? "black" : "transparent",
+            }}
+          >
+            玩家操作
+          </button>
+        </div>
+
         <section className="grid gap-6 xl:grid-cols-[1fr_1.1fr]">
           {/* Left column: 輸入代碼 + 玩家狀態 + 兌換紀錄 */}
-          <div className="space-y-6">
+          <div className="space-y-6" style={{ display: activeTab === "redemption" ? "flex" : "none", flexDirection: "column" }}>
             <div>
               <p className="text-xs font-black uppercase" style={{ color: 'var(--primary)' }}>兌換部分</p>
               <h2 className="text-2xl font-black">輸入代碼並執行兌換</h2>
@@ -900,7 +931,7 @@ export default function AdminRedeemPage() {
           </div>
 
           {/* Right column: 產生臨時代碼 + 重製帳號 */}
-          <div className="space-y-6">
+          <div className="space-y-6" style={{ display: activeTab === "playerOps" ? "flex" : "none", flexDirection: "column" }}>
             <div>
               <p className="text-xs font-black uppercase" style={{ color: 'var(--primary)' }}>玩家操作</p>
               <h2 className="text-2xl font-black">產生臨時代碼 / 帳號管理</h2>
