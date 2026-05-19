@@ -887,7 +887,21 @@ export default function AdminRedeemPage() {
               </div>
 
               {(notice || error) && (
-                <div className="mt-4 space-y-2">{notice && (<div className="bauhaus-frame border-black bg-[#F0C020] px-4 py-3 font-black text-black">{notice}</div>)}{error && (<div className="bauhaus-frame border-black bg-[#D02020] px-4 py-3 font-black text-white">{error}</div>)}</div>
+                <div className="mt-4 space-y-2">
+                  {notice && (<div className="bauhaus-frame border-black bg-[#F0C020] px-4 py-3 font-black text-black">{notice}</div>)}
+                  {error && (<div className="bauhaus-frame border-black bg-[#D02020] px-4 py-3 font-black text-white">{error}</div>)}
+
+                  {activeSession && (
+                    <div className="bauhaus-frame border-black bg-[#fff8e1] px-4 py-3 font-black text-black">
+                      <div className="grid gap-2 sm:grid-cols-2">
+                        <div>玩家名稱：<span className="font-bold">{playerProfile?.nickname || playerProfile?.name || activeSession.playerName}</span></div>
+                        <div>帳號：<span className="font-bold">{activeSession.playerEmail}</span></div>
+                        <div>是否前 30 名完成 20 關：<span className="font-bold">{top30Finishers.some((f) => f.email === activeSession.playerEmail) ? '是' : '否'}</span></div>
+                        <div>欲兌換獎品：<span className="font-bold">{activeSession.rewardLabel}</span></div>
+                      </div>
+                    </div>
+                  )}
+                </div>
               )}
             </div>
 
