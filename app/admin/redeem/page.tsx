@@ -286,6 +286,10 @@ export default function AdminRedeemPage() {
     return ranked;
   }, [allPlayers, records]);
 
+  const activeSessionIsTop30 = activeSession
+    ? top30Finishers.some((finisher) => finisher.email === activeSession.playerEmail)
+    : false;
+
   const requireAccess = () => {
     return true;
   };
@@ -934,6 +938,9 @@ export default function AdminRedeemPage() {
                       <RewardBadge level={activeSession?.rewardLevel || selectedReward} theme={(activeSession?.rewardLevel || selectedReward) === 20 ? 'red' : 'yellow'} />
                       <span className="inline-flex items-center rounded-none border-2 border-black px-3 py-1 text-xs font-black uppercase" style={{ background: sessionExpired ? 'var(--primary-red)' : 'var(--primary-blue)', color: '#ffffff' }}>{sessionExpired ? '不可使用' : '可使用'}</span>
                     </div>
+                    <p className="mt-2 text-sm font-black" style={{ color: activeSessionIsTop30 ? 'var(--primary-blue)' : 'var(--primary-red)' }}>
+                      {activeSessionIsTop30 ? '前30名的玩家' : '非前30名的玩家'}
+                    </p>
                     <p className="mt-2 text-sm font-medium text-[var(--text-secondary)]">{activeSession ? `到期時間：${formatTime(activeSession.expiresAtMs)}` : '尚未載入代碼'}</p>
                   </div>
                 </div>
