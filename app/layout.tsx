@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
+import { getSiteOrigin } from "@/lib/site";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -8,6 +9,10 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(getSiteOrigin()),
+  alternates: {
+    canonical: "/",
+  },
   title: "花蓮高中90周年校慶拾光地圖",
   description: "花蓮高中90周年校慶互動地圖平台，探索校園、完成任務、蒐集回憶",
 };
