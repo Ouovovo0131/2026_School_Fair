@@ -574,7 +574,7 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
             <div className="premium-card clay-shadow-sm p-3 sm:p-4" style={{background: '#ffffff'}}>
               <p className="text-xs font-black uppercase tracking-[0.12em]" style={{color: 'var(--primary)'}}>獎品說明</p>
               <div className="mt-2 space-y-1.5 text-xs sm:text-sm font-semibold" style={{color: 'var(--text)'}}>
-                <p>前 30 名完成 20 關：可得 2 枚代幣（總值約 100 元）。</p>
+                <p>前 30 名完成 20 關：外加獲得 2 枚代幣（總值約 100 元）。</p>
                 <p>30 名後完成 20 關：校園特色建築資料夾 + 90周年紀念品 1 個 + 紀念明信片 1 張。</p>
                 <p>完成 10 關：校園特色建築資料夾 1 個。</p>
               </div>
