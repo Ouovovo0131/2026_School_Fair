@@ -63,7 +63,7 @@ export const STALL_DIRECTORY: Record<StallId, StallInfo> = {
   5:   { id: "5",   className: "202", displayName: "塑度與基情9", category: ["snack", "beverage"], content: "冰品、飲料 & 人體打地鼠" },
   6:   { id: "6",   className: "109", displayName: "沁露珠園", category: ["snack", "beverage", "game"], content: "鬆餅 & 紅茶、冬瓜茶、珍珠奶茶 & 打彈珠" },
   7:   { id: "7",   className: "101", displayName: "雞渴男耐", category: ["snack", "beverage", "other"], content: "雞肉飯、滷豆干 & 紅茶、阿華田 & 女模裝服務員" },
-  8:   { id: "8",   className: "205", displayName: "訂YO等雨停", category: ["snack", "beverage"], content: "香腸 & 冰淇淋、飲料" },
+  8:   { id: "8",   className: "205", displayName: "訂YO等雨停", category: ["snack", "beverage"], content: "香腸、考棉花糖串 & 紅茶" },
   9:   { id: "9",   className: "102", displayName: "糖絲三百手", category: ["snack", "beverage", "game"], content: "糖葫蘆 & 紅茶 & 轉輪盤" },
   10:  { id: "10",  className: "105", displayName: "九零花中 無塑有5", category: ["snack", "game", "other"], content: "香腸 & 「一擲千金」、許願池、贖罪卷" },
   11:  { id: "11",  className: "108", displayName: "熊男幫你烤", category: ["snack", "beverage"], content: "玉米、甜不辣、香腸、雞肉串、豆乾、貓舌餅 & 汽水、冬瓜茶、紅茶" },
