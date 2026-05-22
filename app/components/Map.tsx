@@ -839,7 +839,7 @@ export default function Map({ onBack, isModal = false }: MapProps) {
     setModalState({
       id: feature.id,
       title: feature.id === "audio-room" ? "音控室" : feature.label === "女" ? "女廁" : feature.label === "男" ? "男廁" : "場域資訊",
-      message: "此區域資訊可於後續功能中設定。",
+      message: "",
     });
   };
 
