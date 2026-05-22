@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
 import { STALL_CATEGORIES, type StallCategory, type StallId, getStallInfo, getStallClassLabel, getStallsByCategory } from "@/constants/stalls";
+import { TIMELINE_EVENTS } from "./Timeline";
 import { StallDetailPanel, type SpotlightState } from "./MapSpotlight";
 
 interface MapProps {
@@ -177,12 +178,12 @@ function Modal({
               <div style={{ position: "absolute", left: "16px", top: "16px", bottom: "16px", writingMode: "vertical-rl", textOrientation: "upright", fontSize: "clamp(28px, 4vw, 56px)", fontWeight: 700, color: "#707070", letterSpacing: "0.08em" }}>
                 圖資大樓
               </div>
-              <div className="label-A" style={{ position: "absolute", left: "120px", top: "28px", fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 400, color: "#6b7280" }}>A</div>
+              <div className="label-A" style={{ position: "absolute", left: "120px", top: "424px", fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 400, color: "#6b7280" }}>A</div>
               <div style={{ position: "absolute", right: "24px", top: "18px", textAlign: "center", color: "#6b7280" }}>
                 <div style={{ fontSize: "clamp(18px, 2.6vw, 28px)", fontWeight: 700 }}>北門</div>
                 <div style={{ fontSize: "clamp(11px, 1.6vw, 14px)", fontWeight: 700 }}>(表演團體進出)</div>
               </div>
-              <div className="label-B" style={{ position: "absolute", left: "120px", top: "404px", fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 400, color: "#4b5563" }}>B</div>
+              <div className="label-B" style={{ position: "absolute", left: "120px", top: "28px", fontSize: "clamp(28px, 3.7vw, 52px)", fontWeight: 400, color: "#4b5563" }}>B</div>
               <div style={{ position: "absolute", left: "16px", right: "16px", top: "52%", borderTop: "2px solid #111111" }} />
               <div className="label-southgate" style={{ position: "absolute", right: "24px", top: "404px", textAlign: "center", fontSize: "clamp(18px, 2.6vw, 32px)", fontWeight: 700, color: "#111111" }}>南門</div>
               <div style={{ position: "absolute", left: "24px", top: "67%", display: "flex", flexDirection: "column", gap: "18px", color: "#111111" }}>
@@ -801,6 +802,10 @@ export default function Map({ onBack, isModal = false }: MapProps) {
   };
 
   const onBuildingClick = (feature: RectFeature) => {
+    // 以下幾棟不提供互動說明
+    const noInteraction = new Set(["xinyi", "student-affairs", "academic-affairs", "old-library", "gate", "office"]);
+    if (noInteraction.has(feature.id)) return;
+
     // 圖資大樓改成與其他主樓一致的中央大框彈窗
     if (feature.id === "library-building") {
       setModalState({
@@ -811,7 +816,22 @@ export default function Map({ onBack, isModal = false }: MapProps) {
       return;
     }
 
-    const buildingName = feature.id === "stage" ? "表演舞台" : feature.label;
+    // 綜合大樓的特定介紹
+    if (feature.id === "complex") {
+      setModalState({ id: feature.id, title: feature.label, message: "1F 保健室，8:15~10:30 在 4F 有校慶慶祝大會" });
+      return;
+    }
+
+    // 表演舞台：顯示活動時程中「表演舞台」事件的所有團體（按照出演順序）
+    if (feature.id === "stage") {
+      const event = TIMELINE_EVENTS.find((e) => e.location === "表演舞台" || e.title === "動態表演");
+      const header = event ? `${event.time} ${event.title}` : "動態表演時程";
+      const list = event && event.details ? event.details.join("\n") : "時程內容尚未設定。";
+      setModalState({ id: feature.id, title: "表演舞台", message: `${header}\n\n${list}` });
+      return;
+    }
+
+    const buildingName = feature.label;
     setModalState({ id: feature.id, title: buildingName, message: `[建築名稱] 廁所資訊：[廁所位置描述]` });
   };
 
@@ -936,13 +956,13 @@ export default function Map({ onBack, isModal = false }: MapProps) {
                 ))}
 
                 <foreignObject x={832} y={566} width={44} height={44}>
-                  <button id="facility_utensils" type="button" className="flex h-11 w-11 items-center justify-center rounded-lg border border-slate-400 bg-white" onClick={() => setModalState({ id: "utensils", title: "餐具回收區", message: "此區域資訊可於後續功能中設定。" })}>
+                  <button id="facility_utensils" type="button" className="flex h-11 w-11 items-center justify-center rounded-lg border border-slate-400 bg-white" onClick={() => setModalState({ id: "utensils", title: "餐具借用區", message: "此區域資訊可於後續功能中設定。" })}>
                     <UtensilsCrossed className="h-5 w-5 text-slate-700" strokeWidth={1.8} />
                   </button>
                 </foreignObject>
 
                 <foreignObject x={832} y={614} width={44} height={44}>
-                  <button id="facility_trash" type="button" className="flex h-11 w-11 items-center justify-center rounded-lg border border-slate-400 bg-white" onClick={() => setModalState({ id: "trash", title: "垃圾桶", message: "此區域資訊可於後續功能中設定。" })}>
+                  <button id="facility_trash" type="button" className="flex h-11 w-11 items-center justify-center rounded-lg border border-slate-400 bg-white" onClick={() => setModalState({ id: "trash", title: "垃圾回收區", message: "此區域資訊可於後續功能中設定。" })}>
                     <Trash2 className="h-5 w-5 text-slate-700" strokeWidth={1.8} />
                   </button>
                 </foreignObject>

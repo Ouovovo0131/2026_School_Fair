@@ -9,7 +9,7 @@ interface TimelineItem {
   details?: string[];
 }
 
-const TIMELINE_EVENTS: TimelineItem[] = [
+export const TIMELINE_EVENTS: TimelineItem[] = [
   {
     id: 1,
     time: '8:15 - 10:30',
