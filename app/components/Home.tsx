@@ -193,7 +193,12 @@ export default function Home({ unlockedTasks: unlockedTasksProp = [] }: HomeProp
 
   const pct = Math.round((completed.length / TOTAL_QUESTS) * 100);
   const goHome = () => setUserMode('home');
-  const ADMIN_EMAILS = ["cheiling0131@gmail.com", "s310354@hlhs.hlc.edu.tw", "ofstud2@hlhs.hlc.edu.tw"];
+  const ADMIN_EMAILS = [
+    "cheiling0131@gmail.com",
+    "s310354@hlhs.hlc.edu.tw",
+    "ofstud2@hlhs.hlc.edu.tw",
+    "s0966639007@gmail.com",
+  ];
   const isAdminEmail = (email?: string | null) => ADMIN_EMAILS.includes((email || "").toLowerCase());
 
   const createUniqueTempCode = async () => {
